@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erestauracja", "Erestauracja\Erestauracja.csproj", "{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erestauracja.Tests", "Erestauracja.Tests\Erestauracja.Tests.csproj", "{5CF95613-B996-4544-8424-57085D45FE88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CF95613-B996-4544-8424-57085D45FE88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CF95613-B996-4544-8424-57085D45FE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CF95613-B996-4544-8424-57085D45FE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CF95613-B996-4544-8424-57085D45FE88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
