@@ -1,4 +1,6 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage"%>
+<%@ Import Namespace="Erestauracja.Models"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -10,24 +12,56 @@
 </head>
 <body>
     <div class="page">
+        <div id="logowaniecontainer">
+                <ul id="logowanie">
+                <% using(Html.BeginForm()){ %>
+                
+                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
+                <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
+
+                        <li class="editor-field">
+                            <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 100px;" }) %>
+                            <%: Html.ValidationMessageFor(x => m.UserName) %>
+                        </li>
+
+                        <li class="editor-field">     
+                            <%: Html.PasswordFor(x => m.Password, new { @style = "width: 100px;" })%>
+                            <%: Html.ValidationMessageFor(x => m.Password) %>
+                        </li>
+
+                    <li><%: Html.CheckBox("ZapamietajHasloCheckbox")%></li>
+                    <%--Przekierowuje na gotowa metode logowania.--%>
+                    <li><%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
+                    <% } %>
+                </ul>
+            </div>
         <header>
             <div id="title">
                 <h1>My MVC Application</h1>
             </div>
-            <div id="logindisplay">
+
+            <%--<div id="logindisplay">
                 <% Html.RenderPartial("LogOnUserControl"); %>
-            </div>
-            <nav>
+            </div>--%>
+
+            <div id="ikonka"></div>
+
+            <nav id="menucontainer">
                 <ul id="menu">
                     <li><%: Html.ActionLink("Home", "Index", "Home")%></li>
-                    <li><%: Html.ActionLink("About", "About", "Home")%></li>
+                    <%--<li><%: Html.ActionLink("About", "About", "Home")%></li>--%>
+                    <li><%: Html.ActionLink("Lista", "Index", "Lista")%></li>
+                    <li><%: Html.ActionLink("Menu", "Index", "Menu")%></li>
+                    <%--<li><%: Html.ActionLink("Home", "Index", "Home")%></li>--%>
+
                 </ul>
             </nav>
         </header>
         <section id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-            <footer>
-            </footer>
+            <div id="footer">
+                <p> <center>Copyright by ... 2012. </center></p>
+            </div>
         </section>
     </div>
 </body>
