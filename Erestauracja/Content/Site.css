@@ -11,7 +11,6 @@ body {
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    color: #696969;
 }
 
 a:link {
@@ -109,9 +108,9 @@ header h1, #header h1 {
     padding: 30px 30px 15px 30px;
     background-color: #FFE4C4;
     border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 /* Stopka */
@@ -119,89 +118,172 @@ footer,
 #footer {
     background-color: #FFE4C4;
     color: #999;
-    padding: 10px 0;
+    padding: 10px 0; 
+    
+    position: relative; top: 50px;
     text-align: center;
     line-height: normal;
     margin: 0 0 30px 0;
     font-size: .9em;
-    border-radius: 0 0 4px 4px;
-    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 0 0 4px 4px;
+    
+}
+
+/* ---------------------------------- Wzorowane na YT -------------------------------*/
+
+#footer-container 
+{
+    margin-top: 0;
+    clear: both;
+    background: none!important;
+    margin-top: 14px;
+    background-color: #FFE4C4;
+    color: #999;
+    padding: 10px 0; 
+    
+    position: relative; top: 20px;
+    text-align: center;
+    line-height: normal;
+    margin: 0 0 30px 0;
+    font-size: .9em;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 0 0 4px 4px;
+    
+}
+
+.horizontal-rule {
+    margin: 0;
+    position: relative;
+    height: 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid white;
+    z-index: -99;
+}
+
+.horizontal-rule span {
+    position: absolute;
+    display: block;
+    border: none;
+    height: 80px;
+    top: -80px;
+    z-index: -100;
+    margin: 0;
+    padding: 0;
+    _display: none;
+}
+
+.horizontal-rule .first {
+    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-dividers-vflkSTcwN.png) 0 0;
+    width: 80px;
+    left: 0;
+}
+
+.horizontal-rule .second {
+    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-dividers-vflkSTcwN.png) -114px 0;
+    width: 80px;
+    right: 0;
+}
+
+.horizontal-rule .third {
+    position: relative;
+    margin-left: 80px;
+    margin-right: 80px;
+    top: -80px;
+    background: url(//s.ytimg.com/yt/img/refresh/horizontal_rule-vflnwaP_x.png);
+    background: -webkit-linear-gradient(bottom,rgba(0, 0, 0, .12),rgba(0, 0, 0, .08) 1px,rgba(0, 0, 0, .08) 1px,transparent 80px,transparent 100%);
+}
+
+#footer-logo {
+    position: relative;
+    float: left;
+    font-size: 11px;
+    color: #666;
+    margin: 10px 20px 30px 20px;
+    padding: 25px 35px 20px 0;
+
+}
+
+#footer-logo img#logo
+{
+    background: url(images/logo-test.png);
+    width: 120px;
+    height: 70px;  
+}
+
+#footer-logo #footer-divider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-refresh-vflXkUAsM.png) -82px -172px;
+    width: 13px;
+    height: 118px;
+}
+
+#footer-logo span {
+    display: block;
+    font-size: 15px;
+    text-align: center;
+}
+
+#footer-main {
+    overflow: hidden;
+}
+
+a, abbr, acronym, address, applet, b, big, blockquote, button, canvas, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, embed, fieldset, font, form, h1, h2, h3, h4, h5, h6, hr, html, i, iframe, img, ins, kbd, label, legend, li, menu, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    background: transparent;
+}
+
+user agent stylesheetdiv {
+    display: block;
 }
 
 ikonka, #ikonka
 {
-   width: 100%;
     background: url(images/ikonka2.png) no-repeat left top;
-    position: relative;
-    color: #000;
-    padding: 0;  
-    height: 150px;     
-}
-/* TAB MENU   
-----------------------------------------------------------*/
-ul#menu {
-    border-bottom: 2px #6B6052 solid;
-    padding: 0 0 2px;
-    position: relative;
-    margin: 0;
-    text-align: right;
-}
-
-ul#menu li {
-    display: inline;
-    list-style: none;
-}
-
-ul#menu li#greeting {
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 2.8em;
-    color: #fff;
-}
-
-ul#menu li a {
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
-    border-radius: 4px 4px 0 0;
-    -webkit-border-radius: 10px 10px 0px 0px;
-    -moz-border-radius: 4px 4px 0 0;
-}
-
-ul#menu li a:hover {
-    background-color: #fff;
-    text-decoration: none;
-}
-
-ul#menu li a:active {
-    background-color: #a6e2a6;
-    text-decoration: none;
-}
-
-ul#menu li.selected a {
-    background-color: #fff;
-    color: #000;
+    height: 150px;
 }
 
 /* LOGOWANIE 
 ----------------------------------------------------------*/
+
+logowaniecontainer
+{
+    display: block;
+    
+}
+
+
+ul#logowanie li#label
+{
+    color: Black;
+}
+
 ul#logowanie 
 {
+    
     border-bottom: 2px #6B6052 solid;
-    padding: 0 0 2px;
-    position: static;
+    padding: 0 0px 65px ;
     margin: 0;
     text-align: right;
+    display: block;
+    position: relative; bottom: 100px;
 }
 
 ul#logowanie li {
     display: inline;
     list-style: none;
+}
+ul#logowanie li#editor-label
+{
+     display: block;
+     position: relative; bottom: 10px;  
 }
 
 ul#logowanie li#greeting {
@@ -242,9 +324,66 @@ ul#logowanie li.selected a {
 }
 
 
+/* TAB MENU   
+----------------------------------------------------------*/
+ul#menu {
+    border-bottom: 2px #6B6052 solid;
+    padding: 0 0 1px;
+    position: relative;
+    margin: 0;
+    text-align: left;
+}
+
+ul#menu li {
+    display: inline;
+    list-style: none;
+}
+
+ul#menu li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+ul#menu li a {
+    padding: 10px 50px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #2B2B2B;
+    color: #FFE4C4;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 4px 4px 0 0;
+}
+
+ul#menu li a:hover {
+    background-color: #FFE4C4;
+    text-decoration: none;
+    color: #926641;
+}
+
+ul#menu li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+ul#menu li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+
+
 /* FORM LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
-
+center
+{
+    left:auto;
+    right:auto;   
+}
 fieldset {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;

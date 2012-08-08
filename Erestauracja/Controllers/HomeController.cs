@@ -10,12 +10,18 @@ namespace Erestauracja.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
+            ViewBag.Message = "Witaj na stronie głównej!";
 
             return View();
         }
 
         public ActionResult About()
+        {
+            return View();
+        }
+
+
+        public ActionResult TopRestaurants()
         {
             return View();
         }

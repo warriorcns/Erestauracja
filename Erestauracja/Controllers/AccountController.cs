@@ -20,6 +20,10 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        public ActionResult Account()
+        {
+            return View();
+        }
         //
         // POST: /Account/LogOn
 
