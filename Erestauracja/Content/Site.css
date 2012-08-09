@@ -144,17 +144,16 @@ header h1, #header h1 {
 
 .logowanie 
 {
-    float: right;
     border-bottom: 0px #6B6052 solid;
     /*pozycja logowania*/
     padding: 20px 20px 2px 0 ;
     margin: 0;
     text-align: right;
     display: block;
-    position: relative;  
+    position: absolute;
     z-index: 2;
     overflow: visible;
-    float: right;
+    right: 0;
 }
 
 .logowanie li#label
