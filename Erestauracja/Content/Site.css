@@ -85,6 +85,12 @@ page width. Or, you can specify an exact pixel width. */
     
 }
 
+.topka
+{
+    display: inline;    
+}
+
+
 /* Naglowek */
 header, #header 
 {
@@ -113,159 +119,21 @@ header h1, #header h1 {
     margin-top: 4px;
 }
 
-/* Stopka */
-footer, 
-#footer {
-    background-color: #FFE4C4;
-    color: #999;
-    padding: 10px 0; 
-    
-    position: relative; top: 50px;
-    text-align: center;
-    line-height: normal;
-    margin: 0 0 30px 0;
-    font-size: .9em;
-    border-radius: 4px 4px 4px 4px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 0 0 4px 4px;
-    
-}
-
-/* ---------------------------------- Wzorowane na YT -------------------------------*/
-
-#footer-container 
-{
-    margin-top: 0;
-    clear: both;
-    background: none!important;
-    margin-top: 14px;
-    background-color: #FFE4C4;
-    color: #999;
-    padding: 10px 0; 
-    
-    position: relative; top: 20px;
-    text-align: center;
-    line-height: normal;
-    margin: 0 0 30px 0;
-    font-size: .9em;
-    border-radius: 4px 4px 4px 4px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 0 0 4px 4px;
-    
-}
-
-.horizontal-rule {
-    margin: 0;
-    position: relative;
-    height: 0;
-    border-top: 1px solid #DDD;
-    border-bottom: 1px solid white;
-    z-index: -99;
-}
-
-.horizontal-rule span {
-    position: absolute;
-    display: block;
-    border: none;
-    height: 80px;
-    top: -80px;
-    z-index: -100;
-    margin: 0;
-    padding: 0;
-    _display: none;
-}
-
-.horizontal-rule .first {
-    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-dividers-vflkSTcwN.png) 0 0;
-    width: 80px;
-    left: 0;
-}
-
-.horizontal-rule .second {
-    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-dividers-vflkSTcwN.png) -114px 0;
-    width: 80px;
-    right: 0;
-}
-
-.horizontal-rule .third {
-    position: relative;
-    margin-left: 80px;
-    margin-right: 80px;
-    top: -80px;
-    background: url(//s.ytimg.com/yt/img/refresh/horizontal_rule-vflnwaP_x.png);
-    background: -webkit-linear-gradient(bottom,rgba(0, 0, 0, .12),rgba(0, 0, 0, .08) 1px,rgba(0, 0, 0, .08) 1px,transparent 80px,transparent 100%);
-}
-
-#footer-logo {
-    position: relative;
-    float: left;
-    font-size: 11px;
-    color: #666;
-    margin: 10px 20px 30px 20px;
-    padding: 25px 35px 20px 0;
-
-}
-
-#footer-logo img#logo
-{
-    background: url(images/logo-test.png);
-    width: 120px;
-    height: 70px;  
-}
-
-#footer-logo #footer-divider {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-refresh-vflXkUAsM.png) -82px -172px;
-    width: 13px;
-    height: 118px;
-}
-
-#footer-logo span {
-    display: block;
-    font-size: 15px;
-    text-align: center;
-}
-
-#footer-main {
-    overflow: hidden;
-}
-
-a, abbr, acronym, address, applet, b, big, blockquote, button, canvas, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, embed, fieldset, font, form, h1, h2, h3, h4, h5, h6, hr, html, i, iframe, img, ins, kbd, label, legend, li, menu, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    background: transparent;
-}
-
-user agent stylesheetdiv {
-    display: block;
-}
-
-ikonka, #ikonka
-{
-    background: url(images/ikonka2.png) no-repeat left top;
-    height: 150px;
-}
-
 /* LOGOWANIE 
 ----------------------------------------------------------*/
 
-logowaniecontainer
+.logowaniecontainer
 {
-    display: block;
-    
+    display: inline;
 }
 
 
-ul#logowanie li#label
+.logowanie li#label
 {
     color: Black;
 }
 
-ul#logowanie 
+.logowanie 
 {
     
     border-bottom: 2px #6B6052 solid;
@@ -273,20 +141,21 @@ ul#logowanie
     margin: 0;
     text-align: right;
     display: block;
-    position: relative; bottom: 100px;
+    position: relative; bottom: 0px;
 }
 
-ul#logowanie li {
+.logowanie li {
     display: inline;
     list-style: none;
+    text-align: center;
 }
-ul#logowanie li#editor-label
+.logowanie li#editor-label
 {
      display: block;
      position: relative; bottom: 10px;  
 }
 
-ul#logowanie li#greeting {
+.logowanie li#greeting {
     padding: 10px 20px;
     font-weight: bold;
     text-decoration: none;
@@ -294,7 +163,7 @@ ul#logowanie li#greeting {
     color: #fff;
 }
 
-ul#logowanie li a {
+.logowanie li a {
     padding: 10px 20px;
     font-weight: bold;
     text-decoration: none;
@@ -308,19 +177,27 @@ ul#logowanie li a {
     -moz-border-radius: 4px 4px 0 0;
 }
 
-ul#logowanie li a:hover {
+.logowanie li a:hover {
     background-color: #fff;
     text-decoration: none;
 }
 
-ul#logowanie li a:active {
+.logowanie li a:active {
     background-color: #a6e2a6;
     text-decoration: none;
 }
 
-ul#logowanie li.selected a {
+.logowanie li.selected a {
     background-color: #fff;
     color: #000;
+}
+
+ikonka, #ikonka
+{
+    background: url(images/ikonka2.png) no-repeat left top;
+    height: 150px;
+    width: 800px;
+    
 }
 
 
@@ -375,6 +252,158 @@ ul#menu li.selected a {
     color: #000;
 }
 
+
+/* ---------------------------------- Stopka -------------------------------*/
+
+footer, 
+#footer {
+    background-color: #FFE4C4;
+    color: #999;
+    padding: 10px 0; 
+    text-align: center;
+    line-height: normal;
+    font-size: .9em;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 0 0 4px 4px;
+    margin: auto;
+    padding-bottom: 11em;
+    
+    
+}
+
+#footer-container 
+{
+    margin-top: 0;
+    clear: both;
+    background: none!important;
+    margin-top: 14px;
+    background-color: #FFE4C4;
+    color: #999;
+    padding: 10px 0; 
+    position: relative; top: 20px;
+    text-align: center;
+    line-height: normal;
+    margin: 0 0 80px 0;
+    font-size: .9em;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 0 0 4px 4px;
+}
+
+.horizontal-rule {
+    margin: 0;
+    position: relative;
+    height: 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid white;
+    z-index: -99;
+}
+
+.horizontal-rule span {
+    position: absolute;
+    display: block;
+    border: none;
+    height: 80px;
+    top: -80px;
+    z-index: -100;
+    margin: 0;
+    padding: 0;
+    _display: none;
+}
+
+.horizontal-rule .first {
+    width: 80px;
+    left: 0;
+}
+
+.horizontal-rule .second {
+    width: 80px;
+    right: 0;
+}
+
+.horizontal-rule .third {
+    position: relative;
+    margin-left: 80px;
+    margin-right: 80px;
+    top: -80px;
+    background: -webkit-linear-gradient(bottom,rgba(0, 0, 0, .12),rgba(0, 0, 0, .08) 1px,rgba(0, 0, 0, .08) 1px,transparent 80px,transparent 100%);
+}
+
+#footer-logo {
+    position: relative;
+    float: left;
+    font-size: 11px;
+    color: #666;
+    margin: 10px 20px 30px 20px;
+    padding: 0px 35px 20px 0;
+
+}
+
+#footer-logo img#logo
+{
+    background: url(images/logo-test.png);
+    width: 120px;
+    height: 70px;  
+}
+
+#footer-logo #footer-divider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-refresh-vflXkUAsM.png) -82px -172px;
+    width: 13px;
+    height: 118px;
+}
+
+#footer-logo span {
+    display: block;
+    font-size: 15px;
+    text-align: center;
+}
+
+#footer-main {
+    overflow: hidden;
+}
+
+#footer #footer-links-primary {
+    margin-top: 35px;
+}
+
+#footer-links-secondary {
+    font-size: 11px;
+}
+
+#footer-links-primary li, #footer-links-secondary li {
+    float: left;
+    margin: 0 20px 0 0;
+    padding: 1px;
+    line-height: normal;
+}
+
+#footer ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-shadow: 0 1px 1px white;
+}
+
+a, abbr, acronym, address, applet, b, big, blockquote, button, canvas, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, embed, fieldset, font, form, h1, h2, h3, h4, h5, h6, hr, html, i, iframe, img, ins, kbd, label, legend, li, menu, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    background: transparent;
+}
+
+user agent stylesheetdiv {
+    display: block;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
 
 
 /* FORM LAYOUT ELEMENTS   

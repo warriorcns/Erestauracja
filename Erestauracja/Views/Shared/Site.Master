@@ -1,7 +1,6 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage"%>
-<%@ Import Namespace="Erestauracja.Models"%>
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
-
+<%@ Import Namespace="Erestauracja.Models" %>
 <!DOCTYPE html>
 <html>
 <head runat="server">
@@ -14,36 +13,40 @@
 </head>
 <body>
     <div class="page">
-
-        <div id="ikonka"></div>
-
-        <div id="logowaniecontainer">
-            <ul id="logowanie">
+        <ul class="topka">
+            <div id="ikonka"></div>
+            <div class="logowaniecontainer">
+                
+                <ul class="logowanie">
                 <% using (Html.BeginForm())
                    { %>
-                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
-                <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
-                <li class="editor-label" id="label">
-                    <%: Html.Label("Login")%></li>
-                <li class="editor-field">
-                    <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
-                    <%: Html.ValidationMessageFor(x => m.UserName) %>
-                </li>
-                <li class="editor-label" id="label">
-                    <%: Html.Label("Haslo") %></li>
-                <li>
-                    <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
-                    <%: Html.ValidationMessageFor(x => m.Password) %>
-                </li>
-                <li>
-                    <%: Html.CheckBoxFor(x => m.RememberMe)%></li>
-                <%--Przekierowuje na gotowa metode logowania.--%>
-                <li>
-                    <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
+                    <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
+                    <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
+                    <li class="editor-label" id="label">
+                        <%: Html.Label("Login")%></li>
+                    <li class="editor-field">
+                        <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
+                        <%: Html.ValidationMessageFor(x => m.UserName) %>
+                    </li>
+                    <li class="editor-label" id="Li1">
+                        <%: Html.Label("Haslo") %></li>
+                    <li>
+                        <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
+                        <%: Html.ValidationMessageFor(x => m.Password) %>
+                    </li>
+                    <li>
+                        <%: Html.CheckBoxFor(x => m.RememberMe)%></li>
+                    <%--Przekierowuje na gotowa metode logowania.--%>
+                    <li>
+                        <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
+               
                 <% } %>
-            </ul>
-        </div>
 
+                </ul>
+                
+                    
+            </div>
+        </ul>
         <header>
             <div id="title">
                 <%--<h1></h1>--%>
@@ -72,71 +75,59 @@
                 </ul>
             </nav>
         </header>
-
         <section id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </section>
-
         <%--div id="footer">
                 <p id="center">Copyright by ... 2012.</p>
             </div>--%>
-
         <div id="footer-container">
             <!-- begin footer -->
             <div id="footer">
-                <div class="horizontal-rule ">
+                <div class="horizontal-rule">
                     <span class="first"></span><span class="second"></span><span class="third"></span>
                 </div>
                 <div id="footer-logo">
                     <a href="/" title="Strona główna">
-                        <%--Link do logo do przerobienia--%>
                         <img id="logo" alt="Strona główna">
-                    </a><span class="copyright" dir="ltr">© 2012 Erestauracja</span> <span id="footer-divider"></span>
+                    </a><span class="copyright" dir="ltr">© 2012 Erestauracja</span> <span id="footer-divider">
+                    </span>
                 </div>
                 <div id="footer-main">
                     <ul id="footer-links-primary">
-                        <li><a href="//support.google.com/youtube/?hl=pl-PL&amp;p=homepage">Pomoc</a></li>
+                        <li>
+                            <p>
+                                <%: Html.ActionLink("Zarejestruj", "Register", "Account") %></p>
+                        </li>
+                        <li>
+                            <p>
+                                <%: Html.ActionLink("Pomoc", "Index", "Help") %></p>
+                        </li>
+                        <li>
+                            <p>
+                                <%: Html.ActionLink("Informacje", "Info", "Home")%></p>
+                        </li>
+                        <%--<li><a href="//support.google.com/youtube/?hl=pl-PL&amp;p=homepage">Pomoc</a></li>
                         <li><a href="/t/about_youtube">Informacje</a></li>
                         <li><a href="/t/press">Centrum prasowe</a></li>
                         <li><a href="/t/copyright_center">Prawa autorskie</a></li>
                         <li><a href="/creators">Twórcy i partnerzy</a></li>
                         <li><a href="/t/advertising_overview">Reklamy</a></li>
-                        <li><a href="/dev">Programiści</a></li>
+                        <li><a href="/dev">Programiści</a></li>--%>
                     </ul>
                     <ul id="footer-links-secondary">
-                        <li><a href="/t/terms">Warunki</a></li>
+                        <%--<li><a href="/t/terms">Warunki</a></li>
                         <li><a href="http://www.google.pl/intl/pl/policies/privacy/">Prywatność</a></li>
                         <li><a href="//support.google.com/youtube/bin/request.py?contact_type=abuse&amp;hl=pl-PL">
                             Bezpieczeństwo</a></li>
                         <li><a href="//www.google.com/tools/feedback/intl/pl/error.html" onclick="return yt.www.feedback.start(yt.getConfig('FEEDBACK_LOCALE_LANGUAGE'), yt.getConfig('FEEDBACK_LOCALE_EXTRAS'));"
                             id="reportbug">Zgłoś błąd</a></li>
-                        <%--<li><a href="/testtube">Spróbuj czegoś nowego!</a></li>--%>
+                        <li><a href="/testtube">Spróbuj czegoś nowego!</a></li>--%>
                     </ul>
-                    <ul class="pickers yt-uix-button-group" data-button-toggle-group="optional">
-                    </ul>
-                    <div id="yt-picker-language-footer" class="yt-picker" style="display: none">
-                        <p class="yt-spinner">
-                            <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="yt-spinner-img" alt="">
-                            Trwa wczytywanie...
-                        </p>
-                    </div>
-                    <div id="yt-picker-country-footer" class="yt-picker" style="display: none">
-                        <p class="yt-spinner">
-                            <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="yt-spinner-img" alt="">
-                            Trwa wczytywanie...
-                        </p>
-                    </div>
-                    <div id="yt-picker-safetymode-footer" class="yt-picker" style="display: none">
-                        <p class="yt-spinner">
-                            <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="yt-spinner-img" alt="">
-                            Trwa wczytywanie...
-                        </p>
-                    </div>
                 </div>
             </div>
             <!-- end footer -->
         </div>
-
     </div>
 </body>
 </html>

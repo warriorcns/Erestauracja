@@ -25,5 +25,11 @@ namespace Erestauracja.Controllers
         {
             return View();
         }
+
+        public ActionResult Info()
+        {
+            return View();
+        }
+        
     }
 }
