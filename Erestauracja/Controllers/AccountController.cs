@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using Erestauracja.Models;
+using Erestauracja.Providers;
 
 namespace Erestauracja.Controllers
 {
@@ -81,13 +82,17 @@ namespace Erestauracja.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, int.Parse(model.TownID), model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                if (user != null)
+                {
+                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+                }
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else

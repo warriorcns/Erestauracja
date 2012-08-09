@@ -7,7 +7,7 @@ using System.Web.Security;
 
 namespace Erestauracja.Models
 {
-
+    //sprawdzić poprawność
     public class ChangePasswordModel
     {
         [Required]
@@ -45,23 +45,80 @@ namespace Erestauracja.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address")]
         public string Email { get; set; }
 
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Confirm email address")]
+        [Compare("Email", ErrorMessage = "The email and confirmation email do not match.  po PL napisac  ")]
+        public string ConfirmEmail { get; set; }
+
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.  po PL napisac  ", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.   po PL napisac  ")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Question")]
+        public string Question { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Answer")]
+        public string Answer { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Surname ")]
+        public string Surname { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Address ")]
+        public string Address { get; set; }
+
+        //zmienić 
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "TownID")]
+        public string TownID { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Country  ")]
+        public string Country { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Birthdate ")]
+        public DateTime Birthdate { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Sex")]
+        public string Sex { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Telephone ")]
+        public string Telephone { get; set; }
     }
 }
