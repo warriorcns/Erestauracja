@@ -14,37 +14,33 @@
 <body>
     <div class="page">
         <ul class="topka">
-            <div id="ikonka"></div>
-            
-                
-                <ul class="logowanie">
+            <div class="ikonka">
+            </div>
+            <ul class="logowanie">
                 <% using (Html.BeginForm())
                    { %>
-                    <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
-                    <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
-                    <li class="editor-label" id="label">
-                        <%: Html.Label("Login")%></li>
-                    <li class="editor-field">
-                        <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
-                        <%: Html.ValidationMessageFor(x => m.UserName) %>
-                    </li>
-                    <li class="editor-label" id="label">
-                        <%: Html.Label("Haslo") %></li>
-                    <li>
-                        <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
-                        <%: Html.ValidationMessageFor(x => m.Password) %>
-                    </li>
-                    <li>
-                        <%: Html.CheckBoxFor(x => m.RememberMe)%></li>
-                    <%--Przekierowuje na gotowa metode logowania.--%>
-                    <li>
-                        <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
-               
+                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
+                <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
+                <li class="editor-label" id="label">
+                    <%: Html.Label("Login")%></li>
+                <li class="editor-field">
+                    <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
+                    <%: Html.ValidationMessageFor(x => m.UserName) %>
+                </li>
+                <li class="editor-label" id="label">
+                    <%: Html.Label("Haslo") %></li>
+                <li>
+                    <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
+                    <%: Html.ValidationMessageFor(x => m.Password) %>
+                </li>
+                <li>
+                    <%: Html.CheckBoxFor(x => m.RememberMe)%></li>
+                <%--Przekierowuje na gotowa metode logowania.--%>
+                <li>
+                    <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
                 <% } %>
+            </ul>
 
-                </ul>
-                
-                    
             
         </ul>
         <header>
