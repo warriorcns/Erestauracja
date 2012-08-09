@@ -93,10 +93,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\images\ikonka.jpg" />
-    <Content Include="Content\images\ikonka.png" />
-    <Content Include="Content\images\ikonka2.png" />
     <Content Include="Content\images\logo-test.png" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\wooden_fence_boards.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -140,6 +138,7 @@
     <Content Include="Views\Basket\Index.aspx" />
     <Content Include="Views\Find\Index.aspx" />
     <Content Include="Views\Help\Index.aspx" />
+    <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\Info.aspx" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\Orders\Index.aspx" />
