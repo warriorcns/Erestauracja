@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddUsersToRoles" xml:space="preserve">
+    <value>INSERT INTO `users_in_roles`(`login`, `rolename`, `applicationName`) VALUES (@login,@rolename,@applicationName)</value>
+  </data>
+  <data name="AllUsersCount" xml:space="preserve">
+    <value>SELECT Count(*) FROM `users` WHERE `applicationName` = @applicationName</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="ChangePasswordQuestionAndAnswer" xml:space="preserve">
+    <value>UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="CreateRole" xml:space="preserve">
+    <value>INSERT INTO `roles`(`rolename`, `applicationName`) VALUES (@rolename, @applicationName)</value>
+  </data>
+  <data name="CreateUser" xml:space="preserve">
+    <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `applicationName`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, @country, @birthdate, @sex, @telephone, @applicationName, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
+  </data>
+  <data name="DeleteRole" xml:space="preserve">
+    <value>DELETE FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>DELETE FROM `users`  WHERE `login` = @login AND `applicationname` = @applicationname</value>
+  </data>
+  <data name="DeleteUsersInRole" xml:space="preserve">
+    <value>DELETE FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="FindUsersByEmail" xml:space="preserve">
+    <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName ORDER BY `login` Asc</value>
+  </data>
+  <data name="FindUsersByName" xml:space="preserve">
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName ORDER BY `login` Asc</value>
+  </data>
+  <data name="FindUsersInRole" xml:space="preserve">
+    <value>SELECT `login` FROM `users_in_roles` WHERE `login` LIKE @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetAllRoles" xml:space="preserve">
+    <value>SELECT `rolename` FROM `roles`  WHERE `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetAllUsers" xml:space="preserve">
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  WHERE `applicationName` = @applicationName ORDER BY `login` Asc</value>
+  </data>
+  <data name="GetFailureCount" xml:space="preserve">
+    <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetNumberOfUsersOnline" xml:space="preserve">
+    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetPassword" xml:space="preserve">
+    <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetPasswordAnswer" xml:space="preserve">
+    <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetRolesForUser" xml:space="preserve">
+    <value>SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetUserByID" xml:space="preserve">
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate` FROM `users` WHERE `id` = @id</value>
+  </data>
+  <data name="GetUserByLogin" xml:space="preserve">
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetUserCountByEmail" xml:space="preserve">
+    <value>SELECT Count(*) FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetUserCountByLogin" xml:space="preserve">
+    <value>SELECT Count(*) FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetUserNameByEmail" xml:space="preserve">
+    <value>SELECT `login` FROM `users` WHERE `email` = @email AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="GetUsersInRole" xml:space="preserve">
+    <value>SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="IsUserInRole" xml:space="preserve">
+    <value>SELECT COUNT(*) FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="LockOutUser" xml:space="preserve">
+    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="RemoveUsersFromRoles" xml:space="preserve">
+    <value>DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `applicationName` = @applicationName AND `isLockedOut` = @isLockedOut</value>
+  </data>
+  <data name="RoleExists" xml:space="preserve">
+    <value>SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="SetFailedPasswordAnswerAttemptCount" xml:space="preserve">
+    <value>UPDATE `users`  SET `failedPasswordAnswerAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="SetFailedPasswordAttemptCount" xml:space="preserve">
+    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="UnlockUser" xml:space="preserve">
+    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="UpdateFailedPasswordAnswerAttempt" xml:space="preserve">
+    <value>UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="UpdateFailedPasswordAttempt" xml:space="preserve">
+    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>UPDATE `users` SET `telephone`= @telephone, `comment` = @comment, `isApproved` = @isApproved WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="UpdateUserActivityByID" xml:space="preserve">
+    <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `id` = @id</value>
+  </data>
+  <data name="UpdateUserActivityByLogin" xml:space="preserve">
+    <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login AND `applicationname` = @applicationname</value>
+  </data>
+  <data name="UpdateUserLoginDate" xml:space="preserve">
+    <value>UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
+  <data name="ValidateUser" xml:space="preserve">
+    <value>SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName AND `isLockedOut` = @isLockedOut</value>
+  </data>
+</root>
