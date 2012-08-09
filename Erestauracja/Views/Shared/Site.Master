@@ -15,7 +15,7 @@
     <div class="page">
         <ul class="topka">
             <div id="ikonka"></div>
-            <div class="logowaniecontainer">
+            
                 
                 <ul class="logowanie">
                 <% using (Html.BeginForm())
@@ -45,7 +45,7 @@
                 </ul>
                 
                     
-            </div>
+            
         </ul>
         <header>
             <div id="title">
