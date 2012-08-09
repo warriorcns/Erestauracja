@@ -218,7 +218,7 @@ header h1, #header h1 {
 ----------------------------------------------------------*/
 ul#menu {
     border-bottom: 2px #6B6052 solid;
-    padding: 0 0 1px;
+    padding: 0 0 1px ;
     position: relative;
     margin: 0;
     text-align: left;
@@ -238,7 +238,7 @@ ul#menu li#greeting {
 }
 
 ul#menu li a {
-    padding: 10px 50px;
+    padding: 10px 20px;
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
@@ -494,7 +494,7 @@ table th {
 
 nav, 
 #menucontainer {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 div#title {
