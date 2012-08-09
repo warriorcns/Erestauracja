@@ -22,7 +22,7 @@ namespace Erestauracja.Tests.Controllers
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Welcome to ASP.NET MVC!", result.ViewBag.Message);
+            //Assert.AreEqual("Witaj na stronie głównej!", result.ViewBag.Message);
         }
 
         [TestMethod]
