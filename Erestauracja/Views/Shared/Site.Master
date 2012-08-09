@@ -28,7 +28,7 @@
                         <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
                         <%: Html.ValidationMessageFor(x => m.UserName) %>
                     </li>
-                    <li class="editor-label" id="Li1">
+                    <li class="editor-label" id="label">
                         <%: Html.Label("Haslo") %></li>
                     <li>
                         <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
