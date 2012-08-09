@@ -146,31 +146,38 @@ header h1, #header h1 {
 {
     border-bottom: 0px #6B6052 solid;
     /*pozycja logowania*/
-    padding: 20px 20px 2px 0 ;
+    padding: 2px 20px 2px 0 ;
     margin: 0;
     text-align: right;
     display: block;
     position: absolute;
     z-index: 2;
     overflow: visible;
-    right: 0;
+    right: 250px;
 }
 
 .logowanie li#label
 {
     color: white;
+    float: left;
 }
 
 .logowanie li {
-    display: inline;
+    display: block;
     list-style: none;
     text-align: center;
+    position: relative; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-.logowanie li#editor-label
+.logowanie li#rememberme
 {
-     display: block;
-     position: relative; bottom: 10px;  
+    float: left;
+    position: absolute;
+    left: -4px;
 }
 
 .logowanie li#greeting {
@@ -210,8 +217,259 @@ header h1, #header h1 {
     color: #000;
 }
 
+/* LOGOWANIE - password
+----------------------------------------------------------*/
+
+.logowaniepassword 
+{
+    border-bottom: 0px #6B6052 solid;
+    /*pozycja logowania*/
+    padding: 2px 20px 2px 0 ;
+    margin: 0;
+    text-align: right;
+    display: block;
+    position: absolute;
+    z-index: 2;
+    overflow: visible;
+    right: 100px;
+}
+
+.logowaniepassword li#label
+{
+    color: white;
+    float: left;
+    
+}
+
+.logowaniepassword li {
+    display: block;
+    list-style: none;
+    text-align: center;
+    position: relative; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.logowaniepassword li#labelpassword 
+{
+    display: block;
+    list-style: none;
+    color: white;
+    float: left;
+    position: absolute;
+}
+
+.logowaniepassword li#passwordtextbox {
+    display: block;
+    list-style: none;
+    text-align: center;
+    position: absolute; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
+}
 
 
+
+.logowaniepassword li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+.logowaniepassword li a {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #e8eef4;
+    color: #034af3;
+    border-radius: 4px 4px 0 0;
+    
+    /*Obramowanie guzika*/
+    -webkit-border-radius:  10px 10px 10px 10px;
+    -moz-border-radius: 4px 4px 0 0;
+}
+
+.logowaniepassword li a:hover {
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.logowaniepassword li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+.logowaniepassword li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+/* LOGOWANIE - rememberme
+----------------------------------------------------------*/
+
+.logowanierememberme 
+{
+    border-bottom: 0px #6B6052 solid;
+    /*pozycja logowania*/
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    display: inline;
+    position: absolute;
+    z-index: 2;
+    overflow: visible;
+    left: 0px;
+}
+
+
+
+.logowanierememberme li {
+    display: inline;
+    list-style: none;
+    text-align: center;
+    position: relative; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.logowanierememberme li#remembermelabel
+{
+    color: white;
+    left: 20px;
+}
+
+.logowanierememberme li#labelpassword 
+{
+    display: block;
+    list-style: none;
+    color: white;
+    float: left;
+    position: absolute;
+}
+
+.logowanierememberme li#passwordtextbox {
+    display: block;
+    list-style: none;
+    text-align: center;
+    position: absolute; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.logowanierememberme li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+.logowanierememberme li a {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #e8eef4;
+    color: #034af3;
+    border-radius: 4px 4px 0 0;
+    
+    /*Obramowanie guzika*/
+    -webkit-border-radius:  10px 10px 10px 10px;
+    -moz-border-radius: 4px 4px 0 0;
+}
+
+.logowanierememberme li a:hover {
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.logowanierememberme li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+.logowanierememberme li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+
+/* LOGOWANIE - button
+----------------------------------------------------------*/
+.zaloguj 
+{
+    border-bottom: 0px #6B6052 solid;
+    /*pozycja logowania*/
+    padding: 20px 20px 2px 0 ;
+    margin: 0;
+    text-align: right;
+    display: block;
+    position: absolute;
+    z-index: 2;
+    overflow: visible;
+    right: 0;
+}
+
+.zaloguj li {
+    display: block;
+    list-style: none;
+    text-align: center;
+    position: relative; 
+    color: White;
+    list-style: none;
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+
+.zaloguj li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+.zaloguj li a {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #e8eef4;
+    color: #034af3;
+    border-radius: 4px 4px 0 0;
+    
+    /*Obramowanie guzika*/
+    -webkit-border-radius:  10px 10px 10px 10px;
+    -moz-border-radius: 4px 4px 0 0;
+}
+
+.zaloguj li a:hover {
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.zaloguj li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+.zaloguj li.selected a {
+    background-color: #fff;
+    color: #000;
+}
 
 /* TAB MENU   
 ----------------------------------------------------------*/
@@ -441,6 +699,7 @@ textarea {
 }
 
 input[type="text"], 
+input[type="datetime"],
 input[type="password"] {
     border: 1px solid #ccc;
     padding: 2px;

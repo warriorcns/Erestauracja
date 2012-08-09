@@ -15,6 +15,9 @@
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    <link href="../../Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
 
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.") %>
@@ -42,7 +45,7 @@
                     <%: Html.LabelFor(m => m.ConfirmEmail) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.ConfirmEmail)%>
+                    <%: Html.TextBoxFor(m => m.ConfirmEmail)%>
                     <%: Html.ValidationMessageFor(m => m.ConfirmEmail)%>
                 </div>
 
@@ -122,7 +125,7 @@
                     <%: Html.LabelFor(m => m.Birthdate)%>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Birthdate)%>
+                    <%: Html.EditorFor(m => m.Birthdate)%>
                     <%: Html.ValidationMessageFor(m => m.Birthdate)%>
                 </div>
 
@@ -149,3 +152,6 @@
         </div>
     <% } %>
 </asp:Content>
+
+
+
