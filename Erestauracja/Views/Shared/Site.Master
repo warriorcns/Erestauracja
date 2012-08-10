@@ -14,13 +14,13 @@
 </head>
 <body>
     <div class="page">
-        <ul class="topka">
+        <%--<ul class="topka">
             <div class="ikonka">
             </div>
-            <% using (Html.BeginForm())
+            <%--<% using (Html.BeginForm())
                { %>
             <ul class="logowanie">
-                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'--%>
+                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'
                 <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
                 <li id="label">
                     <%: Html.Label("Login")%></li>
@@ -34,22 +34,27 @@
                     <li id="remembermelabel">
                         <%: Html.Label("Zapamiętaj mnie")%></li>
                 </ul>
-            </ul>
-            <ul class="logowaniepassword">
+            </ul>--%>
+            <%--<ul class="logowaniepassword">
                 <li id="label">
                     <%: Html.Label("Haslo") %></li>
                 <li>
                     <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
                     <%: Html.ValidationMessageFor(x => m.Password) %>
                 </li>
-            </ul>
-            <ul class="zaloguj">
-                <%--Przekierowuje na gotowa metode logowania.--%>
+            </ul>--%>
+            <%--<ul class="zaloguj">
+                <%--Przekierowuje na gotowa metode logowania.
                 <li>
-                    <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
+                   <%-- <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
             </ul>
             <% } %>
-        </ul>
+
+             
+        </ul>--%>
+        <div id="logindisplay">
+                <% Html.RenderPartial("LogOnUserControl"); %>
+            </div>
         <header>
             <div id="title">
                 <%--<h1></h1>--%>
