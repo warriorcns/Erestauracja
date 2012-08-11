@@ -1,7 +1,7 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
-<%@ Import Namespace="Erestauracja.Models" %>
+﻿<%--<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+<%@ Import Namespace="Erestauracja.Models" %>--%>
 
-
+<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Erestauracja.Models.LogOnModel>"%>
 
 <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 
@@ -26,8 +26,8 @@
                 <li id="label">
                     <%: Html.Label("Login")%></li>
                 <li>
-                    <%: Html.TextBoxFor(m => m.UserName, new { @style = "width: 130px;" }) %>
-                    <%: Html.ValidationMessageFor(m => m.UserName) %>
+                    <%: Html.TextBoxFor(m => m.Login, new { @style = "width: 130px;" })%>
+                    <%: Html.ValidationMessageFor(m => m.Login)%>
                 </li>
                 <ul class="logowanierememberme">
                     <li id="rememberme">

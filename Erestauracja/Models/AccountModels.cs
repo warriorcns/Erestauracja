@@ -30,8 +30,8 @@ namespace Erestauracja.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        [Display(Name = "Login")]
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

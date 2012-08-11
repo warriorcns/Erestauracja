@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
-<%@ Import Namespace="Erestauracja.Models" %>
+<%-- <%@ Import Namespace="Erestauracja.Models" %>--%>
 <!DOCTYPE html>
 <html>
 <head runat="server">
