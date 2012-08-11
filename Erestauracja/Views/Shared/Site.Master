@@ -52,16 +52,16 @@
 
              
         </ul>--%>
-        <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
-            </div>
+      <%--  <div id="logindisplay">
+                <% Html.RenderPartial("~/Views/Account/LogOnUserControl"); %>
+            </div>--%>
         <header>
             <div id="title">
                 <%--<h1></h1>--%>
             </div>
-            <%--<div id="logindisplay">
+            <div id="logindisplay">
                 <% Html.RenderPartial("LogOnUserControl"); %>
-            </div>--%>
+            </div>
             <nav id="menucontainer">
                 <ul id="menu">
                     <li>
@@ -74,7 +74,7 @@
                     <li>
                         <%: Html.ActionLink("Konto", "Account", "Account")%></li>
                     <li>
-                        <%: Html.ActionLink("Koszyk", "Index", "Basket")%></li>
+                        <%: Html.ActionLink("Koszyk", "LogOn", "Account")%></li>
                     <li>
                         <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
                     <%--<li><%: Html.ActionLink("Lista", "Index", "Lista")%></li>

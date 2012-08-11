@@ -5,7 +5,14 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-<h2>Account</h2>
-
+<%
+    if (Request.IsAuthenticated) {
+%>
+<h2>dane konta</h2>
+<%
+    }
+    else {
+        
+    }
+%>
 </asp:Content>

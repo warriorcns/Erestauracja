@@ -15,7 +15,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/LogOn
-
         public ActionResult LogOn()
         {
             return View();
@@ -23,7 +22,14 @@ namespace Erestauracja.Controllers
 
         public ActionResult Account()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
         }
         //
         // POST: /Account/LogOn

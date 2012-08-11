@@ -1,7 +1,4 @@
-﻿<%--<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
-<%@ Import Namespace="Erestauracja.Models" %>--%>
-
-<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Erestauracja.Models.LogOnModel>"%>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Erestauracja.Models.LogOnModel>" %>
 
 <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 
@@ -47,8 +44,8 @@
             <ul class="zaloguj">
                 <%--Przekierowuje na gotowa metode logowania.--%>
                 <li>
-                   <%--<%: Html.ActionLink("Zaloguj", "LogOn", "Account")%>--%>
-                   <p><input type="submit" value="Log On" /></p>
+                <%--   <%: Html.ActionLink("Zaloguj", "LogOn", "Account")--%>
+                   <p><input type="submit" value="Zaloguj" /></p>
                    </li>
             </ul>
             <% } %>

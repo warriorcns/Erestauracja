@@ -20,11 +20,11 @@
                 <legend>Account Information</legend>
                 
                 <div class="editor-label">
-                    <%: Html.LabelFor(m => m.UserName) %>
+                    <%: Html.LabelFor(m => m.Login) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.UserName) %>
-                    <%: Html.ValidationMessageFor(m => m.UserName) %>
+                    <%: Html.TextBoxFor(m => m.Login)%>
+                    <%: Html.ValidationMessageFor(m => m.Login)%>
                 </div>
                 
                 <div class="editor-label">
@@ -41,7 +41,7 @@
                 </div>
                 
                 <p>
-                    <input type="submit" value="Log On" />
+                    <input type="submit" value="Log On"/>
                 </p>
             </fieldset>
         </div>
