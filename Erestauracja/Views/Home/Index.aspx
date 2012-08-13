@@ -25,7 +25,10 @@
             <asp:ListItem>Restauracja 5</asp:ListItem>
         </asp:BulletedList>
     </asp:Panel>
-    
+
+    <asp:Panel class="PanelInfo" runat="server" Height="200" Width="400" ScrollBars="Auto" Wrap="true">
+        <p>Info czym strona sie zajmuje.</p>
+    </asp:Panel>
 
     
     </form>
