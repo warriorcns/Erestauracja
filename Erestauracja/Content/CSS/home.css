@@ -35,18 +35,22 @@
     float: left;
     right: 230px;
     margin-left: -30px;
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
     
     
 }
 
-.KategorieDropDownList
+.DropDownListKategorie
 {
     position: relative;
     left: 10px;    
     top: 10px;
+    width: 200px;
 }
 
-.RestauracjeBulletedList
+.BulletedListRestauracje
 {
     position: relative;
     left: 10px;    
@@ -67,4 +71,82 @@
     overflow: scroll;
     width: 100%;
     top: -603px;
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
+}
+
+.PanelWybor
+{
+   border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+    
+    text-align: left;
+    position: relative;
+    height: 200px;
+    width: 400px;
+    overflow: scroll;
+    width: 100%;
+    top: -593px; 
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
+    
+}
+
+.LabelWybierzMiasto
+{
+    position: absolute;
+    padding: 10px 0 0 20px;
+}
+
+.DropDownListWybierzMiasto
+{
+    position: absolute;
+    left: 10px;  
+    top: 30px;  
+    max-width: 200px;
+    min-width: 200px;
+}
+
+.LabelWybierzRestauracje
+{
+    position: absolute;
+    padding: 10px 0 0 10px; 
+    right: 90px;
+        
+}
+
+.DropDownListWybierzRestauracje
+{
+    position: absolute;
+    left: 230px;  
+    top: 30px;  
+    max-width: 200px;
+    min-width: 200px;
+    
+}
+
+.ButtonWybierzMiasto
+{
+    position: absolute;
+    left: 10px;  
+    top: 80px;  
+    max-width: 200px;
+    min-width: 200px;
+    
+}
+
+
+.ButtonWybierzRestauracje
+{
+    position: absolute;
+    left: 230px;  
+    top: 80px;  
+    max-width: 200px;
+    min-width: 200px;
+    font-size: small;
+    
 }

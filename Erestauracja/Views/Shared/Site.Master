@@ -90,8 +90,8 @@
         </header>
         <section id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        
         </section>
-
         <div id="footer-container">
             <!-- begin footer -->
             <div id="footer">
@@ -118,22 +118,10 @@
                             <p>
                                 <%: Html.ActionLink("Informacje", "Info", "Home")%></p>
                         </li>
-                        <%--<li><a href="//support.google.com/youtube/?hl=pl-PL&amp;p=homepage">Pomoc</a></li>
-                        <li><a href="/t/about_youtube">Informacje</a></li>
-                        <li><a href="/t/press">Centrum prasowe</a></li>
-                        <li><a href="/t/copyright_center">Prawa autorskie</a></li>
-                        <li><a href="/creators">Twórcy i partnerzy</a></li>
-                        <li><a href="/t/advertising_overview">Reklamy</a></li>
-                        <li><a href="/dev">Programiści</a></li>--%>
+                        
                     </ul>
                     <ul id="footer-links-secondary">
-                        <%--<li><a href="/t/terms">Warunki</a></li>
-                        <li><a href="http://www.google.pl/intl/pl/policies/privacy/">Prywatność</a></li>
-                        <li><a href="//support.google.com/youtube/bin/request.py?contact_type=abuse&amp;hl=pl-PL">
-                            Bezpieczeństwo</a></li>
-                        <li><a href="//www.google.com/tools/feedback/intl/pl/error.html" onclick="return yt.www.feedback.start(yt.getConfig('FEEDBACK_LOCALE_LANGUAGE'), yt.getConfig('FEEDBACK_LOCALE_EXTRAS'));"
-                            id="reportbug">Zgłoś błąd</a></li>
-                        <li><a href="/testtube">Spróbuj czegoś nowego!</a></li>--%>
+                        
                     </ul>
                 </div>
             </div>

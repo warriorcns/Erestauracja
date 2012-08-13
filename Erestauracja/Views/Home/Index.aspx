@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
     
 </asp:Content>
 
@@ -16,9 +16,9 @@
     <br />
     <div class="all">
     <asp:Panel class="lewypanel" runat="server" ScrollBars="Auto" Wrap="true">
-        <asp:DropDownList class="KategorieDropDownList" runat="server" Width="200">
+        <asp:DropDownList class="DropDownListKategorie" runat="server" >
         </asp:DropDownList>
-        <asp:BulletedList class="RestauracjeBulletedList" runat="server" BulletStyle="CustomImage" BulletImageUrl="">
+        <asp:BulletedList class="BulletedListRestauracje" runat="server" BulletStyle="CustomImage" BulletImageUrl="">
             <asp:ListItem>Restauracja 1</asp:ListItem>
             <asp:ListItem>Restauracja 2</asp:ListItem>
             <asp:ListItem>Restauracja 3</asp:ListItem>
@@ -31,7 +31,20 @@
         <p>Info czym strona sie zajmuje.</p>
     </asp:Panel>
 
+        <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">
+            <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wybierz miasto:"></asp:Label>
+            <asp:DropDownList class="DropDownListWybierzMiasto" runat="server">
+            </asp:DropDownList>
+            <asp:Button ID="ButtonWybierzMiasto" class="ButtonWybierzMiasto" runat="server" Text="Szukaj" Font-Size="Small"/>
 
+            <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
+            <asp:DropDownList class="DropDownListWybierzRestauracje" runat="server">
+            </asp:DropDownList>
+            <asp:Button ID="ButtonWybierzRestauracje" class="ButtonWybierzRestauracje" runat="server" Text="Szczegółowe wyszukiwanie" Font-Size="Small"/>
+            
+
+
+        </asp:Panel>
     </div>
 
     
