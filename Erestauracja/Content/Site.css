@@ -98,6 +98,16 @@ page width. Or, you can specify an exact pixel width. */
      z-index: 3;
 }
 
+div#label
+{
+     padding: 0 0 0px 0;
+     position: relative;
+     color: White;
+     right: 20px;
+     top: 20px;
+     z-index: 2;
+}
+
 
 /* Naglowek */
 header, #header 
@@ -156,21 +166,15 @@ header h1, #header h1 {
     right: 250px;
 }
 
-.logowanie li#label
-{
-    color: white;
-    float: left;
-}
-
-.logowanie li {
-    display: block;
+.logowanie li#label {
+    display: inline;
     list-style: none;
     text-align: center;
-    position: relative; 
+    position: absolute; 
     color: White;
     list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 2px 20px 2px 0;
 }
 
 .logowanie li#rememberme

@@ -1,58 +1,30 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Erestauracja.Models.LogOnModel>" %>
-
-<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
-
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 <%
-    if (Request.IsAuthenticated) {
+    if (Request.IsAuthenticated)
+    {
 %>
-       Welcome <strong><%: Page.User.Identity.Name %></strong>!
-         
-        [ <%: Html.ActionLink("Log Off", "LogOff", "Account") %> ]
+<ul class="topka">
+    <div class="ikonka">
+    </div>
+    
 
+    <div id="label"> Witaj <strong> <%: Page.User.Identity.Name %></strong>!</div>
+
+    <div id="label"><%: Html.ActionLink("Wyloguj", "LogOff", "Account") %></div>
+
+</ul>
 <%
     }
-    else {
-%>      <ul class="topka">
-            <div class="ikonka">
-            </div>
-            <% using (Html.BeginForm())
-               { %>
-            <ul class="logowanie">
-                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie widoku -.-'--%>
-                <%--<% Erestauracja.Models.LogOnModel m = new LogOnModel();%>--%>
-                <li id="label">
-                    <%: Html.Label("Login")%></li>
-                <li>
-                    <%: Html.TextBoxFor(m => m.Login, new { @style = "width: 130px;" })%>
-                    <%: Html.ValidationMessageFor(m => m.Login)%>
-                </li>
-                <ul class="logowanierememberme">
-                    <li id="rememberme">
-                        <%: Html.CheckBoxFor(m => m.RememberMe)%></li>
-                    <li id="remembermelabel">
-                        <%: Html.Label("Zapamiętaj mnie")%></li>
-                </ul>
-            </ul>
-            <ul class="logowaniepassword">
-                <li id="label">
-                    <%: Html.Label("Haslo") %></li>
-                <li>
-                    <%: Html.PasswordFor(m => m.Password, new { @style = "width: 130px;" })%>
-                    <%: Html.ValidationMessageFor(m => m.Password) %>
-                </li>
-            </ul>
-            <ul class="zaloguj">
-                <%--Przekierowuje na gotowa metode logowania.--%>
-                <li>
-                <%--   <%: Html.ActionLink("Zaloguj", "LogOn", "Account")--%>
-                   <p><input type="submit" value="Zaloguj" /></p>
-                   </li>
-            </ul>
-            <% } %>
+    else
+    {
+%>
+        <ul class="topka">
+    <div class="ikonka">
+    </div>
+    <div id="label"><%: Html.ActionLink("Zaloguj", "LogOn", "Account") %></div>
 
-           
-        </ul>
-       <%-- [ <div class="zaloguj"> <%: Html.ActionLink("Log On", "LogOn", "Account") %></div> ]--%>
+</ul>
+        
 <%
     }
 %>

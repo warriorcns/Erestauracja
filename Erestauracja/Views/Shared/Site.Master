@@ -14,7 +14,8 @@
 </head>
 <body>
     <div class="page">
-        <%--<ul class="topka">
+    <%--
+        <ul class="topka">
             <div class="ikonka">
             </div>
             <%--<% using (Html.BeginForm())
@@ -52,9 +53,11 @@
 
              
         </ul>--%>
-      <%--  <div id="logindisplay">
+      <%--<div id="logindisplay">
                 <% Html.RenderPartial("~/Views/Account/LogOnUserControl"); %>
-            </div>--%>
+            </div>
+   --%>
+
         <header>
             <div id="title">
                 <%--<h1></h1>--%>
