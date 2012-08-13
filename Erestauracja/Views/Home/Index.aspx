@@ -8,13 +8,14 @@
     Home Page
 </asp:Content>
 
-<asp:Content ID="main" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
     
     <h2>
         <%: ViewBag.Message %></h2>
     <form id="form1" runat="server">
     <br />
-    <asp:Panel class="lewypanel" runat="server" Height="600" Width="200" ScrollBars="Auto" Wrap="true">
+    <div class="all">
+    <asp:Panel class="lewypanel" runat="server" ScrollBars="Auto" Wrap="true">
         <asp:DropDownList class="KategorieDropDownList" runat="server" Width="200">
         </asp:DropDownList>
         <asp:BulletedList class="RestauracjeBulletedList" runat="server" BulletStyle="CustomImage" BulletImageUrl="">
@@ -26,9 +27,12 @@
         </asp:BulletedList>
     </asp:Panel>
 
-    <asp:Panel class="PanelInfo" runat="server" Height="200" Width="400" ScrollBars="Auto" Wrap="true">
+    <asp:Panel class="PanelInfo" runat="server" ScrollBars="Auto" Wrap="true">
         <p>Info czym strona sie zajmuje.</p>
     </asp:Panel>
+
+
+    </div>
 
     
     </form>

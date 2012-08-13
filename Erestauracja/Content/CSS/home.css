@@ -1,16 +1,21 @@
-﻿
-p
+﻿p
 {
     color: Blue;
 }
-lewa
+
+.main
 {
-    padding: 0;
-    position: relative;
-    background-color: black;
-    left: 50px;  
-    top: 50px;  
+    max-width: 1200px;
+    min-width: 300px;   
+    
 }
+
+.all
+{
+    padding: 0 250px; /* padding = długość lewych paneli */
+    min-width: 460px  /* minimalna długość środka */
+}
+
 
 .lewypanel
 {
@@ -19,14 +24,19 @@ lewa
     border-bottom: 2px black solid;
     border-left: 2px black solid;
     border-right: 2px black solid;
-    padding: 2px 20px 2px 0 ;
     margin: 0;
     text-align: left;
     position: relative;
+    padding: 0 20px 0 0;
     height: 600px;
     width: 200px; 
     overflow: scroll;
-    left: 0;
+    background: no-repeat;
+    float: left;
+    right: 230px;
+    margin-left: -30px;
+    
+    
 }
 
 .KategorieDropDownList
@@ -45,14 +55,16 @@ lewa
 
 .PanelInfo
 {
-     border-top: 2px black solid;
+    border-top: 2px black solid;
     border-bottom: 2px black solid;
     border-left: 2px black solid;
     border-right: 2px black solid;
-    padding: 2px 20px 2px 0 ;
-    margin: 0;
+    
     text-align: left;
     position: relative;
     height: 200px;
-    width: 400px;    
+    width: 400px;
+    overflow: scroll;
+    width: 100%;
+    top: -603px;
 }
