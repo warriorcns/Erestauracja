@@ -16,53 +16,9 @@
 </head>
 <body>
     <div class="page">
-    <%--
-        <ul class="topka">
-            <div class="ikonka">
-            </div>
-            <%--<% using (Html.BeginForm())
-               { %>
-            <ul class="logowanie">
-                <%--Tworzenie obiektu wewnatrz widoku, masakra.. nie dziala importowanie namespace -.-'
-                <% Erestauracja.Models.LogOnModel m = new LogOnModel();%>
-                <li id="label">
-                    <%: Html.Label("Login")%></li>
-                <li>
-                    <%: Html.TextBoxFor(x => m.UserName, new { @style = "width: 130px;" }) %>
-                    <%: Html.ValidationMessageFor(x => m.UserName) %>
-                </li>
-                <ul class="logowanierememberme">
-                    <li id="rememberme">
-                        <%: Html.CheckBoxFor(x => m.RememberMe)%></li>
-                    <li id="remembermelabel">
-                        <%: Html.Label("Zapamiętaj mnie")%></li>
-                </ul>
-            </ul>--%>
-            <%--<ul class="logowaniepassword">
-                <li id="label">
-                    <%: Html.Label("Haslo") %></li>
-                <li>
-                    <%: Html.PasswordFor(x => m.Password, new { @style = "width: 130px;" })%>
-                    <%: Html.ValidationMessageFor(x => m.Password) %>
-                </li>
-            </ul>--%>
-            <%--<ul class="zaloguj">
-                <%--Przekierowuje na gotowa metode logowania.
-                <li>
-                   <%-- <%: Html.ActionLink("zaloguj", "LogOn", "Account")%></li>
-            </ul>
-            <% } %>
-
-             
-        </ul>--%>
-      <%--<div id="logindisplay">
-                <% Html.RenderPartial("~/Views/Account/LogOnUserControl"); %>
-            </div>
-   --%>
-
         <header>
             <div id="title">
-                <%--<h1></h1>--%>
+                <h1></h1>
             </div>
             <div id="logindisplay">
                 <% Html.RenderPartial("LogOnUserControl"); %>
@@ -71,7 +27,6 @@
                 <ul id="menu">
                     <li>
                         <%: Html.ActionLink("Strona główna", "Index", "Home")%></li>
-                    <%--<li><%: Html.ActionLink("About", "About", "Home")%></li>--%>
                     <li>
                         <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>
                     <li>
@@ -82,9 +37,6 @@
                         <%: Html.ActionLink("Koszyk", "LogOn", "Account")%></li>
                     <li>
                         <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
-                    <%--<li><%: Html.ActionLink("Lista", "Index", "Lista")%></li>
-                    <li><%: Html.ActionLink("Menu", "Index", "Menu")%></li>--%>
-                    <%--<li><%: Html.ActionLink("Home", "Index", "Home")%></li>--%>
                 </ul>
             </nav>
         </header>

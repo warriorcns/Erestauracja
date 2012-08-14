@@ -35,10 +35,10 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Zapamiętaj mnie.")]
         public bool RememberMe { get; set; }
     }
 
@@ -51,48 +51,48 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email address")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Confirm email address")]
-        [Compare("Email", ErrorMessage = "The email and confirmation email do not match.  po PL napisac  ")]
+        [Display(Name = "Powtórz email")]
+        [Compare("Email", ErrorMessage = "Pola Email oraz Powtórz email nie są zgodne")]
         public string ConfirmEmail { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.  po PL napisac  ", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.   po PL napisac  ")]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Question")]
+        [Display(Name = "Pytanie do przywracania hasła")]
         public string Question { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Answer")]
+        [Display(Name = "Odpowiedz")]
         public string Answer { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Name")]
+        [Display(Name = "Imię")]
         public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Surname ")]
+        [Display(Name = "Nazwisko")]
         public string Surname { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Address ")]
+        [Display(Name = "Adres ")]
         public string Address { get; set; }
 
         //zmienić 
@@ -103,22 +103,22 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Country  ")]
+        [Display(Name = "Kraj")]
         public string Country { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Birthdate ")]
+        [Display(Name = "Data urodzenia")]
         public DateTime Birthdate { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Sex")]
+        [Display(Name = "Płeć")]
         public string Sex { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Telephone ")]
+        [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
     }
 }

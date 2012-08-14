@@ -1,24 +1,24 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.LogOnModel>" %>
 
 <asp:Content ID="loginTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Log On
+    Logowanie
 </asp:Content>
 
 <asp:Content ID="loginContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Log On</h2>
-    <p>
-        Please enter your user name and password. <%: Html.ActionLink("Register", "Register") %> if you don't have an account.
-    </p>
+    <h2>Zaloguj się aby w pełni wykorzystać możliwości serwisu.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
     <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.") %>
+        <%: Html.ValidationSummary(true, "Logowanie nie powiodło się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
         <div>
             <fieldset>
-                <legend>Account Information</legend>
-                
+                <legend>Dane logowania</legend>
+                <p>
+                    Wprowadź swój login oraz hasło.
+                </p>
+
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Login) %>
                 </div>
@@ -39,11 +39,19 @@
                     <%: Html.CheckBoxFor(m => m.RememberMe) %>
                     <%: Html.LabelFor(m => m.RememberMe) %>
                 </div>
-                
                 <p>
-                    <input type="submit" value="Log On"/>
+                    <input type="submit" value="Zaloguj"/>
+                </p>
+                </br>
+                <p>
+                    Zapomiałeś hasła? <%: Html.ActionLink("Tutaj", "Register", "Account") %> możesz je odzyskać.
+                </p>
+                </br>
+                <p>
+                    Jeśli nie posiadasz jeszcze konta możesz je założyć <%: Html.ActionLink("tutaj", "Register", "Account") %>.
                 </p>
             </fieldset>
         </div>
+    
     <% } %>
 </asp:Content>
