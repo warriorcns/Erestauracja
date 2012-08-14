@@ -189,6 +189,9 @@
   <data name="GetUserNameByEmail" xml:space="preserve">
     <value>SELECT `login` FROM `users` WHERE `email` = @email AND `applicationName` = @applicationName</value>
   </data>
+  <data name="GetUserQuestion" xml:space="preserve">
+    <value>SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
   <data name="GetUsersInRole" xml:space="preserve">
     <value>SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
   </data>

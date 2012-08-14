@@ -1285,6 +1285,7 @@ namespace Erestauracja.Providers
                         throw new MembershipPasswordException("The supplied user is locked out.");
 
                     passwordAnswer = reader.GetString(0);
+                    reader.Close();
                 }
                 else
                 {
@@ -1329,6 +1330,12 @@ namespace Erestauracja.Providers
 
             if (rowsAffected > 0)
             {
+                //
+                //
+                //wyślij maila 
+                //
+                //tu sprawdz hasło
+                //
                 return newPassword;
             }
             else
@@ -1853,5 +1860,64 @@ namespace Erestauracja.Providers
 
             log.WriteEntry(message);
         }
+
+        public string GetUserQuestion(string login)
+        {
+            if (!EnablePasswordReset)
+            {
+                throw new ProviderException("Password Reset Not Enabled.");
+            }
+
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetUserQuestion);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Connection = conn;
+
+            string passwordQuestion = "";
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (reader.GetBoolean(1))
+                        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                    passwordQuestion = reader.GetString(0);
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user name is not found.");
+                }
+            }
+            catch (MySqlException e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUserQuestion");
+
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return passwordQuestion;
+        }
+
     }
 }

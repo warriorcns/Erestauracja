@@ -44,7 +44,7 @@
                 </p>
                 </br>
                 <p>
-                    Zapomiałeś hasła? <%: Html.ActionLink("Tutaj", "Register", "Account") %> możesz je odzyskać.
+                    Zapomiałeś hasła? <%: Html.ActionLink("Tutaj", "PasswordReset", "Account")%> możesz odzyskać dostęp do konta.
                 </p>
                 </br>
                 <p>

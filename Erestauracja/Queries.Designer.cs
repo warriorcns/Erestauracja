@@ -277,6 +277,15 @@ namespace Erestauracja {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName.
+        /// </summary>
+        internal static string GetUserQuestion {
+            get {
+                return ResourceManager.GetString("GetUserQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName.
         /// </summary>
         internal static string GetUsersInRole {

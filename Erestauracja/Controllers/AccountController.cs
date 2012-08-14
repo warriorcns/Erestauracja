@@ -165,6 +165,64 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //
+        // GET: /Account/PasswordReset
+
+        public ActionResult PasswordReset()
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+
+            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone");
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+        [HttpPost]
+        public ActionResult PasswordReset(string login)
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone");
+            return RedirectToAction("QuestionAndAnswer", new { login = login });
+        }
+
+        //
+        // GET: /Account/QuestionAndAnswer
+        public ActionResult QuestionAndAnswer(string login)
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+
+            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
+            ViewData["Login"] = login;
+            string pyt = customMemebership.GetUserQuestion(login);
+            ViewData["Pytanie"] = pyt;
+            return View();
+        }
+
+        //
+        // POST: /Account/QuestionAndAnswer
+        [HttpPost]
+        public ActionResult QuestionAndAnswer(string login, string odpowiedz)
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
+            customMemebership.ResetPassword(login, odpowiedz);
+            return RedirectToAction("PasswordResetFinal");
+        }
+
+        //
+        // GET: /Account/PasswordResetFinal
+        public ActionResult PasswordResetFinal()
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
+            
+            return View();
+        }
+
+        //
+        //przetłumaczyć reszte
+        //
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
@@ -173,19 +231,19 @@ namespace Erestauracja.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "Podany login już istnieje. Wprowadź inny login.";
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+                    return "Użytkownik o poadany adersie email już istnieje. Wprowadź inny adres email.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Podane hasło jest nieprawidłowe. Wprowadź prawidłowe hasło.";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "Podany adres email jest nieprawidłowy. Wprowadź prawidłowy adres email.";
 
                 case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
+                    return "Odpowiedz do pytania pozwalającego odzyskać hasło jest nieprawidłowa. Wprowadź prawidłową odpowiedź.";
 
                 case MembershipCreateStatus.InvalidQuestion:
                     return "The password retrieval question provided is invalid. Please check the value and try again.";
