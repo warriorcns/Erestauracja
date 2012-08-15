@@ -7,13 +7,13 @@
 {
     max-width: 1200px;
     min-width: 300px;   
-    
 }
 
 .all
 {
     padding: 0 250px; /* padding = długość lewych paneli */
     min-width: 460px  /* minimalna długość środka */
+    
 }
 
 
@@ -67,9 +67,9 @@
     text-align: left;
     position: relative;
     height: 200px;
-    width: 400px;
+    width: 450px;
     overflow: scroll;
-    width: 100%;
+    max-width: 450px;
     top: -603px;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -86,9 +86,9 @@
     text-align: left;
     position: relative;
     height: 200px;
-    width: 400px;
+    width: 450px;
     overflow: scroll;
-    width: 100%;
+    max-width: 450px;
     top: -593px; 
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
