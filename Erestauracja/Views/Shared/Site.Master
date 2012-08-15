@@ -34,7 +34,7 @@
                     <li>
                         <%: Html.ActionLink("Konto", "Account", "Account")%></li>
                     <li>
-                        <%: Html.ActionLink("Koszyk", "LogOn", "Account")%></li>
+                        <%: Html.ActionLink("Koszyk", "Index", "Basket")%></li>
                     <li>
                         <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
                 </ul>

@@ -13,6 +13,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
 using MySql.Data.MySqlClient;
+using System.Net.Mail;
+using System.Net;
 
 /*
 This provider works with the following schema for the table of user data.
@@ -1336,6 +1338,26 @@ namespace Erestauracja.Providers
                 //
                 //tu sprawdz hasło
                 //
+                ////SmtpClient klient = new SmtpClient("smtp.gmail.com");
+                ////MailMessage wiadomosc = new MailMessage();
+                ////try
+                ////{
+                ////    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
+                ////    wiadomosc.To.Add("warriorcns@gmail.com");
+                ////    wiadomosc.To.Add("dkohland@rudy.mif.pg.gda.pl");
+                ////    wiadomosc.Subject = "test";
+                ////    wiadomosc.Body = "ok";
+
+                ////    klient.Port = 587;
+                ////    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
+                ////    klient.EnableSsl = true;
+                ////    klient.Send(wiadomosc);
+
+                ////}
+                ////catch (Exception ex)
+                ////{
+                ////}
+
                 return newPassword;
             }
             else
