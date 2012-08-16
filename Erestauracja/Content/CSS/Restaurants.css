@@ -1,0 +1,89 @@
+﻿
+.main
+{
+    max-width: 1200px;
+    min-width: 300px;
+}
+
+.all
+{
+    padding: 0 250px; /* padding = długość lewych paneli */
+    min-width: 160px;  /* minimalna długość środka */ 
+    min-height: 600px;
+}
+
+.menu {
+    border-bottom: 2px #6B6052 solid;
+    border-top: 2px #6B6052 solid;
+    border-left: 2px #6B6052 solid;
+    border-right: 2px #6B6052 solid;
+    padding: 2px 2px 2px 2px ;
+    position: relative;
+    margin: 0;
+    text-align: left;
+}
+
+.menu li {
+    display: inline;
+    list-style: none;
+}
+
+.menu li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+.menu li a {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #2B2B2B;
+    color: #FFE4C4;
+    
+}
+
+.menu li a:hover {
+    background-color: #FFE4C4;
+    text-decoration: none;
+    color: #926641;
+}
+
+.menu li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+.menu li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+.menucontainer {
+    margin-top: 0px;
+}
+
+.PanelOpis
+{
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+    margin-top: 20px;
+    text-align: left;
+    position: relative;
+    padding: 0 20px 0 0;
+    height: 600px;
+    width: 300px; 
+    overflow: scroll;
+    background: no-repeat;
+    float: left;
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
+    
+        
+}

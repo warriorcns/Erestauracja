@@ -78,6 +78,7 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -95,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
+    <Content Include="Content\CSS\Restaurants.css" />
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\wooden_fence_boards.jpg" />
@@ -165,6 +167,11 @@
     <Content Include="Views\Home\Info.aspx" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\Orders\Index.aspx" />
+    <Content Include="Views\Restaurant\Delivery.aspx" />
+    <Content Include="Views\Restaurant\Gallery.aspx" />
+    <Content Include="Views\Restaurant\Index.aspx" />
+    <Content Include="Views\Restaurant\Menu.aspx" />
+    <Content Include="Views\Restaurant\Parties.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
