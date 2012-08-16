@@ -28,10 +28,11 @@
     </asp:Panel>
 
     <asp:Panel class="PanelInfo" runat="server" ScrollBars="Auto" Wrap="true">
-        <p>Info czym strona sie zajmuje.</p>
+        <%--<p>Info czym strona sie zajmuje.</p>--%>
+        <asp:Label class="LabelWybierzMiasto" runat="server" Font-Size="Large" Text="Na stronie możesz zamówić posiłki przygotowane przez restauracje wraz z dowozem do domu !"></asp:Label>
     </asp:Panel>
 
-        <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">
+        <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true" >
             <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wybierz miasto:"></asp:Label>
             
             <%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>
@@ -48,6 +49,22 @@
 
 
         </asp:Panel>
+        <asp:Panel ID="Statystyki" class="Panelstatystyki" runat="server" ScrollBars="Auto" Wrap="true">
+            <asp:Label ID="Label" class="LabelWybierzMiasto" runat="server" Text="Ilość odwiedzin:"></asp:Label>
+            <div class="licznik">
+                <!-- GoStats JavaScript Based Code -->
+                <script type="text/javascript" src="http://gostats.pl/js/counter.js"></script>
+                <script type="text/javascript">                    _gos = 'c3.gostats.pl'; _goa = 366701;
+                    _got = 2; _goi = 58; _gol = 'licznik blog'; _GoStatsRun();</script>
+                <noscript>
+                    <a target="_blank" title="licznik blog" href="http://gostats.pl">
+                        <img alt="licznik blog" src="http://c3.gostats.pl/bin/count/a_366701/t_2/i_58/counter.png"
+                            style="border-width: 0" /></a></noscript>
+                <br />
+                <!-- End GoStats JavaScript Based Code -->
+            </div>
+        </asp:Panel>
+
     </div>
 
     
