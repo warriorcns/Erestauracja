@@ -1,20 +1,12 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
-
-<!DOCTYPE html>
-<html>
-<head id="Head1" runat="server">
-    <asp:ContentPlaceHolder ID="head" runat="server" />
-    <title>
-        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-    </title>
-    
-</head>
-
-<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
-<body>
-<asp:ContentPlaceHolder ID="Main">
+<form id="form1" runat="server">
 <nav id="menucontainer">
                 <ul id="menu">
                     <li>
@@ -31,6 +23,8 @@
                         <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
                 </ul>
             </nav>
-</asp:ContentPlaceHolder>
-</body>
-</html>
+ <asp:ContentPlaceHolder ID="Main" runat="server">
+ </asp:ContentPlaceHolder>
+    </form>
+   
+</asp:Content>

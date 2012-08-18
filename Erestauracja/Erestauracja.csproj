@@ -185,6 +185,7 @@
     <Content Include="Views\Restaurant\Gallery.aspx" />
     <Content Include="Views\Restaurant\Menu.aspx" />
     <Content Include="Views\Restaurant\Parties.aspx" />
+    <Content Include="Views\Restaurant\test.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
