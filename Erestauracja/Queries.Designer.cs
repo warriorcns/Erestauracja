@@ -187,6 +187,15 @@ namespace Erestauracja {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `email` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName.
+        /// </summary>
+        internal static string GetEmailByLogin {
+            get {
+                return ResourceManager.GetString("GetEmailByLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName.
         /// </summary>
         internal static string GetFailureCount {

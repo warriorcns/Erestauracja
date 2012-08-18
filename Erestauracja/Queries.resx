@@ -159,6 +159,9 @@
   <data name="GetAllUsers" xml:space="preserve">
     <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  WHERE `applicationName` = @applicationName ORDER BY `login` Asc</value>
   </data>
+  <data name="GetEmailByLogin" xml:space="preserve">
+    <value>SELECT `email` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+  </data>
   <data name="GetFailureCount" xml:space="preserve">
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>

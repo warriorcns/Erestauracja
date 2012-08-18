@@ -1332,32 +1332,78 @@ namespace Erestauracja.Providers
 
             if (rowsAffected > 0)
             {
-                //
-                //
-                //wyślij maila 
-                //
-                //tu sprawdz hasło
-                //
-                ////SmtpClient klient = new SmtpClient("smtp.gmail.com");
-                ////MailMessage wiadomosc = new MailMessage();
-                ////try
-                ////{
-                ////    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
-                ////    wiadomosc.To.Add("warriorcns@gmail.com");
-                ////    wiadomosc.To.Add("dkohland@rudy.mif.pg.gda.pl");
-                ////    wiadomosc.Subject = "test";
-                ////    wiadomosc.Body = "ok";
+                MySqlCommand getcommand = new MySqlCommand(Queries.GetEmailByLogin);
+                getcommand.Parameters.AddWithValue("@login", login);
+                getcommand.Parameters.AddWithValue("@applicationName", pApplicationName);
+                getcommand.Connection = conn;
 
-                ////    klient.Port = 587;
-                ////    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
-                ////    klient.EnableSsl = true;
-                ////    klient.Send(wiadomosc);
+                string email = "";
+                MySqlDataReader emailreader = null;
 
-                ////}
-                ////catch (Exception ex)
-                ////{
-                ////}
+                try
+                {
+                    conn.Open();
 
+                    emailreader = getcommand.ExecuteReader(CommandBehavior.SingleRow);
+
+                    if (emailreader.HasRows)
+                    {
+                        emailreader.Read();
+                        
+                        // może być dla bezpieczeństwa ale już było sprawdzane
+                    //    if (emailreader.GetBoolean(2))
+                    //        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                        email = emailreader.GetString(0);
+                    }
+                    else
+                    {
+                        throw new MembershipPasswordException("The supplied login is not found.");
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetEmail");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                    if (emailreader != null) { emailreader.Close(); }
+                    conn.Close();
+                }
+
+                if(email!="")
+                {
+                SmtpClient klient = new SmtpClient("smtp.gmail.com");
+                MailMessage wiadomosc = new MailMessage();
+                try
+                {
+                    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
+                    wiadomosc.To.Add(email);
+                    wiadomosc.Subject = "Erestauracja - restet hasła.";
+                    wiadomosc.Body = "Nowe hasło: " + newPassword;
+
+                    klient.Port = 587;
+                    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
+                    klient.EnableSsl = true;
+                    klient.Send(wiadomosc);
+                }
+                catch (Exception ex)
+                {
+                    // znazcy że nie wysłał wiadomości co robić ??
+                    // przywrócić stare ??
+                    // może rollback ??
+
+                }
+                }
                 return newPassword;
             }
             else
