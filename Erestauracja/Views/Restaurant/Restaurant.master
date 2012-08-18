@@ -31,6 +31,6 @@
                         <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
                 </ul>
             </nav>
-</asp:/asp:ContentPlaceHolder>
+</asp:ContentPlaceHolder>
 </body>
 </html>
