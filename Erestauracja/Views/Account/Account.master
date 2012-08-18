@@ -1,19 +1,23 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Account.master.cs" Inherits="Erestauracja.Views.Account.Account" %>
 
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+<form id="form1" runat="server">
    <nav id="menucontainer2">
                 <ul id="menu2">
-                <p>
+                
                     <li>
-                       <%:  Html.ActionLink("Szukaj", "Index", "Find")%></li>
-                </p>
+                       <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>        
                 </ul>
             </nav>
+            </form>
     <asp:ContentPlaceHolder ID="AccountPlaceHolder" runat="server">
     </asp:ContentPlaceHolder>
     

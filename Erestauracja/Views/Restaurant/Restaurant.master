@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
+
+
+
+<!DOCTYPE html>
+<html>
+<head id="Head1" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server" />
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    
+</head>
+
+<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<body>
+<asp:ContentPlaceHolder ID="Main">
+<nav id="menucontainer">
+                <ul id="menu">
+                    <li>
+                        <%: Html.ActionLink("Strona główna", "Index", "Home")%></li>
+                    <li>
+                        <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>
+                    <li>
+                        <%: Html.ActionLink("Top Restauracje", "TopRestaurants", "Home")%></li>
+                    <li>
+                        <%: Html.ActionLink("Konto", "Account", "Account")%></li>
+                    <li>
+                        <%: Html.ActionLink("Koszyk", "Index", "Basket")%></li>
+                    <li>
+                        <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
+                </ul>
+            </nav>
+</asp:/asp:ContentPlaceHolder>
+</body>
+</html>

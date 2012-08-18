@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Erestauracja.Views.Account
+namespace Erestauracja.Views.Restaurant
 {
-    public partial class Account : System.Web.Mvc.ViewMasterPage
+    public partial class Restaurant : System.Web.Mvc.ViewMasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

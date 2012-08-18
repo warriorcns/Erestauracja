@@ -7,27 +7,36 @@
 // </autogenerowany>
 //------------------------------------------------------------------------------
 
-namespace Erestauracja.Views.Account {
+namespace Erestauracja.Views.Restaurant {
     
     
-    public partial class Account {
+    public partial class Restaurant {
         
         /// <summary>
-        /// Kontrolka form1.
+        /// Kontrolka Head1.
         /// </summary>
         /// <remarks>
         /// Autogenerowane pole.
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// Kontrolka AccountPlaceHolder.
+        /// Kontrolka head.
         /// </summary>
         /// <remarks>
         /// Autogenerowane pole.
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder AccountPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        
+        /// <summary>
+        /// Kontrolka TitleContent.
+        /// </summary>
+        /// <remarks>
+        /// Autogenerowane pole.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder TitleContent;
     }
 }
