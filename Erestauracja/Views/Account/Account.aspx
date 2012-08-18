@@ -1,20 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Account/Account.master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Account
-</asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="AccountPlaceHolder" runat="server">
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<% //to raczej nie bedzie potrzebne chyba że da sie wejsc tu bezpośrednio
-    if (Request.IsAuthenticated) {
-%>
-<h2>dane konta</h2>
-<%
-    }
-    else {
-        %>
-        błąd cofnij if zaloguj sie 
-        <%
-    }
-%>
+<h2>Account</h2>
+
 </asp:Content>

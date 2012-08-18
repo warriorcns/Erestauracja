@@ -7,19 +7,12 @@ using System.Web.Routing;
 using System.Web.Security;
 using Erestauracja.Models;
 using Erestauracja.Providers;
+using System.Web.Mvc.Html;
 
 namespace Erestauracja.Controllers
 {
     public class AccountController : Controller
     {
-
-        //
-        // GET: /Account/LogOn
-        public ActionResult LogOn()
-        {
-            return View();
-        }
-
         public ActionResult Account()
         {
             if (Request.IsAuthenticated)
@@ -31,9 +24,16 @@ namespace Erestauracja.Controllers
                 return RedirectToAction("LogOn", "Account");
             }
         }
+
+        //
+        // GET: /Account/LogOn
+        public ActionResult LogOn()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/LogOn
-
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
@@ -64,7 +64,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/LogOff
-
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -74,7 +73,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/Register
-
         public ActionResult Register()
         {
             return View();
@@ -82,7 +80,6 @@ namespace Erestauracja.Controllers
 
         //
         // POST: /Account/Register
-
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
@@ -113,7 +110,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/ChangePassword
-
         [Authorize]
         public ActionResult ChangePassword()
         {
@@ -122,7 +118,6 @@ namespace Erestauracja.Controllers
 
         //
         // POST: /Account/ChangePassword
-
         [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
@@ -159,7 +154,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/ChangePasswordSuccess
-
         public ActionResult ChangePasswordSuccess()
         {
             return View();
@@ -167,7 +161,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/PasswordReset
-
         public ActionResult PasswordReset()
         {
             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
