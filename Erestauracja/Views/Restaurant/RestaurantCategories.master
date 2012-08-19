@@ -1,0 +1,15 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/Restaurant/Restaurant.master" AutoEventWireup="true"
+    CodeBehind="RestaurantCategories.master.cs" Inherits="Erestauracja.Views.Restaurant.RestaurantCategories" %>
+
+<asp:Content class="main" ContentPlaceHolderID="Main" runat="server">
+    <div class="DivKategorie">
+        <ul class="Kategorie">
+            <li>
+                <%: Html.ActionLink("Pizza","Pizza")%></li>
+            <li>
+                <%: Html.ActionLink("Kebab","Kebab")%></li>
+        </ul>
+        <asp:ContentPlaceHolder ID="Main" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</asp:Content>

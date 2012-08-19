@@ -145,6 +145,94 @@
     -moz-border-radius: 4px 0 0 0;
 }
 
+.DivKategorie
+{
+    height: 200px;
+    margin-top: 5px;
+    position: relative;
+
+}
+
+
+.Kategorie {
     
+    padding: 0 0 1px ;
+    position: relative;
+    text-align: left;
+    margin-top: 5px;
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+    width: 150px;
+    display: block;
+    float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+    
+}
+
+.Kategorie li {
+    display: block;
+    list-style: none;
+    margin: 1px;
+    min-width: 130px;
+    background-color: #2B2B2B;
+    text-align: center;
+    
+}
+
+.Kategorie li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+    
+}
+
+.Kategorie li a {
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #2B2B2B;
+    color: #FFE4C4;
+    text-align: center;
+    
+}
+
+.Kategorie a:link {
+	display: block;
+	width: 144px;
+	border: 2px outset #ccc;
+}
 
 
+.Kategorie li a:hover {
+    background-color: #FFE4C4;
+    text-decoration: none;
+    color: #926641;
+}
+
+.Kategorie li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+.Kategorie li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+.PanelDania
+{
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+    min-width: 200px;   
+    min-height: 200px;
+    position: relative;
+    left: 5px;
+}
