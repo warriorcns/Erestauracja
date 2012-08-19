@@ -2,6 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
 
-<h2>test</h2>
+<h2>Contact</h2>
 
 </asp:Content>

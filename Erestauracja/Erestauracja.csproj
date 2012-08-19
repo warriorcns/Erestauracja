@@ -181,11 +181,12 @@
     <Content Include="Views\Home\Info.aspx" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\Orders\Index.aspx" />
+    <Content Include="Views\Restaurant\Contact.aspx" />
     <Content Include="Views\Restaurant\Delivery.aspx" />
     <Content Include="Views\Restaurant\Gallery.aspx" />
+    <Content Include="Views\Restaurant\Index.aspx" />
     <Content Include="Views\Restaurant\Menu.aspx" />
     <Content Include="Views\Restaurant\Parties.aspx" />
-    <Content Include="Views\Restaurant\test.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
