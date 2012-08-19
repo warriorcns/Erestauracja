@@ -7,19 +7,16 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
 <form id="form1" runat="server">
-  
    <nav id="menucontainer">
                 <ul id="menu">
-                <p>
                     <li>
                       <%: Html.ActionLink("Dane użytkownika", "Account", "Account")%></li>
                     <li>
-                      <%: Html.ActionLink("Ustawienia", "Account", "Account")%></li>
+                      <%: Html.ActionLink("Ustawienia", "Settings", "Account")%></li>
                     <li>
-                      <%: Html.ActionLink("Historia zamówień", "Account", "Account")%></li>
+                      <%: Html.ActionLink("Historia zamówień", "OrderHistory", "Account")%></li>
                     <li>
-                      <%: Html.ActionLink("Komentarze", "Account", "Account")%></li>
-                </p>
+                      <%: Html.ActionLink("Komentarze", "Comments", "Account")%></li>
                 </ul>
             </nav>
     <asp:ContentPlaceHolder ID="AccountPlaceHolder" runat="server">

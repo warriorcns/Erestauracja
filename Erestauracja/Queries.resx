@@ -229,7 +229,7 @@
     <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="UpdateUser" xml:space="preserve">
-    <value>UPDATE `users` SET `telephone`= @telephone, `comment` = @comment, `isApproved` = @isApproved WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="UpdateUserActivityByID" xml:space="preserve">
     <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `id` = @id</value>

@@ -13,7 +13,145 @@ namespace Erestauracja.Controllers
 {
     public class AccountController : Controller
     {
+        //
+        // GET: /Account/Account
+        [Authorize]
         public ActionResult Account()
+        {
+            if (Request.IsAuthenticated)
+            {
+              //  MembershipCreateStatus createStatus;
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+               // CustomMembershipUser user = customMemebership.GetUser(User.Identity.Name, true);
+              //  MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                UserDataModel model = new UserDataModel();
+                model.Login = user.Login;
+                model.Email = user.Email;
+                model.Name = user.Name;
+                model.Surname = user.Surname;
+                model.Address = user.Address;
+                model.TownID = user.TownID;
+                model.Country = user.Country;
+                model.Birthdate = user.Birthdate;
+                model.Sex = user.Sex;
+                model.Telephone = user.Telephone;
+
+                ViewData["model"] = model;
+                    
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // GET: /Account/EditData
+        [Authorize]
+        public ActionResult EditData()
+        {
+            if (Request.IsAuthenticated)
+            {
+                //  MembershipCreateStatus createStatus;
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                // CustomMembershipUser user = customMemebership.GetUser(User.Identity.Name, true);
+                //  MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                UserDataModel model = new UserDataModel();
+                model.Login = user.Login;
+                model.Email = user.Email;
+                model.Name = user.Name;
+                model.Surname = user.Surname;
+                model.Address = user.Address;
+                model.TownID = user.TownID;
+                model.Country = user.Country;
+                model.Birthdate = user.Birthdate;
+                model.Sex = user.Sex;
+                model.Telephone = user.Telephone;
+
+              //  ViewData["model"] = model;
+
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // POST: /Account/EditData
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditData(UserDataModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                    CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                     //CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, model.TownID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                    if (user != null)
+                    {
+                        user.Name = model.Name;
+                        user.Surname = model.Surname;
+                        user.Address = model.Address;
+                        user.TownID = model.TownID;
+                        user.Country = model.Country;
+                        user.Birthdate = model.Birthdate;
+                        user.Sex = model.Sex;
+                        user.Telephone = model.Telephone;
+
+                        customMemebership.UpdateUser(user);
+                        //CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                        //role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+
+                        return RedirectToAction("Account", "Account");
+                    }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/Settings
+
+        [Authorize]
+        public ActionResult Settings()
+        {
+            if (Request.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // GET: /Account/OrderHistory
+        [Authorize]
+        public ActionResult OrderHistory()
+        {
+            if (Request.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // GET: /Account/Comments
+        [Authorize]
+        public ActionResult Comments()
         {
             if (Request.IsAuthenticated)
             {
@@ -87,7 +225,7 @@ namespace Erestauracja.Controllers
             {
                 MembershipCreateStatus createStatus;
                 CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, int.Parse(model.TownID), model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, model.TownID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
                 if (user != null)
                 {
                     CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
@@ -130,8 +268,11 @@ namespace Erestauracja.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    CustomMembershipUser currentUser = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                   // MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                   // changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    changePasswordSucceeded = customMemebership.ChangePassword(currentUser.Login, model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
                 {

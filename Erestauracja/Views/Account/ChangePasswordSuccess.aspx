@@ -5,8 +5,11 @@
 </asp:Content>
 
 <asp:Content ID="changePasswordSuccessContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Change Password</h2>
+    <h2>Zmiana hasła</h2>
     <p>
-        Your password has been changed successfully.
+        Zmiana hasła została przeprowadzona pomyślnie.
+        <p>
+            <%: Html.ActionLink("Powrót do strony głównej.", "Index", "Home")%>
+        </p>
     </p>
 </asp:Content>

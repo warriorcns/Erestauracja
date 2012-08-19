@@ -568,7 +568,7 @@ namespace Erestauracja.Providers
            object providerUserKey,
            out MembershipCreateStatus status)
         {
-            return this.CreateUser("", password, email, "", "", "", 0, "", DateTime.Now, "", "",
+            return this.CreateUser("", password, email, "", "", "", "0", "", DateTime.Now, "", "",
                                   passwordQuestion, passwordAnswer,
                                   isApproved,
                                   out status);
@@ -581,7 +581,7 @@ namespace Erestauracja.Providers
             string name,
             string surname,
             string address,
-            int townID,//tu zmienić na nazwe miasta lub kod i select do zapytania
+            string townID,//tu zmienić na nazwe miasta lub kod i select do zapytania
             string country,
             DateTime birthdate,
             string sex,
@@ -968,7 +968,7 @@ namespace Erestauracja.Providers
                 {
                     reader.Read();
                     u = GetUserFromReader(reader);
-
+                    reader.Close();
                     if (userIsOnline)
                     {
                         MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserActivityByLogin);
@@ -1084,7 +1084,7 @@ namespace Erestauracja.Providers
             string name = reader.GetString(3);
             string surname = reader.GetString(4);
             string address = reader.GetString(5);
-            int townID = reader.GetInt32(6);
+            string townID = reader.GetString(6);
             string country = reader.GetString(7);
             DateTime birthdate = Convert.ToDateTime(reader.GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
             string sex = reader.GetString(9);
@@ -1423,6 +1423,13 @@ namespace Erestauracja.Providers
 
             CustomMembershipUser cu = (CustomMembershipUser)user;
 
+            command.Parameters.AddWithValue("@name", cu.Name);
+            command.Parameters.AddWithValue("@surname", cu.Surname);
+            command.Parameters.AddWithValue("@address", cu.Address);
+            command.Parameters.AddWithValue("@townID", cu.TownID);
+            command.Parameters.AddWithValue("@country", cu.Country);
+            command.Parameters.AddWithValue("@birthdate", cu.Birthdate);
+            command.Parameters.AddWithValue("@sex", cu.Sex);
             command.Parameters.AddWithValue("@telephone", cu.Telephone);
             command.Parameters.AddWithValue("@comment", user.Comment);
             command.Parameters.AddWithValue("@isApproved", user.IsApproved);

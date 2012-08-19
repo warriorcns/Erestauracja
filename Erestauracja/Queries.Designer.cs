@@ -394,7 +394,7 @@ namespace Erestauracja {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `telephone`= @telephone, `comment` = @comment, `isApproved` = @isApproved WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login AND `applicationName` = @applicationName.
         /// </summary>
         internal static string UpdateUser {
             get {

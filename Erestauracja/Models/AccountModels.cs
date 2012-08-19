@@ -12,18 +12,19 @@ namespace Erestauracja.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Dotychczasowe hasło")]
         public string OldPassword { get; set; }
 
+        //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nowe hasło")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("NewPassword", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -56,18 +57,19 @@ namespace Erestauracja.Models
 
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Powtórz email")]
-        [Compare("Email", ErrorMessage = "Pola Email oraz Powtórz email nie są zgodne")]
+        [Compare("Email", ErrorMessage = "Pola Email oraz Powtórz email nie są zgodne.")]
         public string ConfirmEmail { get; set; }
 
+        //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
         [Required]
-        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength=6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Powtórz hasło")]
-        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne")]
+        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -79,6 +81,60 @@ namespace Erestauracja.Models
         [DataType(DataType.Text)]
         [Display(Name = "Odpowiedz")]
         public string Answer { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Imię")]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwisko")]
+        public string Surname { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Adres ")]
+        public string Address { get; set; }
+
+        //zmienić 
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "TownID")]
+        public string TownID { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Kraj")]
+        public string Country { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data urodzenia")]
+        public DateTime Birthdate { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Płeć")]
+        public string Sex { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Numer telefonu")]
+        public string Telephone { get; set; }
+    }
+
+    public class UserDataModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

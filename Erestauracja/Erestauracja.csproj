@@ -170,6 +170,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Views\Account\Account.aspx" />
+    <Content Include="Views\Account\EditData.aspx" />
     <Content Include="Views\Account\PasswordReset.aspx" />
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
@@ -228,6 +229,7 @@
     <EmbeddedResource Include="Queries.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Queries.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

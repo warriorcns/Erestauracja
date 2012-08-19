@@ -5,23 +5,19 @@
 </asp:Content>
 
 <asp:Content ID="changePasswordContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Change Password</h2>
-    <p>
-        Use the form below to change your password. 
-    </p>
-    <p>
-        New passwords are required to be a minimum of <%: Membership.MinRequiredPasswordLength %> characters in length.
-    </p>
+    
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
     <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "Password change was unsuccessful. Please correct the errors and try again.") %>
+        <%: Html.ValidationSummary(true, "Zmiana hasła nie powiodła się. Wprowadź poprawne dane i spróbuj jeszcze raz.") %>
         <div>
             <fieldset>
-                <legend>Account Information</legend>
-                
+                <legend>Zmiana hasła</legend>
+                <p>
+                    Wprowadz dotychczasowe i nowe hasło oraz kliknij 'Zatwierdź' w celu zmiany. 
+                </p>
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.OldPassword) %>
                 </div>
@@ -31,7 +27,7 @@
                 </div>
                 
                 <div class="editor-label">
-                    <%: Html.LabelFor(m => m.NewPassword) %>
+                    <%: Html.LabelFor(m => m.NewPassword) %> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
                 </div>
                 <div class="editor-field">
                     <%: Html.PasswordFor(m => m.NewPassword) %>
@@ -47,7 +43,7 @@
                 </div>
                 
                 <p>
-                    <input type="submit" value="Change Password" />
+                    <input type="submit" value="Zatwierdź" />
                 </p>
             </fieldset>
         </div>

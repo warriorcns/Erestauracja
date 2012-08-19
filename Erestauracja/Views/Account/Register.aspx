@@ -39,9 +39,8 @@
                 </div>
 
                 <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Password) %>
-                    <%: Html.PasswordFor(m => m.Password) %>
-                        Minimum <%: Membership.MinRequiredPasswordLength %> znaków.
+                    <%: Html.LabelFor(m => m.Password) %> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
+                    <%: Html.PasswordFor(m => m.Password) %> 
                     <%: Html.ValidationMessageFor(m => m.Password) %>
                 </div>
                 
