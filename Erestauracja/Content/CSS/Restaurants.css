@@ -236,3 +236,9 @@
     position: relative;
     left: 5px;
 }
+.PanelDowoz
+{
+    min-height: 100px;
+    min-width: 300px;
+    
+}
