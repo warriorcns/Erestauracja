@@ -11,16 +11,17 @@
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>"
         type="text/javascript"></script>
-    <script>
+    <script type="text/javascript">
         $(function () {
             $("#Birthdate").datepicker();
         });
     </script>
-    <script>
+    <script type="text/javascript">
         jQuery(function ($) {
             $("#Birthdate").mask("99/99/9999");
         });
     </script>
+
     <form runat="server">
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
