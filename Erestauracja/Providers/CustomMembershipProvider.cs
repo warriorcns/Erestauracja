@@ -826,7 +826,9 @@ namespace Erestauracja.Providers
             DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
 
             MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
+           //MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
+            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline2);
+            
             command.Parameters.AddWithValue("@lastActivityDate", compareTime);
             command.Parameters.AddWithValue("@applicationName", pApplicationName);
             command.Connection = conn;
@@ -837,7 +839,8 @@ namespace Erestauracja.Providers
             {
                 conn.Open();
 
-                numOnline = (int)command.ExecuteScalar();
+                //numOnline = (int)command.ExecuteScalar();
+                numOnline = Convert.ToInt32(command.ExecuteScalar());
             }
             catch (MySqlException e)
             {

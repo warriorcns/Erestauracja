@@ -54,8 +54,8 @@
             </div>
 
             Ilość zalogowanych użytkowników (na podstawie providera):
-            <% CustomMembershipProvider onlineCount = new CustomMembershipProvider();  %>
-            <% var o = onlineCount.GetNumberOfUsersOnline(); %>
+            <% CustomMembershipProvider onlineCount = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"]; %>
+            <% int o = onlineCount.GetNumberOfUsersOnline(); %>
             <%: Html.Label(o.ToString())%>
 
         </asp:Panel>
