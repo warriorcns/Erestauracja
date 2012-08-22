@@ -83,6 +83,7 @@ page width. Or, you can specify an exact pixel width. */
     margin-left: auto;
     margin-right: auto;
     min-width: 750px;
+    max-width: 1200px;
     
 }
 

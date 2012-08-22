@@ -1,16 +1,15 @@
 ﻿
 .main
 {
-    max-width: 1200px;
-    min-width: 700px;   
+    max-width: 1000px;
+    min-width: 700px;
+      
 }
 
 .all
 {
     padding: 0 250px; /* padding = długość lewych paneli */
     min-width: 160px  /* minimalna długość środka */
-    
-    
 }
 
 
