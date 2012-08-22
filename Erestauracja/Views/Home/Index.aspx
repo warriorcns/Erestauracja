@@ -52,6 +52,12 @@
                 <br />
                 <!-- End GoStats JavaScript Based Code -->
             </div>
+
+            Ilość zalogowanych użytkowników (na podstawie providera):
+            <% CustomMembershipProvider onlineCount = new CustomMembershipProvider();  %>
+            <% var o = onlineCount.GetNumberOfUsersOnline(); %>
+            <%: Html.Label(o.ToString())%>
+
         </asp:Panel>
     </div>
     </form>
