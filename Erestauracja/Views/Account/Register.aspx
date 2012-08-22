@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterModel>" %>
+<%@ Register TagPrefix="asp" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit"%>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Rejesteracja
@@ -8,11 +9,19 @@
     <h2>Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
     
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
-    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
-    <link href="../../Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <link href="../../Content/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
-    
-
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>"
+        type="text/javascript"></script>
+    <script>
+        $(function () {
+            $("#Birthdate").datepicker();
+        });
+    </script>
+    <script>
+        jQuery(function ($) {
+            $("#Birthdate").mask("99/99/9999");
+        });
+    </script>
+    <form runat="server">
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
@@ -94,10 +103,12 @@
 
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Birthdate)%>
-                    <%: Html.EditorFor(m => m.Birthdate)%>
+                    <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
                     <%: Html.ValidationMessageFor(m => m.Birthdate)%>
+                    
                 </div>
-
+                
+                
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Sex) %>
                     <%: Html.TextBoxFor(m => m.Sex)%>
@@ -116,7 +127,11 @@
             </fieldset>
         </div>
     <% } %>
+    </form>
+     
 </asp:Content>
+
+   
 
 
 
