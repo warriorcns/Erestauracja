@@ -826,11 +826,13 @@ namespace Erestauracja.Providers
             DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
 
             MySqlConnection conn = new MySqlConnection(connectionString);
-           //MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
-            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline2);
+            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
+            
             
             command.Parameters.AddWithValue("@lastActivityDate", compareTime);
             command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Parameters.AddWithValue("@lastLoginDate", compareTime);
+            
             command.Connection = conn;
 
             int numOnline = 0;

@@ -166,10 +166,7 @@
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetNumberOfUsersOnline" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt;= @lastActivityDate AND `applicationName` = @applicationName</value>
-  </data>
-  <data name="GetNumberOfUsersOnline2" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `isOnLine` = '1' AND `applicationName` = @applicationName</value>
+    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetPassword" xml:space="preserve">
     <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login AND `applicationName` = @applicationName</value>

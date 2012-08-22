@@ -205,20 +205,11 @@ namespace Erestauracja {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt;= @lastActivityDate AND `applicationName` = @applicationName.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName.
         /// </summary>
         internal static string GetNumberOfUsersOnline {
             get {
                 return ResourceManager.GetString("GetNumberOfUsersOnline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu SELECT Count(*) FROM `users` WHERE `isOnLine` = &apos;1&apos; AND `applicationName` = @applicationName.
-        /// </summary>
-        internal static string GetNumberOfUsersOnline2 {
-            get {
-                return ResourceManager.GetString("GetNumberOfUsersOnline2", resourceCulture);
             }
         }
         
