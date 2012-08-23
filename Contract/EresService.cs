@@ -9,6 +9,7 @@ namespace Contract
 {
     public class EresService : IEresService
     {
+        #region usunąć
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
@@ -26,12 +27,25 @@ namespace Contract
             }
             return composite;
         }
+        #endregion
 
-        public string Test()
+        #region membershipProvider
+
+        public bool ChangePassword(string login, string password)
         {
-            Database db = new Database();
-            string test = db.GetString();
-            return test;
+            if (!(String.IsNullOrEmpty(login) && String.IsNullOrEmpty(password)))
+            {
+                Database db = new Database();
+                bool value = db.ChangePassword(login, password);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
         }
+
+
+        #endregion
     }
 }

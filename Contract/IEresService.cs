@@ -17,7 +17,7 @@ namespace Contract
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         [OperationContract]
-        string Test();
+        bool ChangePassword(string login, string password);
 
         //[OperationContract]
         //User GetUserData(User user);

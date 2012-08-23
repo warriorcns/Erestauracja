@@ -124,7 +124,7 @@
     <value>SELECT Count(*) FROM `users` WHERE `applicationName` = @applicationName</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login</value>
   </data>
   <data name="ChangePasswordQuestionAndAnswer" xml:space="preserve">
     <value>UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login AND `applicationName` = @applicationName</value>

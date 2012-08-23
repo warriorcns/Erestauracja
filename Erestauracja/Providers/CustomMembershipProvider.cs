@@ -35,9 +35,9 @@ namespace Erestauracja.Providers
         // Global connection string, generated password length, generic exception message, event log info.
         //
         private int newPasswordLength = 8;
-        //private string eventSource = "CustomMembershipProvider";
-        //private string eventLog = "Erestauracja";
-        //private string exceptionMessage = "An exception occurred. Please check the Event Log.";
+        private string eventSource = "CustomMembershipProvider";
+        private string eventLog = "Erestauracja";
+        private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string connectionString;
         //
         // Used when determining encryption key values.
@@ -47,19 +47,15 @@ namespace Erestauracja.Providers
         // If false, exceptions are thrown to the caller. If true,
         // exceptions are written to the event log.
         //
+        private bool pWriteExceptionsToEventLog;
+        public bool WriteExceptionsToEventLog
+        {
+            get { return pWriteExceptionsToEventLog; }
+            set { pWriteExceptionsToEventLog = value; }
+        }
 
-        //private bool pWriteExceptionsToEventLog;
 
-        //public bool WriteExceptionsToEventLog
-        //{
-        //    get { return pWriteExceptionsToEventLog; }
-        //    set { pWriteExceptionsToEventLog = value; }
-        //}
-
-        //
-        // System.Configuration.Provider.ProviderBase.Initialize Method
-        //
-
+        #region  System.Configuration.Provider.ProviderBase.Initialize Method
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -141,6 +137,7 @@ namespace Erestauracja.Providers
                     throw new ProviderException("Hashed or Encrypted passwords " +
                                                 "are not supported with auto-generated keys.");
         }
+        
         //
         // A helper function to retrieve config values from the configuration file.
         //
@@ -151,6 +148,8 @@ namespace Erestauracja.Providers
 
             return configValue;
         }
+
+        #endregion
 
         #region System.Web.Security.MembershipProvider properties.
 
@@ -227,18 +226,26 @@ namespace Erestauracja.Providers
 
         #endregion
 
+
+
+
         #region System.Web.Security.MembershipProvider methods.
+
+
 
         #region Password methods:
 
-        //
-        // MembershipProvider.ChangePassword
-        //
+        /// <summary>
+        /// Zamienia stare hasło na nowe u użytkownika o danym loginie
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="oldPwd">Stare hasło</param>
+        /// <param name="newPwd">Nowe hasło</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public override bool ChangePassword(string login, string oldPwd, string newPwd)
         {
             if (!ValidateUser(login, oldPwd))
                 return false;
-
 
             ValidatePasswordEventArgs args =
               new ValidatePasswordEventArgs(login, newPwd, true);
@@ -251,44 +258,29 @@ namespace Erestauracja.Providers
                 else
                     throw new MembershipPasswordException("Change password canceled due to new password validation failure.");
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.ChangePassword);
-            command.Parameters.AddWithValue("@password", EncodePassword(newPwd));
-            command.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            int rowsaffected = 0;
-
+            bool value = false;
             try
             {
-                conn.Open();
-                rowsaffected = command.ExecuteNonQuery();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.ChangePassword(login, EncodePassword(newPwd));
+                }
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "ChangePassword");
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "ChangePassword");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
 
-            finally
-            {
-                conn.Close();
-            }
-
-            if (rowsaffected > 0)
-            {
-                return true;
-            }
-            return false;
+            return value;
         }
 
         //
@@ -684,7 +676,6 @@ namespace Erestauracja.Providers
 
             return password;
         }
-        
 
         public string GetUserQuestion(string login)
         {
@@ -894,7 +885,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.CreateUser
         //
-
         public override MembershipUser CreateUser(string username,
            string password,
            string email,
@@ -1034,12 +1024,9 @@ namespace Erestauracja.Providers
             return null;
         }
 
-
-
         //
         // MembershipProvider.DeleteUser
         //
-
         public override bool DeleteUser(string login, bool deleteAllRelatedData)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1088,7 +1075,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.GetAllUsers
         //
-
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1154,7 +1140,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.GetNumberOfUsersOnline
         //
-
         public override int GetNumberOfUsersOnline()
         {
 
@@ -1201,12 +1186,9 @@ namespace Erestauracja.Providers
             return numOnline;
         }
 
-        
-
         //
         // MembershipProvider.GetUser(string, bool)
         //
-
         public override MembershipUser GetUser(string login, bool userIsOnline)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1269,7 +1251,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.GetUser(object, bool)
         //
-
         public override MembershipUser GetUser(object id, bool userIsOnline)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1334,7 +1315,6 @@ namespace Erestauracja.Providers
         //
 
         //do zmiany
-
         private CustomMembershipUser GetUserFromReader(MySqlDataReader reader)
         {
             //  object providerUserKey = reader.GetValue(0);
@@ -1403,7 +1383,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.UnlockUser
         //
-
         public override bool UnlockUser(string login)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1449,7 +1428,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.GetUserNameByEmail
         //
-
         public override string GetUserNameByEmail(string email)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1490,12 +1468,9 @@ namespace Erestauracja.Providers
             return username;
         }
 
-
-
         //
         // MembershipProvider.UpdateUser
         //
-
         public override void UpdateUser(MembershipUser user)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1545,7 +1520,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.ValidateUser
         //
-
         public override bool ValidateUser(string login, string password)
         {
             bool isValid = false;
@@ -1630,7 +1604,6 @@ namespace Erestauracja.Providers
         //   A helper method that performs the checks and updates associated with
         // password failure tracking.
         //
-
         private void UpdateFailureCount(string login, string failureType)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1752,12 +1725,9 @@ namespace Erestauracja.Providers
             }
         }
 
-
-
         //
         // MembershipProvider.FindUsersByName
         //
-
         public override MembershipUserCollection FindUsersByName(string loginToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1824,7 +1794,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.FindUsersByEmail
         //
-
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -1891,6 +1860,7 @@ namespace Erestauracja.Providers
 
         #endregion
 
+
         //
         // WriteToEventLog
         //   A helper function that writes exception detail to the event log. Exceptions
@@ -1899,26 +1869,25 @@ namespace Erestauracja.Providers
         // or boolean indicating the action succeeded or failed, a generic exception is also 
         // thrown by the caller.
         //
+        private void WriteToEventLog(Exception e, string action)
+        {
+            /*
+            * 
+            * If the sample provider encounters an exception when working with the data source, it writes the details of the exception to the Application Event Log instead of returning the exception to the ASP.NET application. This is done as a security measure to avoid exposing private information about the data source in the ASP.NET application.
+            * The sample provider specifies an event Source of "OdbcRoleProvider". Before your ASP.NET application will be able to write to the Application Event Log successfully, you will need to create the following registry key.
+            * HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\OdbcRoleProvider
+            * 
+            */
+            EventLog log = new EventLog();
+            log.Source = eventSource;
+            log.Log = eventLog;
 
-        //private void WriteToEventLog(Exception e, string action)
-        //{
-        //    /*
-        //    * 
-        //    * If the sample provider encounters an exception when working with the data source, it writes the details of the exception to the Application Event Log instead of returning the exception to the ASP.NET application. This is done as a security measure to avoid exposing private information about the data source in the ASP.NET application.
-        //    * The sample provider specifies an event Source of "OdbcRoleProvider". Before your ASP.NET application will be able to write to the Application Event Log successfully, you will need to create the following registry key.
-        //    * HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\OdbcRoleProvider
-        //    * 
-        //    */
-        //    EventLog log = new EventLog();
-        //    log.Source = eventSource;
-        //    log.Log = eventLog;
+            string message = "An exception occurred communicating with the data source.\n\n";
+            message += "Action: " + action + "\n\n";
+            message += "Exception: " + e.ToString();
 
-        //    string message = "An exception occurred communicating with the data source.\n\n";
-        //    message += "Action: " + action + "\n\n";
-        //    message += "Exception: " + e.ToString();
-
-        //    log.WriteEntry(message);
-        //}
+            log.WriteEntry(message, EventLogEntryType.Error);
+        }
 
         #endregion
     }
