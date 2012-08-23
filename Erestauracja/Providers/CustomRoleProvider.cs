@@ -18,9 +18,9 @@ namespace Erestauracja.Providers
         // Global connection string, generic exception message, event log info.
         //
 
-        private string eventSource = "CustomRoleProvider";
-        private string eventLog = "Erestauracja";
-        private string exceptionMessage = "An exception occurred. Please check the Event Log.";
+      //  private string eventSource = "CustomRoleProvider";
+      //  private string eventLog = "Erestauracja";
+     //   private string exceptionMessage = "An exception occurred. Please check the Event Log.";
 
         private ConnectionStringSettings pConnectionStringSettings;
         private string connectionString;
@@ -30,13 +30,13 @@ namespace Erestauracja.Providers
         // exceptions are written to the event log.
         //
 
-        private bool pWriteExceptionsToEventLog = false;
+   //     private bool pWriteExceptionsToEventLog = false;
 
-        public bool WriteExceptionsToEventLog
-        {
-            get { return pWriteExceptionsToEventLog; }
-            set { pWriteExceptionsToEventLog = value; }
-        }
+    //    public bool WriteExceptionsToEventLog
+   //     {
+    //        get { return pWriteExceptionsToEventLog; }
+    //        set { pWriteExceptionsToEventLog = value; }
+    //    }
 
         //
         // System.Configuration.Provider.ProviderBase.Initialize Method
@@ -75,13 +75,13 @@ namespace Erestauracja.Providers
             }
 
 
-            if (config["writeExceptionsToEventLog"] != null)
-            {
-                if (config["writeExceptionsToEventLog"].ToUpper() == "TRUE")
-                {
-                    pWriteExceptionsToEventLog = true;
-                }
-            }
+            //if (config["writeExceptionsToEventLog"] != null)
+            //{
+            //    if (config["writeExceptionsToEventLog"].ToUpper() == "TRUE")
+            //    {
+            //        pWriteExceptionsToEventLog = true;
+            //    }
+            //}
 
 
             //
@@ -99,12 +99,9 @@ namespace Erestauracja.Providers
             connectionString = pConnectionStringSettings.ConnectionString;
         }
 
-        //
-        // System.Web.Security.RoleProvider properties.
-        //
+        #region System.Web.Security.RoleProvider properties.
 
         private string pApplicationName;
-
 
         public override string ApplicationName
         {
@@ -112,12 +109,12 @@ namespace Erestauracja.Providers
             set { pApplicationName = value; }
         }
 
-        //
-        // System.Web.Security.RoleProvider methods.
-        //
+        #endregion
+
+        #region System.Web.Security.RoleProvider methods.
 
         //
-        // RoleProvider.AddUsersToRoles
+        #region RoleProvider.AddUsersToRoles
         //
 
         public override void AddUsersToRoles(string[] logins, string[] rolenames)
@@ -187,11 +184,11 @@ namespace Erestauracja.Providers
                 catch { }
 
 
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "AddUsersToRoles");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "AddUsersToRoles");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -201,9 +198,9 @@ namespace Erestauracja.Providers
                 conn.Close();
             }
         }
-
+        #endregion
         //
-        // RoleProvider.CreateRole
+        #region RoleProvider.CreateRole
         //
 
         public override void CreateRole(string rolename)
@@ -233,11 +230,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "CreateRole");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "CreateRole");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -247,10 +244,10 @@ namespace Erestauracja.Providers
                 conn.Close();
             }
         }
-
+        #endregion
 
         //
-        // RoleProvider.DeleteRole
+        #region RoleProvider.DeleteRole
         //
 
         public override bool DeleteRole(string rolename, bool throwOnPopulatedRole)
@@ -299,13 +296,13 @@ namespace Erestauracja.Providers
                 catch { }
 
 
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "DeleteRole");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "DeleteRole");
 
-                    return false;
-                }
-                else
+                //    return false;
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -317,10 +314,10 @@ namespace Erestauracja.Providers
 
             return true;
         }
-
+        #endregion
 
         //
-        // RoleProvider.GetAllRoles
+        #region RoleProvider.GetAllRoles
         //
 
         public override string[] GetAllRoles()
@@ -348,11 +345,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetAllRoles");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetAllRoles");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -372,10 +369,10 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-
+        #endregion
 
         //
-        // RoleProvider.GetRolesForUser
+        #region RoleProvider.GetRolesForUser
         //
 
         public override string[] GetRolesForUser(string login)
@@ -404,11 +401,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetRolesForUser");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetRolesForUser");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -428,10 +425,10 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-
+        #endregion
 
         //
-        // RoleProvider.GetUsersInRole
+        #region RoleProvider.GetUsersInRole
         //
 
         public override string[] GetUsersInRole(string rolename)
@@ -459,11 +456,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetUsersInRole");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetUsersInRole");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -483,10 +480,10 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-
+        #endregion
 
         //
-        // RoleProvider.IsUserInRole
+        #region RoleProvider.IsUserInRole
         //
 
         public override bool IsUserInRole(string login, string rolename)
@@ -516,11 +513,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "IsUserInRole");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "IsUserInRole");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -532,10 +529,10 @@ namespace Erestauracja.Providers
 
             return userIsInRole;
         }
-
+        #endregion
 
         //
-        // RoleProvider.RemoveUsersFromRoles
+        #region RoleProvider.RemoveUsersFromRoles
         //
 
         public override void RemoveUsersFromRoles(string[] logins, string[] rolenames)
@@ -600,11 +597,11 @@ namespace Erestauracja.Providers
                 catch { }
 
 
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "RemoveUsersFromRoles");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "RemoveUsersFromRoles");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -614,10 +611,10 @@ namespace Erestauracja.Providers
                 conn.Close();
             }
         }
-
+        #endregion
 
         //
-        // RoleProvider.RoleExists
+        #region RoleProvider.RoleExists
         //
 
         public override bool RoleExists(string rolename)
@@ -646,11 +643,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "RoleExists");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "RoleExists");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -662,9 +659,9 @@ namespace Erestauracja.Providers
 
             return exists;
         }
-
+        #endregion
         //
-        // RoleProvider.FindUsersInRole
+        #region RoleProvider.FindUsersInRole
         //
 
         public override string[] FindUsersInRole(string rolename, string loginToMatch)
@@ -693,11 +690,11 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "FindUsersInRole");
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "FindUsersInRole");
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -718,27 +715,28 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
+        #endregion
+        #endregion
+        ////
+        //// WriteToEventLog
+        ////   A helper function that writes exception detail to the event log. Exceptions
+        //// are written to the event log as a security measure to avoid private database
+        //// details from being returned to the browser. If a method does not return a status
+        //// or boolean indicating the action succeeded or failed, a generic exception is also 
+        //// thrown by the caller.
+        ////
 
-        //
-        // WriteToEventLog
-        //   A helper function that writes exception detail to the event log. Exceptions
-        // are written to the event log as a security measure to avoid private database
-        // details from being returned to the browser. If a method does not return a status
-        // or boolean indicating the action succeeded or failed, a generic exception is also 
-        // thrown by the caller.
-        //
+        //private void WriteToEventLog(MySqlException e, string action)
+        //{
+        //    EventLog log = new EventLog();
+        //    log.Source = eventSource;
+        //    log.Log = eventLog;
 
-        private void WriteToEventLog(MySqlException e, string action)
-        {
-            EventLog log = new EventLog();
-            log.Source = eventSource;
-            log.Log = eventLog;
+        //    string message = exceptionMessage + "\n\n";
+        //    message += "Action: " + action + "\n\n";
+        //    message += "Exception: " + e.ToString();
 
-            string message = exceptionMessage + "\n\n";
-            message += "Action: " + action + "\n\n";
-            message += "Exception: " + e.ToString();
-
-            log.WriteEntry(message);
-        }
+        //    log.WriteEntry(message);
+        //}
     }
 }

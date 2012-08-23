@@ -16,31 +16,14 @@ using MySql.Data.MySqlClient;
 using System.Net.Mail;
 using System.Net;
 
+//dopisać
+
 /*
 This provider works with the following schema for the table of user data.
 
 CREATE TABLE Users
 (
-  //PKID Guid NOT NULL PRIMARY KEY,
-  Username Text (255) NOT NULL, - login
-  //ApplicationName Text (255) NOT NULL,
-  Email Text (128) NOT NULL,
-  //Comment Text (255),
-  Password Text (128) NOT NULL,
-  PasswordQuestion Text (255),
-  PasswordAnswer Text (255),
-  IsApproved YesNo, 
-  //LastActivityDate DateTime,
-  //LastLoginDate DateTime,
-  //LastPasswordChangedDate DateTime,
-  //CreationDate DateTime, 
-  //IsOnLine YesNo,
-  //IsLockedOut YesNo,
-  //LastLockedOutDate DateTime,
-  //FailedPasswordAttemptCount Integer,
-  //FailedPasswordAttemptWindowStart DateTime,
-  //FailedPasswordAnswerAttemptCount Integer,
-  //FailedPasswordAnswerAttemptWindowStart DateTime
+
 )
 */
 
@@ -51,97 +34,32 @@ namespace Erestauracja.Providers
         //
         // Global connection string, generated password length, generic exception message, event log info.
         //
-
-        //#region database
-        //private DataSet ExecuteQuery(MySqlCommand command)
-        //{
-        //    MySqlConnection conn = new MySqlConnection(connectionString);
-        //    conn.Open();
-        //    command.Connection = conn;
-
-        //    DataSet myDS = new DataSet();
-
-        //    try
-        //    {
-        //        MySqlDataAdapter da = new MySqlDataAdapter(command);
-        //        da.Fill(myDS);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }
-
-        //    finally
-        //    {
-        //        //conn.Clone();
-        //        conn.Close();
-        //    }
-
-        //    return myDS;
-        //}
-        //private int ExecuteNonQuery(MySqlCommand command, string action)
-        //{
-        //    MySqlConnection conn = new MySqlConnection(connectionString);
-        //    //conn.Open();
-        //    command.Connection = conn;
-
-        //    int rowsaffected = 0;
-
-        //    try
-        //    {
-        //        conn.Open();
-        //        rowsaffected = command.ExecuteNonQuery();
-        //    }
-        //    catch (MySqlException e)
-        //    {
-        //        if (WriteExceptionsToEventLog)
-        //        {
-        //            WriteToEventLog(e, action);
-        //            throw new ProviderException(exceptionMessage);
-        //        }
-        //        else
-        //        {
-        //            throw e;
-        //        }
-        //    }
-
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-
-        //    return rowsaffected;
-        //}
-        //#endregion
-
         private int newPasswordLength = 8;
-        private string eventSource = "CustomMembershipProvider";
-        private string eventLog = "Erestauracja";
-        private string exceptionMessage = "An exception occurred. Please check the Event Log.";
+        //private string eventSource = "CustomMembershipProvider";
+        //private string eventLog = "Erestauracja";
+        //private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string connectionString;
-
         //
         // Used when determining encryption key values.
         //
-
         private MachineKeySection machineKey;
-
         //
         // If false, exceptions are thrown to the caller. If true,
         // exceptions are written to the event log.
         //
 
-        private bool pWriteExceptionsToEventLog;
+        //private bool pWriteExceptionsToEventLog;
 
-        public bool WriteExceptionsToEventLog
-        {
-            get { return pWriteExceptionsToEventLog; }
-            set { pWriteExceptionsToEventLog = value; }
-        }
+        //public bool WriteExceptionsToEventLog
+        //{
+        //    get { return pWriteExceptionsToEventLog; }
+        //    set { pWriteExceptionsToEventLog = value; }
+        //}
 
         //
         // System.Configuration.Provider.ProviderBase.Initialize Method
         //
+
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -175,7 +93,7 @@ namespace Erestauracja.Providers
             pEnablePasswordRetrieval = Convert.ToBoolean(GetConfigValue(config["enablePasswordRetrieval"], "true"));
             pRequiresQuestionAndAnswer = Convert.ToBoolean(GetConfigValue(config["requiresQuestionAndAnswer"], "false"));
             pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
-            pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
+         //   pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
             string temp_format = config["passwordFormat"];
             if (temp_format == null)
@@ -223,11 +141,9 @@ namespace Erestauracja.Providers
                     throw new ProviderException("Hashed or Encrypted passwords " +
                                                 "are not supported with auto-generated keys.");
         }
-
         //
         // A helper function to retrieve config values from the configuration file.
         //
-
         private string GetConfigValue(string configValue, string defaultValue)
         {
             if (String.IsNullOrEmpty(configValue))
@@ -236,9 +152,7 @@ namespace Erestauracja.Providers
             return configValue;
         }
 
-        //
-        // System.Web.Security.MembershipProvider properties.
-        //
+        #region System.Web.Security.MembershipProvider properties.
 
         private string pApplicationName;
         private bool pEnablePasswordReset;
@@ -311,14 +225,15 @@ namespace Erestauracja.Providers
             get { return pPasswordStrengthRegularExpression; }
         }
 
-        //
-        // System.Web.Security.MembershipProvider methods.
-        //
+        #endregion
+
+        #region System.Web.Security.MembershipProvider methods.
+
+        #region Password methods:
 
         //
         // MembershipProvider.ChangePassword
         //
-
         public override bool ChangePassword(string login, string oldPwd, string newPwd)
         {
             if (!ValidateUser(login, oldPwd))
@@ -353,12 +268,12 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "ChangePassword");
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "ChangePassword");
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -379,7 +294,6 @@ namespace Erestauracja.Providers
         //
         // MembershipProvider.ChangePasswordQuestionAndAnswer
         //
-
         public override bool ChangePasswordQuestionAndAnswer(string login, string password, string newPwdQuestion, string newPwdAnswer)
         {
             if (!ValidateUser(login, password))
@@ -402,12 +316,12 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -424,6 +338,428 @@ namespace Erestauracja.Providers
             }
             return false;
         }
+
+        //
+        // MembershipProvider.GetPassword
+        //
+        public override string GetPassword(string login, string answer)
+        {
+            if (!EnablePasswordRetrieval)
+            {
+                throw new ProviderException("Password Retrieval Not Enabled.");
+            }
+
+            if (PasswordFormat == MembershipPasswordFormat.Hashed)
+            {
+                throw new ProviderException("Cannot retrieve Hashed passwords.");
+            }
+
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetPassword);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Connection = conn;
+
+            string password = "";
+            string passwordAnswer = "";
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (reader.GetBoolean(2))
+                        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                    password = reader.GetString(0);
+                    passwordAnswer = reader.GetString(1);
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user name is not found.");
+                }
+            }
+            catch (MySqlException e)
+            {
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetPassword");
+
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
+                {
+                    throw e;
+                }
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+
+            if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
+            {
+                UpdateFailureCount(login, "passwordAnswer");
+
+                throw new MembershipPasswordException("Incorrect password answer.");
+            }
+
+
+            if (PasswordFormat == MembershipPasswordFormat.Encrypted)
+            {
+                password = UnEncodePassword(password);
+            }
+
+            return password;
+        }
+
+        //
+        // MembershipProvider.ResetPassword
+        //
+        public override string ResetPassword(string login, string answer)
+        {
+            if (!EnablePasswordReset)
+            {
+                throw new NotSupportedException("Password reset is not enabled.");
+            }
+
+            if (answer == null && RequiresQuestionAndAnswer)
+            {
+                UpdateFailureCount(login, "passwordAnswer");
+
+                throw new ProviderException("Password answer required for password reset.");
+            }
+
+            string newPassword =
+              System.Web.Security.Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
+
+
+            ValidatePasswordEventArgs args =
+              new ValidatePasswordEventArgs(login, newPassword, true);
+
+            OnValidatingPassword(args);
+
+            if (args.Cancel)
+                if (args.FailureInformation != null)
+                    throw args.FailureInformation;
+                else
+                    throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
+
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetPasswordAnswer);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Connection = conn;
+
+            int rowsAffected = 0;
+            string passwordAnswer = "";
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (reader.GetBoolean(1))
+                        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                    passwordAnswer = reader.GetString(0);
+                    reader.Close();
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user name is not found.");
+                }
+
+                if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
+                {
+                    UpdateFailureCount(login, "passwordAnswer");
+
+                    throw new MembershipPasswordException("Incorrect password answer.");
+                }
+
+                MySqlCommand updateCmd = new MySqlCommand(Queries.ResetPassword);
+                updateCmd.Parameters.AddWithValue("@password", EncodePassword(newPassword));
+                updateCmd.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
+                updateCmd.Parameters.AddWithValue("@login", login);
+                updateCmd.Parameters.AddWithValue("@applicationName", pApplicationName);
+                updateCmd.Parameters.AddWithValue("@isLockedOut", false);
+                updateCmd.Connection = conn;
+
+                rowsAffected = updateCmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "ResetPassword");
+
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
+                {
+                    throw e;
+                }
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            if (rowsAffected > 0)
+            {
+                MySqlCommand getcommand = new MySqlCommand(Queries.GetEmailByLogin);
+                getcommand.Parameters.AddWithValue("@login", login);
+                getcommand.Parameters.AddWithValue("@applicationName", pApplicationName);
+                getcommand.Connection = conn;
+
+                string email = "";
+                MySqlDataReader emailreader = null;
+
+                try
+                {
+                    conn.Open();
+
+                    emailreader = getcommand.ExecuteReader(CommandBehavior.SingleRow);
+
+                    if (emailreader.HasRows)
+                    {
+                        emailreader.Read();
+                        
+                        // może być dla bezpieczeństwa ale już było sprawdzane
+                    //    if (emailreader.GetBoolean(2))
+                    //        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                        email = emailreader.GetString(0);
+                    }
+                    else
+                    {
+                        throw new MembershipPasswordException("The supplied login is not found.");
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    //if (WriteExceptionsToEventLog)
+                    //{
+                    //    WriteToEventLog(e, "GetEmail");
+
+                    //    throw new ProviderException(exceptionMessage);
+                    //}
+                    //else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                    if (emailreader != null) { emailreader.Close(); }
+                    conn.Close();
+                }
+
+                if(email!="")
+                {
+                SmtpClient klient = new SmtpClient("smtp.gmail.com");
+                MailMessage wiadomosc = new MailMessage();
+                try
+                {
+                    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
+                    wiadomosc.To.Add(email);
+                    wiadomosc.Subject = "Erestauracja - restet hasła.";
+                    wiadomosc.Body = "Nowe hasło: " + newPassword;
+
+                    klient.Port = 587;
+                    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
+                    klient.EnableSsl = true;
+                    klient.Send(wiadomosc);
+                }
+                catch (Exception ex)
+                {
+                    // znazcy że nie wysłał wiadomości co robić ??
+                    // przywrócić stare ??
+                    // może rollback ??
+
+                }
+                }
+                return newPassword;
+            }
+            else
+            {
+                throw new MembershipPasswordException("User not found, or user is locked out. Password not Reset.");
+            }
+        }
+
+        //
+        // CheckPassword
+        //   Compares password values based on the MembershipPasswordFormat.
+        //
+        private bool CheckPassword(string password, string dbpassword)
+        {
+            string pass1 = password;
+            string pass2 = dbpassword;
+
+            switch (PasswordFormat)
+            {
+                case MembershipPasswordFormat.Encrypted:
+                    pass2 = UnEncodePassword(dbpassword);
+                    break;
+                case MembershipPasswordFormat.Hashed:
+                    pass1 = EncodePassword(password);
+                    break;
+                default:
+                    break;
+            }
+
+            if (pass1 == pass2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //
+        // EncodePassword
+        //   Encrypts, Hashes, or leaves the password clear based on the PasswordFormat.
+        //
+        private string EncodePassword(string password)
+        {
+            string encodedPassword = password;
+
+            switch (PasswordFormat)
+            {
+                case MembershipPasswordFormat.Clear:
+                    break;
+                case MembershipPasswordFormat.Encrypted:
+                    encodedPassword =
+                      Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)));
+                    break;
+                case MembershipPasswordFormat.Hashed:
+                    HMACSHA1 hash = new HMACSHA1();
+                    hash.Key = HexToByte(machineKey.ValidationKey);
+                    encodedPassword =
+                      Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)));
+                    break;
+                default:
+                    throw new ProviderException("Unsupported password format.");
+            }
+
+            return encodedPassword;
+        }
+
+        //
+        // UnEncodePassword
+        //   Decrypts or leaves the password clear based on the PasswordFormat.
+        //
+        private string UnEncodePassword(string encodedPassword)
+        {
+            string password = encodedPassword;
+
+            switch (PasswordFormat)
+            {
+                case MembershipPasswordFormat.Clear:
+                    break;
+                case MembershipPasswordFormat.Encrypted:
+                    password =
+                      Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)));
+                    break;
+                case MembershipPasswordFormat.Hashed:
+                    throw new ProviderException("Cannot unencode a hashed password.");
+                default:
+                    throw new ProviderException("Unsupported password format.");
+            }
+
+            return password;
+        }
+        
+
+        public string GetUserQuestion(string login)
+        {
+            if (!EnablePasswordReset)
+            {
+                throw new ProviderException("Password Reset Not Enabled.");
+            }
+
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetUserQuestion);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Connection = conn;
+
+            string passwordQuestion = "";
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (reader.GetBoolean(1))
+                        throw new MembershipPasswordException("The supplied user is locked out.");
+
+                    passwordQuestion = reader.GetString(0);
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user name is not found.");
+                }
+            }
+            catch (MySqlException e)
+            {
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetUserQuestion");
+
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
+                {
+                    throw e;
+                }
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return passwordQuestion;
+        }
+        
+        //
+        // HexToByte
+        //   Converts a hexadecimal string to a byte array. Used to convert encryption
+        // key values from the configuration.
+        //
+        private byte[] HexToByte(string hexString)
+        {
+            byte[] returnBytes = new byte[hexString.Length / 2];
+            for (int i = 0; i < returnBytes.Length; i++)
+                returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+            return returnBytes;
+        }
+        #endregion
+
+
+        #region User methods:
 
         ////
         //// MembershipProvider.CreateUser
@@ -675,10 +1011,10 @@ namespace Erestauracja.Providers
                 }
                 catch (MySqlException e)
                 {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        WriteToEventLog(e, "CreateUser");
-                    }
+                    //if (WriteExceptionsToEventLog)
+                    //{
+                    //    WriteToEventLog(e, "CreateUser");
+                    //}
 
                     status = MembershipCreateStatus.ProviderError;
                 }
@@ -728,12 +1064,12 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "DeleteUser");
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "DeleteUser");
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -795,13 +1131,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetAllUsers ");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetAllUsers ");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -846,13 +1182,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetNumberOfUsersOnline");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetNumberOfUsersOnline");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -865,88 +1201,7 @@ namespace Erestauracja.Providers
             return numOnline;
         }
 
-        //
-        // MembershipProvider.GetPassword
-        //
-
-        public override string GetPassword(string login, string answer)
-        {
-            if (!EnablePasswordRetrieval)
-            {
-                throw new ProviderException("Password Retrieval Not Enabled.");
-            }
-
-            if (PasswordFormat == MembershipPasswordFormat.Hashed)
-            {
-                throw new ProviderException("Cannot retrieve Hashed passwords.");
-            }
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetPassword);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            string password = "";
-            string passwordAnswer = "";
-            MySqlDataReader reader = null;
-
-            try
-            {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    if (reader.GetBoolean(2))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    password = reader.GetString(0);
-                    passwordAnswer = reader.GetString(1);
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
-                }
-            }
-            catch (MySqlException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetPassword");
-
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-
-            if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
-            {
-                UpdateFailureCount(login, "passwordAnswer");
-
-                throw new MembershipPasswordException("Incorrect password answer.");
-            }
-
-
-            if (PasswordFormat == MembershipPasswordFormat.Encrypted)
-            {
-                password = UnEncodePassword(password);
-            }
-
-            return password;
-        }
+        
 
         //
         // MembershipProvider.GetUser(string, bool)
@@ -990,13 +1245,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetUser(String, Boolean)");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetUser(String, Boolean)");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1050,13 +1305,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetUser(Object, Boolean)");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetUser(Object, Boolean)");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1169,13 +1424,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "UnlockUser");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "UnlockUser");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1213,13 +1468,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetUserNameByEmail");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "GetUserNameByEmail");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1235,187 +1490,7 @@ namespace Erestauracja.Providers
             return username;
         }
 
-        //
-        // MembershipProvider.ResetPassword
-        //
 
-        public override string ResetPassword(string login, string answer)
-        {
-            if (!EnablePasswordReset)
-            {
-                throw new NotSupportedException("Password reset is not enabled.");
-            }
-
-            if (answer == null && RequiresQuestionAndAnswer)
-            {
-                UpdateFailureCount(login, "passwordAnswer");
-
-                throw new ProviderException("Password answer required for password reset.");
-            }
-
-            string newPassword =
-              System.Web.Security.Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
-
-
-            ValidatePasswordEventArgs args =
-              new ValidatePasswordEventArgs(login, newPassword, true);
-
-            OnValidatingPassword(args);
-
-            if (args.Cancel)
-                if (args.FailureInformation != null)
-                    throw args.FailureInformation;
-                else
-                    throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetPasswordAnswer);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            int rowsAffected = 0;
-            string passwordAnswer = "";
-            MySqlDataReader reader = null;
-
-            try
-            {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    if (reader.GetBoolean(1))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    passwordAnswer = reader.GetString(0);
-                    reader.Close();
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
-                }
-
-                if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
-                {
-                    UpdateFailureCount(login, "passwordAnswer");
-
-                    throw new MembershipPasswordException("Incorrect password answer.");
-                }
-
-                MySqlCommand updateCmd = new MySqlCommand(Queries.ResetPassword);
-                updateCmd.Parameters.AddWithValue("@password", EncodePassword(newPassword));
-                updateCmd.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
-                updateCmd.Parameters.AddWithValue("@login", login);
-                updateCmd.Parameters.AddWithValue("@applicationName", pApplicationName);
-                updateCmd.Parameters.AddWithValue("@isLockedOut", false);
-                updateCmd.Connection = conn;
-
-                rowsAffected = updateCmd.ExecuteNonQuery();
-            }
-            catch (MySqlException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "ResetPassword");
-
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            if (rowsAffected > 0)
-            {
-                MySqlCommand getcommand = new MySqlCommand(Queries.GetEmailByLogin);
-                getcommand.Parameters.AddWithValue("@login", login);
-                getcommand.Parameters.AddWithValue("@applicationName", pApplicationName);
-                getcommand.Connection = conn;
-
-                string email = "";
-                MySqlDataReader emailreader = null;
-
-                try
-                {
-                    conn.Open();
-
-                    emailreader = getcommand.ExecuteReader(CommandBehavior.SingleRow);
-
-                    if (emailreader.HasRows)
-                    {
-                        emailreader.Read();
-                        
-                        // może być dla bezpieczeństwa ale już było sprawdzane
-                    //    if (emailreader.GetBoolean(2))
-                    //        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                        email = emailreader.GetString(0);
-                    }
-                    else
-                    {
-                        throw new MembershipPasswordException("The supplied login is not found.");
-                    }
-                }
-                catch (MySqlException e)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        WriteToEventLog(e, "GetEmail");
-
-                        throw new ProviderException(exceptionMessage);
-                    }
-                    else
-                    {
-                        throw e;
-                    }
-                }
-                finally
-                {
-                    if (emailreader != null) { emailreader.Close(); }
-                    conn.Close();
-                }
-
-                if(email!="")
-                {
-                SmtpClient klient = new SmtpClient("smtp.gmail.com");
-                MailMessage wiadomosc = new MailMessage();
-                try
-                {
-                    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
-                    wiadomosc.To.Add(email);
-                    wiadomosc.Subject = "Erestauracja - restet hasła.";
-                    wiadomosc.Body = "Nowe hasło: " + newPassword;
-
-                    klient.Port = 587;
-                    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
-                    klient.EnableSsl = true;
-                    klient.Send(wiadomosc);
-                }
-                catch (Exception ex)
-                {
-                    // znazcy że nie wysłał wiadomości co robić ??
-                    // przywrócić stare ??
-                    // może rollback ??
-
-                }
-                }
-                return newPassword;
-            }
-            else
-            {
-                throw new MembershipPasswordException("User not found, or user is locked out. Password not Reset.");
-            }
-        }
 
         //
         // MembershipProvider.UpdateUser
@@ -1450,13 +1525,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "UpdateUser");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "UpdateUser");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1530,13 +1605,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "ValidateUser");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "ValidateUser");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1659,13 +1734,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "UpdateFailureCount");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "UpdateFailureCount");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1677,105 +1752,7 @@ namespace Erestauracja.Providers
             }
         }
 
-        //
-        // CheckPassword
-        //   Compares password values based on the MembershipPasswordFormat.
-        //
 
-        private bool CheckPassword(string password, string dbpassword)
-        {
-            string pass1 = password;
-            string pass2 = dbpassword;
-
-            switch (PasswordFormat)
-            {
-                case MembershipPasswordFormat.Encrypted:
-                    pass2 = UnEncodePassword(dbpassword);
-                    break;
-                case MembershipPasswordFormat.Hashed:
-                    pass1 = EncodePassword(password);
-                    break;
-                default:
-                    break;
-            }
-
-            if (pass1 == pass2)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        //
-        // EncodePassword
-        //   Encrypts, Hashes, or leaves the password clear based on the PasswordFormat.
-        //
-
-        private string EncodePassword(string password)
-        {
-            string encodedPassword = password;
-
-            switch (PasswordFormat)
-            {
-                case MembershipPasswordFormat.Clear:
-                    break;
-                case MembershipPasswordFormat.Encrypted:
-                    encodedPassword =
-                      Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)));
-                    break;
-                case MembershipPasswordFormat.Hashed:
-                    HMACSHA1 hash = new HMACSHA1();
-                    hash.Key = HexToByte(machineKey.ValidationKey);
-                    encodedPassword =
-                      Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)));
-                    break;
-                default:
-                    throw new ProviderException("Unsupported password format.");
-            }
-
-            return encodedPassword;
-        }
-
-        //
-        // UnEncodePassword
-        //   Decrypts or leaves the password clear based on the PasswordFormat.
-        //
-
-        private string UnEncodePassword(string encodedPassword)
-        {
-            string password = encodedPassword;
-
-            switch (PasswordFormat)
-            {
-                case MembershipPasswordFormat.Clear:
-                    break;
-                case MembershipPasswordFormat.Encrypted:
-                    password =
-                      Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)));
-                    break;
-                case MembershipPasswordFormat.Hashed:
-                    throw new ProviderException("Cannot unencode a hashed password.");
-                default:
-                    throw new ProviderException("Unsupported password format.");
-            }
-
-            return password;
-        }
-
-        //
-        // HexToByte
-        //   Converts a hexadecimal string to a byte array. Used to convert encryption
-        // key values from the configuration.
-        //
-
-        private byte[] HexToByte(string hexString)
-        {
-            byte[] returnBytes = new byte[hexString.Length / 2];
-            for (int i = 0; i < returnBytes.Length; i++)
-                returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
-            return returnBytes;
-        }
 
         //
         // MembershipProvider.FindUsersByName
@@ -1823,13 +1800,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "FindUsersByName");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "FindUsersByName");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1891,13 +1868,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "FindUsersByEmail");
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "FindUsersByEmail");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
                 {
                     throw e;
                 }
@@ -1912,6 +1889,8 @@ namespace Erestauracja.Providers
             return users;
         }
 
+        #endregion
+
         //
         // WriteToEventLog
         //   A helper function that writes exception detail to the event log. Exceptions
@@ -1921,83 +1900,26 @@ namespace Erestauracja.Providers
         // thrown by the caller.
         //
 
-        private void WriteToEventLog(Exception e, string action)
-        {
-            /*
-            * 
-            * If the sample provider encounters an exception when working with the data source, it writes the details of the exception to the Application Event Log instead of returning the exception to the ASP.NET application. This is done as a security measure to avoid exposing private information about the data source in the ASP.NET application.
-            * The sample provider specifies an event Source of "OdbcRoleProvider". Before your ASP.NET application will be able to write to the Application Event Log successfully, you will need to create the following registry key.
-            * HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\OdbcRoleProvider
-            * 
-            */
-            EventLog log = new EventLog();
-            log.Source = eventSource;
-            log.Log = eventLog;
+        //private void WriteToEventLog(Exception e, string action)
+        //{
+        //    /*
+        //    * 
+        //    * If the sample provider encounters an exception when working with the data source, it writes the details of the exception to the Application Event Log instead of returning the exception to the ASP.NET application. This is done as a security measure to avoid exposing private information about the data source in the ASP.NET application.
+        //    * The sample provider specifies an event Source of "OdbcRoleProvider". Before your ASP.NET application will be able to write to the Application Event Log successfully, you will need to create the following registry key.
+        //    * HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\OdbcRoleProvider
+        //    * 
+        //    */
+        //    EventLog log = new EventLog();
+        //    log.Source = eventSource;
+        //    log.Log = eventLog;
 
-            string message = "An exception occurred communicating with the data source.\n\n";
-            message += "Action: " + action + "\n\n";
-            message += "Exception: " + e.ToString();
+        //    string message = "An exception occurred communicating with the data source.\n\n";
+        //    message += "Action: " + action + "\n\n";
+        //    message += "Exception: " + e.ToString();
 
-            log.WriteEntry(message);
-        }
+        //    log.WriteEntry(message);
+        //}
 
-        public string GetUserQuestion(string login)
-        {
-            if (!EnablePasswordReset)
-            {
-                throw new ProviderException("Password Reset Not Enabled.");
-            }
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserQuestion);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            string passwordQuestion = "";
-            MySqlDataReader reader = null;
-
-            try
-            {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    if (reader.GetBoolean(1))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    passwordQuestion = reader.GetString(0);
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
-                }
-            }
-            catch (MySqlException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetUserQuestion");
-
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            return passwordQuestion;
-        }
-
+        #endregion
     }
 }

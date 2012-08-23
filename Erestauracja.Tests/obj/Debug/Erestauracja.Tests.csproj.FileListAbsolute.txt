@@ -1,0 +1,8 @@
+D:\Eres\dobry\Erestauracja.Tests\bin\Debug\Erestauracja.Tests.dll.config
+D:\Eres\dobry\Erestauracja.Tests\bin\Debug\Erestauracja.Tests.dll
+D:\Eres\dobry\Erestauracja.Tests\bin\Debug\Erestauracja.Tests.pdb
+D:\Eres\dobry\Erestauracja.Tests\bin\Debug\Erestauracja.dll
+D:\Eres\dobry\Erestauracja.Tests\bin\Debug\Erestauracja.pdb
+D:\Eres\dobry\Erestauracja.Tests\obj\Debug\ResolveAssemblyReference.cache
+D:\Eres\dobry\Erestauracja.Tests\obj\Debug\Erestauracja.Tests.dll
+D:\Eres\dobry\Erestauracja.Tests\obj\Debug\Erestauracja.Tests.pdb
