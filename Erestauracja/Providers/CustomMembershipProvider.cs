@@ -15,6 +15,7 @@ using System.Web.Configuration;
 using MySql.Data.MySqlClient;
 using System.Net.Mail;
 using System.Net;
+using Erestauracja.ServiceReference;
 
 //dopisać
 
@@ -89,7 +90,7 @@ namespace Erestauracja.Providers
             pEnablePasswordRetrieval = Convert.ToBoolean(GetConfigValue(config["enablePasswordRetrieval"], "true"));
             pRequiresQuestionAndAnswer = Convert.ToBoolean(GetConfigValue(config["requiresQuestionAndAnswer"], "false"));
             pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
-         //   pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
+            pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
             string temp_format = config["passwordFormat"];
             if (temp_format == null)
@@ -226,9 +227,6 @@ namespace Erestauracja.Providers
 
         #endregion
 
-
-
-
         #region System.Web.Security.MembershipProvider methods.
 
 
@@ -236,12 +234,12 @@ namespace Erestauracja.Providers
         #region Password methods:
 
         /// <summary>
-        /// Zamienia stare hasło na nowe u użytkownika o danym loginie
+        /// Zamienia stare hasło na nowe u użytkownika o danym loginie.
         /// </summary>
         /// <param name="login">Login użytkownika</param>
         /// <param name="oldPwd">Stare hasło</param>
         /// <param name="newPwd">Nowe hasło</param>
-        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public override bool ChangePassword(string login, string oldPwd, string newPwd)
         {
             if (!ValidateUser(login, oldPwd))
@@ -283,57 +281,50 @@ namespace Erestauracja.Providers
             return value;
         }
 
-        //
-        // MembershipProvider.ChangePasswordQuestionAndAnswer
-        //
+        /// <summary>
+        /// Zamienia pytanie oraz odpowiedź do odzyskiwania hasła u użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło użytkownika</param>
+        /// <param name="newPwdQuestion">Nowe pytanie</param>
+        /// <param name="newPwdAnswer">Nowa odpowiedź</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public override bool ChangePasswordQuestionAndAnswer(string login, string password, string newPwdQuestion, string newPwdAnswer)
         {
             if (!ValidateUser(login, password))
                 return false;
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.ChangePasswordQuestionAndAnswer);
-            command.Parameters.AddWithValue("@question", newPwdQuestion);
-            command.Parameters.AddWithValue("@answer", EncodePassword(newPwdAnswer));
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            int rowsaffected = 0;
-
+            bool value = false;
             try
             {
-                conn.Open();
-                rowsaffected = command.ExecuteNonQuery();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                { 
+                    value = client.ChangePasswordQuestionAndAnswer(login, newPwdQuestion, EncodePassword(newPwdAnswer));
+                }
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
 
-            finally
-            {
-                conn.Close();
-            }
-
-            if (rowsaffected > 0)
-            {
-                return true;
-            }
-            return false;
+            return value;
         }
 
-        //
-        // MembershipProvider.GetPassword
-        //
+        /// <summary>
+        /// Zwraca hasło, jeżeli odpowiedz na pytanie do przywaracania hasła jest poprawna.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="answer">Odpowiedź na pytanie</param>
+        /// <returns>Hasło jeśli odpowiedź jest poprawna.</returns>
         public override string GetPassword(string login, string answer)
         {
             if (!EnablePasswordRetrieval)
@@ -346,68 +337,54 @@ namespace Erestauracja.Providers
                 throw new ProviderException("Cannot retrieve Hashed passwords.");
             }
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetPassword);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
             string password = "";
-            string passwordAnswer = "";
-            MySqlDataReader reader = null;
-
+            PasswordAndAnswer value = null;
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    reader.Read();
-
-                    if (reader.GetBoolean(2))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    password = reader.GetString(0);
-                    passwordAnswer = reader.GetString(1);
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
+                    value = client.GetPassword(login);
                 }
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetPassword");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetPassword");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+
+            if (value != null)
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
+                if(value.IsLockedOut == false)
+                {
+                    if (RequiresQuestionAndAnswer && !CheckPassword(answer, value.PasswordAnswer))
+                    {
+                        UpdateFailureCount(login, "passwordAnswer");
+
+                        throw new MembershipPasswordException("Incorrect password answer.");
+                    }
+
+
+                    if (PasswordFormat == MembershipPasswordFormat.Encrypted)
+                    {
+                        password = UnEncodePassword(value.Password);
+                    }
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user is locked out.");
+                }
             }
-
-
-            if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
+            else
             {
-                UpdateFailureCount(login, "passwordAnswer");
-
-                throw new MembershipPasswordException("Incorrect password answer.");
-            }
-
-
-            if (PasswordFormat == MembershipPasswordFormat.Encrypted)
-            {
-                password = UnEncodePassword(password);
+                throw new MembershipPasswordException("The supplied user name is not found.");
             }
 
             return password;
@@ -1600,132 +1577,6 @@ namespace Erestauracja.Providers
         }
 
         //
-        // UpdateFailureCount
-        //   A helper method that performs the checks and updates associated with
-        // password failure tracking.
-        //
-        private void UpdateFailureCount(string login, string failureType)
-        {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            MySqlDataReader reader = null;
-            DateTime windowStart = new DateTime();
-            int failureCount = 0;
-
-            try
-            {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    if (failureType == "password")
-                    {
-                        failureCount = reader.GetInt32(0);
-                        windowStart = reader.GetDateTime(1);
-                    }
-
-                    if (failureType == "passwordAnswer")
-                    {
-                        failureCount = reader.GetInt32(2);
-                        windowStart = reader.GetDateTime(3);
-                    }
-                }
-
-                reader.Close();
-
-                DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
-
-                if (failureCount == 0 || DateTime.Now > windowEnd)
-                {
-                    // First password failure or outside of PasswordAttemptWindow. 
-                    // Start a new password failure count from 1 and a new window starting now.
-
-                    if (failureType == "password")
-                        command.CommandText = Queries.UpdateFailedPasswordAttempt;
-
-                    if (failureType == "passwordAnswer")
-                        command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
-
-                    command.Parameters.Clear();
-
-                    command.Parameters.Add("@count", 1);
-                    command.Parameters.Add("@windowStart", DateTime.Now);
-                    command.Parameters.Add("@login", login);
-                    command.Parameters.Add("@applicationName", pApplicationName);
-
-                    if (command.ExecuteNonQuery() < 0)
-                        throw new ProviderException("Unable to update failure count and window start.");
-                }
-                else
-                {
-                    if (failureCount++ >= MaxInvalidPasswordAttempts)
-                    {
-                        // Password attempts have exceeded the failure threshold. Lock out
-                        // the user.
-
-                        command.CommandText = Queries.LockOutUser;
-
-                        command.Parameters.Clear();
-
-                        command.Parameters.Add("@isLockedOut", true);
-                        command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
-                        command.Parameters.Add("@login", login);
-                        command.Parameters.Add("@applicationName", pApplicationName);
-
-                        if (command.ExecuteNonQuery() < 0)
-                            throw new ProviderException("Unable to lock out user.");
-                    }
-                    else
-                    {
-                        // Password attempts have not exceeded the failure threshold. Update
-                        // the failure counts. Leave the window the same.
-
-                        if (failureType == "password")
-                            command.CommandText = Queries.SetFailedPasswordAttemptCount;
-
-                        if (failureType == "passwordAnswer")
-                            command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
-
-                        command.Parameters.Clear();
-
-                        command.Parameters.Add("@count", failureCount);
-                        command.Parameters.Add("@login", login);
-                        command.Parameters.Add("@applicationName", pApplicationName);
-
-                        if (command.ExecuteNonQuery() < 0)
-                            throw new ProviderException("Unable to update failure count.");
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "UpdateFailureCount");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-        }
-
-        //
         // MembershipProvider.FindUsersByName
         //
         public override MembershipUserCollection FindUsersByName(string loginToMatch, int pageIndex, int pageSize, out int totalRecords)
@@ -1860,7 +1711,131 @@ namespace Erestauracja.Providers
 
         #endregion
 
+//
+        // UpdateFailureCount
+        //   A helper method that performs the checks and updates associated with
+        // password failure tracking.
+        //
+        private void UpdateFailureCount(string login, string failureType)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            command.Connection = conn;
 
+            MySqlDataReader reader = null;
+            DateTime windowStart = new DateTime();
+            int failureCount = 0;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (failureType == "password")
+                    {
+                        failureCount = reader.GetInt32(0);
+                        windowStart = reader.GetDateTime(1);
+                    }
+
+                    if (failureType == "passwordAnswer")
+                    {
+                        failureCount = reader.GetInt32(2);
+                        windowStart = reader.GetDateTime(3);
+                    }
+                }
+
+                reader.Close();
+
+                DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
+
+                if (failureCount == 0 || DateTime.Now > windowEnd)
+                {
+                    // First password failure or outside of PasswordAttemptWindow. 
+                    // Start a new password failure count from 1 and a new window starting now.
+
+                    if (failureType == "password")
+                        command.CommandText = Queries.UpdateFailedPasswordAttempt;
+
+                    if (failureType == "passwordAnswer")
+                        command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
+
+                    command.Parameters.Clear();
+
+                    command.Parameters.Add("@count", 1);
+                    command.Parameters.Add("@windowStart", DateTime.Now);
+                    command.Parameters.Add("@login", login);
+                    command.Parameters.Add("@applicationName", pApplicationName);
+
+                    if (command.ExecuteNonQuery() < 0)
+                        throw new ProviderException("Unable to update failure count and window start.");
+                }
+                else
+                {
+                    if (failureCount++ >= MaxInvalidPasswordAttempts)
+                    {
+                        // Password attempts have exceeded the failure threshold. Lock out
+                        // the user.
+
+                        command.CommandText = Queries.LockOutUser;
+
+                        command.Parameters.Clear();
+
+                        command.Parameters.Add("@isLockedOut", true);
+                        command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
+                        command.Parameters.Add("@login", login);
+                        command.Parameters.Add("@applicationName", pApplicationName);
+
+                        if (command.ExecuteNonQuery() < 0)
+                            throw new ProviderException("Unable to lock out user.");
+                    }
+                    else
+                    {
+                        // Password attempts have not exceeded the failure threshold. Update
+                        // the failure counts. Leave the window the same.
+
+                        if (failureType == "password")
+                            command.CommandText = Queries.SetFailedPasswordAttemptCount;
+
+                        if (failureType == "passwordAnswer")
+                            command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
+
+                        command.Parameters.Clear();
+
+                        command.Parameters.Add("@count", failureCount);
+                        command.Parameters.Add("@login", login);
+                        command.Parameters.Add("@applicationName", pApplicationName);
+
+                        if (command.ExecuteNonQuery() < 0)
+                            throw new ProviderException("Unable to update failure count.");
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                //if (WriteExceptionsToEventLog)
+                //{
+                //    WriteToEventLog(e, "UpdateFailureCount");
+
+                //    throw new ProviderException(exceptionMessage);
+                //}
+                //else
+                {
+                    throw e;
+                }
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+        }
         //
         // WriteToEventLog
         //   A helper function that writes exception detail to the event log. Exceptions

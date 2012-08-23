@@ -14,7 +14,7 @@ namespace Contract
     {
         private string eventSource = "EresWindowsService";
         private string eventLog = "Erestauracja";
-        private string message = "Wystąpił błąd związany z mySql podczas komunikacji z bazą danych.\n\n";
+        private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
         private string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";";
@@ -28,27 +28,46 @@ namespace Contract
             //this.ConnectionString = settings[2].ConnectionString;
         }
 
-        private DataSet ExecuteQuery(MySqlCommand command)
+        private DataSet ExecuteQuery(MySqlCommand command, string action)
         {
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            conn.Open();
-            command.Connection = conn;
-
+            MySqlConnection conn = new MySqlConnection();
             DataSet myDS = new DataSet();
 
             try
             {
+                conn = new MySqlConnection(ConnectionString);
+                conn.Open();
+                command.Connection = conn;
+
                 MySqlDataAdapter da = new MySqlDataAdapter(command);
                 da.Fill(myDS);
             }
-            catch (Exception e)
+            catch (MySqlException e)
             {
-                Console.WriteLine(e.Message);
-            }
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
 
+                string wiadomosc = message;
+                wiadomosc += "Action: " + action + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + action + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+            }
             finally
             {
-                //conn.Clone();
                 conn.Close();
             }
 
@@ -57,14 +76,14 @@ namespace Contract
 
         private int ExecuteNonQuery(MySqlCommand command, string action)
         {
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            conn.Open();
-            command.Connection = conn;
-
+            MySqlConnection conn = new MySqlConnection();
             int rowsaffected = 0;
-
             try
             {
+                conn = new MySqlConnection(ConnectionString);
+                conn.Open();
+                command.Connection = conn;
+
                 rowsaffected = command.ExecuteNonQuery();
             }
             catch (MySqlException e)
@@ -117,32 +136,49 @@ namespace Contract
             }
             return false;  
         }
-        
-        
-            //////try
-            //////{
-            //////    MySqlCommand command = new MySqlCommand(Queries.Test);
 
-            //////    DataSet ds = new DataSet();
-            //////    ds = ExecuteQuery(command);
-            //////    string test = "";
+        public bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.ChangePasswordQuestionAndAnswer);
+            command.Parameters.AddWithValue("@question", newPwdQuestion);
+            command.Parameters.AddWithValue("@answer", newPwdAnswer);
+            command.Parameters.AddWithValue("@login", login);
+            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
+            int rowsaffected = ExecuteNonQuery(command, "ChangePasswordQuestionAndAnswer");
 
-            //////    if (ds.Tables.Count > 0)
-            //////    {
-            //////        foreach (DataRow row in ds.Tables[0].Rows)
-            //////        {
-            //////            if (row["Nazwa"] != DBNull.Value) test = row["Nazwa"].ToString();
-            //////        }
-            //////    }
-            //////    return test;
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
-            //////}
-            //////catch (MySqlException ex)
-            //////{
-            //////    Console.WriteLine(ex.ToString());
-            //////    return "";
-            //////}   
+        public PasswordAndAnswer GetPassword(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetPassword);
+            command.Parameters.AddWithValue("@login", login);
+            ////command.Parameters.AddWithValue("@applicationName", pApplicationName);
+
+            PasswordAndAnswer value = new PasswordAndAnswer();
+            value.Password = null;
+            value.PasswordAnswer = null;
+            value.IsLockedOut = false;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetPassword");
+
+            if (ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["password"] != DBNull.Value) value.Password = row["password"].ToString();
+                    if (row["passwordAnswer"] != DBNull.Value) value.PasswordAnswer = row["passwordAnswer"].ToString();
+                    if (row["isLockedOut"] != DBNull.Value) value.IsLockedOut = Convert.ToBoolean(row["isLockedOut"]);
+                }
+            }
+            return value;
+        }  
     }
 
 

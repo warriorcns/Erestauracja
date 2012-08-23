@@ -11,38 +11,42 @@ namespace Contract
     public interface IEresService
     {
         [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        [OperationContract]
         bool ChangePassword(string login, string password);
 
-        //[OperationContract]
-        //User GetUserData(User user);
-        //// TODO: Add your service operations here
+        [OperationContract]
+        bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer);
+
+        [OperationContract]
+        PasswordAndAnswer GetPassword(string login);
+
     }
 
-    // Use a data contract as illustrated in the sample below to add composite types to service operations
     [DataContract]
-    public class CompositeType
+    public class PasswordAndAnswer
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        private string password = null;
+        private string passwordAnswer = null;
+        private bool isLockedOut = false;
 
         [DataMember]
-        public bool BoolValue
+        public string Password
         {
-            get { return boolValue; }
-            set { boolValue = value; }
+            get { return password; }
+            set { password = value; }
         }
 
         [DataMember]
-        public string StringValue
+        public string PasswordAnswer
         {
-            get { return stringValue; }
-            set { stringValue = value; }
+            get { return passwordAnswer; }
+            set { passwordAnswer = value; }
+        }
+
+        [DataMember]
+        public bool IsLockedOut
+        {
+            get { return isLockedOut; }
+            set { isLockedOut = value; }
         }
     }
 

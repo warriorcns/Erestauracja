@@ -88,7 +88,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login.
         /// </summary>
         internal static string ChangePasswordQuestionAndAnswer {
             get {
@@ -214,7 +214,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login.
         /// </summary>
         internal static string GetPassword {
             get {

@@ -15,18 +15,21 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordAndAnswer", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class PasswordAndAnswer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
+        private bool IsLockedOutField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordAnswerField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -39,27 +42,40 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
+        public bool IsLockedOut {
             get {
-                return this.BoolValueField;
+                return this.IsLockedOutField;
             }
             set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
+                if ((this.IsLockedOutField.Equals(value) != true)) {
+                    this.IsLockedOutField = value;
+                    this.RaisePropertyChanged("IsLockedOut");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
+        public string Password {
             get {
-                return this.StringValueField;
+                return this.PasswordField;
             }
             set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PasswordAnswer {
+            get {
+                return this.PasswordAnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordAnswerField, value) != true)) {
+                    this.PasswordAnswerField = value;
+                    this.RaisePropertyChanged("PasswordAnswer");
                 }
             }
         }
@@ -78,14 +94,14 @@ namespace Erestauracja.ServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetData", ReplyAction="http://tempuri.org/IEresService/GetDataResponse")]
-        string GetData(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IEresService/GetDataUsingDataContractResponse")]
-        Erestauracja.ServiceReference.CompositeType GetDataUsingDataContract(Erestauracja.ServiceReference.CompositeType composite);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ChangePassword", ReplyAction="http://tempuri.org/IEresService/ChangePasswordResponse")]
         bool ChangePassword(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ChangePasswordQuestionAndAnswer", ReplyAction="http://tempuri.org/IEresService/ChangePasswordQuestionAndAnswerResponse")]
+        bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetPassword", ReplyAction="http://tempuri.org/IEresService/GetPasswordResponse")]
+        Erestauracja.ServiceReference.PasswordAndAnswer GetPassword(string login);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -115,16 +131,16 @@ namespace Erestauracja.ServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
-        }
-        
-        public Erestauracja.ServiceReference.CompositeType GetDataUsingDataContract(Erestauracja.ServiceReference.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
-        }
-        
         public bool ChangePassword(string login, string password) {
             return base.Channel.ChangePassword(login, password);
+        }
+        
+        public bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer) {
+            return base.Channel.ChangePasswordQuestionAndAnswer(login, newPwdQuestion, newPwdAnswer);
+        }
+        
+        public Erestauracja.ServiceReference.PasswordAndAnswer GetPassword(string login) {
+            return base.Channel.GetPassword(login);
         }
     }
 }

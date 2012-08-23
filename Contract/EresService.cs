@@ -9,26 +9,6 @@ namespace Contract
 {
     public class EresService : IEresService
     {
-        #region usunąć
-        public string GetData(int value)
-        {
-            return string.Format("You entered: {0}", value);
-        }
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
-        #endregion
-
         #region membershipProvider
 
         public bool ChangePassword(string login, string password)
@@ -45,6 +25,33 @@ namespace Contract
             }
         }
 
+        public bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer)
+        {
+            if (!(String.IsNullOrEmpty(login) && String.IsNullOrEmpty(newPwdQuestion) && String.IsNullOrEmpty(newPwdAnswer)))
+            {
+                Database db = new Database();
+                bool value = db.ChangePasswordQuestionAndAnswer(login, newPwdQuestion, newPwdAnswer);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public PasswordAndAnswer GetPassword(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                PasswordAndAnswer value = db.GetPassword(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         #endregion
     }

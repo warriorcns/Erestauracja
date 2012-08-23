@@ -127,7 +127,7 @@
     <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login</value>
   </data>
   <data name="ChangePasswordQuestionAndAnswer" xml:space="preserve">
-    <value>UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `passwordQuestion` = @question, `passwordAnswer` = @answer WHERE `login` = @login</value>
   </data>
   <data name="CreateRole" xml:space="preserve">
     <value>INSERT INTO `roles`(`rolename`, `applicationName`) VALUES (@rolename, @applicationName)</value>
@@ -169,7 +169,7 @@
     <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetPassword" xml:space="preserve">
-    <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login</value>
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>

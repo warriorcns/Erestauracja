@@ -612,7 +612,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.CompositeType.datasource">
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.PasswordAndAnswer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\item.disco" />
