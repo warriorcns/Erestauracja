@@ -25,6 +25,24 @@
   <wsdl:message name="IEresService_GetPassword_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPasswordResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetPasswordAnswer_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPasswordAnswer" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetPasswordAnswer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPasswordAnswerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_ResetPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_ResetPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUserQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserQuestion" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUserQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserQuestionResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEresService">
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -37,6 +55,18 @@
     <wsdl:operation name="GetPassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetPassword" message="tns:IEresService_GetPassword_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetPasswordResponse" message="tns:IEresService_GetPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPasswordAnswer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetPasswordAnswer" message="tns:IEresService_GetPasswordAnswer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetPasswordAnswerResponse" message="tns:IEresService_GetPasswordAnswer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ResetPassword" message="tns:IEresService_ResetPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/ResetPasswordResponse" message="tns:IEresService_ResetPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUserQuestion" message="tns:IEresService_GetUserQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUserQuestionResponse" message="tns:IEresService_GetUserQuestion_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
@@ -61,6 +91,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetPassword">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPasswordAnswer">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetPasswordAnswer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <soap:operation soapAction="http://tempuri.org/IEresService/ResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserQuestion">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetUserQuestion" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

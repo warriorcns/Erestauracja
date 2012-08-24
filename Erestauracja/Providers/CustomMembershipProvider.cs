@@ -155,71 +155,67 @@ namespace Erestauracja.Providers
         #region System.Web.Security.MembershipProvider properties.
 
         private string pApplicationName;
-        private bool pEnablePasswordReset;
-        private bool pEnablePasswordRetrieval;
-        private bool pRequiresQuestionAndAnswer;
-        private bool pRequiresUniqueEmail;
-        private int pMaxInvalidPasswordAttempts;
-        private int pPasswordAttemptWindow;
-        private MembershipPasswordFormat pPasswordFormat;
-
         public override string ApplicationName
         {
             get { return pApplicationName; }
             set { pApplicationName = value; }
         }
 
+        private bool pEnablePasswordReset;
         public override bool EnablePasswordReset
         {
             get { return pEnablePasswordReset; }
         }
-
+ 
+        private bool pEnablePasswordRetrieval;
         public override bool EnablePasswordRetrieval
         {
             get { return pEnablePasswordRetrieval; }
         }
 
+        private bool pRequiresQuestionAndAnswer;
         public override bool RequiresQuestionAndAnswer
         {
             get { return pRequiresQuestionAndAnswer; }
         }
 
+        private bool pRequiresUniqueEmail;
         public override bool RequiresUniqueEmail
         {
             get { return pRequiresUniqueEmail; }
         }
 
+        private int pMaxInvalidPasswordAttempts;
         public override int MaxInvalidPasswordAttempts
         {
             get { return pMaxInvalidPasswordAttempts; }
         }
 
+        private int pPasswordAttemptWindow;
         public override int PasswordAttemptWindow
         {
             get { return pPasswordAttemptWindow; }
         }
 
+        private MembershipPasswordFormat pPasswordFormat;
         public override MembershipPasswordFormat PasswordFormat
         {
             get { return pPasswordFormat; }
         }
 
         private int pMinRequiredNonAlphanumericCharacters;
-
         public override int MinRequiredNonAlphanumericCharacters
         {
             get { return pMinRequiredNonAlphanumericCharacters; }
         }
 
         private int pMinRequiredPasswordLength;
-
         public override int MinRequiredPasswordLength
         {
             get { return pMinRequiredPasswordLength; }
         }
 
         private string pPasswordStrengthRegularExpression;
-
         public override string PasswordStrengthRegularExpression
         {
             get { return pPasswordStrengthRegularExpression; }
@@ -264,6 +260,7 @@ namespace Erestauracja.Providers
                 {
                     value = client.ChangePassword(login, EncodePassword(newPwd));
                 }
+                client.Close();
             }
             catch (Exception e)
             {
@@ -277,7 +274,7 @@ namespace Erestauracja.Providers
                     throw e;
                 }
             }
-
+            
             return value;
         }
 
@@ -302,6 +299,7 @@ namespace Erestauracja.Providers
                 { 
                     value = client.ChangePasswordQuestionAndAnswer(login, newPwdQuestion, EncodePassword(newPwdAnswer));
                 }
+                client.Close();
             }
             catch (Exception e)
             {
@@ -346,6 +344,7 @@ namespace Erestauracja.Providers
                 {
                     value = client.GetPassword(login);
                 }
+                client.Close();
             }
             catch (Exception e)
             {
@@ -371,7 +370,6 @@ namespace Erestauracja.Providers
                         throw new MembershipPasswordException("Incorrect password answer.");
                     }
 
-
                     if (PasswordFormat == MembershipPasswordFormat.Encrypted)
                     {
                         password = UnEncodePassword(value.Password);
@@ -390,9 +388,15 @@ namespace Erestauracja.Providers
             return password;
         }
 
-        //
-        // MembershipProvider.ResetPassword
-        //
+        /// <summary>
+        /// Jeśli odpowiedź na pytanie do przywracania hasła jest poprawna ustawia nowe hasło dla danego użytkownika oraz wysyła nowe hasło na jego aders email.
+        /// </summary>
+        /// /// <remarks>
+        /// Aby metoda zwracała nowe hasło trzeba odkomentować return.
+        /// </remarks>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="answer">Odpowiedź na pytanie</param>
+        /// <returns>Pusty string.</returns>
         public override string ResetPassword(string login, string answer)
         {
             if (!EnablePasswordReset)
@@ -422,159 +426,144 @@ namespace Erestauracja.Providers
                 else
                     throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetPasswordAnswer);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            int rowsAffected = 0;
-            string passwordAnswer = "";
-            MySqlDataReader reader = null;
-
+            PasswordAnswer value = null;
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    reader.Read();
-
-                    if (reader.GetBoolean(1))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    passwordAnswer = reader.GetString(0);
-                    reader.Close();
+                    value = client.GetPasswordAnswer(login);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetPasswordAnswer");
+                    throw new ProviderException(exceptionMessage);
                 }
                 else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
-                }
-
-                if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
-                {
-                    UpdateFailureCount(login, "passwordAnswer");
-
-                    throw new MembershipPasswordException("Incorrect password answer.");
-                }
-
-                MySqlCommand updateCmd = new MySqlCommand(Queries.ResetPassword);
-                updateCmd.Parameters.AddWithValue("@password", EncodePassword(newPassword));
-                updateCmd.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
-                updateCmd.Parameters.AddWithValue("@login", login);
-                updateCmd.Parameters.AddWithValue("@applicationName", pApplicationName);
-                updateCmd.Parameters.AddWithValue("@isLockedOut", false);
-                updateCmd.Connection = conn;
-
-                rowsAffected = updateCmd.ExecuteNonQuery();
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "ResetPassword");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
                 {
                     throw e;
                 }
             }
-            finally
+
+            if (value != null)
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            if (rowsAffected > 0)
-            {
-                MySqlCommand getcommand = new MySqlCommand(Queries.GetEmailByLogin);
-                getcommand.Parameters.AddWithValue("@login", login);
-                getcommand.Parameters.AddWithValue("@applicationName", pApplicationName);
-                getcommand.Connection = conn;
-
-                string email = "";
-                MySqlDataReader emailreader = null;
-
-                try
+                if (value.IsLockedOut == false)
                 {
-                    conn.Open();
-
-                    emailreader = getcommand.ExecuteReader(CommandBehavior.SingleRow);
-
-                    if (emailreader.HasRows)
+                    if (RequiresQuestionAndAnswer && !CheckPassword(answer, value.Answer))
                     {
-                        emailreader.Read();
-                        
-                        // może być dla bezpieczeństwa ale już było sprawdzane
-                    //    if (emailreader.GetBoolean(2))
-                    //        throw new MembershipPasswordException("The supplied user is locked out.");
+                        UpdateFailureCount(login, "passwordAnswer");
+                        throw new MembershipPasswordException("Incorrect password answer.");
+                    }
 
-                        email = emailreader.GetString(0);
+                    bool reset = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            reset = client.ResetPassword(login, EncodePassword(newPassword));
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        if (WriteExceptionsToEventLog)
+                        {
+                            WriteToEventLog(e, "ResetPassword");
+                            throw new ProviderException(exceptionMessage);
+                        }
+                        else
+                        {
+                            throw e;
+                        }
+                    }
+
+                    if (reset == true)
+                    {
+                        //return newPassword;
+                        return String.Empty;
                     }
                     else
                     {
-                        throw new MembershipPasswordException("The supplied login is not found.");
+                        throw new MembershipPasswordException("Restetowanie hasła nie powiodło się.");
                     }
                 }
-                catch (MySqlException e)
+                else
                 {
-                    //if (WriteExceptionsToEventLog)
-                    //{
-                    //    WriteToEventLog(e, "GetEmail");
-
-                    //    throw new ProviderException(exceptionMessage);
-                    //}
-                    //else
-                    {
-                        throw e;
-                    }
+                    throw new MembershipPasswordException("The supplied user is locked out.");
                 }
-                finally
-                {
-                    if (emailreader != null) { emailreader.Close(); }
-                    conn.Close();
-                }
-
-                if(email!="")
-                {
-                SmtpClient klient = new SmtpClient("smtp.gmail.com");
-                MailMessage wiadomosc = new MailMessage();
-                try
-                {
-                    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
-                    wiadomosc.To.Add(email);
-                    wiadomosc.Subject = "Erestauracja - restet hasła.";
-                    wiadomosc.Body = "Nowe hasło: " + newPassword;
-
-                    klient.Port = 587;
-                    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
-                    klient.EnableSsl = true;
-                    klient.Send(wiadomosc);
-                }
-                catch (Exception ex)
-                {
-                    // znazcy że nie wysłał wiadomości co robić ??
-                    // przywrócić stare ??
-                    // może rollback ??
-
-                }
-                }
-                return newPassword;
             }
             else
             {
-                throw new MembershipPasswordException("User not found, or user is locked out. Password not Reset.");
+                throw new MembershipPasswordException("The supplied user name is not found.");
             }
         }
 
-        //
-        // CheckPassword
-        //   Compares password values based on the MembershipPasswordFormat.
-        //
+        /// <summary>
+        /// Zwraca pytanie do odzyskiwania hasła danego użytkownika.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>Pytanie do odzyskiwania hasła.</returns>
+        public string GetUserQuestion(string login)
+        {
+            if (!EnablePasswordReset)
+            {
+                throw new ProviderException("Password Reset Not Enabled.");
+            }
+
+            string passwordQuestion = "";
+            PasswordQuestion value = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.GetUserQuestion(login);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUserQuestion");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+
+            if (value != null)
+            {
+                if (value.IsLockedOut == false)
+                {
+                    passwordQuestion = value.Question;
+                }
+                else
+                {
+                    throw new MembershipPasswordException("The supplied user is locked out.");
+                }
+            }
+            else
+            {
+                throw new MembershipPasswordException("The supplied user name is not found.");
+            }
+
+            return passwordQuestion;
+        } 
+
+        /// <summary>
+        /// Porównuje wartości haseł na podstawie MembershipPasswordFormat.
+        /// </summary>
+        /// <param name="password">Hasło podane przez użytkownika</param>
+        /// <param name="dbpassword">Hasło z bazy</param>
+        /// <returns>True jeśli hasła zgodne.</returns>
         private bool CheckPassword(string password, string dbpassword)
         {
             string pass1 = password;
@@ -600,10 +589,11 @@ namespace Erestauracja.Providers
             return false;
         }
 
-        //
-        // EncodePassword
-        //   Encrypts, Hashes, or leaves the password clear based on the PasswordFormat.
-        //
+        /// <summary>
+        /// Szyfruje, hashuje, lub pozostawia hasło nie zmienione na podstawie PasswordFormat.
+        /// </summary>
+        /// <param name="password">Hasło</param>
+        /// <returns>Przerobione hasło.</returns>
         private string EncodePassword(string password)
         {
             string encodedPassword = password;
@@ -629,10 +619,11 @@ namespace Erestauracja.Providers
             return encodedPassword;
         }
 
-        //
-        // UnEncodePassword
-        //   Decrypts or leaves the password clear based on the PasswordFormat.
-        //
+        /// <summary>
+        /// Odszyfrowuje lub pozostawia hasło nie zmienione na podstawie PasswordFormat.
+        /// </summary>
+        /// <param name="encodedPassword">Zakodowane hasło</param>
+        /// <returns>Odkodowane hasło.</returns>
         private string UnEncodePassword(string encodedPassword)
         {
             string password = encodedPassword;
@@ -654,69 +645,14 @@ namespace Erestauracja.Providers
             return password;
         }
 
-        public string GetUserQuestion(string login)
-        {
-            if (!EnablePasswordReset)
-            {
-                throw new ProviderException("Password Reset Not Enabled.");
-            }
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserQuestion);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            string passwordQuestion = "";
-            MySqlDataReader reader = null;
-
-            try
-            {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    if (reader.GetBoolean(1))
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-
-                    passwordQuestion = reader.GetString(0);
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
-                }
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetUserQuestion");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            return passwordQuestion;
-        }
-        
-        //
-        // HexToByte
-        //   Converts a hexadecimal string to a byte array. Used to convert encryption
-        // key values from the configuration.
-        //
+        /// <summary>
+        /// Konwertuje szesnastkowy łańcuch znaków do tablicy bajtów.
+        /// </summary>
+        /// <remarks>
+        /// Służy do konwersji wartości klucza szyfrowania z pliku konfiguracji.
+        /// </remarks>
+        /// <param name="hexString">Łańcuch znaków do przerobienia</param>
+        /// <returns>Zwraca tablice bajtów.</returns>
         private byte[] HexToByte(string hexString)
         {
             byte[] returnBytes = new byte[hexString.Length / 2];
@@ -724,6 +660,7 @@ namespace Erestauracja.Providers
                 returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
             return returnBytes;
         }
+        
         #endregion
 
 

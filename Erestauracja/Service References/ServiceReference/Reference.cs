@@ -90,6 +90,128 @@ namespace Erestauracja.ServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordAnswer", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class PasswordAnswer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AnswerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLockedOutField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Answer {
+            get {
+                return this.AnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AnswerField, value) != true)) {
+                    this.AnswerField = value;
+                    this.RaisePropertyChanged("Answer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLockedOut {
+            get {
+                return this.IsLockedOutField;
+            }
+            set {
+                if ((this.IsLockedOutField.Equals(value) != true)) {
+                    this.IsLockedOutField = value;
+                    this.RaisePropertyChanged("IsLockedOut");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordQuestion", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class PasswordQuestion : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLockedOutField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string QuestionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLockedOut {
+            get {
+                return this.IsLockedOutField;
+            }
+            set {
+                if ((this.IsLockedOutField.Equals(value) != true)) {
+                    this.IsLockedOutField = value;
+                    this.RaisePropertyChanged("IsLockedOut");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Question {
+            get {
+                return this.QuestionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QuestionField, value) != true)) {
+                    this.QuestionField = value;
+                    this.RaisePropertyChanged("Question");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
@@ -102,6 +224,15 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetPassword", ReplyAction="http://tempuri.org/IEresService/GetPasswordResponse")]
         Erestauracja.ServiceReference.PasswordAndAnswer GetPassword(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetPasswordAnswer", ReplyAction="http://tempuri.org/IEresService/GetPasswordAnswerResponse")]
+        Erestauracja.ServiceReference.PasswordAnswer GetPasswordAnswer(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ResetPassword", ReplyAction="http://tempuri.org/IEresService/ResetPasswordResponse")]
+        bool ResetPassword(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetUserQuestion", ReplyAction="http://tempuri.org/IEresService/GetUserQuestionResponse")]
+        Erestauracja.ServiceReference.PasswordQuestion GetUserQuestion(string login);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -141,6 +272,18 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.PasswordAndAnswer GetPassword(string login) {
             return base.Channel.GetPassword(login);
+        }
+        
+        public Erestauracja.ServiceReference.PasswordAnswer GetPasswordAnswer(string login) {
+            return base.Channel.GetPasswordAnswer(login);
+        }
+        
+        public bool ResetPassword(string login, string password) {
+            return base.Channel.ResetPassword(login, password);
+        }
+        
+        public Erestauracja.ServiceReference.PasswordQuestion GetUserQuestion(string login) {
+            return base.Channel.GetUserQuestion(login);
         }
     }
 }

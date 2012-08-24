@@ -160,7 +160,7 @@
     <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  WHERE `applicationName` = @applicationName ORDER BY `login` Asc</value>
   </data>
   <data name="GetEmailByLogin" xml:space="preserve">
-    <value>SELECT `email` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `email` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetFailureCount" xml:space="preserve">
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
@@ -172,7 +172,7 @@
     <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login</value>
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
-    <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetRolesForUser" xml:space="preserve">
     <value>SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName</value>
@@ -193,7 +193,7 @@
     <value>SELECT `login` FROM `users` WHERE `email` = @email AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetUserQuestion" xml:space="preserve">
-    <value>SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetUsersInRole" xml:space="preserve">
     <value>SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
@@ -208,7 +208,7 @@
     <value>DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
   </data>
   <data name="ResetPassword" xml:space="preserve">
-    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `applicationName` = @applicationName AND `isLockedOut` = @isLockedOut</value>
+    <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `isLockedOut` = @isLockedOut</value>
   </data>
   <data name="RoleExists" xml:space="preserve">
     <value>SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>

@@ -53,6 +53,48 @@ namespace Contract
             }
         }
 
+        public PasswordAnswer GetPasswordAnswer(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                PasswordAnswer value = db.GetPasswordAnswer(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool ResetPassword(string login, string password)
+        {
+            if (!(String.IsNullOrEmpty(login) && String.IsNullOrEmpty(password)))
+            {
+                Database db = new Database();
+                bool value = db.ResetPassword(login, password);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public PasswordQuestion GetUserQuestion(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                PasswordQuestion value = db.GetUserQuestion(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

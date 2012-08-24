@@ -19,6 +19,14 @@ namespace Contract
         [OperationContract]
         PasswordAndAnswer GetPassword(string login);
 
+        [OperationContract]
+        PasswordAnswer GetPasswordAnswer(string login);
+
+        [OperationContract]
+        bool ResetPassword(string login, string password);
+
+        [OperationContract]
+        PasswordQuestion GetUserQuestion(string login);
     }
 
     [DataContract]
@@ -40,6 +48,48 @@ namespace Contract
         {
             get { return passwordAnswer; }
             set { passwordAnswer = value; }
+        }
+
+        [DataMember]
+        public bool IsLockedOut
+        {
+            get { return isLockedOut; }
+            set { isLockedOut = value; }
+        }
+    }
+
+    [DataContract]
+    public class PasswordAnswer
+    {
+        private string passwordAnswer = null;
+        private bool isLockedOut = false;
+
+        [DataMember]
+        public string Answer
+        {
+            get { return passwordAnswer; }
+            set { passwordAnswer = value; }
+        }
+
+        [DataMember]
+        public bool IsLockedOut
+        {
+            get { return isLockedOut; }
+            set { isLockedOut = value; }
+        }
+    }
+
+    [DataContract]
+    public class PasswordQuestion
+    {
+        private string passwordQuestion = null;
+        private bool isLockedOut = false;
+
+        [DataMember]
+        public string Question
+        {
+            get { return passwordQuestion; }
+            set { passwordQuestion = value; }
         }
 
         [DataMember]

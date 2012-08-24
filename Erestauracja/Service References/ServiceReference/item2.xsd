@@ -8,4 +8,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PasswordAndAnswer" nillable="true" type="tns:PasswordAndAnswer" />
+  <xs:complexType name="PasswordAnswer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Answer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PasswordAnswer" nillable="true" type="tns:PasswordAnswer" />
+  <xs:complexType name="PasswordQuestion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Question" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PasswordQuestion" nillable="true" type="tns:PasswordQuestion" />
 </xs:schema>
