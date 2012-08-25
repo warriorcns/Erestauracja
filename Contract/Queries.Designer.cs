@@ -106,7 +106,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `applicationName`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @s [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CreateUser {
             get {
@@ -124,7 +124,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE FROM `users`  WHERE `login` = @login AND `applicationname` = @applicationname.
+        ///   Looks up a localized string similar to DELETE FROM `users`  WHERE `login` = @login.
         /// </summary>
         internal static string DeleteUser {
             get {
@@ -214,7 +214,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login.
+        ///   Looks up a localized string similar to SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetPassword {
             get {

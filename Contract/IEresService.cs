@@ -27,6 +27,12 @@ namespace Contract
 
         [OperationContract]
         PasswordQuestion GetUserQuestion(string login);
+
+        [OperationContract]
+        bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
+
+        [OperationContract]
+        bool DeleteUser(string login, bool deleteAllRelatedData);
     }
 
     [DataContract]

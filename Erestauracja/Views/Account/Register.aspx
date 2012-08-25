@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterModel>" %>
-<%@ Register TagPrefix="asp" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit"%>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Rejesteracja

@@ -133,13 +133,13 @@
     <value>INSERT INTO `roles`(`rolename`, `applicationName`) VALUES (@rolename, @applicationName)</value>
   </data>
   <data name="CreateUser" xml:space="preserve">
-    <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `applicationName`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, @country, @birthdate, @sex, @telephone, @applicationName, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
+    <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, @country, @birthdate, @sex, @telephone, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
   </data>
   <data name="DeleteRole" xml:space="preserve">
     <value>DELETE FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
   </data>
   <data name="DeleteUser" xml:space="preserve">
-    <value>DELETE FROM `users`  WHERE `login` = @login AND `applicationname` = @applicationname</value>
+    <value>DELETE FROM `users`  WHERE `login` = @login</value>
   </data>
   <data name="DeleteUsersInRole" xml:space="preserve">
     <value>DELETE FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
@@ -169,7 +169,7 @@
     <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetPassword" xml:space="preserve">
-    <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users WHERE `login` = @login</value>
+    <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>

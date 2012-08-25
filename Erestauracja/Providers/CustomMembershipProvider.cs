@@ -225,8 +225,6 @@ namespace Erestauracja.Providers
 
         #region System.Web.Security.MembershipProvider methods.
 
-
-
         #region Password methods:
 
         /// <summary>
@@ -666,10 +664,10 @@ namespace Erestauracja.Providers
 
         #region User methods:
 
+        ////CreateUser dla Guid
         ////
         //// MembershipProvider.CreateUser
         ////
-
         //public override MembershipUser CreateUser(string login,
         //    string password,
         //    string email,
@@ -689,27 +687,21 @@ namespace Erestauracja.Providers
         //{
         //    ValidatePasswordEventArgs args =
         //      new ValidatePasswordEventArgs(login, password, true);
-
         //    OnValidatingPassword(args);
-
         //    if (args.Cancel)
         //    {
         //        status = MembershipCreateStatus.InvalidPassword;
         //        return null;
         //    }
-
         //    if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
         //    {
         //        status = MembershipCreateStatus.DuplicateEmail;
         //        return null;
         //    }
-
         //    MembershipUser u = GetUser(login, false);
-
         //    if (u == null)
         //    {
         //        DateTime createDate = DateTime.Now;
-
         //        //  if (providerUserKey == null)
         //        //  {
         //        //       providerUserKey = Guid.NewGuid();
@@ -722,10 +714,8 @@ namespace Erestauracja.Providers
         //        //        return null;
         //        //    }
         //        //}
-
         //        MySqlConnection conn = new MySqlConnection(connectionString);
         //        MySqlCommand command = new MySqlCommand(Queries.CreateUser);
-
         //        command.Parameters.AddWithValue("@login ", login);
         //        command.Parameters.AddWithValue("@password ", EncodePassword(password));
         //        command.Parameters.AddWithValue("@email ", email);
@@ -754,13 +744,10 @@ namespace Erestauracja.Providers
         //        command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount ", 0);
         //        command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart ", createDate);
         //        command.Connection = conn;
-
         //        try
         //        {
         //            conn.Open();
-
         //            int recAdded = command.ExecuteNonQuery();
-
         //            if (recAdded > 0)
         //            {
         //                status = MembershipCreateStatus.Success;
@@ -776,61 +763,62 @@ namespace Erestauracja.Providers
         //            {
         //                WriteToEventLog(e, "CreateUser");
         //            }
-
         //            status = MembershipCreateStatus.ProviderError;
         //        }
         //        finally
         //        {
         //            conn.Close();
         //        }
-
-
         //        return GetUser(login, false);
         //    }
         //    else
         //    {
         //        status = MembershipCreateStatus.DuplicateUserName;
         //    }
-
-
         //    return null;
         //}
 
         //
         // MembershipProvider.CreateUser
         //
-        public override MembershipUser CreateUser(string username,
-           string password,
-           string email,
-           string passwordQuestion,
-           string passwordAnswer,
-           bool isApproved,
-           object providerUserKey,
-           out MembershipCreateStatus status)
+
+        /// <summary>
+        /// Bazowy MembershipUser CreateUser - nie stosować jako samodzielna metoda
+        /// </summary>
+        /// <param name="username">Pusty string - zawsze ""</param>
+        /// <param name="password">Hasło użytkownika</param>
+        /// <param name="email">Adres email</param>
+        /// <param name="passwordQuestion">Pytanie do odzyskiwania hasła</param>
+        /// <param name="passwordAnswer">Odpowiedź do odzyskiwania hasła</param>
+        /// <param name="isApproved">Czy zatwierdzony</param>
+        /// <param name="providerUserKey">Guid - zawsze null</param>
+        /// <param name="status">out MembershipCreateStatus</param>
+        /// <returns>MembershipUser</returns>
+        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            return this.CreateUser("", password, email, "", "", "", "0", "", DateTime.Now, "", "",
-                                  passwordQuestion, passwordAnswer,
-                                  isApproved,
-                                  out status);
+            return this.CreateUser("", password, email, "", "", "", "0", "", DateTime.Now, "", "", passwordQuestion, passwordAnswer, isApproved, out status);
         }
 
-        public CustomMembershipUser CreateUser(
-            string login,
-            string password,
-            string email,
-            string name,
-            string surname,
-            string address,
-            string townID,//tu zmienić na nazwe miasta lub kod i select do zapytania
-            string country,
-            DateTime birthdate,
-            string sex,
-            string telephone,
-            string passwordQuestion,
-            string passwordAnswer,
-            bool isApproved,
-            //    object providerUserKey,
-            out MembershipCreateStatus status)
+        /// <summary>
+        /// Tworzy nowego użytkownika oraz zapisuje go w bazie danych.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło użytkownika</param>
+        /// <param name="email">Adres email</param>
+        /// <param name="name">Imię użytkownika</param>
+        /// <param name="surname">Nazwisko użytkownika</param>
+        /// <param name="address">Adres</param>
+        /// <param name="townID">!!</param>
+        /// <param name="country">Kraj</param>
+        /// <param name="birthdate">Data urodzenia</param>
+        /// <param name="sex">Płeć</param>
+        /// <param name="telephone">Numer telefonu</param>
+        /// <param name="passwordQuestion">Pytanie do odzyskiwania hasła</param>
+        /// <param name="passwordAnswer">Odpowiedź do odzyskiwania hasła</param>
+        /// <param name="isApproved">Czy zatwierdzony</param>
+        /// <param name="status">out MembershipCreateStatus</param>
+        /// <returns>CustomMembershipUser</returns>
+        public CustomMembershipUser CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved, out MembershipCreateStatus status)
         {
             ValidatePasswordEventArgs args =
               new ValidatePasswordEventArgs(login, password, true);
@@ -853,8 +841,7 @@ namespace Erestauracja.Providers
 
             if (u == null)
             {
-                DateTime createDate = DateTime.Now;
-
+                #region //tworzenie Guid wymaga - object providerUserKey argumentach
                 //  if (providerUserKey == null)
                 //  {
                 //       providerUserKey = Guid.NewGuid();
@@ -867,64 +854,40 @@ namespace Erestauracja.Providers
                 //        return null;
                 //    }
                 //}
-                MySqlConnection conn = new MySqlConnection(connectionString);
-                MySqlCommand command = new MySqlCommand(Queries.CreateUser);
-                command.Parameters.AddWithValue("@login", login);
-                command.Parameters.AddWithValue("@password", EncodePassword(password));
-                command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@surname", surname);
-                command.Parameters.AddWithValue("@address", address);
-                command.Parameters.AddWithValue("@townID", townID);
-                command.Parameters.AddWithValue("@country", country);
-                command.Parameters.AddWithValue("@birthdate", birthdate);
-                command.Parameters.AddWithValue("@sex", sex);
-                command.Parameters.AddWithValue("@telephone", telephone);
-                command.Parameters.AddWithValue("@applicationName", pApplicationName);
-                command.Parameters.AddWithValue("@comment", "");
-                command.Parameters.AddWithValue("@passwordQuestion", passwordQuestion);
-                command.Parameters.AddWithValue("@passwordAnswer", EncodePassword(passwordAnswer));
-                command.Parameters.AddWithValue("@isApproved", isApproved);
-                command.Parameters.AddWithValue("@lastActivityDate", createDate);
-                command.Parameters.AddWithValue("@lastLoginDate", createDate);
-                command.Parameters.AddWithValue("@lastPasswordChangedDate", createDate);
-                command.Parameters.AddWithValue("@creationDate", createDate);
-                command.Parameters.AddWithValue("@isOnLine", false);
-                command.Parameters.AddWithValue("@isLockedOut", false);
-                command.Parameters.AddWithValue("@lastLockedOutDate", createDate);
-                command.Parameters.AddWithValue("@failedPasswordAttemptCount", 0);
-                command.Parameters.AddWithValue("@failedPasswordAttemptWindowStart", createDate);
-                command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount", 0);
-                command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart", createDate);
-                command.Connection = conn;
+                #endregion
 
+                bool value = false;
                 try
                 {
-                    conn.Open();
-
-                    int recAdded = command.ExecuteNonQuery();
-
-                    if (recAdded > 0)
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {       
+                        value = client.CreateUser(login, EncodePassword(password), email, name, surname, address, townID, country, birthdate, sex, telephone, passwordQuestion, EncodePassword(passwordAnswer), isApproved);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    if (WriteExceptionsToEventLog)
                     {
-                        status = MembershipCreateStatus.Success;
+                        WriteToEventLog(e, "CreateUser");
+                        status = MembershipCreateStatus.ProviderError;
+                        throw new ProviderException(exceptionMessage);
                     }
                     else
                     {
-                        status = MembershipCreateStatus.UserRejected;
+                        status = MembershipCreateStatus.ProviderError;
+                        throw e;
                     }
                 }
-                catch (MySqlException e)
-                {
-                    //if (WriteExceptionsToEventLog)
-                    //{
-                    //    WriteToEventLog(e, "CreateUser");
-                    //}
 
-                    status = MembershipCreateStatus.ProviderError;
-                }
-                finally
+                if (value == true)
                 {
-                    conn.Close();
+                    status = MembershipCreateStatus.Success;
+                }
+                else
+                {
+                    status = MembershipCreateStatus.UserRejected;
                 }
 
                 return (CustomMembershipUser)GetUser(login, false);
@@ -938,52 +901,39 @@ namespace Erestauracja.Providers
             return null;
         }
 
-        //
-        // MembershipProvider.DeleteUser
-        //
+        /// <summary>
+        /// Usuwa użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="deleteAllRelatedData">Czy usunąć powiązane dane</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public override bool DeleteUser(string login, bool deleteAllRelatedData)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.DeleteUser);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            int rowsAffected = 0;
+            bool value = false;
 
             try
             {
-                conn.Open();
-                rowsAffected = command.ExecuteNonQuery();
-                if (deleteAllRelatedData)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    // Process commands to delete all data for the user in the database.
-                    //dopisać
-                    //co zmienić jak sie usera usówa
-                    // + tranzakcje
+                    value = client.DeleteUser(login, deleteAllRelatedData);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "DeleteUser");
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "DeleteUser");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                conn.Close();
-            }
 
-            if (rowsAffected > 0)
-                return true;
-
-            return false;
+            return value;
         }
 
         //
@@ -1648,7 +1598,7 @@ namespace Erestauracja.Providers
 
         #endregion
 
-//
+        //
         // UpdateFailureCount
         //   A helper method that performs the checks and updates associated with
         // password failure tracking.

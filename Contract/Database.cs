@@ -160,7 +160,6 @@ namespace Contract
         {
             MySqlCommand command = new MySqlCommand(Queries.GetPassword);
             command.Parameters.AddWithValue("@login", login);
-            ////command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
             PasswordAndAnswer value = null;
 
@@ -348,6 +347,69 @@ namespace Contract
                 }
             }
             return value;
+        }
+
+        public bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
+        {
+            DateTime createDate = DateTime.Now;
+
+            MySqlCommand command = new MySqlCommand(Queries.CreateUser);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@password", password);
+            command.Parameters.AddWithValue("@email", email);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@surname", surname);
+            command.Parameters.AddWithValue("@address", address);
+            command.Parameters.AddWithValue("@townID", townID);
+            command.Parameters.AddWithValue("@country", country);
+            command.Parameters.AddWithValue("@birthdate", birthdate);
+            command.Parameters.AddWithValue("@sex", sex);
+            command.Parameters.AddWithValue("@telephone", telephone);
+            command.Parameters.AddWithValue("@comment", "");
+            command.Parameters.AddWithValue("@passwordQuestion", passwordQuestion);
+            command.Parameters.AddWithValue("@passwordAnswer", passwordAnswer);
+            command.Parameters.AddWithValue("@isApproved", isApproved);
+            command.Parameters.AddWithValue("@lastActivityDate", createDate);
+            command.Parameters.AddWithValue("@lastLoginDate", createDate);
+            command.Parameters.AddWithValue("@lastPasswordChangedDate", createDate);
+            command.Parameters.AddWithValue("@creationDate", createDate);
+            command.Parameters.AddWithValue("@isOnLine", false);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+            command.Parameters.AddWithValue("@lastLockedOutDate", createDate);
+            command.Parameters.AddWithValue("@failedPasswordAttemptCount", 0);
+            command.Parameters.AddWithValue("@failedPasswordAttemptWindowStart", createDate);
+            command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount", 0);
+            command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart", createDate);
+
+            int rowsaffected = ExecuteNonQuery(command, "CreateUser");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteUser(string login, bool deleteAllRelatedData)
+        {
+            if (deleteAllRelatedData)
+            {
+                // Process commands to delete all data for the user in the database.
+                //dopisać
+                //co zmienić jak sie usera usuwa
+                // + tranzakcje
+            }
+
+            MySqlCommand command = new MySqlCommand(Queries.DeleteUser);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "DeleteUser");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;  
         }
     }
 

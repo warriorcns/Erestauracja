@@ -43,6 +43,18 @@
   <wsdl:message name="IEresService_GetUserQuestion_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserQuestionResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_CreateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_CreateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEresService">
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -67,6 +79,14 @@
     <wsdl:operation name="GetUserQuestion">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUserQuestion" message="tns:IEresService_GetUserQuestion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUserQuestionResponse" message="tns:IEresService_GetUserQuestion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/CreateUser" message="tns:IEresService_CreateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/CreateUserResponse" message="tns:IEresService_CreateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/DeleteUser" message="tns:IEresService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/DeleteUserResponse" message="tns:IEresService_DeleteUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
@@ -118,6 +138,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserQuestion">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetUserQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/DeleteUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

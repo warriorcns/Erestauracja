@@ -89,4 +89,46 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CreateUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="surname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="townID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="birthdate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sex" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="telephone" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="passwordQuestion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="passwordAnswer" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="isApproved" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateUserResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="deleteAllRelatedData" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeleteUserResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

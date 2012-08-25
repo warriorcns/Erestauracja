@@ -233,6 +233,12 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetUserQuestion", ReplyAction="http://tempuri.org/IEresService/GetUserQuestionResponse")]
         Erestauracja.ServiceReference.PasswordQuestion GetUserQuestion(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/CreateUser", ReplyAction="http://tempuri.org/IEresService/CreateUserResponse")]
+        bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/DeleteUser", ReplyAction="http://tempuri.org/IEresService/DeleteUserResponse")]
+        bool DeleteUser(string login, bool deleteAllRelatedData);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -284,6 +290,14 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.PasswordQuestion GetUserQuestion(string login) {
             return base.Channel.GetUserQuestion(login);
+        }
+        
+        public bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved) {
+            return base.Channel.CreateUser(login, password, email, name, surname, address, townID, country, birthdate, sex, telephone, passwordQuestion, passwordAnswer, isApproved);
+        }
+        
+        public bool DeleteUser(string login, bool deleteAllRelatedData) {
+            return base.Channel.DeleteUser(login, deleteAllRelatedData);
         }
     }
 }
