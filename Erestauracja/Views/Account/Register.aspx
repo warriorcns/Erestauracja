@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterModel>" %>
 
+
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Rejesteracja
 </asp:Content>
@@ -15,12 +16,13 @@
             $("#Birthdate").datepicker();
         });
     </script>
+    
     <script type="text/javascript">
         jQuery(function ($) {
             $("#Birthdate").mask("99/99/9999");
         });
     </script>
-
+    
     <form runat="server">
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>

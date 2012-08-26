@@ -18,7 +18,7 @@
     else
     {
 %>
-        <ul class="topka">
+    <ul class="topka">
     <div class="ikonka">
     </div>
     <div id="label"><%: Html.ActionLink("Zaloguj", "LogOn", "Account") %></div>

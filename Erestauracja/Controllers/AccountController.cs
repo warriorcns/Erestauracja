@@ -9,13 +9,17 @@ using Erestauracja.Models;
 using Erestauracja.Providers;
 using System.Web.Mvc.Html;
 
+
 namespace Erestauracja.Controllers
 {
     public class AccountController : Controller
     {
+
+               
         //
         // GET: /Account/Account
         [Authorize]
+        
         public ActionResult Account()
         {
             if (Request.IsAuthenticated)
@@ -51,6 +55,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/EditData
         [Authorize]
+        
         public ActionResult EditData()
         {
             if (Request.IsAuthenticated)
@@ -74,8 +79,7 @@ namespace Erestauracja.Controllers
 
               //  ViewData["model"] = model;
 
-
-                return View(model);
+                return View(model);              
             }
             else
             {
@@ -173,6 +177,7 @@ namespace Erestauracja.Controllers
         //
         // POST: /Account/LogOn
         [HttpPost]
+        
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -200,6 +205,8 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
+
+        
         //
         // GET: /Account/LogOff
         public ActionResult LogOff()
