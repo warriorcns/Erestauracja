@@ -14,12 +14,12 @@ namespace Contract
 {
     public class Database
     {
-        private string eventSource = "EresWindowsService";
-        private string eventLog = "Erestauracja";
-        private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
-        private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
+        private static string eventSource = "EresWindowsService";
+        private static string eventLog = "Erestauracja";
+        private static string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
+        private static string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
-        private string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";";
+        private static string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";";
       
         //zabezpieczyć connectionString
         public Database()
@@ -30,7 +30,7 @@ namespace Contract
             //this.ConnectionString = settings[2].ConnectionString;
         }
 
-        private DataSet ExecuteQuery(MySqlCommand command, string action)
+        private static DataSet ExecuteQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
             DataSet myDS = new DataSet();
@@ -76,7 +76,7 @@ namespace Contract
             return myDS;
         }
 
-        private int ExecuteNonQuery(MySqlCommand command, string action)
+        private static  int ExecuteNonQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
             int rowsaffected = 0;
@@ -120,7 +120,49 @@ namespace Contract
             return rowsaffected;
         }
 
-        // jeszcze execute scalar
+        public static int ExecuteScalar(MySqlCommand command, string action)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            int insertedID = 0;
+
+            try
+            {
+                conn = new MySqlConnection(ConnectionString);
+                conn.Open();
+                command.Connection = conn;
+                insertedID = System.Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + action + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + action + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return insertedID;
+        }
+
 
         public bool ChangePassword(string login, string password)
         {
@@ -411,6 +453,146 @@ namespace Contract
             }
             return false;  
         }
+
+        public List<User> GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.AllUsersCount);
+            command.Connection = conn;
+
+            List<User> users = new List<User>();
+
+            MySqlDataReader reader = null;
+            totalRecords = 0;
+
+            try
+            {
+                conn.Open();
+                totalRecords = Convert.ToInt32(command.ExecuteScalar());
+
+                if (totalRecords <= 0) { return users; }
+
+                command.CommandText = Queries.GetAllUsers;
+
+                reader = command.ExecuteReader();
+
+                int counter = 0;
+                int startIndex = pageSize * pageIndex;
+                int endIndex = startIndex + pageSize - 1;
+
+                while (reader.Read())
+                {
+                    if (counter >= startIndex)
+                    {
+                        User u = GetUserFromReader(reader);
+                        users.Add(u);
+                    }
+
+                    if (counter >= endIndex) { command.Cancel(); }
+
+                    counter++;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetAllUsers" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetAllUsers" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return users;
+            
+        }
+
+        private User GetUserFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string login = reader.GetString(1);
+            string email = reader.GetString(2);
+            string name = reader.GetString(3);
+            string surname = reader.GetString(4);
+            string address = reader.GetString(5);
+            string townID = reader.GetString(6);
+            string country = reader.GetString(7);
+            DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
+            string sex = reader.GetString(9);
+            string telephone = reader.GetString(10);
+            string comment = "";
+            if (reader.GetValue(11) != DBNull.Value)
+                comment = reader.GetString(11);
+            string passwordQuestion = "";
+            if (reader.GetValue(12) != DBNull.Value)
+                passwordQuestion = reader.GetString(12);
+            bool isApproved = reader.GetBoolean(13);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(14)); //reader.GetDateTime(14);
+            DateTime lastLoginDate = new DateTime();
+            if (reader.GetValue(15) != DBNull.Value)
+                lastLoginDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(15);
+            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(16);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(17);
+            bool isLockedOut = reader.GetBoolean(18);
+            DateTime lastLockedOutDate = new DateTime();
+            if (reader.GetValue(19) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(19)); //reader.GetDateTime(19);
+            
+            User u = new User();
+            u.Email = email;
+            u.PasswordQuestion = passwordQuestion;
+            u.Comment = comment;
+            u.IsApproved = isApproved;
+            u.IsLockedOut = isLockedOut;
+            u.CreationDate = creationDate;
+            u.LastLoginDate = lastLoginDate;
+            u.LastActivityDate = lastActivityDate;
+            u.LastPasswordChangedDate = lastPasswordChangedDate;
+            u.LastLockedOutDate = lastLockedOutDate;
+            u.ID = id;
+            u.Login = login;
+            u.Name = name;
+            u.Surname = surname;
+            u.Address = address;
+            u.TownID = townID;
+            u.Country = country;
+            u.Birthdate = birthdate;
+            u.Sex = sex;
+            u.Telephone = telephone;
+
+            return u;
+        }
+
+
     }
 
 

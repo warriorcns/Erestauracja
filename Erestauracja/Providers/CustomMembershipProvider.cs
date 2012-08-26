@@ -16,16 +16,40 @@ using MySql.Data.MySqlClient;
 using System.Net.Mail;
 using System.Net;
 using Erestauracja.ServiceReference;
-
-//dopisać
+using System.Collections.Generic;
 
 /*
 This provider works with the following schema for the table of user data.
 
-CREATE TABLE Users
-(
-
-)
+CREATE  TABLE  `dbo`.`users` (  `id` int( 10  )  NOT  NULL  AUTO_INCREMENT , 
+`login` varchar( 20  )  COLLATE utf8_polish_ci NOT  NULL , 
+`password` varchar( 90  )  COLLATE utf8_polish_ci NOT  NULL , 
+`email` varchar( 50  )  COLLATE utf8_polish_ci NOT  NULL , 
+`name` varchar( 50  )  COLLATE utf8_polish_ci NOT  NULL , 
+`surname` varchar( 50  )  COLLATE utf8_polish_ci NOT  NULL , 
+`address` varchar( 100  )  COLLATE utf8_polish_ci NOT  NULL , 
+`townID` int( 10  )  NOT  NULL , 
+`country` varchar( 50  )  COLLATE utf8_polish_ci NOT  NULL , 
+`birthdate` date NOT  NULL , 
+`sex` varchar( 20  )  COLLATE utf8_polish_ci NOT  NULL , 
+`telephone` varchar( 20  )  COLLATE utf8_polish_ci NOT  NULL , 
+`applicationName` mediumtext COLLATE utf8_polish_ci NOT  NULL , 
+`comment` mediumtext COLLATE utf8_polish_ci, 
+`passwordQuestion` mediumtext COLLATE utf8_polish_ci, 
+`passwordAnswer` mediumtext COLLATE utf8_polish_ci, 
+`isApproved` bit( 1  )  DEFAULT NULL , 
+`lastActivityDate` datetime  DEFAULT NULL , 
+`lastLoginDate` datetime  DEFAULT NULL , 
+`lastPasswordChangedDate` datetime  DEFAULT NULL , 
+`creationDate` datetime  DEFAULT NULL , 
+`isOnLine` bit( 1  )  DEFAULT NULL , 
+`isLockedOut` bit( 1  )  DEFAULT NULL , 
+`lastLockedOutDate` datetime  DEFAULT NULL , 
+`failedPasswordAttemptCount` int( 11  )  DEFAULT NULL , 
+`failedPasswordAttemptWindowStart` datetime  DEFAULT NULL , 
+`failedPasswordAnswerAttemptCount` int( 11  )  DEFAULT NULL , 
+`failedPasswordAnswerAttemptWindowStart` datetime  DEFAULT NULL , 
+PRIMARY  KEY (  `id`  )  ) ENGINE  = InnoDB  DEFAULT CHARSET  = utf8 COLLATE  = utf8_polish_ci; 
 */
 
 namespace Erestauracja.Providers
@@ -55,7 +79,7 @@ namespace Erestauracja.Providers
             set { pWriteExceptionsToEventLog = value; }
         }
 
-
+        //
         #region  System.Configuration.Provider.ProviderBase.Initialize Method
 
         public override void Initialize(string name, NameValueCollection config)
@@ -664,123 +688,121 @@ namespace Erestauracja.Providers
 
         #region User methods:
 
-        ////CreateUser dla Guid
-        ////
-        //// MembershipProvider.CreateUser
-        ////
-        //public override MembershipUser CreateUser(string login,
-        //    string password,
-        //    string email,
-        //    string name,
-        //    string surname,
-        //    string address,
-        //    int townID,//tu zmienić na nazwe miasta lub kod i select do zapytania
-        //    string country,
-        //    DateTime birthdate,
-        //    string sex,
-        //    string telephone,
-        //    string passwordQuestion,
-        //    string passwordAnswer,
-        //    bool isApproved,
-        //    object providerUserKey,
-        //    out MembershipCreateStatus status)
-        //{
-        //    ValidatePasswordEventArgs args =
-        //      new ValidatePasswordEventArgs(login, password, true);
-        //    OnValidatingPassword(args);
-        //    if (args.Cancel)
-        //    {
-        //        status = MembershipCreateStatus.InvalidPassword;
-        //        return null;
-        //    }
-        //    if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
-        //    {
-        //        status = MembershipCreateStatus.DuplicateEmail;
-        //        return null;
-        //    }
-        //    MembershipUser u = GetUser(login, false);
-        //    if (u == null)
-        //    {
-        //        DateTime createDate = DateTime.Now;
-        //        //  if (providerUserKey == null)
-        //        //  {
-        //        //       providerUserKey = Guid.NewGuid();
-        //        //   }
-        //        //else
-        //        //{
-        //        //    if (!(providerUserKey is Guid))
-        //        //    {
-        //        //        status = MembershipCreateStatus.InvalidProviderUserKey;
-        //        //        return null;
-        //        //    }
-        //        //}
-        //        MySqlConnection conn = new MySqlConnection(connectionString);
-        //        MySqlCommand command = new MySqlCommand(Queries.CreateUser);
-        //        command.Parameters.AddWithValue("@login ", login);
-        //        command.Parameters.AddWithValue("@password ", EncodePassword(password));
-        //        command.Parameters.AddWithValue("@email ", email);
-        //        command.Parameters.AddWithValue("@name ", name);
-        //        command.Parameters.AddWithValue("@surname ", surname);
-        //        command.Parameters.AddWithValue("@address ", address);
-        //        command.Parameters.AddWithValue("@townID ", townID);
-        //        command.Parameters.AddWithValue("@country ", country);
-        //        command.Parameters.AddWithValue("@birthdate ", birthdate);
-        //        command.Parameters.AddWithValue("@sex ", sex);
-        //        command.Parameters.AddWithValue("@telephone ", telephone);
-        //        command.Parameters.AddWithValue("@applicationName ", pApplicationName);
-        //        command.Parameters.AddWithValue("@comment ", "");
-        //        command.Parameters.AddWithValue("@passwordQuestion ", passwordQuestion);
-        //        command.Parameters.AddWithValue("@passwordAnswer ", EncodePassword(passwordAnswer));
-        //        command.Parameters.AddWithValue("@isApproved ", isApproved);
-        //        command.Parameters.AddWithValue("@lastActivityDate ", createDate);
-        //        command.Parameters.AddWithValue("@lastLoginDate ", createDate);
-        //        command.Parameters.AddWithValue("@lastPasswordChangedDate ", createDate);
-        //        command.Parameters.AddWithValue("@creationDate ", createDate);
-        //        command.Parameters.AddWithValue("@isOnLine ", false);
-        //        command.Parameters.AddWithValue("@isLockedOut ", false);
-        //        command.Parameters.AddWithValue("@lastLockedOutDate ", createDate);
-        //        command.Parameters.AddWithValue("@failedPasswordAttemptCount ", 0);
-        //        command.Parameters.AddWithValue("@failedPasswordAttemptWindowStart ", createDate);
-        //        command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount ", 0);
-        //        command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart ", createDate);
-        //        command.Connection = conn;
-        //        try
-        //        {
-        //            conn.Open();
-        //            int recAdded = command.ExecuteNonQuery();
-        //            if (recAdded > 0)
-        //            {
-        //                status = MembershipCreateStatus.Success;
-        //            }
-        //            else
-        //            {
-        //                status = MembershipCreateStatus.UserRejected;
-        //            }
-        //        }
-        //        catch (MySqlException e)
-        //        {
-        //            if (WriteExceptionsToEventLog)
-        //            {
-        //                WriteToEventLog(e, "CreateUser");
-        //            }
-        //            status = MembershipCreateStatus.ProviderError;
-        //        }
-        //        finally
-        //        {
-        //            conn.Close();
-        //        }
-        //        return GetUser(login, false);
-        //    }
-        //    else
-        //    {
-        //        status = MembershipCreateStatus.DuplicateUserName;
-        //    }
-        //    return null;
-        //}
-
+        /*
+        //CreateUser dla Guid
         //
         // MembershipProvider.CreateUser
         //
+        public override MembershipUser CreateUser(string login,
+            string password,
+            string email,
+            string name,
+            string surname,
+            string address,
+            int townID,//tu zmienić na nazwe miasta lub kod i select do zapytania
+            string country,
+            DateTime birthdate,
+            string sex,
+            string telephone,
+            string passwordQuestion,
+            string passwordAnswer,
+            bool isApproved,
+            object providerUserKey,
+            out MembershipCreateStatus status)
+        {
+            ValidatePasswordEventArgs args =
+              new ValidatePasswordEventArgs(login, password, true);
+            OnValidatingPassword(args);
+            if (args.Cancel)
+            {
+                status = MembershipCreateStatus.InvalidPassword;
+                return null;
+            }
+            if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
+            {
+                status = MembershipCreateStatus.DuplicateEmail;
+                return null;
+            }
+            MembershipUser u = GetUser(login, false);
+            if (u == null)
+            {
+                DateTime createDate = DateTime.Now;
+                //  if (providerUserKey == null)
+                //  {
+                //       providerUserKey = Guid.NewGuid();
+                //   }
+                //else
+                //{
+                //    if (!(providerUserKey is Guid))
+                //    {
+                //        status = MembershipCreateStatus.InvalidProviderUserKey;
+                //        return null;
+                //    }
+                //}
+                MySqlConnection conn = new MySqlConnection(connectionString);
+                MySqlCommand command = new MySqlCommand(Queries.CreateUser);
+                command.Parameters.AddWithValue("@login ", login);
+                command.Parameters.AddWithValue("@password ", EncodePassword(password));
+                command.Parameters.AddWithValue("@email ", email);
+                command.Parameters.AddWithValue("@name ", name);
+                command.Parameters.AddWithValue("@surname ", surname);
+                command.Parameters.AddWithValue("@address ", address);
+                command.Parameters.AddWithValue("@townID ", townID);
+                command.Parameters.AddWithValue("@country ", country);
+                command.Parameters.AddWithValue("@birthdate ", birthdate);
+                command.Parameters.AddWithValue("@sex ", sex);
+                command.Parameters.AddWithValue("@telephone ", telephone);
+                command.Parameters.AddWithValue("@applicationName ", pApplicationName);
+                command.Parameters.AddWithValue("@comment ", "");
+                command.Parameters.AddWithValue("@passwordQuestion ", passwordQuestion);
+                command.Parameters.AddWithValue("@passwordAnswer ", EncodePassword(passwordAnswer));
+                command.Parameters.AddWithValue("@isApproved ", isApproved);
+                command.Parameters.AddWithValue("@lastActivityDate ", createDate);
+                command.Parameters.AddWithValue("@lastLoginDate ", createDate);
+                command.Parameters.AddWithValue("@lastPasswordChangedDate ", createDate);
+                command.Parameters.AddWithValue("@creationDate ", createDate);
+                command.Parameters.AddWithValue("@isOnLine ", false);
+                command.Parameters.AddWithValue("@isLockedOut ", false);
+                command.Parameters.AddWithValue("@lastLockedOutDate ", createDate);
+                command.Parameters.AddWithValue("@failedPasswordAttemptCount ", 0);
+                command.Parameters.AddWithValue("@failedPasswordAttemptWindowStart ", createDate);
+                command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount ", 0);
+                command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart ", createDate);
+                command.Connection = conn;
+                try
+                {
+                    conn.Open();
+                    int recAdded = command.ExecuteNonQuery();
+                    if (recAdded > 0)
+                    {
+                        status = MembershipCreateStatus.Success;
+                    }
+                    else
+                    {
+                        status = MembershipCreateStatus.UserRejected;
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "CreateUser");
+                    }
+                    status = MembershipCreateStatus.ProviderError;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return GetUser(login, false);
+            }
+            else
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+            }
+            return null;
+        }
+        */
 
         /// <summary>
         /// Bazowy MembershipUser CreateUser - nie stosować jako samodzielna metoda
@@ -936,69 +958,161 @@ namespace Erestauracja.Providers
             return value;
         }
 
-        //
-        // MembershipProvider.GetAllUsers
-        //
+        /// <summary>
+        /// Pobiera kolekcje typu MembershipUserCollection zawierającą określoną ilość użytkowników
+        /// </summary>
+        /// <param name="pageIndex">Indeks strony</param>
+        /// <param name="pageSize">Rozmiar strony</param>
+        /// <param name="totalRecords">Out ilość pobranych użytkowników</param>
+        /// <returns>MembershipUserCollection</returns>
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.AllUsersCount);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-            command.Connection = conn;
-
             MembershipUserCollection users = new MembershipUserCollection();
-
-            MySqlDataReader reader = null;
-            totalRecords = 0;
+            List<User> lista = new List<User>();
 
             try
             {
-                conn.Open();
-                totalRecords = (int)command.ExecuteScalar();
-
-                if (totalRecords <= 0) { return users; }
-
-                command.CommandText = Queries.GetAllUsers;
-
-                reader = command.ExecuteReader();
-
-                int counter = 0;
-                int startIndex = pageSize * pageIndex;
-                int endIndex = startIndex + pageSize - 1;
-
-                while (reader.Read())
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    if (counter >= startIndex)
-                    {
-                        CustomMembershipUser u = GetUserFromReader(reader);
-                        users.Add(u);
-                    }
-
-                    if (counter >= endIndex) { command.Cancel(); }
-
-                    counter++;
+                    lista.AddRange(client.GetAllUsers(out totalRecords, pageIndex, pageSize));
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetAllUsers ");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetAllUsers");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
 
+            foreach (User user in lista)
+            {
+                CustomMembershipUser u = GetCustomMembershipUserFromUser(user);
+                    //new CustomMembershipUser(this.Name, user.Email, user.PasswordQuestion, user.Comment, user.IsApproved,
+//user.IsLockedOut, user.CreationDate, user.LastLoginDate, user.LastActivityDate, user.LastPasswordChangedDate, user.LastLockedOutDate,
+//user.ID, user.Login, user.Name, user.Surname, user.Address, user.TownID, user.Country, user.Birthdate, user.Sex, user.Telephone);
+
+
+                users.Add(u);
+            }
+            
             return users;
+////////////////////////
+            //////MySqlConnection conn = new MySqlConnection(connectionString);
+            //////MySqlCommand command = new MySqlCommand(Queries.AllUsersCount);
+            //////command.Parameters.AddWithValue("@applicationName", ApplicationName);
+            //////command.Connection = conn;
+
+            //////MySqlDataReader reader = null;
+            //////totalRecords = 0;
+
+            //////try
+            //////{
+            //////    conn.Open();
+            //////    totalRecords = (int)command.ExecuteScalar();
+
+            //////    if (totalRecords <= 0) { return users; }
+
+            //////    command.CommandText = Queries.GetAllUsers;
+
+            //////    reader = command.ExecuteReader();
+
+            //////    int counter = 0;
+            //////    int startIndex = pageSize * pageIndex;
+            //////    int endIndex = startIndex + pageSize - 1;
+
+            //////    while (reader.Read())
+            //////    {
+            //////        if (counter >= startIndex)
+            //////        {
+            //////            CustomMembershipUser u = GetUserFromReader(reader);
+            //////            users.Add(u);
+            //////        }
+
+            //////        if (counter >= endIndex) { command.Cancel(); }
+
+            //////        counter++;
+            //////    }
+            //////}
+            //////catch (MySqlException e)
+            //////{
+            //////    if (WriteExceptionsToEventLog)
+            //////    {
+            //////        WriteToEventLog(e, "GetAllUsers ");
+
+            //////        throw new ProviderException(exceptionMessage);
+            //////    }
+            //////    else
+            //////    {
+            //////        throw e;
+            //////    }
+            //////}
+            //////finally
+            //////{
+            //////    if (reader != null) { reader.Close(); }
+            //////    conn.Close();
+            //////}
+
+            
+        }
+
+        private CustomMembershipUser GetCustomMembershipUserFromUser(User reader)
+        {
+            //  object providerUserKey = reader.GetValue(0);
+            int id = reader.ID;
+            string login = reader.Login;
+            string email = reader.Email;
+            string name = reader.Name;
+            string surname = reader.Surname;
+            string address = reader.Address;
+            string townID = reader.TownID;
+            string country = reader.Country;
+            DateTime birthdate = reader.Birthdate;
+            string sex = reader.Sex;
+            string telephone = reader.Telephone;
+            string comment = reader.Comment;
+            string passwordQuestion = reader.PasswordQuestion;
+            bool isApproved = reader.IsApproved;
+            DateTime lastActivityDate = reader.LastActivityDate;
+            DateTime lastLoginDate = reader.LastLoginDate;
+            DateTime lastPasswordChangedDate = reader.LastPasswordChangedDate;
+            DateTime creationDate = reader.CreationDate;
+            bool isLockedOut = reader.IsLockedOut;
+            DateTime lastLockedOutDate = reader.LastLockedOutDate;
+
+
+            CustomMembershipUser u = new CustomMembershipUser(this.Name,
+                //             login,
+                //  providerUserKey,
+                                                  email,
+                                                  passwordQuestion,
+                                                  comment,
+                                                  isApproved,
+                                                  isLockedOut,
+                                                  creationDate,
+                                                  lastLoginDate,
+                                                  lastActivityDate,
+                                                  lastPasswordChangedDate,
+                                                  lastLockedOutDate,
+                                                  id,
+                                                  login,
+                                                  name,
+                                                  surname,
+                                                  address,
+                                                  townID,
+                                                  country,
+                                                  birthdate,
+                                                  sex,
+                                                  telephone);
+
+            return u;
         }
 
         //

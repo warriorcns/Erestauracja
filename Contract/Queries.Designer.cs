@@ -70,7 +70,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT Count(*) FROM `users`.
         /// </summary>
         internal static string AllUsersCount {
             get {
@@ -178,7 +178,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  WHERE `applicationName` = @applicationName ORDER BY `login` Asc.
+        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  ORDER BY `login` Asc.
         /// </summary>
         internal static string GetAllUsers {
             get {

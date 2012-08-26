@@ -121,7 +121,7 @@
     <value>INSERT INTO `users_in_roles`(`login`, `rolename`, `applicationName`) VALUES (@login,@rolename,@applicationName)</value>
   </data>
   <data name="AllUsersCount" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `applicationName` = @applicationName</value>
+    <value>SELECT Count(*) FROM `users`</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login</value>
@@ -157,7 +157,7 @@
     <value>SELECT `rolename` FROM `roles`  WHERE `applicationName` = @applicationName</value>
   </data>
   <data name="GetAllUsers" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  WHERE `applicationName` = @applicationName ORDER BY `login` Asc</value>
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  ORDER BY `login` Asc</value>
   </data>
   <data name="GetEmailByLogin" xml:space="preserve">
     <value>SELECT `email` FROM `users` WHERE `login` = @login</value>

@@ -212,6 +212,355 @@ namespace Erestauracja.ServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime BirthdateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsApprovedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLockedOutField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastActivityDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastLockedOutDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastLoginDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastPasswordChangedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordQuestionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SexField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurnameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TelephoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TownIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Birthdate {
+            get {
+                return this.BirthdateField;
+            }
+            set {
+                if ((this.BirthdateField.Equals(value) != true)) {
+                    this.BirthdateField = value;
+                    this.RaisePropertyChanged("Birthdate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comment {
+            get {
+                return this.CommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentField, value) != true)) {
+                    this.CommentField = value;
+                    this.RaisePropertyChanged("Comment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsApproved {
+            get {
+                return this.IsApprovedField;
+            }
+            set {
+                if ((this.IsApprovedField.Equals(value) != true)) {
+                    this.IsApprovedField = value;
+                    this.RaisePropertyChanged("IsApproved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLockedOut {
+            get {
+                return this.IsLockedOutField;
+            }
+            set {
+                if ((this.IsLockedOutField.Equals(value) != true)) {
+                    this.IsLockedOutField = value;
+                    this.RaisePropertyChanged("IsLockedOut");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastActivityDate {
+            get {
+                return this.LastActivityDateField;
+            }
+            set {
+                if ((this.LastActivityDateField.Equals(value) != true)) {
+                    this.LastActivityDateField = value;
+                    this.RaisePropertyChanged("LastActivityDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastLockedOutDate {
+            get {
+                return this.LastLockedOutDateField;
+            }
+            set {
+                if ((this.LastLockedOutDateField.Equals(value) != true)) {
+                    this.LastLockedOutDateField = value;
+                    this.RaisePropertyChanged("LastLockedOutDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastLoginDate {
+            get {
+                return this.LastLoginDateField;
+            }
+            set {
+                if ((this.LastLoginDateField.Equals(value) != true)) {
+                    this.LastLoginDateField = value;
+                    this.RaisePropertyChanged("LastLoginDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastPasswordChangedDate {
+            get {
+                return this.LastPasswordChangedDateField;
+            }
+            set {
+                if ((this.LastPasswordChangedDateField.Equals(value) != true)) {
+                    this.LastPasswordChangedDateField = value;
+                    this.RaisePropertyChanged("LastPasswordChangedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PasswordQuestion {
+            get {
+                return this.PasswordQuestionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordQuestionField, value) != true)) {
+                    this.PasswordQuestionField = value;
+                    this.RaisePropertyChanged("PasswordQuestion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Sex {
+            get {
+                return this.SexField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SexField, value) != true)) {
+                    this.SexField = value;
+                    this.RaisePropertyChanged("Sex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Surname {
+            get {
+                return this.SurnameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurnameField, value) != true)) {
+                    this.SurnameField = value;
+                    this.RaisePropertyChanged("Surname");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Telephone {
+            get {
+                return this.TelephoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TelephoneField, value) != true)) {
+                    this.TelephoneField = value;
+                    this.RaisePropertyChanged("Telephone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TownID {
+            get {
+                return this.TownIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TownIDField, value) != true)) {
+                    this.TownIDField = value;
+                    this.RaisePropertyChanged("TownID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
@@ -239,6 +588,9 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/DeleteUser", ReplyAction="http://tempuri.org/IEresService/DeleteUserResponse")]
         bool DeleteUser(string login, bool deleteAllRelatedData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetAllUsers", ReplyAction="http://tempuri.org/IEresService/GetAllUsersResponse")]
+        Erestauracja.ServiceReference.User[] GetAllUsers(out int totalRecords, int pageIndex, int pageSize);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -298,6 +650,10 @@ namespace Erestauracja.ServiceReference {
         
         public bool DeleteUser(string login, bool deleteAllRelatedData) {
             return base.Channel.DeleteUser(login, deleteAllRelatedData);
+        }
+        
+        public Erestauracja.ServiceReference.User[] GetAllUsers(out int totalRecords, int pageIndex, int pageSize) {
+            return base.Channel.GetAllUsers(out totalRecords, pageIndex, pageSize);
         }
     }
 }
