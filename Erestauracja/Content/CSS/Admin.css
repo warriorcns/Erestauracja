@@ -1,0 +1,71 @@
+﻿body {
+}
+
+.page {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 1000px;
+    max-width: 1200px;
+    min-height: 800px;
+    
+}
+
+/* TAB MENU   
+----------------------------------------------------------*/
+ul#menu {
+    border-bottom: 2px black solid;
+    padding: 0 0 0px;
+    position: relative;
+    margin: 0;
+    text-align: left;
+}
+
+ul#menu li {
+    display: inline;
+    list-style: none;
+}
+
+ul#menu li#greeting {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: black;
+}
+
+ul#menu li a {
+    padding: 5px 30px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1.8em;
+    background-color: white;
+    color: black;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0 0;
+    
+    border-top: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+}
+
+ul#menu li a:hover {
+    background-color: Silver;
+    text-decoration: none;
+}
+
+ul#menu li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+ul#menu li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+nav, 
+#menucontainer {
+   
+}

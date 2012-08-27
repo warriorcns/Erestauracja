@@ -272,6 +272,7 @@
       <DependentUpon>UploadLocalization.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\CitiesAndRestaurantsController.cs" />
     <Compile Include="Controllers\FindController.cs" />
@@ -304,6 +305,13 @@
     </Compile>
     <Compile Include="Views\Account\Account.master.designer.cs">
       <DependentUpon>Account.master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
     </Compile>
     <Compile Include="Views\Restaurant\Restaurant.master.cs">
       <DependentUpon>Restaurant.master</DependentUpon>
@@ -521,6 +529,7 @@
     <Content Include="Content\2012.2.607\Windows7\slider-v.gif" />
     <Content Include="Content\2012.2.607\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.2.607\Windows7\sprite.png" />
+    <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
     <Content Include="Content\CSS\Restaurants.css" />
     <Content Include="Content\images\logo-test.png" />
@@ -651,6 +660,8 @@
     <Content Include="Views\Account\PasswordReset.aspx" />
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
+    <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\phpmyadmin.aspx" />
     <Content Include="Views\Basket\Index.aspx" />
     <Content Include="Views\CitiesAndRestaurants\ListRestaurantsFromCity.aspx" />
     <Content Include="Views\Find\Index.aspx" />
@@ -702,6 +713,7 @@
     <None Include="Service References\ServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Admin\Admin.Master" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="Erestauracja.Views.Admin.Admin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+    <link href="../../Content/CSS/Admin.css" rel="stylesheet" type="text/css" />
+    <title>Administracja witryna</title>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <div class="page">
+        <form id="form1" runat="server">
+        <div>
+            <nav id="menucontainer">
+                <ul id="menu">
+                    <li>
+                        <%: Html.ActionLink("General", "Index", "Admin")%></li>
+                    <li>
+                        <%: Html.ActionLink("phpmyadmin", "phpmyadmin", "Admin")%></li>
+                </ul>
+            </nav>
+            <asp:ContentPlaceHolder ID="AdminPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        </form>
+    </div>
+</body>
+</html>
