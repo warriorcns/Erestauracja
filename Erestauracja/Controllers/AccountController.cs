@@ -43,12 +43,6 @@ namespace Erestauracja.Controllers
 
                 ViewData["model"] = model;
                     
-                /////////////////
-                int total=0;
-                MembershipUserCollection kolekcja = customMemebership.GetAllUsers(0, 5, out total);
-                //////////////////
-
-
                 return View();
             }
             else

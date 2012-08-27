@@ -205,7 +205,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate.
         /// </summary>
         internal static string GetNumberOfUsersOnline {
             get {
@@ -250,7 +250,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetUserByLogin {
             get {
@@ -277,7 +277,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `login` FROM `users` WHERE `email` = @email AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `login` FROM `users` WHERE `email` = @email.
         /// </summary>
         internal static string GetUserNameByEmail {
             get {
@@ -367,7 +367,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login.
         /// </summary>
         internal static string UnlockUser {
             get {
@@ -394,7 +394,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login.
         /// </summary>
         internal static string UpdateUser {
             get {
@@ -412,7 +412,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login AND `applicationname` = @applicationname.
+        ///   Looks up a localized string similar to UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login.
         /// </summary>
         internal static string UpdateUserActivityByLogin {
             get {
@@ -430,7 +430,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName AND `isLockedOut` = @isLockedOut.
+        ///   Looks up a localized string similar to SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `isLockedOut` = @isLockedOut.
         /// </summary>
         internal static string ValidateUser {
             get {

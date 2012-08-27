@@ -14,12 +14,12 @@ namespace Contract
 {
     public class Database
     {
-        private static string eventSource = "EresWindowsService";
-        private static string eventLog = "Erestauracja";
-        private static string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
-        private static string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
+        private string eventSource = "EresWindowsService";
+        private string eventLog = "Erestauracja";
+        private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
+        private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
-        private static string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";";
+        private string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";";
       
         //zabezpieczyć connectionString
         public Database()
@@ -30,7 +30,7 @@ namespace Contract
             //this.ConnectionString = settings[2].ConnectionString;
         }
 
-        private static DataSet ExecuteQuery(MySqlCommand command, string action)
+        private DataSet ExecuteQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
             DataSet myDS = new DataSet();
@@ -76,7 +76,7 @@ namespace Contract
             return myDS;
         }
 
-        private static  int ExecuteNonQuery(MySqlCommand command, string action)
+        private  int ExecuteNonQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
             int rowsaffected = 0;
@@ -120,17 +120,17 @@ namespace Contract
             return rowsaffected;
         }
 
-        public static int ExecuteScalar(MySqlCommand command, string action)
+        private object ExecuteScalar(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
-            int insertedID = 0;
+            object objekt = 0;
 
             try
             {
                 conn = new MySqlConnection(ConnectionString);
                 conn.Open();
                 command.Connection = conn;
-                insertedID = System.Convert.ToInt32(command.ExecuteScalar());
+                objekt = command.ExecuteScalar();
             }
             catch (MySqlException e)
             {
@@ -160,7 +160,7 @@ namespace Contract
             {
                 conn.Close();
             }
-            return insertedID;
+            return objekt;
         }
 
 
@@ -592,7 +592,255 @@ namespace Contract
             return u;
         }
 
+        public int GetNumberOfUsersOnline(TimeSpan onlineSpan)
+        {
+            DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
 
+            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
+            command.Parameters.AddWithValue("@lastActivityDate", compareTime);
+
+            int rowsaffected = Convert.ToInt32(ExecuteScalar(command, "GetNumberOfUsersOnline"));
+
+            if (rowsaffected > 0)
+            {
+                return rowsaffected;
+            }
+            return 0;  
+    }
+
+        public User GetUser(string login, bool userIsOnline)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetUserByLogin);
+            command.Parameters.AddWithValue("@login", login);
+            command.Connection = conn;
+
+            User u = null;
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    u = GetUserFromReader(reader);
+                    reader.Close();
+                    if (userIsOnline)
+                    {
+                        MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserActivityByLogin);
+
+                        updateCmd.Parameters.Add("@lastActivityDate", DateTime.Now);
+                        updateCmd.Parameters.Add("@login", login);
+                        updateCmd.Connection = conn;
+
+                        updateCmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+
+                conn.Close();
+            }
+
+            return u;
+        }
+
+        public User GetUser(int id, bool userIsOnline)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetUserByID);
+            command.Parameters.AddWithValue("@id", (int)id);
+            command.Connection = conn;
+
+            User u = null;
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    u = GetUserFromReader(reader);
+                    reader.Close();
+                    if (userIsOnline)
+                    {
+                        MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserActivityByID);
+
+                        updateCmd.Parameters.AddWithValue("@lastActivityDate", DateTime.Now);
+                        updateCmd.Parameters.AddWithValue("@id", (int)id);
+                        updateCmd.Connection = conn;
+
+                        updateCmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+
+                conn.Close();
+            }
+
+            return u;
+        }
+
+        public bool UnlockUser(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.UnlockUser);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+            command.Parameters.AddWithValue("@lastLockedOutDate", DateTime.Now);
+
+            int rowsaffected = ExecuteNonQuery(command, "UnlockUser");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string GetUserNameByEmail(string email)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetUserNameByEmail);
+            command.Parameters.AddWithValue("@email", email);
+
+            string rowsaffected = (ExecuteScalar(command, "GetUserNameByEmail")).ToString();
+
+            if (!(String.IsNullOrEmpty(rowsaffected)))
+            {
+                return rowsaffected;
+            }
+            return null;
+        }
+
+        public bool UpdateUser(User user)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.UpdateUser);
+            command.Parameters.AddWithValue("@name", user.Name);
+            command.Parameters.AddWithValue("@surname", user.Surname);
+            command.Parameters.AddWithValue("@address", user.Address);
+            command.Parameters.AddWithValue("@townID", user.TownID);
+            command.Parameters.AddWithValue("@country", user.Country);
+            command.Parameters.AddWithValue("@birthdate", user.Birthdate);
+            command.Parameters.AddWithValue("@sex", user.Sex);
+            command.Parameters.AddWithValue("@telephone", user.Telephone);
+            command.Parameters.AddWithValue("@comment", user.Comment);
+            command.Parameters.AddWithValue("@isApproved", user.IsApproved);
+            command.Parameters.AddWithValue("@login", user.Login);
+
+            int rowsaffected = ExecuteNonQuery(command, "UpdateUser");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public ValidateUser ValidateUser(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.ValidateUser);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+
+            ValidateUser value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "ValidateUser");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new ValidateUser();
+                value.Password = null;
+                value.IsApproved = false;
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["password"] != DBNull.Value) value.Password = row["password"].ToString();
+                    if (row["isApproved"] != DBNull.Value) value.IsApproved = Convert.ToBoolean(row["isApproved"]);
+                }
+            }
+            return value;
+        }
     }
 
 

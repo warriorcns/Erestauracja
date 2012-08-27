@@ -968,6 +968,7 @@ namespace Erestauracja.Providers
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             MembershipUserCollection users = new MembershipUserCollection();
+            users.Clear();
             List<User> lista = new List<User>();
 
             try
@@ -995,74 +996,18 @@ namespace Erestauracja.Providers
             foreach (User user in lista)
             {
                 CustomMembershipUser u = GetCustomMembershipUserFromUser(user);
-                    //new CustomMembershipUser(this.Name, user.Email, user.PasswordQuestion, user.Comment, user.IsApproved,
-//user.IsLockedOut, user.CreationDate, user.LastLoginDate, user.LastActivityDate, user.LastPasswordChangedDate, user.LastLockedOutDate,
-//user.ID, user.Login, user.Name, user.Surname, user.Address, user.TownID, user.Country, user.Birthdate, user.Sex, user.Telephone);
-
-
+                MembershipUser us = (MembershipUser)u;
                 users.Add(u);
             }
             
-            return users;
-////////////////////////
-            //////MySqlConnection conn = new MySqlConnection(connectionString);
-            //////MySqlCommand command = new MySqlCommand(Queries.AllUsersCount);
-            //////command.Parameters.AddWithValue("@applicationName", ApplicationName);
-            //////command.Connection = conn;
-
-            //////MySqlDataReader reader = null;
-            //////totalRecords = 0;
-
-            //////try
-            //////{
-            //////    conn.Open();
-            //////    totalRecords = (int)command.ExecuteScalar();
-
-            //////    if (totalRecords <= 0) { return users; }
-
-            //////    command.CommandText = Queries.GetAllUsers;
-
-            //////    reader = command.ExecuteReader();
-
-            //////    int counter = 0;
-            //////    int startIndex = pageSize * pageIndex;
-            //////    int endIndex = startIndex + pageSize - 1;
-
-            //////    while (reader.Read())
-            //////    {
-            //////        if (counter >= startIndex)
-            //////        {
-            //////            CustomMembershipUser u = GetUserFromReader(reader);
-            //////            users.Add(u);
-            //////        }
-
-            //////        if (counter >= endIndex) { command.Cancel(); }
-
-            //////        counter++;
-            //////    }
-            //////}
-            //////catch (MySqlException e)
-            //////{
-            //////    if (WriteExceptionsToEventLog)
-            //////    {
-            //////        WriteToEventLog(e, "GetAllUsers ");
-
-            //////        throw new ProviderException(exceptionMessage);
-            //////    }
-            //////    else
-            //////    {
-            //////        throw e;
-            //////    }
-            //////}
-            //////finally
-            //////{
-            //////    if (reader != null) { reader.Close(); }
-            //////    conn.Close();
-            //////}
-
-            
+            return users;   
         }
 
+        /// <summary>
+        /// Konwertuje typ User na CustomMembershipUser
+        /// </summary>
+        /// <param name="reader">User</param>
+        /// <returns>CustomMembershipUser</returns>
         private CustomMembershipUser GetCustomMembershipUserFromUser(User reader)
         {
             //  object providerUserKey = reader.GetValue(0);
@@ -1115,176 +1060,152 @@ namespace Erestauracja.Providers
             return u;
         }
 
-        //
-        // MembershipProvider.GetNumberOfUsersOnline
-        //
+        /// <summary>
+        /// Konwertuje typ CustomMembershipUser na User
+        /// </summary>
+        /// <param name="reader">CustomMembershipUser</param>
+        /// <returns>User</returns>
+        private User GetCustomMembershipUserFromUser(CustomMembershipUser reader)
+        {
+            User user = new User();
+
+            user.ID = reader.Id;
+            user.Login = reader.Login;
+            user.Email = reader.Email;
+            user.Name = reader.Name;
+            user.Surname = reader.Surname;
+            user.Address = reader.Address;
+            user.TownID = reader.TownID;
+            user.Country = reader.Country;
+            user.Birthdate = reader.Birthdate;
+            user.Sex = reader.Sex;
+            user.Telephone = reader.Telephone;
+            user.Comment = reader.Comment;
+            user.PasswordQuestion = reader.PasswordQuestion;
+            user.IsApproved = reader.IsApproved;
+            user.LastActivityDate = reader.LastActivityDate;
+            user.LastLoginDate = reader.LastLoginDate;
+            user.LastPasswordChangedDate = reader.LastPasswordChangedDate;
+            user.CreationDate = reader.CreationDate;
+            user.IsLockedOut = reader.IsLockedOut;
+            user.LastLockedOutDate = reader.LastLockoutDate;
+
+            return user;
+        }
+
+        /// <summary>
+        /// Zwraca ilość użytkowników, których ostatnia aktywność jest późniejsza niż czas ustalony w configu
+        /// </summary>
+        /// <returns>Int</returns>
         public override int GetNumberOfUsersOnline()
         {
-
             TimeSpan onlineSpan = new TimeSpan(0, System.Web.Security.Membership.UserIsOnlineTimeWindow, 0);
-            DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetNumberOfUsersOnline);
+            int value = 0;
             
-            
-            command.Parameters.AddWithValue("@lastActivityDate", compareTime);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Parameters.AddWithValue("@lastLoginDate", compareTime);
-            
-            command.Connection = conn;
-
-            int numOnline = 0;
-
             try
             {
-                conn.Open();
-
-                //numOnline = (int)command.ExecuteScalar();
-                numOnline = Convert.ToInt32(command.ExecuteScalar());
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.GetNumberOfUsersOnline(onlineSpan);
+                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetNumberOfUsersOnline");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetNumberOfUsersOnline");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                conn.Close();
-            }
 
-            return numOnline;
+            return value;  
         }
 
-        //
-        // MembershipProvider.GetUser(string, bool)
-        //
+        /// <summary>
+        /// Pobiera dane użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="userIsOnline">Czy użytkownik jest online - aktualizacja daty ostatniej aktywności</param>
+        /// <returns>MembershipUser - CustomMembershipUser</returns>
         public override MembershipUser GetUser(string login, bool userIsOnline)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserByLogin);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            CustomMembershipUser u = null;
-            MySqlDataReader reader = null;
+            User lista = new User();
 
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    reader.Read();
-                    u = GetUserFromReader(reader);
-                    reader.Close();
-                    if (userIsOnline)
-                    {
-                        MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserActivityByLogin);
-
-                        updateCmd.Parameters.Add("@lastActivityDate", DateTime.Now);
-                        updateCmd.Parameters.Add("@login", login);
-                        updateCmd.Parameters.Add("@applicationName", pApplicationName);
-                        updateCmd.Connection = conn;
-
-                        updateCmd.ExecuteNonQuery();
-                    }
+                    lista = client.GetUser(login, userIsOnline);
                 }
-
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetUser(String, Boolean)");
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUser(String, Boolean)");
 
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
 
-                conn.Close();
-            }
+            CustomMembershipUser u = GetCustomMembershipUserFromUser(lista);
+            MembershipUser us = (MembershipUser)u;
 
-            return u;
+            return us;
         }
 
-        //
-        // MembershipProvider.GetUser(object, bool)
-        //
+        /// <summary>
+        /// Pobiera dane użytkownika o danym id.
+        /// </summary>
+        /// <param name="login">Id użytkownika</param>
+        /// <param name="userIsOnline">Czy użytkownik jest online - aktualizacja daty ostatniej aktywności</param>
+        /// <returns>MembershipUser - CustomMembershipUser</returns>
         public override MembershipUser GetUser(object id, bool userIsOnline)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserByID);
-            command.Parameters.AddWithValue("@id", (int)id);
-            command.Connection = conn;
-
-            CustomMembershipUser u = null;
-            MySqlDataReader reader = null;
+            User lista = new User();
 
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    reader.Read();
-                    u = GetUserFromReader(reader);
-
-                    if (userIsOnline)
-                    {
-                        MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserActivityByID);
-                        updateCmd.Parameters.Add("@lastActivityDate", DateTime.Now);
-                        updateCmd.Parameters.Add("@id", id);
-                        updateCmd.Connection = conn;
-
-                        updateCmd.ExecuteNonQuery();
-                    }
+                    lista = client.GetUserById((int)id, userIsOnline);
                 }
-
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetUser(Object, Boolean)");
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUser(String, Boolean)");
 
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
 
-                conn.Close();
-            }
+            CustomMembershipUser u = GetCustomMembershipUserFromUser(lista);
+            MembershipUser us = (MembershipUser)u;
 
-            return u;
+            return us;
         }
 
+        //usunąć
         //
         // GetUserFromReader
         //    A helper function that takes the current row from the OdbcDataReader
@@ -1358,140 +1279,103 @@ namespace Erestauracja.Providers
             return u;
         }
 
-        //
-        // MembershipProvider.UnlockUser
-        //
+        /// <summary>
+        /// Odblokowuje konto użytkownika.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public override bool UnlockUser(string login)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.UnlockUser);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Parameters.AddWithValue("@isLockedOut", false);
-            command.Parameters.AddWithValue("@lastLockedOutDate", DateTime.Now);
-            command.Connection = conn;
-
-            int rowsAffected = 0;
-
+            bool value = false;
             try
             {
-                conn.Open();
-
-                rowsAffected = command.ExecuteNonQuery();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.UnlockUser(login);
+                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "UnlockUser");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "UnlockUser");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                conn.Close();
-            }
 
-            if (rowsAffected > 0)
-                return true;
-
-            return false;
+            return value;
         }
 
-        //
-        // MembershipProvider.GetUserNameByEmail
-        //
+        /// <summary>
+        /// Pobiera nazwe użytkownika na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca login użytkownika.</returns>
         public override string GetUserNameByEmail(string email)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserNameByEmail);
-            command.Parameters.AddWithValue("@email", email);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            string username = "";
+            string value = null;
 
             try
             {
-                conn.Open();
-
-                username = (string)command.ExecuteScalar();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.GetUserNameByEmail(email);
+                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetUserNameByEmail");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUserNameByEmail");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                conn.Close();
-            }
 
-            if (username == null)
-                username = "";
-
-            return username;
+            return value;  
         }
 
-        //
-        // MembershipProvider.UpdateUser
-        //
-        public override void UpdateUser(MembershipUser user)
+        /// <summary>
+        /// Aktualizuje dane użytkownika.
+        /// </summary>
+        /// <param name="muser">MembershipUser - CustomMembershipUser</param>
+        public override void UpdateUser(MembershipUser muser)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.UpdateUser);
+            User user = GetCustomMembershipUserFromUser((CustomMembershipUser)muser);
 
-            CustomMembershipUser cu = (CustomMembershipUser)user;
-
-            command.Parameters.AddWithValue("@name", cu.Name);
-            command.Parameters.AddWithValue("@surname", cu.Surname);
-            command.Parameters.AddWithValue("@address", cu.Address);
-            command.Parameters.AddWithValue("@townID", cu.TownID);
-            command.Parameters.AddWithValue("@country", cu.Country);
-            command.Parameters.AddWithValue("@birthdate", cu.Birthdate);
-            command.Parameters.AddWithValue("@sex", cu.Sex);
-            command.Parameters.AddWithValue("@telephone", cu.Telephone);
-            command.Parameters.AddWithValue("@comment", user.Comment);
-            command.Parameters.AddWithValue("@isApproved", user.IsApproved);
-            command.Parameters.AddWithValue("@login", cu.Login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
+            bool value = false;
 
             try
             {
-                conn.Open();
-
-                command.ExecuteNonQuery();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.UpdateUser(user);
+                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "UpdateUser");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "UpdateUser");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
-            }
-            finally
-            {
-                conn.Close();
             }
         }
 
@@ -1557,13 +1441,13 @@ namespace Erestauracja.Providers
             }
             catch (MySqlException e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "ValidateUser");
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "ValidateUser");
 
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }

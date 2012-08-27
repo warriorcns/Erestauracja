@@ -591,6 +591,18 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetAllUsers", ReplyAction="http://tempuri.org/IEresService/GetAllUsersResponse")]
         Erestauracja.ServiceReference.User[] GetAllUsers(out int totalRecords, int pageIndex, int pageSize);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetNumberOfUsersOnline", ReplyAction="http://tempuri.org/IEresService/GetNumberOfUsersOnlineResponse")]
+        int GetNumberOfUsersOnline(System.TimeSpan onlineSpan);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetUser", ReplyAction="http://tempuri.org/IEresService/GetUserResponse")]
+        Erestauracja.ServiceReference.User GetUser(string login, bool userIsOnline);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetUserById", ReplyAction="http://tempuri.org/IEresService/GetUserByIdResponse")]
+        Erestauracja.ServiceReference.User GetUserById(int id, bool userIsOnline);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UnlockUser", ReplyAction="http://tempuri.org/IEresService/UnlockUserResponse")]
+        bool UnlockUser(string login);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -654,6 +666,22 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.User[] GetAllUsers(out int totalRecords, int pageIndex, int pageSize) {
             return base.Channel.GetAllUsers(out totalRecords, pageIndex, pageSize);
+        }
+        
+        public int GetNumberOfUsersOnline(System.TimeSpan onlineSpan) {
+            return base.Channel.GetNumberOfUsersOnline(onlineSpan);
+        }
+        
+        public Erestauracja.ServiceReference.User GetUser(string login, bool userIsOnline) {
+            return base.Channel.GetUser(login, userIsOnline);
+        }
+        
+        public Erestauracja.ServiceReference.User GetUserById(int id, bool userIsOnline) {
+            return base.Channel.GetUserById(id, userIsOnline);
+        }
+        
+        public bool UnlockUser(string login) {
+            return base.Channel.UnlockUser(login);
         }
     }
 }

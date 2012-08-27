@@ -61,6 +61,30 @@
   <wsdl:message name="IEresService_GetAllUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllUsersResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetNumberOfUsersOnline_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNumberOfUsersOnline" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetNumberOfUsersOnline_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNumberOfUsersOnlineResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUserById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserById" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUserById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UnlockUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnlockUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UnlockUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnlockUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEresService">
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -97,6 +121,22 @@
     <wsdl:operation name="GetAllUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetAllUsers" message="tns:IEresService_GetAllUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetAllUsersResponse" message="tns:IEresService_GetAllUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfUsersOnline">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetNumberOfUsersOnline" message="tns:IEresService_GetNumberOfUsersOnline_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetNumberOfUsersOnlineResponse" message="tns:IEresService_GetNumberOfUsersOnline_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUser" message="tns:IEresService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUserResponse" message="tns:IEresService_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUserById" message="tns:IEresService_GetUserById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUserByIdResponse" message="tns:IEresService_GetUserById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnlockUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/UnlockUser" message="tns:IEresService_UnlockUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/UnlockUserResponse" message="tns:IEresService_UnlockUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
@@ -175,6 +215,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllUsers">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetAllUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfUsersOnline">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetNumberOfUsersOnline" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetUserById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnlockUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/UnlockUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

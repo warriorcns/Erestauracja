@@ -42,8 +42,8 @@ namespace Erestauracja.Providers
             string telephone
             ) :
             base(providername,
-                "",
-                new Guid(),
+                login,
+                Guid.NewGuid(),
                 email,
                 passwordQuestion,
                 comment,

@@ -166,7 +166,7 @@
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetNumberOfUsersOnline" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate AND `applicationName` = @applicationName</value>
+    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate</value>
   </data>
   <data name="GetPassword" xml:space="preserve">
     <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
@@ -181,7 +181,7 @@
     <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate` FROM `users` WHERE `id` = @id</value>
   </data>
   <data name="GetUserByLogin" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetUserCountByEmail" xml:space="preserve">
     <value>SELECT Count(*) FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName</value>
@@ -190,7 +190,7 @@
     <value>SELECT Count(*) FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetUserNameByEmail" xml:space="preserve">
-    <value>SELECT `login` FROM `users` WHERE `email` = @email AND `applicationName` = @applicationName</value>
+    <value>SELECT `login` FROM `users` WHERE `email` = @email</value>
   </data>
   <data name="GetUserQuestion" xml:space="preserve">
     <value>SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
@@ -220,7 +220,7 @@
     <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="UnlockUser" xml:space="preserve">
-    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login</value>
   </data>
   <data name="UpdateFailedPasswordAnswerAttempt" xml:space="preserve">
     <value>UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
@@ -229,18 +229,18 @@
     <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="UpdateUser" xml:space="preserve">
-    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>
   </data>
   <data name="UpdateUserActivityByID" xml:space="preserve">
     <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `id` = @id</value>
   </data>
   <data name="UpdateUserActivityByLogin" xml:space="preserve">
-    <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login AND `applicationname` = @applicationname</value>
+    <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login</value>
   </data>
   <data name="UpdateUserLoginDate" xml:space="preserve">
     <value>UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="ValidateUser" xml:space="preserve">
-    <value>SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName AND `isLockedOut` = @isLockedOut</value>
+    <value>SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `isLockedOut` = @isLockedOut</value>
   </data>
 </root>

@@ -36,6 +36,27 @@ namespace Contract
 
         [OperationContract]
         List<User> GetAllUsers(int pageIndex, int pageSize, out int totalRecords);
+
+        [OperationContract]
+        int GetNumberOfUsersOnline(TimeSpan onlineSpan);
+
+        [OperationContract]
+        User GetUser(string login, bool userIsOnline);
+
+        [OperationContract]
+        User GetUserById(int id, bool userIsOnline);
+
+        [OperationContract]
+        bool UnlockUser(string login);
+
+        [OperationContract]
+        string GetUserNameByEmail(string email);
+
+        [OperationContract]
+        bool UpdateUser(User user);
+
+        [OperationContract]
+        ValidateUser ValidateUser(string login);
     }
 
     [DataContract]
@@ -271,6 +292,27 @@ namespace Contract
         {
             get { return lastLockedOutDate; }
             set { lastLockedOutDate = value; }
+        }
+    }
+
+    [DataContract]
+    public class ValidateUser
+    {
+        private string password = null;
+        private bool isApproved = false;
+
+        [DataMember]
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+        [DataMember]
+        public bool IsApproved
+        {
+            get { return isApproved; }
+            set { isApproved = value; }
         }
     }
 }

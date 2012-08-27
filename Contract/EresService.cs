@@ -142,6 +142,98 @@ namespace Contract
             }
         }
 
+        public int GetNumberOfUsersOnline(TimeSpan onlineSpan)
+        {
+            if (onlineSpan != null)
+            {
+                Database db = new Database();
+                int value = db.GetNumberOfUsersOnline(onlineSpan);
+                return value;
+            }
+            else
+                return -1;
+        }
+
+        public User GetUser(string login, bool userIsOnline)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                User value = db.GetUser(login, userIsOnline);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public User GetUserById(int id, bool userIsOnline)
+        {
+            if (!(id<0))
+            {
+                Database db = new Database();
+                User value = db.GetUser(id, userIsOnline);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool UnlockUser(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                bool value = db.UnlockUser(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string GetUserNameByEmail(string email)
+        {
+            if (!(String.IsNullOrEmpty(email)))
+            {
+                Database db = new Database();
+                string value = db.GetUserNameByEmail(email);
+                return value;
+            }
+            else
+                return null;
+        }
+
+        public bool UpdateUser(User user)
+        {
+            if (!(user == null))
+            {
+                Database db = new Database();
+                bool value = db.UpdateUser(user);
+                return value;
+            }
+            else
+                return false;
+        }
+
+        public ValidateUser ValidateUser(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                ValidateUser value = db.ValidateUser(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }
