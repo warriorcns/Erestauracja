@@ -56,14 +56,25 @@ namespace Erestauracja.Providers
 {
     public sealed class CustomMembershipProvider : MembershipProvider
     {
-        //
-        // Global connection string, generated password length, generic exception message, event log info.
-        //
+        /// <summary>
+        /// Generated password length.
+        /// </summary>
         private int newPasswordLength = 8;
+        
+        /// <summary>
+        /// Generic exception event.
+        /// </summary>
         private string eventSource = "CustomMembershipProvider";
+        
+        /// <summary>
+        /// Generic exception log info.
+        /// </summary>
         private string eventLog = "Erestauracja";
+        
+        /// <summary>
+        /// Generic exception message.
+        /// </summary>
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
-     //   private string connectionString;
 
         /// <summary>
         /// Used when determining encryption key values.
@@ -81,7 +92,6 @@ namespace Erestauracja.Providers
             set { pWriteExceptionsToEventLog = value; }
         }
 
-        //
         #region  System.Configuration.Provider.ProviderBase.Initialize Method
 
         /// <summary>
@@ -140,21 +150,6 @@ namespace Erestauracja.Providers
                     throw new ProviderException("Password format not supported.");
             }
 
-            //
-            // Initialize MySQLConnection.
-            //
-
-         //   ConnectionStringSettings ConnectionStringSettings =
-        //      ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
-
-      //      if (ConnectionStringSettings == null || ConnectionStringSettings.ConnectionString.Trim() == "")
-      //      {
-      //          throw new ProviderException("Connection string cannot be blank.");
-      //      }
-
-     //       connectionString = ConnectionStringSettings.ConnectionString;
-
-
             // Get encryption and decryption key information from the configuration.
             Configuration cfg =
               WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
@@ -166,9 +161,12 @@ namespace Erestauracja.Providers
                                                 "are not supported with auto-generated keys.");
         }
         
-        //
-        // A helper function to retrieve config values from the configuration file.
-        //
+        /// <summary>
+        /// A helper function to retrieve config values from the configuration file.
+        /// </summary>
+        /// <param name="configValue"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
         private string GetConfigValue(string configValue, string defaultValue)
         {
             if (String.IsNullOrEmpty(configValue))
@@ -688,11 +686,10 @@ namespace Erestauracja.Providers
         
         #endregion
 
-
         #region User methods:
 
-        /*
-        //CreateUser dla Guid
+        /*CreateUser dla Guid - nie używana
+        //
         //
         // MembershipProvider.CreateUser
         //
@@ -1215,79 +1212,69 @@ namespace Erestauracja.Providers
             return us;
         }
 
-        //usunąć
-        //
-        // GetUserFromReader
-        //    A helper function that takes the current row from the OdbcDataReader
-        // and hydrates a MembershiUser from the values. Called by the 
-        // MembershipUser.GetUser implementation.
-        //
-
-        //do zmiany
-        private CustomMembershipUser GetUserFromReader(MySqlDataReader reader)
-        {
-            //  object providerUserKey = reader.GetValue(0);
-            int id = reader.GetInt32(0);
-            string login = reader.GetString(1);
-            string email = reader.GetString(2);
-            string name = reader.GetString(3);
-            string surname = reader.GetString(4);
-            string address = reader.GetString(5);
-            string townID = reader.GetString(6);
-            string country = reader.GetString(7);
-            DateTime birthdate = Convert.ToDateTime(reader.GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
-            string sex = reader.GetString(9);
-            string telephone = reader.GetString(10);
-
-            string comment = "";
-            if (reader.GetValue(11) != DBNull.Value)
-                comment = reader.GetString(11);
-
-            string passwordQuestion = "";
-            if (reader.GetValue(12) != DBNull.Value)
-                passwordQuestion = reader.GetString(12);
-
-            bool isApproved = reader.GetBoolean(13);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(14)); //reader.GetDateTime(14);
-
-            DateTime lastLoginDate = new DateTime();
-            if (reader.GetValue(15) != DBNull.Value)
-                lastLoginDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(15);
-
-            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(16);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(17);
-            bool isLockedOut = reader.GetBoolean(18);
-
-            DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(19) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(19)); //reader.GetDateTime(19);
-
-            CustomMembershipUser u = new CustomMembershipUser(this.Name,
-                //             login,
-                //  providerUserKey,
-                                                  email,
-                                                  passwordQuestion,
-                                                  comment,
-                                                  isApproved,
-                                                  isLockedOut,
-                                                  creationDate,
-                                                  lastLoginDate,
-                                                  lastActivityDate,
-                                                  lastPasswordChangedDate,
-                                                  lastLockedOutDate,
-                                                  id,
-                                                  login,
-                                                  name,
-                                                  surname,
-                                                  address,
-                                                  townID,
-                                                  country,
-                                                  birthdate,
-                                                  sex,
-                                                  telephone);
-
-            return u;
-        }
+        ////Nie używana
+        ////
+        //// GetUserFromReader
+        ////    A helper function that takes the current row from the OdbcDataReader
+        //// and hydrates a MembershiUser from the values. Called by the 
+        //// MembershipUser.GetUser implementation.
+        ////
+        //private CustomMembershipUser GetUserFromReader(MySqlDataReader reader)
+        //{
+        //    //  object providerUserKey = reader.GetValue(0);
+        //    int id = reader.GetInt32(0);
+        //    string login = reader.GetString(1);
+        //    string email = reader.GetString(2);
+        //    string name = reader.GetString(3);
+        //    string surname = reader.GetString(4);
+        //    string address = reader.GetString(5);
+        //    string townID = reader.GetString(6);
+        //    string country = reader.GetString(7);
+        //    DateTime birthdate = Convert.ToDateTime(reader.GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
+        //    string sex = reader.GetString(9);
+        //    string telephone = reader.GetString(10);
+        //    string comment = "";
+        //    if (reader.GetValue(11) != DBNull.Value)
+        //        comment = reader.GetString(11);
+        //    string passwordQuestion = "";
+        //    if (reader.GetValue(12) != DBNull.Value)
+        //        passwordQuestion = reader.GetString(12);
+        //    bool isApproved = reader.GetBoolean(13);
+        //    DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(14)); //reader.GetDateTime(14);
+        //    DateTime lastLoginDate = new DateTime();
+        //    if (reader.GetValue(15) != DBNull.Value)
+        //        lastLoginDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(15);
+        //    DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(16);
+        //    DateTime creationDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(17);
+        //    bool isLockedOut = reader.GetBoolean(18);
+        //    DateTime lastLockedOutDate = new DateTime();
+        //    if (reader.GetValue(19) != DBNull.Value)
+        //        lastLockedOutDate = Convert.ToDateTime(reader.GetString(19)); //reader.GetDateTime(19);
+        //    CustomMembershipUser u = new CustomMembershipUser(this.Name,
+        //        //             login,
+        //        //  providerUserKey,
+        //                                          email,
+        //                                          passwordQuestion,
+        //                                          comment,
+        //                                          isApproved,
+        //                                          isLockedOut,
+        //                                          creationDate,
+        //                                          lastLoginDate,
+        //                                          lastActivityDate,
+        //                                          lastPasswordChangedDate,
+        //                                          lastLockedOutDate,
+        //                                          id,
+        //                                          login,
+        //                                          name,
+        //                                          surname,
+        //                                          address,
+        //                                          townID,
+        //                                          country,
+        //                                          birthdate,
+        //                                          sex,
+        //                                          telephone);
+        //    return u;
+        //}
 
         /// <summary>
         /// Odblokowuje konto użytkownika.
@@ -1604,139 +1591,58 @@ namespace Erestauracja.Providers
 
         #endregion
 
-        //
-        // UpdateFailureCount
-        //   A helper method that performs the checks and updates associated with
-        // password failure tracking.
-        //
+        /// <summary>
+        /// A helper method that performs the checks and updates associated with password failure tracking.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="failureType">Typ niepowodzenia</param>
         private void UpdateFailureCount(string login, string failureType)
         {
-            //MySqlConnection conn = new MySqlConnection(connectionString);
-            //MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
-            //command.Parameters.AddWithValue("@login", login);
-            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            //command.Connection = conn;
-
-            //MySqlDataReader reader = null;
-            //DateTime windowStart = new DateTime();
-            //int failureCount = 0;
-
-            //try
-            //{
-            //    conn.Open();
-
-            //    reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-            //    if (reader.HasRows)
-            //    {
-            //        reader.Read();
-
-            //        if (failureType == "password")
-            //        {
-            //            failureCount = reader.GetInt32(0);
-            //            windowStart = reader.GetDateTime(1);
-            //        }
-
-            //        if (failureType == "passwordAnswer")
-            //        {
-            //            failureCount = reader.GetInt32(2);
-            //            windowStart = reader.GetDateTime(3);
-            //        }
-            //    }
-
-            //    reader.Close();
-
-            //    DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
-
-            //    if (failureCount == 0 || DateTime.Now > windowEnd)
-            //    {
-            //        // First password failure or outside of PasswordAttemptWindow. 
-            //        // Start a new password failure count from 1 and a new window starting now.
-
-            //        if (failureType == "password")
-            //            command.CommandText = Queries.UpdateFailedPasswordAttempt;
-
-            //        if (failureType == "passwordAnswer")
-            //            command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
-
-            //        command.Parameters.Clear();
-
-            //        command.Parameters.Add("@count", 1);
-            //        command.Parameters.Add("@windowStart", DateTime.Now);
-            //        command.Parameters.Add("@login", login);
-            //        command.Parameters.Add("@applicationName", pApplicationName);
-
-            //        if (command.ExecuteNonQuery() < 0)
-            //            throw new ProviderException("Unable to update failure count and window start.");
-            //    }
-            //    else
-            //    {
-            //        if (failureCount++ >= MaxInvalidPasswordAttempts)
-            //        {
-            //            // Password attempts have exceeded the failure threshold. Lock out
-            //            // the user.
-
-            //            command.CommandText = Queries.LockOutUser;
-
-            //            command.Parameters.Clear();
-
-            //            command.Parameters.Add("@isLockedOut", true);
-            //            command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
-            //            command.Parameters.Add("@login", login);
-            //            command.Parameters.Add("@applicationName", pApplicationName);
-
-            //            if (command.ExecuteNonQuery() < 0)
-            //                throw new ProviderException("Unable to lock out user.");
-            //        }
-            //        else
-            //        {
-            //            // Password attempts have not exceeded the failure threshold. Update
-            //            // the failure counts. Leave the window the same.
-
-            //            if (failureType == "password")
-            //                command.CommandText = Queries.SetFailedPasswordAttemptCount;
-
-            //            if (failureType == "passwordAnswer")
-            //                command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
-
-            //            command.Parameters.Clear();
-
-            //            command.Parameters.Add("@count", failureCount);
-            //            command.Parameters.Add("@login", login);
-            //            command.Parameters.Add("@applicationName", pApplicationName);
-
-            //            if (command.ExecuteNonQuery() < 0)
-            //                throw new ProviderException("Unable to update failure count.");
-            //        }
-            //    }
-            //}
-            //catch (MySqlException e)
-            //{
-            //    //if (WriteExceptionsToEventLog)
-            //    //{
-            //    //    WriteToEventLog(e, "UpdateFailureCount");
-
-            //    //    throw new ProviderException(exceptionMessage);
-            //    //}
-            //    //else
-            //    {
-            //        throw e;
-            //    }
-            //}
-            //finally
-            //{
-            //    if (reader != null) { reader.Close(); }
-            //    conn.Close();
-            //}
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.UpdateFailureCount(login, failureType, PasswordAttemptWindow, MaxInvalidPasswordAttempts);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "UpdateFailureCount");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+            if (value == false)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("UpdateFailureCount nie wykonał się poprawnie."), "UpdateFailureCount");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("UpdateFailureCount nie wykonał się poprawnie.");
+                }
+            }
         }
-        //
-        // WriteToEventLog
-        //   A helper function that writes exception detail to the event log. Exceptions
-        // are written to the event log as a security measure to avoid private database
-        // details from being returned to the browser. If a method does not return a status
-        // or boolean indicating the action succeeded or failed, a generic exception is also 
-        // thrown by the caller.
-        //
+
+        /// <summary>
+        /// A helper function that writes exception detail to the event log. Exceptions
+        /// are written to the event log as a security measure to avoid private database
+        /// details from being returned to the browser. If a method does not return a status
+        /// or boolean indicating the action succeeded or failed, a generic exception is also 
+        /// thrown by the caller.
+        /// </summary>
+        /// <param name="e">Exception</param>
+        /// <param name="action">Nazwa wykonywaniej akcji</param>
         private void WriteToEventLog(Exception e, string action)
         {
             /*

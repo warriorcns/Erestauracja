@@ -676,6 +676,9 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UpdateUserLoginDate", ReplyAction="http://tempuri.org/IEresService/UpdateUserLoginDateResponse")]
         bool UpdateUserLoginDate(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UpdateFailureCount", ReplyAction="http://tempuri.org/IEresService/UpdateFailureCountResponse")]
+        bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -771,6 +774,10 @@ namespace Erestauracja.ServiceReference {
         
         public bool UpdateUserLoginDate(string login) {
             return base.Channel.UpdateUserLoginDate(login);
+        }
+        
+        public bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts) {
+            return base.Channel.UpdateFailureCount(login, failureType, PasswordAttemptWindow, MaxInvalidPasswordAttempts);
         }
     }
 }

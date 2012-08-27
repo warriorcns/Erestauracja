@@ -859,6 +859,111 @@ namespace Contract
             }
             return false;
         }
+
+        public bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
+            command.Parameters.AddWithValue("@login", login);
+
+            DateTime windowStart = new DateTime();
+            int failureCount = 0;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "UpdateFailureCount");
+
+            if (ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (failureType == "password")
+                    {
+                        if (row["failedPasswordAttemptCount"] != DBNull.Value) failureCount = Convert.ToInt32(row["failedPasswordAttemptCount"]);
+                        if (row["failedPasswordAttemptWindowStart"] != DBNull.Value) windowStart = Convert.ToDateTime(row["failedPasswordAttemptWindowStart"]);
+                    }
+
+                    if (failureType == "passwordAnswer")
+                    {
+
+                        if (row["failedPasswordAnswerAttemptCount"] != DBNull.Value) failureCount = Convert.ToInt32(row["failedPasswordAnswerAttemptCount"]);
+                        if (row["failedPasswordAnswerAttemptWindowStart"] != DBNull.Value) windowStart = Convert.ToDateTime(row["failedPasswordAnswerAttemptWindowStart"]);
+                    }
+                }
+            }
+
+            DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
+
+            if (failureCount == 0 || DateTime.Now > windowEnd)
+            {
+                // First password failure or outside of PasswordAttemptWindow. 
+                // Start a new password failure count from 1 and a new window starting now.
+
+                if (failureType == "password")
+                    command.CommandText = Queries.UpdateFailedPasswordAttempt;
+
+                if (failureType == "passwordAnswer")
+                    command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
+
+                command.Parameters.Clear();
+
+                command.Parameters.Add("@count", 1);
+                command.Parameters.Add("@windowStart", DateTime.Now);
+                command.Parameters.Add("@login", login);
+
+                int rowsaffected = ExecuteNonQuery(command, "UpdateFailed" + failureType + "Attempt");
+
+                if (rowsaffected < 0)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (failureCount++ >= MaxInvalidPasswordAttempts)
+                {
+                    // Password attempts have exceeded the failure threshold. Lock out
+                    // the user.
+
+                    command.CommandText = Queries.LockOutUser;
+
+                    command.Parameters.Clear();
+
+                    command.Parameters.Add("@isLockedOut", true);
+                    command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
+                    command.Parameters.Add("@login", login);
+
+                    int rowsaffected = ExecuteNonQuery(command, "LockOutUser");
+
+                    if (rowsaffected < 0)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    // Password attempts have not exceeded the failure threshold. Update
+                    // the failure counts. Leave the window the same.
+
+                    if (failureType == "password")
+                        command.CommandText = Queries.SetFailedPasswordAttemptCount;
+
+                    if (failureType == "passwordAnswer")
+                        command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
+
+                    command.Parameters.Clear();
+
+                    command.Parameters.Add("@count", failureCount);
+                    command.Parameters.Add("@login", login);
+
+                    int rowsaffected = ExecuteNonQuery(command, "Unable to update failure count.");
+
+                    if (rowsaffected < 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 
 

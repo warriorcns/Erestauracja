@@ -196,7 +196,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetFailureCount {
             get {
@@ -313,7 +313,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login.
         /// </summary>
         internal static string LockOutUser {
             get {
@@ -349,7 +349,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users`  SET `failedPasswordAnswerAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users`  SET `failedPasswordAnswerAttemptCount` = @count WHERE `login` = @login.
         /// </summary>
         internal static string SetFailedPasswordAnswerAttemptCount {
             get {
@@ -358,7 +358,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login.
         /// </summary>
         internal static string SetFailedPasswordAttemptCount {
             get {
@@ -376,7 +376,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login.
         /// </summary>
         internal static string UpdateFailedPasswordAnswerAttempt {
             get {
@@ -385,7 +385,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login.
         /// </summary>
         internal static string UpdateFailedPasswordAttempt {
             get {

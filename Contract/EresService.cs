@@ -248,6 +248,20 @@ namespace Contract
             }
         }
 
+        public bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts)
+        {
+            if (!(String.IsNullOrEmpty(login) || String.IsNullOrEmpty(failureType)))
+            {
+                Database db = new Database();
+                bool value = db.UpdateFailureCount(login, failureType, PasswordAttemptWindow, MaxInvalidPasswordAttempts);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

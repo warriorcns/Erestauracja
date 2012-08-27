@@ -163,7 +163,7 @@
     <value>SELECT `email` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetFailureCount" xml:space="preserve">
-    <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetNumberOfUsersOnline" xml:space="preserve">
     <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate</value>
@@ -202,7 +202,7 @@
     <value>SELECT COUNT(*) FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
   </data>
   <data name="LockOutUser" xml:space="preserve">
-    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login</value>
   </data>
   <data name="RemoveUsersFromRoles" xml:space="preserve">
     <value>DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName</value>
@@ -214,19 +214,19 @@
     <value>SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
   </data>
   <data name="SetFailedPasswordAnswerAttemptCount" xml:space="preserve">
-    <value>UPDATE `users`  SET `failedPasswordAnswerAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users`  SET `failedPasswordAnswerAttemptCount` = @count WHERE `login` = @login</value>
   </data>
   <data name="SetFailedPasswordAttemptCount" xml:space="preserve">
-    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count WHERE `login` = @login</value>
   </data>
   <data name="UnlockUser" xml:space="preserve">
     <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login</value>
   </data>
   <data name="UpdateFailedPasswordAnswerAttempt" xml:space="preserve">
-    <value>UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `failedPasswordAnswerAttemptCount` = @count, `failedPasswordAnswerAttemptWindowStart` = @windowStart WHERE `login` = @login</value>
   </data>
   <data name="UpdateFailedPasswordAttempt" xml:space="preserve">
-    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login</value>
   </data>
   <data name="UpdateUser" xml:space="preserve">
     <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>

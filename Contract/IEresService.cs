@@ -60,6 +60,9 @@ namespace Contract
 
         [OperationContract]
         bool UpdateUserLoginDate(string login);
+
+        [OperationContract]
+        bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
     }
 
     [DataContract]
