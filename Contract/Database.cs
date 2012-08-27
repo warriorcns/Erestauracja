@@ -123,7 +123,7 @@ namespace Contract
         private object ExecuteScalar(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
-            object objekt = 0;
+            object objekt = null;
 
             try
             {
@@ -783,7 +783,7 @@ namespace Contract
             MySqlCommand command = new MySqlCommand(Queries.GetUserNameByEmail);
             command.Parameters.AddWithValue("@email", email);
 
-            string rowsaffected = (ExecuteScalar(command, "GetUserNameByEmail")).ToString();
+            string rowsaffected = (string)(ExecuteScalar(command, "GetUserNameByEmail"));
 
             if (!(String.IsNullOrEmpty(rowsaffected)))
             {

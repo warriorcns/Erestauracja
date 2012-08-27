@@ -613,6 +613,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <None Include="Service References\ServiceReference\EresService1.wsdl" />
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.PasswordAndAnswer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -631,10 +632,20 @@
     <None Include="Service References\ServiceReference\item.disco" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
     <Content Include="Views\Account\PasswordReset.aspx" />

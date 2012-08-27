@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erestauracja", "Erestauracja\Erestauracja.csproj", "{CF15D18B-4BE7-4AAD-B631-F3D8645747C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DDD69446-E172-4139-8072-545715248C7D} = {DDD69446-E172-4139-8072-545715248C7D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erestauracja.Tests", "Erestauracja.Tests\Erestauracja.Tests.csproj", "{5CF95613-B996-4544-8424-57085D45FE88}"
 EndProject

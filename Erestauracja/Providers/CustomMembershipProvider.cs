@@ -63,16 +63,18 @@ namespace Erestauracja.Providers
         private string eventSource = "CustomMembershipProvider";
         private string eventLog = "Erestauracja";
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
-        private string connectionString;
-        //
-        // Used when determining encryption key values.
-        //
+     //   private string connectionString;
+
+        /// <summary>
+        /// Used when determining encryption key values.
+        /// </summary>
         private MachineKeySection machineKey;
-        //
-        // If false, exceptions are thrown to the caller. If true,
-        // exceptions are written to the event log.
-        //
+        
         private bool pWriteExceptionsToEventLog;
+        /// <summary>
+        /// If false, exceptions are thrown to the caller. If true,
+        /// exceptions are written to the event log.
+        /// </summary>
         public bool WriteExceptionsToEventLog
         {
             get { return pWriteExceptionsToEventLog; }
@@ -82,12 +84,13 @@ namespace Erestauracja.Providers
         //
         #region  System.Configuration.Provider.ProviderBase.Initialize Method
 
+        /// <summary>
+        /// Initialize values from web.config.
+        /// </summary>
+        /// <param name="name">Nazwa providera</param>
+        /// <param name="config">NameValueCollection</param>
         public override void Initialize(string name, NameValueCollection config)
         {
-            //
-            // Initialize values from web.config.
-            //
-
             if (config == null)
                 throw new ArgumentNullException("config");
 
@@ -141,15 +144,15 @@ namespace Erestauracja.Providers
             // Initialize MySQLConnection.
             //
 
-            ConnectionStringSettings ConnectionStringSettings =
-              ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
+         //   ConnectionStringSettings ConnectionStringSettings =
+        //      ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
 
-            if (ConnectionStringSettings == null || ConnectionStringSettings.ConnectionString.Trim() == "")
-            {
-                throw new ProviderException("Connection string cannot be blank.");
-            }
+      //      if (ConnectionStringSettings == null || ConnectionStringSettings.ConnectionString.Trim() == "")
+      //      {
+      //          throw new ProviderException("Connection string cannot be blank.");
+      //      }
 
-            connectionString = ConnectionStringSettings.ConnectionString;
+     //       connectionString = ConnectionStringSettings.ConnectionString;
 
 
             // Get encryption and decryption key information from the configuration.
@@ -853,7 +856,7 @@ namespace Erestauracja.Providers
                 return null;
             }
 
-            if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
+            if (RequiresUniqueEmail && !(String.IsNullOrEmpty(GetUserNameByEmail(email))))
             {
                 status = MembershipCreateStatus.DuplicateEmail;
                 return null;
@@ -1160,10 +1163,17 @@ namespace Erestauracja.Providers
                 }
             }
 
-            CustomMembershipUser u = GetCustomMembershipUserFromUser(lista);
-            MembershipUser us = (MembershipUser)u;
-
-            return us;
+            if (lista != null)
+            {
+                CustomMembershipUser u = GetCustomMembershipUserFromUser(lista);
+                MembershipUser us = (MembershipUser)u;
+                return us;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         /// <summary>
@@ -1466,137 +1476,130 @@ namespace Erestauracja.Providers
             return isValid;
         }
 
-        //
-        // MembershipProvider.FindUsersByName
-        //
+        /// <summary>
+        /// Nie używać ze względu na niepowtarzalność loginów!
+        /// </summary>
+        /// <param name="loginToMatch"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords">Zawsze -1</param>
+        /// <returns>Zawsze null</returns>
         public override MembershipUserCollection FindUsersByName(string loginToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserCountByLogin);
-            command.Parameters.AddWithValue("@login", loginToMatch);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
+            totalRecords = -1;
+            return null;
 
-            MembershipUserCollection users = new MembershipUserCollection();
+            //MySqlConnection conn = new MySqlConnection(connectionString);
+            //MySqlCommand command = new MySqlCommand(Queries.GetUserCountByLogin);
+            //command.Parameters.AddWithValue("@login", loginToMatch);
+            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            //command.Connection = conn;
+            //MySqlDataReader reader = null;
+            //try
+            //{
+            //    conn.Open();
+            //    totalRecords = (int)command.ExecuteScalar();
+            //    if (totalRecords <= 0) { return users; }
+            //    command.CommandText = Queries.FindUsersByName;
+            //    command.Connection = conn;
+            //    reader = command.ExecuteReader();
+            //    int counter = 0;
+            //    int startIndex = pageSize * pageIndex;
+            //    int endIndex = startIndex + pageSize - 1;
+            //    while (reader.Read())
+            //    {
+            //        if (counter >= startIndex)
+            //        {
+            //            CustomMembershipUser u = GetUserFromReader(reader);
+            //            users.Add(u);
+            //        }
+            //        if (counter >= endIndex) { command.Cancel(); }
+            //        counter++;
+            //    }
+            //}
+            //catch (MySqlException e)
+            //{
+            //    if (WriteExceptionsToEventLog)
+            //    {
+            //        WriteToEventLog(e, "FindUsersByName");
 
-            MySqlDataReader reader = null;
+            //        throw new ProviderException(exceptionMessage);
+            //    }
+            //    else
+            //    {
+            //        throw e;
+            //    }
+            //}
+            //finally
+            //{
+            //    if (reader != null) { reader.Close(); }
 
-            try
-            {
-                conn.Open();
-                totalRecords = (int)command.ExecuteScalar();
+            //    conn.Close();
+            //}
 
-                if (totalRecords <= 0) { return users; }
-
-                command.CommandText = Queries.FindUsersByName;
-                command.Connection = conn;
-                reader = command.ExecuteReader();
-
-                int counter = 0;
-                int startIndex = pageSize * pageIndex;
-                int endIndex = startIndex + pageSize - 1;
-
-                while (reader.Read())
-                {
-                    if (counter >= startIndex)
-                    {
-                        CustomMembershipUser u = GetUserFromReader(reader);
-                        users.Add(u);
-                    }
-
-                    if (counter >= endIndex) { command.Cancel(); }
-
-                    counter++;
-                }
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "FindUsersByName");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-
-                conn.Close();
-            }
-
-            return users;
+            //return users;
         }
 
-        //
-        // MembershipProvider.FindUsersByEmail
-        //
+        /// <summary>
+        /// Nie używać ze względu na niepowtarzalność adresów email!
+        /// </summary>
+        /// <param name="loginToMatch"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords">Zawsze -1</param>
+        /// <returns>Zawsze null</returns>
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUserCountByEmail);
-            command.Parameters.AddWithValue("@email", emailToMatch);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
+            totalRecords = -1;
+            return null;
 
-            MembershipUserCollection users = new MembershipUserCollection();
-
-            MySqlDataReader reader = null;
-            totalRecords = 0;
-
-            try
-            {
-                conn.Open();
-                totalRecords = (int)command.ExecuteScalar();
-
-                if (totalRecords <= 0) { return users; }
-
-                command.CommandText = Queries.FindUsersByEmail;
-
-                reader = command.ExecuteReader();
-
-                int counter = 0;
-                int startIndex = pageSize * pageIndex;
-                int endIndex = startIndex + pageSize - 1;
-
-                while (reader.Read())
-                {
-                    if (counter >= startIndex)
-                    {
-                        CustomMembershipUser u = GetUserFromReader(reader);
-                        users.Add(u);
-                    }
-
-                    if (counter >= endIndex) { command.Cancel(); }
-
-                    counter++;
-                }
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "FindUsersByEmail");
-
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-
-                conn.Close();
-            }
-
-            return users;
+            //MySqlConnection conn = new MySqlConnection(connectionString);
+            //MySqlCommand command = new MySqlCommand(Queries.GetUserCountByEmail);
+            //command.Parameters.AddWithValue("@email", emailToMatch);
+            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            //command.Connection = conn;
+            //MembershipUserCollection users = new MembershipUserCollection();
+            //MySqlDataReader reader = null;
+            //totalRecords = 0;
+            //try
+            //{
+            //    conn.Open();
+            //    totalRecords = (int)command.ExecuteScalar();
+            //    if (totalRecords <= 0) { return users; }
+            //    command.CommandText = Queries.FindUsersByEmail;
+            //    reader = command.ExecuteReader();
+            //    int counter = 0;
+            //    int startIndex = pageSize * pageIndex;
+            //    int endIndex = startIndex + pageSize - 1;
+            //    while (reader.Read())
+            //    {
+            //        if (counter >= startIndex)
+            //        {
+            //            CustomMembershipUser u = GetUserFromReader(reader);
+            //            users.Add(u);
+            //        }
+            //        if (counter >= endIndex) { command.Cancel(); }
+            //        counter++;
+            //    }
+            //}
+            //catch (MySqlException e)
+            //{
+            //    //if (WriteExceptionsToEventLog)
+            //    //{
+            //    //    WriteToEventLog(e, "FindUsersByEmail");
+            //    //    throw new ProviderException(exceptionMessage);
+            //    //}
+            //    //else
+            //    {
+            //        throw e;
+            //    }
+            //}
+            //finally
+            //{
+            //    if (reader != null) { reader.Close(); }
+            //    conn.Close();
+            //}
+            //return users;
         }
 
         #endregion
@@ -1608,123 +1611,123 @@ namespace Erestauracja.Providers
         //
         private void UpdateFailureCount(string login, string failureType)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
+            //MySqlConnection conn = new MySqlConnection(connectionString);
+            //MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
+            //command.Parameters.AddWithValue("@login", login);
+            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
+            //command.Connection = conn;
 
-            MySqlDataReader reader = null;
-            DateTime windowStart = new DateTime();
-            int failureCount = 0;
+            //MySqlDataReader reader = null;
+            //DateTime windowStart = new DateTime();
+            //int failureCount = 0;
 
-            try
-            {
-                conn.Open();
+            //try
+            //{
+            //    conn.Open();
 
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+            //    reader = command.ExecuteReader(CommandBehavior.SingleRow);
 
-                if (reader.HasRows)
-                {
-                    reader.Read();
+            //    if (reader.HasRows)
+            //    {
+            //        reader.Read();
 
-                    if (failureType == "password")
-                    {
-                        failureCount = reader.GetInt32(0);
-                        windowStart = reader.GetDateTime(1);
-                    }
+            //        if (failureType == "password")
+            //        {
+            //            failureCount = reader.GetInt32(0);
+            //            windowStart = reader.GetDateTime(1);
+            //        }
 
-                    if (failureType == "passwordAnswer")
-                    {
-                        failureCount = reader.GetInt32(2);
-                        windowStart = reader.GetDateTime(3);
-                    }
-                }
+            //        if (failureType == "passwordAnswer")
+            //        {
+            //            failureCount = reader.GetInt32(2);
+            //            windowStart = reader.GetDateTime(3);
+            //        }
+            //    }
 
-                reader.Close();
+            //    reader.Close();
 
-                DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
+            //    DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
 
-                if (failureCount == 0 || DateTime.Now > windowEnd)
-                {
-                    // First password failure or outside of PasswordAttemptWindow. 
-                    // Start a new password failure count from 1 and a new window starting now.
+            //    if (failureCount == 0 || DateTime.Now > windowEnd)
+            //    {
+            //        // First password failure or outside of PasswordAttemptWindow. 
+            //        // Start a new password failure count from 1 and a new window starting now.
 
-                    if (failureType == "password")
-                        command.CommandText = Queries.UpdateFailedPasswordAttempt;
+            //        if (failureType == "password")
+            //            command.CommandText = Queries.UpdateFailedPasswordAttempt;
 
-                    if (failureType == "passwordAnswer")
-                        command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
+            //        if (failureType == "passwordAnswer")
+            //            command.CommandText = Queries.UpdateFailedPasswordAnswerAttempt;
 
-                    command.Parameters.Clear();
+            //        command.Parameters.Clear();
 
-                    command.Parameters.Add("@count", 1);
-                    command.Parameters.Add("@windowStart", DateTime.Now);
-                    command.Parameters.Add("@login", login);
-                    command.Parameters.Add("@applicationName", pApplicationName);
+            //        command.Parameters.Add("@count", 1);
+            //        command.Parameters.Add("@windowStart", DateTime.Now);
+            //        command.Parameters.Add("@login", login);
+            //        command.Parameters.Add("@applicationName", pApplicationName);
 
-                    if (command.ExecuteNonQuery() < 0)
-                        throw new ProviderException("Unable to update failure count and window start.");
-                }
-                else
-                {
-                    if (failureCount++ >= MaxInvalidPasswordAttempts)
-                    {
-                        // Password attempts have exceeded the failure threshold. Lock out
-                        // the user.
+            //        if (command.ExecuteNonQuery() < 0)
+            //            throw new ProviderException("Unable to update failure count and window start.");
+            //    }
+            //    else
+            //    {
+            //        if (failureCount++ >= MaxInvalidPasswordAttempts)
+            //        {
+            //            // Password attempts have exceeded the failure threshold. Lock out
+            //            // the user.
 
-                        command.CommandText = Queries.LockOutUser;
+            //            command.CommandText = Queries.LockOutUser;
 
-                        command.Parameters.Clear();
+            //            command.Parameters.Clear();
 
-                        command.Parameters.Add("@isLockedOut", true);
-                        command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
-                        command.Parameters.Add("@login", login);
-                        command.Parameters.Add("@applicationName", pApplicationName);
+            //            command.Parameters.Add("@isLockedOut", true);
+            //            command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
+            //            command.Parameters.Add("@login", login);
+            //            command.Parameters.Add("@applicationName", pApplicationName);
 
-                        if (command.ExecuteNonQuery() < 0)
-                            throw new ProviderException("Unable to lock out user.");
-                    }
-                    else
-                    {
-                        // Password attempts have not exceeded the failure threshold. Update
-                        // the failure counts. Leave the window the same.
+            //            if (command.ExecuteNonQuery() < 0)
+            //                throw new ProviderException("Unable to lock out user.");
+            //        }
+            //        else
+            //        {
+            //            // Password attempts have not exceeded the failure threshold. Update
+            //            // the failure counts. Leave the window the same.
 
-                        if (failureType == "password")
-                            command.CommandText = Queries.SetFailedPasswordAttemptCount;
+            //            if (failureType == "password")
+            //                command.CommandText = Queries.SetFailedPasswordAttemptCount;
 
-                        if (failureType == "passwordAnswer")
-                            command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
+            //            if (failureType == "passwordAnswer")
+            //                command.CommandText = Queries.SetFailedPasswordAnswerAttemptCount;
 
-                        command.Parameters.Clear();
+            //            command.Parameters.Clear();
 
-                        command.Parameters.Add("@count", failureCount);
-                        command.Parameters.Add("@login", login);
-                        command.Parameters.Add("@applicationName", pApplicationName);
+            //            command.Parameters.Add("@count", failureCount);
+            //            command.Parameters.Add("@login", login);
+            //            command.Parameters.Add("@applicationName", pApplicationName);
 
-                        if (command.ExecuteNonQuery() < 0)
-                            throw new ProviderException("Unable to update failure count.");
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "UpdateFailureCount");
+            //            if (command.ExecuteNonQuery() < 0)
+            //                throw new ProviderException("Unable to update failure count.");
+            //        }
+            //    }
+            //}
+            //catch (MySqlException e)
+            //{
+            //    //if (WriteExceptionsToEventLog)
+            //    //{
+            //    //    WriteToEventLog(e, "UpdateFailureCount");
 
-                //    throw new ProviderException(exceptionMessage);
-                //}
-                //else
-                {
-                    throw e;
-                }
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
+            //    //    throw new ProviderException(exceptionMessage);
+            //    //}
+            //    //else
+            //    {
+            //        throw e;
+            //    }
+            //}
+            //finally
+            //{
+            //    if (reader != null) { reader.Close(); }
+            //    conn.Close();
+            //}
         }
         //
         // WriteToEventLog
