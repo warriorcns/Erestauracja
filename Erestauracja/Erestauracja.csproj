@@ -625,6 +625,9 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ValidateUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\item.disco" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />

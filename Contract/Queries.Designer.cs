@@ -421,7 +421,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login.
         /// </summary>
         internal static string UpdateUserLoginDate {
             get {

@@ -238,7 +238,7 @@
     <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `login` = @login</value>
   </data>
   <data name="UpdateUserLoginDate" xml:space="preserve">
-    <value>UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login AND `applicationName` = @applicationName</value>
+    <value>UPDATE `users` SET `lastLoginDate`= @lastLoginDate WHERE `login` = @login</value>
   </data>
   <data name="ValidateUser" xml:space="preserve">
     <value>SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `isLockedOut` = @isLockedOut</value>

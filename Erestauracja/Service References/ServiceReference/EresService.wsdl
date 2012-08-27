@@ -85,6 +85,30 @@
   <wsdl:message name="IEresService_UnlockUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:UnlockUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetUserNameByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserNameByEmail" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUserNameByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserNameByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_ValidateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_ValidateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UpdateUserLoginDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserLoginDate" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_UpdateUserLoginDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserLoginDateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEresService">
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -137,6 +161,22 @@
     <wsdl:operation name="UnlockUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/UnlockUser" message="tns:IEresService_UnlockUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/UnlockUserResponse" message="tns:IEresService_UnlockUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserNameByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUserNameByEmail" message="tns:IEresService_GetUserNameByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUserNameByEmailResponse" message="tns:IEresService_GetUserNameByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/UpdateUser" message="tns:IEresService_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/UpdateUserResponse" message="tns:IEresService_UpdateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ValidateUser" message="tns:IEresService_ValidateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/ValidateUserResponse" message="tns:IEresService_ValidateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserLoginDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/UpdateUserLoginDate" message="tns:IEresService_UpdateUserLoginDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/UpdateUserLoginDateResponse" message="tns:IEresService_UpdateUserLoginDate_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
@@ -251,6 +291,42 @@
     </wsdl:operation>
     <wsdl:operation name="UnlockUser">
       <soap:operation soapAction="http://tempuri.org/IEresService/UnlockUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserNameByEmail">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetUserNameByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserLoginDate">
+      <soap:operation soapAction="http://tempuri.org/IEresService/UpdateUserLoginDate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

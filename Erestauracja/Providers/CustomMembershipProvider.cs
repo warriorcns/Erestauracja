@@ -1379,72 +1379,31 @@ namespace Erestauracja.Providers
             }
         }
 
-        //
-        // MembershipProvider.ValidateUser
-        //
+        /// <summary>
+        /// Sprawdza czy dany użytkownik posiada konto.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło użytkownika</param>
+        /// <returns>True - jeśli użytkownik posiada konto.</returns>
         public override bool ValidateUser(string login, string password)
         {
             bool isValid = false;
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.ValidateUser);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Parameters.AddWithValue("@isLockedOut", false);
-            command.Connection = conn;
-
-            MySqlDataReader reader = null;
-            bool isApproved = false;
-            string pwd = "";
-
+            ValidateUser value = null;
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-
-                if (reader.HasRows)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    reader.Read();
-                    pwd = reader.GetString(0);
-                    isApproved = reader.GetBoolean(1);
+                    value = client.ValidateUser(login);
                 }
-                else
-                {
-                    return false;
-                }
-
-                reader.Close();
-
-                if (CheckPassword(password, pwd))
-                {
-                    if (isApproved)
-                    {
-                        isValid = true;
-
-                        MySqlCommand updateCmd = new MySqlCommand(Queries.UpdateUserLoginDate);
-
-                        updateCmd.Parameters.Add("@lastLoginDate", DateTime.Now);
-                        updateCmd.Parameters.Add("@login", login);
-                        updateCmd.Parameters.Add("@applicationName", pApplicationName);
-                        updateCmd.Connection = conn;
-
-                        updateCmd.ExecuteNonQuery();
-                    }
-                }
-                else
-                {
-                    conn.Close();
-
-                    UpdateFailureCount(login, "password");
-                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
                 if (WriteExceptionsToEventLog)
                 {
                     WriteToEventLog(e, "ValidateUser");
-
                     throw new ProviderException(exceptionMessage);
                 }
                 else
@@ -1452,10 +1411,56 @@ namespace Erestauracja.Providers
                     throw e;
                 }
             }
-            finally
+
+            if (value == null) return false;
+            else
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
+                if (CheckPassword(password, value.Password))
+                {
+                    if (value.IsApproved)
+                    {
+                        isValid = true;
+
+                        bool update = false;
+                        try
+                        {
+                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                            using (client)
+                            {
+                                update = client.UpdateUserLoginDate(login);
+                            }
+                            client.Close();
+                        }
+                        catch (Exception e)
+                        {
+                            if (WriteExceptionsToEventLog)
+                            {
+                                WriteToEventLog(e, "UpdateUserLoginDate");
+                                throw new ProviderException(exceptionMessage);
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
+                        if (update == false)
+                        {
+                            if (WriteExceptionsToEventLog)
+                            {
+                                WriteToEventLog(new Exception("Aktualizacja daty logowania nie powiodła się!"), "UpdateUserLoginDate");
+                                throw new ProviderException(exceptionMessage);
+                            }
+                            else
+                            {
+                                throw new ProviderException(exceptionMessage);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    UpdateFailureCount(login, "password");
+                }
             }
 
             return isValid;

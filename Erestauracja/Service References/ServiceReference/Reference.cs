@@ -561,6 +561,67 @@ namespace Erestauracja.ServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ValidateUser", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class ValidateUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsApprovedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsApproved {
+            get {
+                return this.IsApprovedField;
+            }
+            set {
+                if ((this.IsApprovedField.Equals(value) != true)) {
+                    this.IsApprovedField = value;
+                    this.RaisePropertyChanged("IsApproved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
@@ -603,6 +664,18 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UnlockUser", ReplyAction="http://tempuri.org/IEresService/UnlockUserResponse")]
         bool UnlockUser(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetUserNameByEmail", ReplyAction="http://tempuri.org/IEresService/GetUserNameByEmailResponse")]
+        string GetUserNameByEmail(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UpdateUser", ReplyAction="http://tempuri.org/IEresService/UpdateUserResponse")]
+        bool UpdateUser(Erestauracja.ServiceReference.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ValidateUser", ReplyAction="http://tempuri.org/IEresService/ValidateUserResponse")]
+        Erestauracja.ServiceReference.ValidateUser ValidateUser(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/UpdateUserLoginDate", ReplyAction="http://tempuri.org/IEresService/UpdateUserLoginDateResponse")]
+        bool UpdateUserLoginDate(string login);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -682,6 +755,22 @@ namespace Erestauracja.ServiceReference {
         
         public bool UnlockUser(string login) {
             return base.Channel.UnlockUser(login);
+        }
+        
+        public string GetUserNameByEmail(string email) {
+            return base.Channel.GetUserNameByEmail(email);
+        }
+        
+        public bool UpdateUser(Erestauracja.ServiceReference.User user) {
+            return base.Channel.UpdateUser(user);
+        }
+        
+        public Erestauracja.ServiceReference.ValidateUser ValidateUser(string login) {
+            return base.Channel.ValidateUser(login);
+        }
+        
+        public bool UpdateUserLoginDate(string login) {
+            return base.Channel.UpdateUserLoginDate(login);
         }
     }
 }

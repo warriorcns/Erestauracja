@@ -234,6 +234,20 @@ namespace Contract
             }
         }
 
+        public bool UpdateUserLoginDate(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                bool value = db.UpdateUserLoginDate(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

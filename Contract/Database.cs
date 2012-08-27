@@ -841,6 +841,21 @@ namespace Contract
             }
             return value;
         }
+
+        public bool UpdateUserLoginDate(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.UpdateUserLoginDate);
+            command.Parameters.Add("@lastLoginDate", DateTime.Now);
+            command.Parameters.Add("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "UpdateUserLoginDate");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
 

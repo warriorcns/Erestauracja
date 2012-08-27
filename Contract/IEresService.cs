@@ -57,6 +57,9 @@ namespace Contract
 
         [OperationContract]
         ValidateUser ValidateUser(string login);
+
+        [OperationContract]
+        bool UpdateUserLoginDate(string login);
     }
 
     [DataContract]

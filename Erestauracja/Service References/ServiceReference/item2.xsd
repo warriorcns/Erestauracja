@@ -53,4 +53,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ValidateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsApproved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValidateUser" nillable="true" type="tns:ValidateUser" />
 </xs:schema>
