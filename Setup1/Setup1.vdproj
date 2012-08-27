@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_17B8978825C111D42F7E53BDB8AA3D10"
+        "OwnerKey" = "8:_9019843D058346CB863D6F8207DE0950"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9019843D058346CB863D6F8207DE0950"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -28,31 +34,25 @@
         "Entry"
         {
         "MsmKey" = "8:_9FD8C468A329E08E3B096BC654CCDEAD"
-        "OwnerKey" = "8:_C42784FFB726C1EFA856EC3B17A8A415"
+        "OwnerKey" = "8:_17B8978825C111D42F7E53BDB8AA3D10"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C42784FFB726C1EFA856EC3B17A8A415"
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9019843D058346CB863D6F8207DE0950"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_17B8978825C111D42F7E53BDB8AA3D10"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9FD8C468A329E08E3B096BC654CCDEAD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9019843D058346CB863D6F8207DE0950"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C42784FFB726C1EFA856EC3B17A8A415"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -73,6 +73,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -89,6 +110,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -174,20 +216,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9FD8C468A329E08E3B096BC654CCDEAD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_17B8978825C111D42F7E53BDB8AA3D10"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Contract, Version=1.0.4622.24871, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_9FD8C468A329E08E3B096BC654CCDEAD"
+                    "_17B8978825C111D42F7E53BDB8AA3D10"
                     {
-                    "Name" = "8:MySql.Data.dll"
+                    "Name" = "8:Contract.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:MySql.Data.dll"
+            "SourcePath" = "8:Contract.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4EEFA5AA037E4305AD09BF4823AD2BF4"
@@ -205,20 +247,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C42784FFB726C1EFA856EC3B17A8A415"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9FD8C468A329E08E3B096BC654CCDEAD"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Contract, Version=1.0.4617.31870, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C42784FFB726C1EFA856EC3B17A8A415"
+                    "_9FD8C468A329E08E3B096BC654CCDEAD"
                     {
-                    "Name" = "8:Contract.dll"
+                    "Name" = "8:MySql.Data.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Contract.dll"
+            "SourcePath" = "8:MySql.Data.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4EEFA5AA037E4305AD09BF4823AD2BF4"
@@ -293,7 +335,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup1"
         "ProductCode" = "8:{74FE50AD-143C-4DC2-A89A-ECE993447E73}"
-        "PackageCode" = "8:{8EBCFE19-330C-485B-9A05-1CEA2D1590E1}"
+        "PackageCode" = "8:{AD5E2263-74F6-4072-8578-EF1A76CF51BB}"
         "UpgradeCode" = "8:{45A56E1C-58AF-4A91-BB37-379AF09C8E9D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -479,7 +521,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B975E43588F745C887A9AD723600D8EB"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:Folder instalacji"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
@@ -558,7 +600,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4A9FF64ED9834272B3F6DC2AAC87ACB1"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Welcome"
+                    "DisplayName" = "8:Witaj"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
@@ -628,7 +670,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_BB81A8570BC8464486543CF9DDB160BB"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:Folder instalacji"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"

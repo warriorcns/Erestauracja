@@ -13,7 +13,7 @@
     </script>
     <script type="text/javascript">
         jQuery(function ($) {
-            $("#Birthdate").mask("99/99/9999");
+            $("#Birthdate").mask("9999/99/99");
         });
     </script>
 

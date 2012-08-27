@@ -785,11 +785,14 @@ namespace Contract
 
             string rowsaffected = (string)(ExecuteScalar(command, "GetUserNameByEmail"));
 
-            if (!(String.IsNullOrEmpty(rowsaffected)))
+            if (!( String.IsNullOrEmpty(rowsaffected)))
             {
                 return rowsaffected;
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
         public bool UpdateUser(User user)
