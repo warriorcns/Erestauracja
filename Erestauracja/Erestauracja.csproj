@@ -532,6 +532,7 @@
     <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
     <Content Include="Content\CSS\Restaurants.css" />
+    <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\wooden_fence_boards.jpg" />
