@@ -6,13 +6,25 @@ using System.Web.Mvc;
 using System.Data;
 using System.Web.UI.WebControls;
 using Erestauracja;
+using System.Web.Security;
+using Erestauracja.Authorization;
 
 namespace Erestauracja.Controllers
 {
+    
+    //[CustomAuthorizeAttribute(Roles = "admin")]
+    //tu admin musi wejsc by go przekierowalo
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+
+            if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+            {
+                //Redirect to admin page
+                Response.Redirect("~/Admin/Index");
+            }
+
             ViewBag.Message = "Witaj na stronie głównej!";
     
             var Miasta = new SelectList(new []
@@ -39,18 +51,16 @@ namespace Erestauracja.Controllers
         }
 
         
-        public ActionResult About()
-        {
-            return View();
-        }
+        
 
-
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult TopRestaurants()
         {
             return View();
         }
-
-        public ActionResult Info()
+        
+        
+        public ActionResult Unauthorized()
         {
             return View();
         }

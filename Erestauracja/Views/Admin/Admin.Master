@@ -13,6 +13,9 @@
 </head>
 <body>
     <div class="page">
+    <div id="logindisplay">
+                <% Html.RenderPartial("LogOnUserControl"); %>
+            </div>
         <form id="form1" runat="server">
         <div>
             <nav id="menucontainer">

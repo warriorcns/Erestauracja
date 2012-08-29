@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" ErrorPage="~/Views/Shared/Unauthorized.aspx"%>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

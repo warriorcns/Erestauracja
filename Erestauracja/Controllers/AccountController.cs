@@ -8,10 +8,11 @@ using System.Web.Security;
 using Erestauracja.Models;
 using Erestauracja.Providers;
 using System.Web.Mvc.Html;
-
+using Erestauracja.Authorization;
 
 namespace Erestauracja.Controllers
 {
+    
     public class AccountController : Controller
     {
 
@@ -19,7 +20,8 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Account
         //role ktore maja dostep do danego zasobu - inaczej przekierowuje na strone logowania - do zmiany.
-        [Authorize(Roles = "Klient, admin")]
+        //[Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult Account()
         {
             if (Request.IsAuthenticated)
@@ -53,8 +55,8 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/EditData
-        [Authorize]
-        
+        //[Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult EditData()
         {
             if (Request.IsAuthenticated)
@@ -88,8 +90,9 @@ namespace Erestauracja.Controllers
 
         //
         // POST: /Account/EditData
-        [Authorize]
+        //[Authorize]
         [HttpPost]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult EditData(UserDataModel model)
         {
             if (ModelState.IsValid)
@@ -123,6 +126,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Settings
         [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult Settings()
         {
             if (Request.IsAuthenticated)
@@ -139,6 +143,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/OrderHistory
         [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult OrderHistory()
         {
             if (Request.IsAuthenticated)
@@ -154,6 +159,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Comments
         [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
         public ActionResult Comments()
         {
             if (Request.IsAuthenticated)
@@ -168,6 +174,7 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/LogOn
+        
         public ActionResult LogOn()
         {
             return View();
@@ -208,6 +215,7 @@ namespace Erestauracja.Controllers
         
         //
         // GET: /Account/LogOff
+        
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -225,6 +233,7 @@ namespace Erestauracja.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
+        
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
