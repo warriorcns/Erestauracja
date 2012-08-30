@@ -32,96 +32,156 @@
                 <p>
                     Wprowadz swoje dane, a następnie kliknij 'Załóż konto' aby w pełni wykorzystać możliwości serwisu.
                 </p>
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Login) %>
-                    <%: Html.TextBoxFor(m => m.Login)%>
-                    <%: Html.ValidationMessageFor(m => m.Login)%>
-                </div>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Login) %>
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.ValidationMessageFor(m => m.Login)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Email)%>
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Email)%>
+                        <%: Html.ValidationMessageFor(m => m.Email)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.ConfirmEmail)%>
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.ConfirmEmail)%>
+                        <%: Html.ValidationMessageFor(m => m.ConfirmEmail)%>
+                    </li>
+                </ul>
+               
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Password)%> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Password)%>
+                        <%: Html.ValidationMessageFor(m => m.Password)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.ConfirmPassword)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.ConfirmPassword)%>
+                        <%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Question)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Question)%>
+                        <%: Html.ValidationMessageFor(m => m.Question)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Answer)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Answer)%>
+                        <%: Html.ValidationMessageFor(m => m.Answer)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Name)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Name)%>
+                        <%: Html.ValidationMessageFor(m => m.Name)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Surname)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Surname)%>
+                        <%: Html.ValidationMessageFor(m => m.Surname)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Address)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Address)%>
+                        <%: Html.ValidationMessageFor(m => m.Address)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.TownID)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.TownID)%>
+                        <%: Html.ValidationMessageFor(m => m.TownID)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Country)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Country)%>
+                        <%: Html.ValidationMessageFor(m => m.Country)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Birthdate)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
+                        <%: Html.ValidationMessageFor(m => m.Birthdate)%>
+                    </li>
+                </ul>
                 
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Email) %>
-                    <%: Html.TextBoxFor(m => m.Email) %>
-                    <%: Html.ValidationMessageFor(m => m.Email) %>
-                </div>
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.ConfirmEmail) %>
-                    <%: Html.TextBoxFor(m => m.ConfirmEmail)%>
-                    <%: Html.ValidationMessageFor(m => m.ConfirmEmail)%>
-                </div>
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Sex)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Sex)%>
+                        <%: Html.ValidationMessageFor(m => m.Sex)%>
+                    </li>
+                </ul>
 
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Password) %> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
-                    <%: Html.PasswordFor(m => m.Password) %> 
-                    <%: Html.ValidationMessageFor(m => m.Password) %>
-                </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.ConfirmPassword) %>
-                    <%: Html.PasswordFor(m => m.ConfirmPassword) %>
-                    <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
-                </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Question) %>
-                    <%: Html.TextBoxFor(m => m.Question)%>
-                    <%: Html.ValidationMessageFor(m => m.Question)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Answer) %>
-                    <%: Html.TextBoxFor(m => m.Answer)%>
-                    <%: Html.ValidationMessageFor(m => m.Answer)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Name) %>
-                    <%: Html.TextBoxFor(m => m.Name)%>
-                    <%: Html.ValidationMessageFor(m => m.Name)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Surname) %>
-                    <%: Html.TextBoxFor(m => m.Surname)%>
-                    <%: Html.ValidationMessageFor(m => m.Surname)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Address) %>
-                    <%: Html.TextBoxFor(m => m.Address)%>
-                    <%: Html.ValidationMessageFor(m => m.Address)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.TownID) %>
-                    <%: Html.TextBoxFor(m => m.TownID)%>
-                    <%: Html.ValidationMessageFor(m => m.TownID)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Country) %>
-                    <%: Html.TextBoxFor(m => m.Country)%>
-                    <%: Html.ValidationMessageFor(m => m.Country)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Birthdate)%>
-                    <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
-                    <%: Html.ValidationMessageFor(m => m.Birthdate)%>
-                    
-                </div>
-                
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Sex) %>
-                    <%: Html.TextBoxFor(m => m.Sex)%>
-                    <%: Html.ValidationMessageFor(m => m.Sex)%>
-                </div>
-
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Telephone)%>
-                    <%: Html.TextBoxFor(m => m.Telephone)%>
-                    <%: Html.ValidationMessageFor(m => m.Telephone)%>
-                </div>
+                <ul class="rej">
+                    <li class="display-label">
+                        <%: Html.LabelFor(m => m.Telephone)%> 
+                    </li>
+                    <li class="editor-label">
+                        <%: Html.TextBoxFor(m => m.Telephone)%>
+                        <%: Html.ValidationMessageFor(m => m.Telephone)%>
+                    </li>
+                </ul>
 
                 <p>
                     <input type="submit" value="Załóż konto"/>

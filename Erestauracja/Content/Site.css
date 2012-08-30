@@ -818,14 +818,38 @@ div#title {
 }
 
 /* Styles for editor and display helpers
+
 ----------------------------------------------------------*/
-.display-label, 
+
+.rej
+{
+    display: block;
+    
+    width: 400px;
+    position: relative;
+    margin: 7px 0 7px 0;
+    
+}
+.display-label{
+    /*margin: 1em 120px 0 0;*/
+    position: relative;
+    display: inline;
+    left: 0px;
+}
 .editor-label {
-    margin: 1em 0 0 0;
+    /*margin: 1em 120px 0 0;*/
+    position: absolute;
+    display: inline;
+    right: 0px;
+    
 }
 
-.display-field, 
-.editor-field {
+.display-field{
+    margin: 0.5em 0 0 0; 
+}
+ 
+.editor-field 
+{
     margin: 0.5em 0 0 0;
 }
 
