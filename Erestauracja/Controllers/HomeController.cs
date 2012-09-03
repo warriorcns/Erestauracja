@@ -12,14 +12,14 @@ using Erestauracja.Authorization;
 namespace Erestauracja.Controllers
 {
     
-    //[CustomAuthorizeAttribute(Roles = "admin")]
+    //[CustomAuthorizeAttribute(Roles = "Admin")]
     //tu admin musi wejsc by go przekierowalo
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
 
-            if (Roles.IsUserInRole(User.Identity.Name, "admin"))
+            if (Roles.IsUserInRole(User.Identity.Name, "Admin"))
             {
                 //Redirect to admin page
                 Response.Redirect("~/Admin/Index");
@@ -53,7 +53,7 @@ namespace Erestauracja.Controllers
         
         
 
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult TopRestaurants()
         {
             return View();

@@ -3,7 +3,7 @@
 <%-- <%@ Import Namespace="Erestauracja.Models" %>--%>
 <!DOCTYPE html>
 <html>
-<head runat="server">
+<head id="Head1" runat="server">
     <link rel="shortcut icon" href="~/Content/images/favicon.ico" >
     <asp:ContentPlaceHolder ID="head" runat="server" />
     <title>
@@ -34,22 +34,16 @@
                 <h1></h1>
             </div>
             <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
+                <% //Html.RenderPartial("LogOnUserControl", //("LogOnUserControl"); %>
             </div>
             <nav id="menucontainer">
                 <ul id="menu">
                     <li>
-                        <%: Html.ActionLink("Strona główna", "Index", "Home")%></li>
+                        <%: Html.ActionLink("Twoje restauracje", "Restaurant", "ManagePanel")%></li>
                     <li>
-                        <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>
+                        <%: Html.ActionLink("Pracownicy", "Personnel", "ManagePanel")%></li>
                     <li>
-                        <%: Html.ActionLink("Top Restauracje", "TopRestaurants", "Home")%></li>
-                    <li>
-                        <%: Html.ActionLink("Konto", "Account", "Account")%></li>
-                    <li>
-                        <%: Html.ActionLink("Koszyk", "Index", "Basket")%></li>
-                    <li>
-                        <%: Html.ActionLink("Aktualne zamowienia", "Index", "Orders")%></li>
+                        <%: Html.ActionLink("Raporty", "Reports", "ManagePanel")%></li>
                 </ul>
             </nav>
         </header>
@@ -71,10 +65,6 @@
                 </div>
                 <div id="footer-main">
                     <ul id="footer-links-primary">
-                        <li>
-                            <p>
-                                <%: Html.ActionLink("Dodaj swoją restaurację", "RegisterManager", "Account") %></p>
-                        </li>
                         <li>
                             <p>
                                 <%: Html.ActionLink("Pomoc", "Index", "Help") %></p>

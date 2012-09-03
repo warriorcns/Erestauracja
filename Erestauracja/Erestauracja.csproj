@@ -279,6 +279,7 @@
     <Compile Include="Controllers\FindController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManagePanelController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,6 +314,13 @@
     </Compile>
     <Compile Include="Views\Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagePanel\ManagePanel.Master.cs">
+      <DependentUpon>ManagePanel.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ManagePanel\ManagePanel.Master.designer.cs">
+      <DependentUpon>ManagePanel.Master</DependentUpon>
     </Compile>
     <Compile Include="Views\Restaurant\Restaurant.master.cs">
       <DependentUpon>Restaurant.master</DependentUpon>
@@ -659,9 +667,11 @@
     <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
+    <Content Include="Views\Account\ExistingManager.aspx" />
     <Content Include="Views\Account\PasswordReset.aspx" />
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
+    <Content Include="Views\Account\RegisterManager.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\phpmyadmin.aspx" />
     <Content Include="Views\Basket\Index.aspx" />
@@ -670,6 +680,10 @@
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
+    <Content Include="Views\ManagePanel\Index.aspx" />
+    <Content Include="Views\ManagePanel\Personnel.aspx" />
+    <Content Include="Views\ManagePanel\Reports.aspx" />
+    <Content Include="Views\ManagePanel\Restaurant.aspx" />
     <Content Include="Views\Orders\Index.aspx" />
     <Content Include="Views\Restaurant\Contact.aspx" />
     <Content Include="Views\Restaurant\Delivery.aspx" />
@@ -715,6 +729,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Admin\Admin.Master" />
+    <Content Include="Views\ManagePanel\ManagePanel.Master" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

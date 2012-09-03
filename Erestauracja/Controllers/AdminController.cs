@@ -7,8 +7,8 @@ using Erestauracja.Authorization;
 
 namespace Erestauracja.Controllers
 {
-    [CustomAuthorizeAttribute(Roles = "admin")]
-    //[Authorize(Roles = "admin")]
+    [CustomAuthorizeAttribute(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         //
@@ -17,7 +17,7 @@ namespace Erestauracja.Controllers
         
         public ActionResult Index()
         {
-            if (!User.IsInRole("admin"))
+            if (!User.IsInRole("Admin"))
             {
                 //Response.Redirect("/Home/Index");
                 //Response.Write("Pomyslnie zweryfikowano role uzytkownika");

@@ -21,7 +21,7 @@ namespace Erestauracja.Controllers
         // GET: /Account/Account
         //role ktore maja dostep do danego zasobu - inaczej przekierowuje na strone logowania - do zmiany.
         //[Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult Account()
         {
             if (Request.IsAuthenticated)
@@ -56,7 +56,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/EditData
         //[Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData()
         {
             if (Request.IsAuthenticated)
@@ -92,7 +92,7 @@ namespace Erestauracja.Controllers
         // POST: /Account/EditData
         //[Authorize]
         [HttpPost]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData(UserDataModel model)
         {
             if (ModelState.IsValid)
@@ -126,7 +126,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Settings
         [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult Settings()
         {
             if (Request.IsAuthenticated)
@@ -143,7 +143,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/OrderHistory
         [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult OrderHistory()
         {
             if (Request.IsAuthenticated)
@@ -159,7 +159,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Comments
         [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFul, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult Comments()
         {
             if (Request.IsAuthenticated)
@@ -190,15 +190,29 @@ namespace Erestauracja.Controllers
             {
                 if (Membership.ValidateUser(model.Login, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    if (role.IsUserInRole(model.Login, "Menadżer"))
                     {
-                        return Redirect(returnUrl);
+                        FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                        return RedirectToAction("Index", "ManagePanel");
+                    }
+                    else if (role.IsUserInRole(model.Login, "Menadżer"))
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                        return RedirectToAction("Index", "Admin");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                 }
                 else
@@ -370,6 +384,76 @@ namespace Erestauracja.Controllers
         }
 
         //
+        // GET: /Account/RegisterManager
+        public ActionResult RegisterManager()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/RegisterManager
+        [HttpPost]
+        public ActionResult RegisterManager(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MembershipCreateStatus createStatus;
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, model.TownID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                if (user != null)
+                {
+                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Menadżer" });
+                }
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
+                    return RedirectToAction("Index", "ManagePanel");
+                }
+                else
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ExistingManager
+        public ActionResult ExistingManager()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ExistingManager
+        [HttpPost]
+        public ActionResult ExistingManager(LogOnModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Membership.ValidateUser(model.Login, model.Password))
+                {
+                    FormsAuthentication.SignOut();
+                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    string[] rola = role.GetRolesForUser(model.Login);
+                    role.RemoveUsersFromRoles(new string[] { model.Login }, rola);
+                    role.AddUsersToRoles(new string[] { model.Login }, new string[] { "Menadżer" });
+                    FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                    return RedirectToAction("Index", "ManagePanel");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         //przetłumaczyć reszte
         //
         #region Status Codes
