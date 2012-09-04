@@ -2,7 +2,7 @@
 
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Rejesteracja
+    Rejestracja
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -168,7 +168,10 @@
                         <%: Html.LabelFor(m => m.Sex)%> 
                     </li>
                     <li class="editor-label">
-                        <%: Html.TextBoxFor(m => m.Sex)%>
+                        <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
+                        <%: Html.DropDownList("sex", ViewData["sex"] as SelectList)%>
+
+                        
                         <%: Html.ValidationMessageFor(m => m.Sex)%>
                     </li>
                 </ul>

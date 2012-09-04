@@ -241,15 +241,23 @@ namespace Erestauracja.Controllers
         // GET: /Account/Register
         public ActionResult Register()
         {
+            var sex = new SelectList(new[]
+                                          {
+                                              new {ID="1", Name="Mężczyzna"},
+                                              new {ID="2", Name="Kobieta"},
+                                          },"ID", "Name", 1);
+            ViewData["sex"] = sex;
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        
-        public ActionResult Register(RegisterModel model)
+
+        public ActionResult Register(RegisterModel model, FormCollection formValues)
         {
+            string test;
+            test = formValues.Keys[14].;
             if (ModelState.IsValid)
             {
                 MembershipCreateStatus createStatus;
