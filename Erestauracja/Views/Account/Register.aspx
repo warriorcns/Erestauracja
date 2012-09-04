@@ -169,9 +169,9 @@
                     </li>
                     <li class="editor-label">
                         <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
-                        <%: Html.DropDownList("sex", ViewData["sex"] as SelectList)%>
-
-                        
+                        <%=Html.DropDownListFor(m=>m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
+                       
+                       
                         <%: Html.ValidationMessageFor(m => m.Sex)%>
                     </li>
                 </ul>

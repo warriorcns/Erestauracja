@@ -59,6 +59,10 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData()
         {
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
             if (Request.IsAuthenticated)
             {
                 //  MembershipCreateStatus createStatus;
@@ -95,6 +99,10 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData(UserDataModel model)
         {
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
             if (ModelState.IsValid)
             {
                     CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
@@ -241,11 +249,16 @@ namespace Erestauracja.Controllers
         // GET: /Account/Register
         public ActionResult Register()
         {
-            var sex = new SelectList(new[]
-                                          {
-                                              new {ID="1", Name="Mężczyzna"},
-                                              new {ID="2", Name="Kobieta"},
-                                          },"ID", "Name", 1);
+            //var sex = new SelectList(new[]
+            //                              {
+            //                                  new {ID="Mężczyzna", Name="Mężczyzna"},
+            //                                  new {ID="Kobieta", Name="Kobieta"},
+            //                              },"ID", "Name", 1);
+            
+
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});
+            sex.Add(new SelectListItem {Text = "Kobieta", Value = "Kobieta"});
             ViewData["sex"] = sex;
             return View();
         }
@@ -254,10 +267,15 @@ namespace Erestauracja.Controllers
         // POST: /Account/Register
         [HttpPost]
 
-        public ActionResult Register(RegisterModel model, FormCollection formValues)
+        public ActionResult Register(RegisterModel model)
         {
-            string test;
-            test = formValues.Keys[14].;
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
+            //if (sex.Equals("1")) sex = "Mężczyzna";
+            //else if (sex.Equals("2")) sex = "Kobieta";
+
             if (ModelState.IsValid)
             {
                 MembershipCreateStatus createStatus;

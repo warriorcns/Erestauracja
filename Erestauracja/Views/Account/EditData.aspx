@@ -27,49 +27,51 @@
                     Wprowadz nowe dane, a następnie kliknij 'Zapisz'.
                 </p>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Name) %>
                     <%: Html.TextBoxFor(m => m.Name)%>
                     <%: Html.ValidationMessageFor(m => m.Name)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Surname) %>
                     <%: Html.TextBoxFor(m => m.Surname)%>
                     <%: Html.ValidationMessageFor(m => m.Surname)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Address) %>
                     <%: Html.TextBoxFor(m => m.Address)%>
                     <%: Html.ValidationMessageFor(m => m.Address)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.TownID) %>
                     <%: Html.TextBoxFor(m => m.TownID)%>
                     <%: Html.ValidationMessageFor(m => m.TownID)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Country) %>
                     <%: Html.TextBoxFor(m => m.Country)%>
                     <%: Html.ValidationMessageFor(m => m.Country)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Birthdate)%>
                     <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
                     <%: Html.ValidationMessageFor(m => m.Birthdate)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Sex) %>
-                    <%: Html.TextBoxFor(m => m.Sex)%>
+                    <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
+                    <%=Html.DropDownListFor(m=>m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
+
                     <%: Html.ValidationMessageFor(m => m.Sex)%>
                 </div>
 
-                <div class="editor-label">
+                <div class="editor-labelE">
                     <%: Html.LabelFor(m => m.Telephone)%>
                     <%: Html.TextBoxFor(m => m.Telephone)%>
                     <%: Html.ValidationMessageFor(m => m.Telephone)%>
