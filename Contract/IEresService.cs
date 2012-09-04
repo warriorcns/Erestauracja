@@ -71,6 +71,9 @@ namespace Contract
         bool AddRestaurant(string name ,string displayName,string address,string townId,string countryId,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
 
         #endregion
+
+        [OperationContract]
+        List<string> GetCountriesList();
     }
 
 

@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Contract" />
+      <xsd:import schemaLocation="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IEresService_ChangePassword_InputMessage">
@@ -121,6 +122,12 @@
   <wsdl:message name="IEresService_AddRestaurant_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddRestaurantResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetCountriesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesList" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetCountriesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesListResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEresService">
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -197,6 +204,10 @@
     <wsdl:operation name="AddRestaurant">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/AddRestaurant" message="tns:IEresService_AddRestaurant_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/AddRestaurantResponse" message="tns:IEresService_AddRestaurant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountriesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCountriesList" message="tns:IEresService_GetCountriesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCountriesListResponse" message="tns:IEresService_GetCountriesList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
@@ -365,6 +376,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddRestaurant">
       <soap:operation soapAction="http://tempuri.org/IEresService/AddRestaurant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountriesList">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetCountriesList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

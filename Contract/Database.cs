@@ -1018,6 +1018,27 @@ namespace Contract
         }
 
         #endregion
+
+        public List<string> GetCountriesList()
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetCountriesList);
+
+            List<string> value = new List<string>();
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetCountriesList");
+
+            if (ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["name"] != DBNull.Value) value.Add(row["name"].ToString());
+                }
+            }
+            else
+                value = null;
+            return value;
+        }
     }
 
 

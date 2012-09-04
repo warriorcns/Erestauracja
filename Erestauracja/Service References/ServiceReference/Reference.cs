@@ -682,6 +682,9 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
         bool AddRestaurant(string name, string displayName, string address, string townId, string countryId, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
+        string[] GetCountriesList();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -785,6 +788,10 @@ namespace Erestauracja.ServiceReference {
         
         public bool AddRestaurant(string name, string displayName, string address, string townId, string countryId, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime) {
             return base.Channel.AddRestaurant(name, displayName, address, townId, countryId, telephone, email, nip, regon, password, menagerId, deliveryTime);
+        }
+        
+        public string[] GetCountriesList() {
+            return base.Channel.GetCountriesList();
         }
     }
 }

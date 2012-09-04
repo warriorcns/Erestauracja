@@ -22,10 +22,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="5b4976d2-f46c-49ad-808a-8809531cfd40" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd1" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="78f49205-2c57-4964-b5bd-ed45a7570320" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd0" />
+    <MetadataFile FileName="item6.xsd" MetadataType="Schema" ID="608614f4-d569-4940-91e6-13a1e66d7d9d" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd3" />
+    <MetadataFile FileName="item5.xsd" MetadataType="Schema" ID="496f3668-48df-45cf-95a6-5ad7096e0775" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd2" />
     <MetadataFile FileName="EresService1.wsdl" MetadataType="Wsdl" ID="7bbc2787-bd65-470a-b89a-367f6117b649" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?wsdl" />
     <MetadataFile FileName="item1.disco" MetadataType="Disco" ID="8c3748ef-1c28-418b-acba-c023599319f0" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?disco" />
-    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="78f49205-2c57-4964-b5bd-ed45a7570320" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd0" />
-    <MetadataFile FileName="item5.xsd" MetadataType="Schema" ID="496f3668-48df-45cf-95a6-5ad7096e0775" SourceId="1" SourceUrl="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

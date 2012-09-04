@@ -196,6 +196,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `name` FROM `countries`.
+        /// </summary>
+        internal static string GetCountriesList {
+            get {
+                return ResourceManager.GetString("GetCountriesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `email` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetEmailByLogin {

@@ -284,5 +284,13 @@ namespace Contract
         }
 
         #endregion
+
+        public List<string> GetCountriesList()
+        {
+            List<string> lista = null;
+            Database db = new Database();
+            lista = db.GetCountriesList();
+            return lista;
+        }
     }
 }

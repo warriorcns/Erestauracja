@@ -162,6 +162,9 @@
   <data name="GetAllUsers" xml:space="preserve">
     <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  ORDER BY `login` Asc</value>
   </data>
+  <data name="GetCountriesList" xml:space="preserve">
+    <value>SELECT `name` FROM `countries`</value>
+  </data>
   <data name="GetEmailByLogin" xml:space="preserve">
     <value>SELECT `email` FROM `users` WHERE `login` = @login</value>
   </data>
