@@ -163,7 +163,7 @@ namespace Contract
             return objekt;
         }
 
-
+        #region membership
         public bool ChangePassword(string login, string password)
         {
             MySqlCommand command = new MySqlCommand(Queries.ChangePassword);
@@ -964,6 +964,47 @@ namespace Contract
             }
             return true;
         }
+        #endregion
+
+        #region Manage restaurant
+
+        public bool AddRestaurant(string name, string displayName, string address, string townId, string countryId, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime)
+        {
+            DateTime createDate = DateTime.Now;
+
+            MySqlCommand command = new MySqlCommand(Queries.AddRestaurant);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@displayName", displayName);
+            command.Parameters.AddWithValue("@address", address);
+            command.Parameters.AddWithValue("@townId", townId);
+            command.Parameters.AddWithValue("@countryId", countryId);
+            command.Parameters.AddWithValue("@telephone", telephone);
+            command.Parameters.AddWithValue("@email", email);
+            command.Parameters.AddWithValue("@nip", nip);
+            command.Parameters.AddWithValue("@regon", regon);
+            command.Parameters.AddWithValue("@creationData", createDate);
+            command.Parameters.AddWithValue("@inputsCount", 0);
+            command.Parameters.AddWithValue("@averageRating", 0);
+            command.Parameters.AddWithValue("@password", password);
+            command.Parameters.AddWithValue("@menagerId", menagerId);
+            command.Parameters.AddWithValue("@deliveryTime", deliveryTime);
+            command.Parameters.AddWithValue("@currentDeliveryTime", "00:00:00");
+            command.Parameters.AddWithValue("@isApproved", true);
+            command.Parameters.AddWithValue("@lastActivityDate", createDate);
+            command.Parameters.AddWithValue("@isOnLine", false);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+            command.Parameters.AddWithValue("@lastLockedOutDate", createDate);
+
+            int rowsaffected = ExecuteNonQuery(command, "AddRestaurant");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
     }
 
 

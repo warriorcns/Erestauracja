@@ -10,6 +10,7 @@ namespace Contract
     [ServiceContract]
     public interface IEresService
     {
+        #region membership
         [OperationContract]
         bool ChangePassword(string login, string password);
 
@@ -63,8 +64,17 @@ namespace Contract
 
         [OperationContract]
         bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
+        #endregion
+
+        #region Manage restaurant
+        [OperationContract]
+        bool AddRestaurant(string name ,string displayName,string address,string townId,string countryId,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
+
+        #endregion
     }
 
+
+    #region membership dataContract
     [DataContract]
     public class PasswordAndAnswer
     {
@@ -321,4 +331,5 @@ namespace Contract
             set { isApproved = value; }
         }
     }
+    #endregion
 }

@@ -263,5 +263,26 @@ namespace Contract
         }
 
         #endregion
+
+        #region Manage restaurant
+
+        public bool AddRestaurant(string name, string displayName, string address, string townId, string countryId, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime)
+        {
+            if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
+                || String.IsNullOrEmpty(townId) || String.IsNullOrEmpty(countryId) || String.IsNullOrEmpty(telephone)
+                || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
+                || String.IsNullOrEmpty(password) || menagerId == null || deliveryTime==null))
+            {
+                Database db = new Database();
+                bool value = db.AddRestaurant(name , displayName, address, townId, countryId, telephone, email, nip, regon, password , menagerId, deliveryTime);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 }

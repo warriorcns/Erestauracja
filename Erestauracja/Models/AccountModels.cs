@@ -48,7 +48,6 @@ namespace Erestauracja.Models
 
         CultureInfo polish = new CultureInfo("pl-PL");
         
-
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Login")]
@@ -118,10 +117,6 @@ namespace Erestauracja.Models
         [Display(Name = "Data urodzenia")]
         public DateTime Birthdate { get; set; }
         
-        
-	   
-	
-
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Płeć")]

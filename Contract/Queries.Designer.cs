@@ -61,6 +61,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, @countryId, @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, @menagerId, @deliveryTime, @currentDeliveryTime [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AddRestaurant {
+            get {
+                return ResourceManager.GetString("AddRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO `users_in_roles`(`login`, `rolename`, `applicationName`) VALUES (@login,@rolename,@applicationName).
         /// </summary>
         internal static string AddUsersToRoles {
