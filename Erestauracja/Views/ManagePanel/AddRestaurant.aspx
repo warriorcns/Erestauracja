@@ -61,11 +61,11 @@
 
                 <ul class="rej">
                     <li class="display-label">
-                        <%: Html.LabelFor(m => m.CountryId)%> 
+                        <%: Html.LabelFor(m => m.Country)%> 
                     </li>
                     <li class="editor-label">
-                        <%: Html.TextBoxFor(m => m.CountryId)%>
-                        <%: Html.ValidationMessageFor(m => m.CountryId)%>
+                        <%: Html.TextBoxFor(m => m.Country)%>
+                        <%: Html.ValidationMessageFor(m => m.Country)%>
                     </li>
                 </ul>
 

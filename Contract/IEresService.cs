@@ -68,7 +68,7 @@ namespace Contract
 
         #region Manage restaurant
         [OperationContract]
-        bool AddRestaurant(string name ,string displayName,string address,string townId,string countryId,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
+        bool AddRestaurant(string name ,string displayName,string address,string townId,string country,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
 
         #endregion
 

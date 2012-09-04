@@ -981,7 +981,7 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string countryId, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime)
+        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime)
         {
             DateTime createDate = DateTime.Now;
 
@@ -990,7 +990,7 @@ namespace Contract
             command.Parameters.AddWithValue("@displayName", displayName);
             command.Parameters.AddWithValue("@address", address);
             command.Parameters.AddWithValue("@townId", townId);
-            command.Parameters.AddWithValue("@countryId", countryId);
+            command.Parameters.AddWithValue("@country", country);
             command.Parameters.AddWithValue("@telephone", telephone);
             command.Parameters.AddWithValue("@email", email);
             command.Parameters.AddWithValue("@nip", nip);

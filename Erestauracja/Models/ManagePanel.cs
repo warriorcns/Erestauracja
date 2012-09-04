@@ -31,8 +31,8 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Country ID")]
-        public string CountryId { get; set; }
+        [Display(Name = "Kraj")]
+        public string Country { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]

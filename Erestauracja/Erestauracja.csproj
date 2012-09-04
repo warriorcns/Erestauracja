@@ -661,6 +661,9 @@
     <None Include="Service References\ServiceReference\item5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ServiceReference\item6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
