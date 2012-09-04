@@ -405,7 +405,10 @@ namespace Contract
             command.Parameters.AddWithValue("@townID", townID);
             command.Parameters.AddWithValue("@country", country);
             command.Parameters.AddWithValue("@birthdate", birthdate);
-            command.Parameters.AddWithValue("@sex", sex);
+            if (sex == "Kobieta")
+                command.Parameters.AddWithValue("@sex", true);
+            else
+                command.Parameters.AddWithValue("@sex", false);
             command.Parameters.AddWithValue("@telephone", telephone);
             command.Parameters.AddWithValue("@comment", "");
             command.Parameters.AddWithValue("@passwordQuestion", passwordQuestion);
@@ -547,7 +550,13 @@ namespace Contract
             string townID = reader.GetString(6);
             string country = reader.GetString(7);
             DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
-            string sex = reader.GetString(9);
+            string sex = "Mężczyzna";
+           // bool plec = false;
+            if (reader.GetBoolean(9) == true)
+                sex = "Kobieta";
+           // else
+           //     command.Parameters.AddWithValue("@sex", false);
+           //     reader.GetString(9);
             string telephone = reader.GetString(10);
             string comment = "";
             if (reader.GetValue(11) != DBNull.Value)
@@ -804,7 +813,11 @@ namespace Contract
             command.Parameters.AddWithValue("@townID", user.TownID);
             command.Parameters.AddWithValue("@country", user.Country);
             command.Parameters.AddWithValue("@birthdate", user.Birthdate);
-            command.Parameters.AddWithValue("@sex", user.Sex);
+            if (user.Sex == "Kobieta")
+                command.Parameters.AddWithValue("@sex", true);
+            else
+                command.Parameters.AddWithValue("@sex", false);
+           // command.Parameters.AddWithValue("@sex", user.Sex);
             command.Parameters.AddWithValue("@telephone", user.Telephone);
             command.Parameters.AddWithValue("@comment", user.Comment);
             command.Parameters.AddWithValue("@isApproved", user.IsApproved);
