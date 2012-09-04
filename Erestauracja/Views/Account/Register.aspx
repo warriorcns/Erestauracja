@@ -68,7 +68,7 @@
                         <%: Html.LabelFor(m => m.Password)%> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
                     </li>
                     <li class="editor-label">
-                        <%: Html.TextBoxFor(m => m.Password)%>
+                        <%: Html.PasswordFor(m => m.Password)%>
                         <%: Html.ValidationMessageFor(m => m.Password)%>
                     </li>
                 </ul>
@@ -78,7 +78,7 @@
                         <%: Html.LabelFor(m => m.ConfirmPassword)%> 
                     </li>
                     <li class="editor-label">
-                        <%: Html.TextBoxFor(m => m.ConfirmPassword)%>
+                        <%: Html.PasswordFor(m => m.ConfirmPassword)%>
                         <%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
                     </li>
                 </ul>

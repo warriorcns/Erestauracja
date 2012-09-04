@@ -20,34 +20,34 @@
                 <p>
                    lub przycisk 'Zmień hasło', aby zmienić hasło do swojego konta.
                 </p>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Login:  <%: model.Login %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Adres email:  <%: model.Email %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Imię:  <%: model.Name %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Nazwisko:  <%: model.Surname %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Adres:  <%: model.Address %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Miasto:  <%: model.TownID %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Kraj:  <%: model.Country %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Data urodzenia:  <%: model.Birthdate.ToShortDateString() %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Płeć:  <%: model.Sex %>
                 </div>
-                <div class="editor-label">
+                <div class="editor-labelE">
                 Numer telefonu:  <%: model.Telephone %>
                 </div>
                 <li>

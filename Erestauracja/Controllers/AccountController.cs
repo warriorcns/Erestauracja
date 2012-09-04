@@ -60,9 +60,10 @@ namespace Erestauracja.Controllers
         public ActionResult EditData()
         {
             List<SelectListItem> sex = new List<SelectListItem>();
-            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
-            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
-            ViewData["sex"] = sex;
+
+            
+
+
             if (Request.IsAuthenticated)
             {
                 //  MembershipCreateStatus createStatus;
@@ -84,6 +85,16 @@ namespace Erestauracja.Controllers
 
               //  ViewData["model"] = model;
 
+                if (model.Sex.Equals("Mężczyzna"))
+                {
+                    sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+                    sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+                }
+                else {
+                    sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+                    sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" }); 
+                }
+                ViewData["sex"] = sex;
                 return View(model);              
             }
             else
@@ -273,9 +284,7 @@ namespace Erestauracja.Controllers
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
             sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
             ViewData["sex"] = sex;
-            //if (sex.Equals("1")) sex = "Mężczyzna";
-            //else if (sex.Equals("2")) sex = "Kobieta";
-
+            
             if (ModelState.IsValid)
             {
                 MembershipCreateStatus createStatus;
