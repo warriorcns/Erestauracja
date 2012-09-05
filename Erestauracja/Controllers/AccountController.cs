@@ -61,8 +61,16 @@ namespace Erestauracja.Controllers
         {
             List<SelectListItem> sex = new List<SelectListItem>();
 
+            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             
+            List<SelectListItem> countryList = new List<SelectListItem>();
+            List<string> lista = new List<string>();
 
+            lista = (List<string>)country.GetCountriesList();
+
+            foreach (string item in lista)             {             sex.Add(new SelectListItem {Text = item, Value = item});             } 
+
+            ViewData["country"] = country;
 
             if (Request.IsAuthenticated)
             {
@@ -95,6 +103,8 @@ namespace Erestauracja.Controllers
                     sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" }); 
                 }
                 ViewData["sex"] = sex;
+
+
                 return View(model);              
             }
             else
