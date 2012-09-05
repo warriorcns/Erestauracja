@@ -64,13 +64,16 @@ namespace Erestauracja.Controllers
             ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             
             List<SelectListItem> countryList = new List<SelectListItem>();
-            List<string> lista = new List<string>();
+           // List<string> lista = new List<string>();
 
-            lista = (List<string>)country.GetCountriesList();
+            string[] lista = country.GetCountriesList();
 
-            foreach (string item in lista)             {             sex.Add(new SelectListItem {Text = item, Value = item});             } 
+            foreach (string item in lista) 
+            {
+                countryList.Add(new SelectListItem { Text = item, Value = item }); 
+            }
 
-            ViewData["country"] = country;
+            ViewData["country"] = countryList;
 
             if (Request.IsAuthenticated)
             {
