@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
 using Erestauracja.Providers;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace Erestauracja.Controllers
 {
@@ -23,6 +25,21 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/Restaurant
         public ActionResult Restaurant()
         {
+            //string constr = "Server=TestServer;Database=TestDB;uid=test;pwd=test;";
+            //string query = "SELECT ProductID, ProductName, UnitPrice FROM Products";
+
+            ServiceReference.EresServiceClient res = new ServiceReference.EresServiceClient();
+            
+            //Tutaj wywolac metode ktora pobiera liste tablic stringow (restauracje)
+            //List<string>[] listaRes = res.
+
+            //SqlDataAdapter da = new SqlDataAdapter(query, constr);
+            //DataTable table = new DataTable();
+
+            //da.Fill(table);
+
+            //ListView1.DataSource = table;
+            //ListView1.DataBind();
             return View();
         }
 
