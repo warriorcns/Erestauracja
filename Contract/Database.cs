@@ -19,7 +19,7 @@ namespace Contract
         private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
-        private string ConnectionString = "SERVER=" + "5.32.56.82" + ";DATABASE=" + "dbo" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
+        private string ConnectionString = "SERVER=" + "5.153.38.77" + ";DATABASE=" + "eres" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
       
         //zabezpieczyć connectionString
         public Database()

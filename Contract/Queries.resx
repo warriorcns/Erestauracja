@@ -136,7 +136,7 @@
     <value>INSERT INTO `roles`(`rolename`, `applicationName`) VALUES (@rolename, @applicationName)</value>
   </data>
   <data name="CreateUser" xml:space="preserve">
-    <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, @country, @birthdate, @sex, @telephone, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
+    <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `countryID`, `birthdate`, `sex`, `telephone`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, (SELECT `id` FROM `countries` WHERE `name`=@country), @birthdate, @sex, @telephone, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
   </data>
   <data name="DeleteRole" xml:space="preserve">
     <value>DELETE FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName</value>
@@ -160,7 +160,8 @@
     <value>SELECT `rolename` FROM `roles`  WHERE `applicationName` = @applicationName</value>
   </data>
   <data name="GetAllUsers" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users`  ORDER BY `login` Asc</value>
+    <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
+ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
   </data>
   <data name="GetCountriesList" xml:space="preserve">
     <value>SELECT `name` FROM `countries`</value>
@@ -184,10 +185,12 @@
     <value>SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>
   <data name="GetUserByID" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate` FROM `users` WHERE `id` = @id</value>
+    <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
+ON u.`countryID` = c.`id` WHERE u.`id` = @id</value>
   </data>
   <data name="GetUserByLogin" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`  FROM `users` WHERE `login` = @login</value>
+    <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
+ON u.`countryID` = c.`id` WHERE u.`login` = @login</value>
   </data>
   <data name="GetUserCountByEmail" xml:space="preserve">
     <value>SELECT Count(*) FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName</value>
@@ -235,7 +238,7 @@
     <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login</value>
   </data>
   <data name="UpdateUser" xml:space="preserve">
-    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `country` = @country, `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>
+    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>
   </data>
   <data name="UpdateUserActivityByID" xml:space="preserve">
     <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `id` = @id</value>
