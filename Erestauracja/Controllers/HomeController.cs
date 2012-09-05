@@ -18,8 +18,7 @@ namespace Erestauracja.Controllers
     {
         public ActionResult Index()
         {
-
-            if (Roles.IsUserInRole(User.Identity.Name, "Admin"))
+           if (Roles.IsUserInRole(User.Identity.Name, "Admin"))
             {
                 //Redirect to admin page
                 Response.Redirect("~/Admin/Index");
