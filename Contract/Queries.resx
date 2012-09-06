@@ -181,6 +181,9 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
   </data>
+  <data name="GetRestaurantsByManagerLogin" xml:space="preserve">
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
+  </data>
   <data name="GetRolesForUser" xml:space="preserve">
     <value>SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName</value>
   </data>

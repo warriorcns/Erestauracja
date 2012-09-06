@@ -1017,6 +1017,132 @@ namespace Contract
             return false;
         }
 
+        public List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<Restaurant> rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantsByManagerLogin);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Connection = conn;
+                rest = new List<Restaurant>();
+                //totalRecords = 0;
+                conn.Open();
+                //totalRecords = Convert.ToInt32(command.ExecuteScalar());
+                // if (totalRecords <= 0) { return users; }
+                //command.CommandText = Queries.GetAllUsers;
+                reader = command.ExecuteReader();
+                //int counter = 0;
+                //int startIndex = pageSize * pageIndex;
+                //int endIndex = startIndex + pageSize - 1;
+
+                while (reader.Read())
+                {
+                    //  if (counter >= startIndex)
+                    //   {
+                    Restaurant r = GetRestaurantsFromReader(reader);
+                    rest.Add(r);
+                    //   }
+                    // if (counter >= endIndex) { command.Cancel(); }
+                    //   counter++;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRestaurantsByManagerLogin" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRestaurantsByManagerLogin" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        private Restaurant GetRestaurantsFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            string displayName = reader.GetString(2);
+            string address = reader.GetString(3);
+            string townId = reader.GetString(4);
+            string country = reader.GetString(5);
+            string telephone = reader.GetString(6);
+            string email = reader.GetString(7);
+            string nip = reader.GetString(8);
+            string regon = reader.GetString(9);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(10));
+            int inputsCount = reader.GetInt32(11);
+            int averageRating = reader.GetInt32(12);
+            string password = reader.GetString(13);
+            int menagerId = reader.GetInt32(14);
+            string deliveryTime = reader.GetString(15);
+            string currentDeliveryTime = reader.GetString(16);
+            bool isApproved = reader.GetBoolean(17);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(18));
+            bool isLockedOut = reader.GetBoolean(19);
+            DateTime lastLockedOutDate = new DateTime();
+            if (reader.GetValue(20) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20));
+
+            Restaurant u = new Restaurant();
+            u.ID = id;
+            u.Name = name;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.TownID = townId;
+            u.Country = country;
+            u.Telephone = telephone;
+            u.Email = email;
+            u.Nip = nip;
+            u.Regon = regon;
+            u.CreationDate = creationDate;
+            u.InputsCount = inputsCount;
+            u.AverageRating = averageRating;
+            u.Password = password;
+            u.MenagerId = menagerId;
+            u.DeliveryTime = deliveryTime;
+            u.CurrentDeliveryTime = currentDeliveryTime;
+            u.IsApproved = isApproved;
+            u.LastActivityDate = lastActivityDate;
+            u.IsLockedOut = isLockedOut;
+            u.LastLockedOutDate = lastLockedOutDate;
+
+            return u;
+        }
+
         #endregion
 
         public List<string> GetCountriesList()

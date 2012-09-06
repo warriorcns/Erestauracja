@@ -67,9 +67,20 @@ namespace Contract
         #endregion
 
         #region Manage restaurant
+
+        //
+        //przerobić na by login
+        //i kraj
+        //
         [OperationContract]
         bool AddRestaurant(string name ,string displayName,string address,string townId,string country,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
 
+        //
+        //dać podział ma strony ?
+        //int pageIndex, int pageSize, out int totalRecords
+        //
+        [OperationContract]
+        List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
         #endregion
 
         [OperationContract]
@@ -335,4 +346,178 @@ namespace Contract
         }
     }
     #endregion
+
+    [DataContract]
+    public class Restaurant
+    { 
+        private int id = -1;
+        private string name = null;
+        private string displayName = null;
+        private string address = null;
+        private string townID = null;
+        private string country = null;
+        private string telephone = null;
+        private string email = null;
+        private string nip = null;
+        private string regon = null;
+        private DateTime creationDate = new DateTime();
+        private int inputsCount = -1;
+        private int averageRating = -1;
+        private string password = null;
+        private int menagerId = -1;
+        private string deliveryTime = null;
+        private string currentDeliveryTime = null;
+        private bool isApproved = false;
+        private DateTime lastActivityDate = new DateTime();
+        private bool isLockedOut = false;
+        private DateTime lastLockedOutDate = new DateTime();
+
+        [DataMember]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string TownID
+        {
+            get { return townID; }
+            set { townID = value; }
+        }
+
+        [DataMember]
+        public string Country
+        {
+            get { return country; }
+            set { country = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        [DataMember]
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+        }
+
+        [DataMember]
+        public string Nip
+        {
+            get { return nip; }
+            set { nip = value; }
+        }
+
+        [DataMember]
+        public string Regon
+        {
+            get { return regon; }
+            set { regon = value; }
+        }
+
+        [DataMember]
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
+        }
+
+        [DataMember]
+        public int InputsCount
+        {
+            get { return inputsCount; }
+            set { inputsCount = value; }
+        }
+
+        [DataMember]
+        public int AverageRating
+        {
+            get { return averageRating; }
+            set { averageRating = value; }
+        }
+
+        [DataMember]
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+        [DataMember]
+        public int MenagerId
+        {
+            get { return menagerId; }
+            set { menagerId = value; }
+        }
+
+        [DataMember]
+        public string DeliveryTime
+        {
+            get { return deliveryTime; }
+            set { deliveryTime = value; }
+        }
+
+        [DataMember]
+        public string CurrentDeliveryTime
+        {
+            get { return currentDeliveryTime; }
+            set { currentDeliveryTime = value; }
+        }
+
+
+        [DataMember]
+        public bool IsApproved
+        {
+            get { return isApproved; }
+            set { isApproved = value; }
+        }
+
+        [DataMember]
+        public DateTime LastActivityDate
+        {
+            get { return lastActivityDate; }
+            set { lastActivityDate = value; }
+        }
+
+        [DataMember]
+        public bool IsLockedOut
+        {
+            get { return isLockedOut; }
+            set { isLockedOut = value; }
+        }
+
+        [DataMember]
+        public DateTime LastLockedOutDate
+        {
+            get { return lastLockedOutDate; }
+            set { lastLockedOutDate = value; }
+        }
+    }
 }

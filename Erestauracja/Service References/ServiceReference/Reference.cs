@@ -622,6 +622,371 @@ namespace Erestauracja.ServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Restaurant", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class Restaurant : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AverageRatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentDeliveryTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DisplayNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int InputsCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsApprovedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsLockedOutField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastActivityDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastLockedOutDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MenagerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegonField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TelephoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TownIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AverageRating {
+            get {
+                return this.AverageRatingField;
+            }
+            set {
+                if ((this.AverageRatingField.Equals(value) != true)) {
+                    this.AverageRatingField = value;
+                    this.RaisePropertyChanged("AverageRating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentDeliveryTime {
+            get {
+                return this.CurrentDeliveryTimeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentDeliveryTimeField, value) != true)) {
+                    this.CurrentDeliveryTimeField = value;
+                    this.RaisePropertyChanged("CurrentDeliveryTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryTime {
+            get {
+                return this.DeliveryTimeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryTimeField, value) != true)) {
+                    this.DeliveryTimeField = value;
+                    this.RaisePropertyChanged("DeliveryTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DisplayName {
+            get {
+                return this.DisplayNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DisplayNameField, value) != true)) {
+                    this.DisplayNameField = value;
+                    this.RaisePropertyChanged("DisplayName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int InputsCount {
+            get {
+                return this.InputsCountField;
+            }
+            set {
+                if ((this.InputsCountField.Equals(value) != true)) {
+                    this.InputsCountField = value;
+                    this.RaisePropertyChanged("InputsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsApproved {
+            get {
+                return this.IsApprovedField;
+            }
+            set {
+                if ((this.IsApprovedField.Equals(value) != true)) {
+                    this.IsApprovedField = value;
+                    this.RaisePropertyChanged("IsApproved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsLockedOut {
+            get {
+                return this.IsLockedOutField;
+            }
+            set {
+                if ((this.IsLockedOutField.Equals(value) != true)) {
+                    this.IsLockedOutField = value;
+                    this.RaisePropertyChanged("IsLockedOut");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastActivityDate {
+            get {
+                return this.LastActivityDateField;
+            }
+            set {
+                if ((this.LastActivityDateField.Equals(value) != true)) {
+                    this.LastActivityDateField = value;
+                    this.RaisePropertyChanged("LastActivityDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastLockedOutDate {
+            get {
+                return this.LastLockedOutDateField;
+            }
+            set {
+                if ((this.LastLockedOutDateField.Equals(value) != true)) {
+                    this.LastLockedOutDateField = value;
+                    this.RaisePropertyChanged("LastLockedOutDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MenagerId {
+            get {
+                return this.MenagerIdField;
+            }
+            set {
+                if ((this.MenagerIdField.Equals(value) != true)) {
+                    this.MenagerIdField = value;
+                    this.RaisePropertyChanged("MenagerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nip {
+            get {
+                return this.NipField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NipField, value) != true)) {
+                    this.NipField = value;
+                    this.RaisePropertyChanged("Nip");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Regon {
+            get {
+                return this.RegonField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegonField, value) != true)) {
+                    this.RegonField = value;
+                    this.RaisePropertyChanged("Regon");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Telephone {
+            get {
+                return this.TelephoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TelephoneField, value) != true)) {
+                    this.TelephoneField = value;
+                    this.RaisePropertyChanged("Telephone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TownID {
+            get {
+                return this.TownIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TownIDField, value) != true)) {
+                    this.TownIDField = value;
+                    this.RaisePropertyChanged("TownID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
@@ -682,6 +1047,9 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
         bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin", ReplyAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse")]
+        Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
@@ -788,6 +1156,10 @@ namespace Erestauracja.ServiceReference {
         
         public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime) {
             return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, menagerId, deliveryTime);
+        }
+        
+        public Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin) {
+            return base.Channel.GetRestaurantsByManagerLogin(managerLogin);
         }
         
         public string[] GetCountriesList() {

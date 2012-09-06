@@ -283,6 +283,19 @@ namespace Contract
             }
         }
 
+        public List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin)))
+            {
+                Database db = new Database();
+                List<Restaurant> value = db.GetRestaurantsByManagerLogin(managerLogin);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
 
         public List<string> GetCountriesList()

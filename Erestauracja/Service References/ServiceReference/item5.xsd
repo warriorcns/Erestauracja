@@ -60,4 +60,36 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ValidateUser" nillable="true" type="tns:ValidateUser" />
+  <xs:complexType name="ArrayOfRestaurant">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Restaurant" nillable="true" type="tns:Restaurant" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRestaurant" nillable="true" type="tns:ArrayOfRestaurant" />
+  <xs:complexType name="Restaurant">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AverageRating" type="xs:int" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CurrentDeliveryTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliveryTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="InputsCount" type="xs:int" />
+      <xs:element minOccurs="0" name="IsApproved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastActivityDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastLockedOutDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MenagerId" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Regon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TownID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Restaurant" nillable="true" type="tns:Restaurant" />
 </xs:schema>

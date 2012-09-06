@@ -305,6 +305,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRestaurantsByManagerLogin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRestaurantsByManagerLoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetRestaurantsByManagerLoginResult" nillable="true" type="q10:ArrayOfRestaurant" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetCountriesList">
     <xs:complexType>
       <xs:sequence />
@@ -313,7 +327,7 @@
   <xs:element name="GetCountriesListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCountriesListResult" nillable="true" type="q10:ArrayOfstring" />
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCountriesListResult" nillable="true" type="q11:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

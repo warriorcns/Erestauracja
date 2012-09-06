@@ -251,6 +251,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin).
+        /// </summary>
+        internal static string GetRestaurantsByManagerLogin {
+            get {
+                return ResourceManager.GetString("GetRestaurantsByManagerLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName.
         /// </summary>
         internal static string GetRolesForUser {
