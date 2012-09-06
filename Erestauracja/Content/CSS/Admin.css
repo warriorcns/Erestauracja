@@ -11,6 +11,17 @@
     
 }
 
+/*glowny div ktory trzyma menu po lewej i panel po srosku*/
+.main
+{
+    width: 100%;
+    clear: both;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
@@ -68,4 +79,107 @@ ul#menu li.selected a {
 nav, 
 #menucontainer {
    
+}
+
+/*pierwszy element w glownym divie.. */
+.AdminIndexPanel
+{
+    position: relative;
+    top: 20px;
+    height: 500px;
+    border-right: 2px black solid; 
+    width: 20%;
+    margin: 0 0 -20000px 5px;
+    padding-bottom: 20000px;
+    height: 100%;
+    float: left;
+}
+
+.UsersLabelDiv
+{
+  border-bottom: 2px black solid;        
+  width: 180px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.UsersLabel
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: 20px;
+    font-size: larger;
+}
+
+
+.UsersMenu
+{
+    list-style: none;
+    text-decoration: none;  
+    position: relative;
+    left: -10px ;
+    top: -10px;  
+}
+
+.UsersMenu li a{
+    text-decoration: none;
+    color: Black;
+}
+
+.UsersMenu li a:hover {
+    color: #7A7A7A;
+}
+
+.RolesLabelDiv
+{
+  border-bottom: 2px black solid;        
+  width: 180px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.RolesLabel
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: 20px;
+    font-size: larger;
+}
+
+.RolesMenu
+{
+    list-style: none;
+    text-decoration: none;  
+    position: relative;
+    left: -10px ;
+    top: -10px;  
+}
+
+.RolesMenu li a{
+    text-decoration: none;
+    color: Black;
+}
+
+.RolesMenu li a:hover {
+    color: #7A7A7A;
+}
+
+/* ...i drugi*/
+.AdminPlaceHolder{
+    width: 70%;
+    padding: 10px 0 0 15px;
+    position: relative;
+    left: 10px;
+    top: 20px;
+    float: left;
+    height: 500px;
+    background: #E6E6E6;
+    margin-bottom: -20000px;
+    padding-bottom: 20000px;
 }

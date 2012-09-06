@@ -2,5 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
 
+<h2>ManageUsers</h2>
 
 </asp:Content>

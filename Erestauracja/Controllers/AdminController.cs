@@ -34,7 +34,27 @@ namespace Erestauracja.Controllers
 
             return View();
         }
-        
+
+
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+        public ActionResult ManageUsers()
+        {
+            return View();
+        }
+
+        public ActionResult CreateRoles()
+        {
+            return View();
+        }
+
+        public ActionResult ManageRoles()
+        {
+            return View();
+        }
 
     }
 }

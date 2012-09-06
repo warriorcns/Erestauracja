@@ -23,6 +23,11 @@ namespace Erestauracja.Controllers
                 //Redirect to admin page
                 Response.Redirect("~/Admin/Index");
             }
+           if (Roles.IsUserInRole(User.Identity.Name, "Menadżer"))
+           {
+               //Redirect to menadzer page
+               Response.Redirect("~/ManagePanel");
+           }
 
             ViewBag.Message = "Witaj na stronie głównej!";
     
