@@ -293,7 +293,7 @@
         <xs:element minOccurs="0" name="nip" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="regon" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="menagerId" type="xs:int" />
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="deliveryTime" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

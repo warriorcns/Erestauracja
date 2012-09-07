@@ -981,7 +981,7 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime)
+        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
         {
             DateTime createDate = DateTime.Now;
 
@@ -999,7 +999,7 @@ namespace Contract
             command.Parameters.AddWithValue("@inputsCount", 0);
             command.Parameters.AddWithValue("@averageRating", 0);
             command.Parameters.AddWithValue("@password", password);
-            command.Parameters.AddWithValue("@menagerId", menagerId);
+            command.Parameters.AddWithValue("@menager", managerLogin);
             command.Parameters.AddWithValue("@deliveryTime", deliveryTime);
             command.Parameters.AddWithValue("@currentDeliveryTime", "00:00:00");
             command.Parameters.AddWithValue("@isApproved", true);
@@ -1028,25 +1028,14 @@ namespace Contract
                 command.Parameters.AddWithValue("@managerLogin", managerLogin);
                 command.Connection = conn;
                 rest = new List<Restaurant>();
-                //totalRecords = 0;
                 conn.Open();
-                //totalRecords = Convert.ToInt32(command.ExecuteScalar());
-                // if (totalRecords <= 0) { return users; }
-                //command.CommandText = Queries.GetAllUsers;
+
                 reader = command.ExecuteReader();
-                //int counter = 0;
-                //int startIndex = pageSize * pageIndex;
-                //int endIndex = startIndex + pageSize - 1;
 
                 while (reader.Read())
                 {
-                    //  if (counter >= startIndex)
-                    //   {
                     Restaurant r = GetRestaurantsFromReader(reader);
                     rest.Add(r);
-                    //   }
-                    // if (counter >= endIndex) { command.Cancel(); }
-                    //   counter++;
                 }
             }
             catch (MySqlException e)

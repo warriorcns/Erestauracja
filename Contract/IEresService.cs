@@ -68,17 +68,9 @@ namespace Contract
 
         #region Manage restaurant
 
-        //
-        //przerobić na by login
-        //i kraj
-        //
         [OperationContract]
-        bool AddRestaurant(string name ,string displayName,string address,string townId,string country,string telephone,string email,string nip,string regon,string password ,int menagerId,string deliveryTime);
+        bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
 
-        //
-        //dać podział ma strony ?
-        //int pageIndex, int pageSize, out int totalRecords
-        //
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
         #endregion

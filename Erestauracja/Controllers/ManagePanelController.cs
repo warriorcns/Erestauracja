@@ -72,9 +72,10 @@ namespace Erestauracja.Controllers
         {
             if (ModelState.IsValid)
             {
-                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
-                if (user != null)
+                //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                //CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
                 {
                     bool value = false;
                     try
@@ -82,7 +83,7 @@ namespace Erestauracja.Controllers
                         ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                         using (client)
                         {
-                            value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password ,user.Id, model.DeliveryTime);
+                            value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
                         }
                         client.Close();
                     }
@@ -99,6 +100,10 @@ namespace Erestauracja.Controllers
                     {
                         return RedirectToAction("Restaurant", "ManagePanel");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
                 }
             }
 

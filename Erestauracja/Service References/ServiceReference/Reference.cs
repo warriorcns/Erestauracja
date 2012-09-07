@@ -1046,7 +1046,7 @@ namespace Erestauracja.ServiceReference {
         bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
-        bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime);
+        bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin", ReplyAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse")]
         Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin);
@@ -1154,8 +1154,8 @@ namespace Erestauracja.ServiceReference {
             return base.Channel.UpdateFailureCount(login, failureType, PasswordAttemptWindow, MaxInvalidPasswordAttempts);
         }
         
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, int menagerId, string deliveryTime) {
-            return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, menagerId, deliveryTime);
+        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime) {
+            return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
         }
         
         public Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin) {
