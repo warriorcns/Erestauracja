@@ -10,45 +10,52 @@ using System.Diagnostics;
 using System.Web;
 using System.Globalization;
 
+//dać create
+
 namespace Erestauracja.Providers
 {
     public sealed class CustomRoleProvider : RoleProvider
     {
-        //
-        // Global connection string, generic exception message, event log info.
-        //
+        /// <summary>
+        /// Generic exception event.
+        /// </summary>
+        private string eventSource = "CustomRoleProvider";
 
-      //  private string eventSource = "CustomRoleProvider";
-      //  private string eventLog = "Erestauracja";
-     //   private string exceptionMessage = "An exception occurred. Please check the Event Log.";
+        /// <summary>
+        /// Generic exception log info.
+        /// </summary>
+        private string eventLog = "Erestauracja";
 
-        private ConnectionStringSettings pConnectionStringSettings;
-        private string connectionString;
+        /// <summary>
+        /// Generic exception message.
+        /// </summary>
+        private string exceptionMessage = "An exception occurred. Please check the Event Log.";
 
-        //
-        // If false, exceptions are thrown to the caller. If true,
-        // exceptions are written to the event log.
-        //
+//---------------------------------------------------------------------
+        //private ConnectionStringSettings pConnectionStringSettings;
+        //private string connectionString;
+//------------------------------------------------------------------------
 
-   //     private bool pWriteExceptionsToEventLog = false;
+        private bool pWriteExceptionsToEventLog = false;
+        /// <summary>
+        /// If false, exceptions are thrown to the caller. If true,
+        /// exceptions are written to the event log.
+        /// </summary>
+        public bool WriteExceptionsToEventLog
+        {
+            get { return pWriteExceptionsToEventLog; }
+            set { pWriteExceptionsToEventLog = value; }
+        }
 
-    //    public bool WriteExceptionsToEventLog
-   //     {
-    //        get { return pWriteExceptionsToEventLog; }
-    //        set { pWriteExceptionsToEventLog = value; }
-    //    }
-
-        //
-        // System.Configuration.Provider.ProviderBase.Initialize Method
-        //
-
+        #region  System.Configuration.Provider.ProviderBase.Initialize Method
+        
+        /// <summary>
+        /// Initialize values from web.config.
+        /// </summary>
+        /// <param name="name">Nazwa providera</param>
+        /// <param name="config">NameValueCollection</param>
         public override void Initialize(string name, NameValueCollection config)
         {
-
-            //
-            // Initialize values from web.config.
-            //
-
             if (config == null)
                 throw new ArgumentNullException("config");
 
@@ -58,12 +65,11 @@ namespace Erestauracja.Providers
             if (String.IsNullOrEmpty(config["description"]))
             {
                 config.Remove("description");
-                config.Add("description", "Sample MySQL Role provider");
+                config.Add("description", "Custom MySQL Role provider");
             }
 
             // Initialize the abstract base class.
             base.Initialize(name, config);
-
 
             if (config["applicationName"] == null || config["applicationName"].Trim() == "")
             {
@@ -75,34 +81,32 @@ namespace Erestauracja.Providers
             }
 
 
-            //if (config["writeExceptionsToEventLog"] != null)
-            //{
-            //    if (config["writeExceptionsToEventLog"].ToUpper() == "TRUE")
-            //    {
-            //        pWriteExceptionsToEventLog = true;
-            //    }
-            //}
-
-
-            //
-            // InitializeMySQLConnection.
-            //
-
-            pConnectionStringSettings = ConfigurationManager.
-              ConnectionStrings[config["connectionStringName"]];
-
-            if (pConnectionStringSettings == null || pConnectionStringSettings.ConnectionString.Trim() == "")
+            if (config["writeExceptionsToEventLog"] != null)
             {
-                throw new ProviderException("Connection string cannot be blank.");
+                if (config["writeExceptionsToEventLog"].ToUpper() == "TRUE")
+                {
+                    pWriteExceptionsToEventLog = true;
+                }
             }
 
-            connectionString = pConnectionStringSettings.ConnectionString;
+//---------------------------------------------------------------------------------------------------------------------
+            ////
+            //// InitializeMySQLConnection.
+            ////
+            //pConnectionStringSettings = ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
+            //if (pConnectionStringSettings == null || pConnectionStringSettings.ConnectionString.Trim() == "")
+            //{
+            //    throw new ProviderException("Connection string cannot be blank.");
+            //}
+            //connectionString = pConnectionStringSettings.ConnectionString;
+//--------------------------------------------------------------------------------------------------------------------
         }
 
+        #endregion
+        
         #region System.Web.Security.RoleProvider properties.
 
         private string pApplicationName;
-
         public override string ApplicationName
         {
             get { return pApplicationName; }
@@ -113,10 +117,13 @@ namespace Erestauracja.Providers
 
         #region System.Web.Security.RoleProvider methods.
 
-        //
-        #region RoleProvider.AddUsersToRoles
-        //
+        #region Role methods:
 
+        /// <summary>
+        /// Dodaje użytkowników do ról
+        /// </summary>
+        /// <param name="logins">Tablica loginów typu <c>string[]</c></param>
+        /// <param name="rolenames">Tablica ról typu <c>string[]</c></param>
         public override void AddUsersToRoles(string[] logins, string[] rolenames)
         {
             foreach (string rolename in rolenames)
@@ -126,14 +133,12 @@ namespace Erestauracja.Providers
                     throw new ProviderException("Role name not found.");
                 }
             }
-
             foreach (string login in logins)
             {
                 if (login.Contains(","))
                 {
                     throw new ArgumentException("User names cannot contain commas.");
                 }
-
                 foreach (string rolename in rolenames)
                 {
                     if (IsUserInRole(login, rolename))
@@ -143,66 +148,46 @@ namespace Erestauracja.Providers
                 }
             }
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.AddUsersToRoles);
-            //  MySqlParameter loginParm = command.Parameters.Add("@login", MySqlDbType.VarChar, 255);
-            //  MySqlParameter roleParm = command.Parameters.Add("@rolename", MySqlDbType.VarChar, 255);
-            //jak nie działa to parametry czyścić i dodawać w foreach
-            //  command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            MySqlTransaction tran = null;
-
+            bool value = false;
             try
             {
-                conn.Open();
-                tran = conn.BeginTransaction();
-                command.Transaction = tran;
-
-                foreach (string login in logins)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    foreach (string rolename in rolenames)
-                    {
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@login", login);
-                        command.Parameters.AddWithValue("@rolename", rolename);
-                        command.Parameters.AddWithValue("@applicationName", pApplicationName);
-                        //  loginParm.Value = login;
-                        //  roleParm.Value = rolename;
-                        command.ExecuteNonQuery();
-                    }
+                    value = client.AddUsersToRoles(logins, rolenames);
                 }
-
-                tran.Commit();
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                try
+                if (WriteExceptionsToEventLog)
                 {
-                    tran.Rollback();
+                    WriteToEventLog(e, "AddUsersToRoles");
+                    throw new ProviderException(exceptionMessage);
                 }
-                catch { }
-
-
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "AddUsersToRoles");
-                //}
-                //else
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (value == false)
             {
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Dodawanie użytkowników do ról nie powiodło się."), "AddUsersToRoles");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Dodawanie użytkowników do ról nie powiodło się.");
+                }
             }
         }
-        #endregion
-        //
-        #region RoleProvider.CreateRole
-        //
 
+        /// <summary>
+        /// Tworzy nowe role
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
         public override void CreateRole(string rolename)
         {
             if (rolename.Contains(","))
@@ -215,41 +200,51 @@ namespace Erestauracja.Providers
                 throw new ProviderException("Role name already exists.");
             }
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.CreateRole);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
+            bool value = false;
             try
             {
-                conn.Open();
-
-                command.ExecuteNonQuery();
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.CreateRole(rolename);
+                }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "CreateRole");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "CreateRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (value == false)
             {
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Dodawanie nowej roli nie powiodło się."), "CreateRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Dodawanie nowej roli nie powiodło się.");
+                }
             }
         }
-        #endregion
 
-        //
-        #region RoleProvider.DeleteRole
-        //
-
+        /// <summary>
+        /// Usuwa rolę
+        /// </summary>
+        /// <remarks>
+        /// Jeśli throwOnPopulatedRole == true, zawsze zwróci ProviderException
+        /// </remarks>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <param name="throwOnPopulatedRole">If true, throw an exception if roleName has one or more members and do not delete roleName.</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public override bool DeleteRole(string rolename, bool throwOnPopulatedRole)
         {
             if (!RoleExists(rolename))
@@ -262,102 +257,83 @@ namespace Erestauracja.Providers
                 throw new ProviderException("Cannot delete a populated role.");
             }
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.DeleteRole);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-            command.Connection = conn;
-
-            MySqlCommand command2 = new MySqlCommand(Queries.DeleteUsersInRole);
-            command2.Parameters.AddWithValue("@rolename", rolename);
-            command2.Parameters.AddWithValue("@applicationName", ApplicationName);
-            command2.Connection = conn;
-
-            MySqlTransaction tran = null;
-
+            bool value = false;
             try
             {
-                conn.Open();
-                tran = conn.BeginTransaction();
-                command.Transaction = tran;
-                command2.Transaction = tran;
-
-                command2.ExecuteNonQuery();
-                command.ExecuteNonQuery();
-
-                tran.Commit();
-            }
-            catch (MySqlException e)
-            {
-                try
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    tran.Rollback();
+                    value = client.DeleteRole(rolename);
                 }
-                catch { }
-
-
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "DeleteRole");
-
-                //    return false;
-                //}
-                //else
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "DeleteRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (value == false)
             {
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Usuwanie nowej roli nie powiodło się."), "DeleteRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Usuwanie nowej roli nie powiodło się.");
+                }
             }
-
             return true;
         }
-        #endregion
 
-        //
-        #region RoleProvider.GetAllRoles
-        //
-
+        /// <summary>
+        /// Pobiera nazwy wszystkich ról.
+        /// </summary>
+        /// <returns>Tablice typu <c>string</c> z nazwami ról</returns>
         public override string[] GetAllRoles()
         {
             string tmpRoleNames = "";
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetAllRoles);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
-            MySqlDataReader reader = null;
-
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    tmpRoleNames += reader.GetString(0) + ",";
+                    tmpRoleNames = client.GetAllRoles();
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetAllRoles");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetAllRoles");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (tmpRoleNames == null)
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Pobieranie ról nie powiodło się."), "GetAllRoles");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Pobieranie ról nie powiodło się.");
+                }
             }
 
             if (tmpRoleNames.Length > 0)
@@ -369,51 +345,48 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-        #endregion
 
-        //
-        #region RoleProvider.GetRolesForUser
-        //
-
+        /// <summary>
+        /// Zwraca role przypisane do użytkownika w postaci <c>string[]</c>
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>Tablice typu <c>string</c> z nazwami ról przypisanych do użytkownika</returns>
         public override string[] GetRolesForUser(string login)
         {
             string tmpRoleNames = "";
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetRolesForUser);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
-            MySqlDataReader reader = null;
-
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    tmpRoleNames += reader.GetString(0) + ",";
+                    tmpRoleNames = client.GetRolesForUser(login);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetRolesForUser");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetRolesForUser");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (tmpRoleNames == null)
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Pobieranie ról nie powiodło się."), "GetRolesForUser");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Pobieranie ról nie powiodło się.");
+                }
             }
 
             if (tmpRoleNames.Length > 0)
@@ -425,52 +398,48 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-        #endregion
 
-        //
-        #region RoleProvider.GetUsersInRole
-        //
-
+        /// <summary>
+        /// Zwraca tablice typu <c>string[]</c> użytkowników przypisanych do danej roli
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>Tablice typu <c>string</c> z nazwami użytkowników przypisanych do roli</returns>
         public override string[] GetUsersInRole(string rolename)
         {
             string tmpUserNames = "";
-
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.GetUsersInRole);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
-            MySqlDataReader reader = null;
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    tmpUserNames += reader.GetString(0) + ",";
+                    tmpUserNames = client.GetUsersInRole(rolename);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "GetUsersInRole");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetUsersInRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (tmpUserNames == null)
             {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Pobieranie użytkowników nie powiodło się."), "GetUsersInRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Pobieranie użytkowników nie powiodło się.");
+                }
             }
-
             if (tmpUserNames.Length > 0)
             {
                 // Remove trailing comma.
@@ -480,61 +449,47 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
-        #endregion
 
-        //
-        #region RoleProvider.IsUserInRole
-        //
-
+        /// <summary>
+        /// Sprawdza czy użytkownik posiada określoną rolę
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli użytkownik posiada role</returns>
         public override bool IsUserInRole(string login, string rolename)
         {
             bool userIsInRole = false;
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.IsUserInRole);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
             try
             {
-                conn.Open();
-
-                // int numRecs = (int)command.ExecuteScalar();
-                //Decimal numRecs = (decimal)(command.ExecuteScalar());
-                object obj = command.ExecuteScalar();
-                int numRecs = (obj == null ? 0 : Convert.ToInt32(obj.ToString()));
-                if (numRecs > 0)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    userIsInRole = true;
+                    userIsInRole = client.IsUserInRole(login, rolename);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "IsUserInRole");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "IsUserInRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
-            {
-                conn.Close();
-            }
 
             return userIsInRole;
         }
-        #endregion
 
-        //
-        #region RoleProvider.RemoveUsersFromRoles
-        //
-
+        /// <summary>
+        /// Usuwa użytkowników z ról
+        /// </summary>
+        /// <param name="logins">Tablica loginów typu <c>string[]</c></param>
+        /// <param name="rolenames">Tablica ról typu <c>string[]</c></param>
         public override void RemoveUsersFromRoles(string[] logins, string[] rolenames)
         {
             foreach (string rolename in rolenames)
@@ -556,154 +511,117 @@ namespace Erestauracja.Providers
                 }
             }
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.RemoveUsersFromRoles);
-            //   MySqlParameter loginParm = command.Parameters.Add("@login", MySqlDbType.VarChar, 255);
-            //    MySqlParameter roleParm = command.Parameters.Add("@rolename", MySqlDbType.VarChar, 255);
-            //jak nie działa to parametry czyścić i dodawać w foreach
-            //   command.Parameters.AddWithValue("@applicationName", pApplicationName);
-            command.Connection = conn;
-
-            MySqlTransaction tran = null;
-
+            bool value = false;
             try
             {
-                conn.Open();
-                tran = conn.BeginTransaction();
-                command.Transaction = tran;
-
-                foreach (string login in logins)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    foreach (string rolename in rolenames)
-                    {
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@login", login);
-                        command.Parameters.AddWithValue("@rolename", rolename);
-                        command.Parameters.AddWithValue("@applicationName", pApplicationName);
-                        //  loginParm.Value = login;
-                        //  roleParm.Value = rolename;
-                        command.ExecuteNonQuery();
-                    }
+                    value = client.RemoveUsersFromRoles(logins, rolenames);
                 }
-
-                tran.Commit();
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                try
+                if (WriteExceptionsToEventLog)
                 {
-                    tran.Rollback();
+                    WriteToEventLog(e, "RemoveUsersFromRoles");
+                    throw new ProviderException(exceptionMessage);
                 }
-                catch { }
-
-
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "RemoveUsersFromRoles");
-                //}
-                //else
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (value == false)
             {
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Usuwanie użytkowników z ról nie powiodło się."), "RemoveUsersFromRoles");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Usuwanie użytkowników z ról nie powiodło się.");
+                }
             }
         }
-        #endregion
 
-        //
-        #region RoleProvider.RoleExists
-        //
-
+        /// <summary>
+        /// Sprawdza czy dana rola istnieje w bazie
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli rola istnieje</returns>
         public override bool RoleExists(string rolename)
         {
             bool exists = false;
 
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.RoleExists);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", ApplicationName);
-
-            command.Connection = conn;
-
             try
             {
-                conn.Open();
-
-                //Decimal numRecs = (decimal)(command.ExecuteScalar());
-                // int numRecs = Convert.ToInt32(command.ExecuteScalar());
-                object obj = command.ExecuteScalar();
-                int numRecs = (obj == null ? 0 : Convert.ToInt32(obj.ToString()));
-                if (numRecs > 0)
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    exists = true;
+                    exists = client.RoleExists(rolename);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "RoleExists");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "RoleExists");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
-            }
-            finally
-            {
-                conn.Close();
             }
 
             return exists;
         }
-        #endregion
-        //
-        #region RoleProvider.FindUsersInRole
-        //
 
+        /// <summary>
+        /// Wyszukuje użytkowników z loginem rozpoczynającym się od loginToMatch, przypisanych do danej roli
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <param name="loginToMatch">Login do wyszukiwania - gdy jest null, "" lub " " wyszuka wszystkie loginy</param>
+        /// <returns>Tablice typu <c>string</c> z nazwami użytkowników przypisanych do roli</returns>
         public override string[] FindUsersInRole(string rolename, string loginToMatch)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(Queries.FindUsersInRole);
-            command.Parameters.AddWithValue("@login", loginToMatch);
-            command.Parameters.AddWithValue("@rolename", rolename);
-            command.Parameters.AddWithValue("@applicationName", pApplicationName);
-
-            command.Connection = conn;
-
-            string tmpUserNames = "";
-            MySqlDataReader reader = null;
-
+            string tmpUserNames = null;
             try
             {
-                conn.Open();
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    tmpUserNames += reader.GetString(0) + ",";
+                    tmpUserNames = client.FindUsersInRole(rolename, loginToMatch);
                 }
+                client.Close();
             }
-            catch (MySqlException e)
+            catch (Exception e)
             {
-                //if (WriteExceptionsToEventLog)
-                //{
-                //    WriteToEventLog(e, "FindUsersInRole");
-                //}
-                //else
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "FindUsersInRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
                 {
                     throw e;
                 }
             }
-            finally
+            if (tmpUserNames == null)
             {
-                if (reader != null) { reader.Close(); }
-
-                conn.Close();
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(new Exception("Pobieranie użytkowników nie powiodło się."), "FindUsersInRole");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw new Exception("Pobieranie użytkowników nie powiodło się.");
+                }
             }
 
             if (tmpUserNames.Length > 0)
@@ -715,28 +633,38 @@ namespace Erestauracja.Providers
 
             return new string[0];
         }
+
         #endregion
+
+        /// <summary>
+        /// A helper function that writes exception detail to the event log. Exceptions
+        /// are written to the event log as a security measure to avoid private database
+        /// details from being returned to the browser. If a method does not return a status
+        /// or boolean indicating the action succeeded or failed, a generic exception is also 
+        /// thrown by the caller.
+        /// </summary>
+        /// <param name="e">Exception</param>
+        /// <param name="action">Nazwa wykonywaniej akcji</param>
+        private void WriteToEventLog(Exception e, string action)
+        {
+            /*
+            * 
+            * If the sample provider encounters an exception when working with the data source, it writes the details of the exception to the Application Event Log instead of returning the exception to the ASP.NET application. This is done as a security measure to avoid exposing private information about the data source in the ASP.NET application.
+            * The sample provider specifies an event Source of "OdbcRoleProvider". Before your ASP.NET application will be able to write to the Application Event Log successfully, you will need to create the following registry key.
+            * HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\OdbcRoleProvider
+            * 
+            */
+            EventLog log = new EventLog();
+            log.Source = eventSource;
+            log.Log = eventLog;
+
+            string message = "An exception occurred communicating with the data source.\n\n";
+            message += "Action: " + action + "\n\n";
+            message += "Exception: " + e.ToString();
+
+            log.WriteEntry(message, EventLogEntryType.Error);
+        }
+        
         #endregion
-        ////
-        //// WriteToEventLog
-        ////   A helper function that writes exception detail to the event log. Exceptions
-        //// are written to the event log as a security measure to avoid private database
-        //// details from being returned to the browser. If a method does not return a status
-        //// or boolean indicating the action succeeded or failed, a generic exception is also 
-        //// thrown by the caller.
-        ////
-
-        //private void WriteToEventLog(MySqlException e, string action)
-        //{
-        //    EventLog log = new EventLog();
-        //    log.Source = eventSource;
-        //    log.Log = eventLog;
-
-        //    string message = exceptionMessage + "\n\n";
-        //    message += "Action: " + action + "\n\n";
-        //    message += "Exception: " + e.ToString();
-
-        //    log.WriteEntry(message);
-        //}
     }
 }

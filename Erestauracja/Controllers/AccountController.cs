@@ -232,7 +232,7 @@ namespace Erestauracja.Controllers
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
                         return RedirectToAction("Index", "ManagePanel");
                     }
-                    else if (role.IsUserInRole(model.Login, "Menadżer"))
+                    else if (role.IsUserInRole(model.Login, "Admin"))
                     {
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
                         return RedirectToAction("Index", "Admin");

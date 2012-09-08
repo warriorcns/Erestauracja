@@ -164,8 +164,8 @@ namespace Erestauracja.Providers
         /// <summary>
         /// A helper function to retrieve config values from the configuration file.
         /// </summary>
-        /// <param name="configValue"></param>
-        /// <param name="defaultValue"></param>
+        /// <param name="configValue">Value from config</param>
+        /// <param name="defaultValue">Default value</param>
         /// <returns></returns>
         private string GetConfigValue(string configValue, string defaultValue)
         {

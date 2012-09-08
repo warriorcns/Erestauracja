@@ -8,6 +8,24 @@
       <xsd:import schemaLocation="http://localhost:8733/Erestauracja/Contract/EresService/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IEresService_AddRestaurant_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRestaurant" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_AddRestaurant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRestaurantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLogin" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetCountriesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesList" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetCountriesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesListResponse" />
+  </wsdl:message>
   <wsdl:message name="IEresService_ChangePassword_InputMessage">
     <wsdl:part name="parameters" element="tns:ChangePassword" />
   </wsdl:message>
@@ -116,25 +134,79 @@
   <wsdl:message name="IEresService_UpdateFailureCount_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateFailureCountResponse" />
   </wsdl:message>
-  <wsdl:message name="IEresService_AddRestaurant_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddRestaurant" />
+  <wsdl:message name="IEresService_AddUsersToRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUsersToRoles" />
   </wsdl:message>
-  <wsdl:message name="IEresService_AddRestaurant_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddRestaurantResponse" />
+  <wsdl:message name="IEresService_AddUsersToRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUsersToRolesResponse" />
   </wsdl:message>
-  <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLogin" />
+  <wsdl:message name="IEresService_CreateRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRole" />
   </wsdl:message>
-  <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLoginResponse" />
+  <wsdl:message name="IEresService_CreateRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRoleResponse" />
   </wsdl:message>
-  <wsdl:message name="IEresService_GetCountriesList_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCountriesList" />
+  <wsdl:message name="IEresService_DeleteRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRole" />
   </wsdl:message>
-  <wsdl:message name="IEresService_GetCountriesList_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCountriesListResponse" />
+  <wsdl:message name="IEresService_DeleteRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetAllRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRoles" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetAllRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRolesForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesForUser" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRolesForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRolesForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUsersInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersInRole" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetUsersInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersInRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_IsUserInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserInRole" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_IsUserInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserInRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_RemoveUsersFromRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUsersFromRoles" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_RemoveUsersFromRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUsersFromRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_RoleExists_InputMessage">
+    <wsdl:part name="parameters" element="tns:RoleExists" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_RoleExists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RoleExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_FindUsersInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindUsersInRole" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_FindUsersInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindUsersInRoleResponse" />
   </wsdl:message>
   <wsdl:portType name="IEresService">
+    <wsdl:operation name="AddRestaurant">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/AddRestaurant" message="tns:IEresService_AddRestaurant_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/AddRestaurantResponse" message="tns:IEresService_AddRestaurant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantsByManagerLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" message="tns:IEresService_GetRestaurantsByManagerLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse" message="tns:IEresService_GetRestaurantsByManagerLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountriesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCountriesList" message="tns:IEresService_GetCountriesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCountriesListResponse" message="tns:IEresService_GetCountriesList_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/ChangePasswordResponse" message="tns:IEresService_ChangePassword_OutputMessage" />
@@ -207,21 +279,76 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/UpdateFailureCount" message="tns:IEresService_UpdateFailureCount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/UpdateFailureCountResponse" message="tns:IEresService_UpdateFailureCount_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddRestaurant">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/AddRestaurant" message="tns:IEresService_AddRestaurant_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/AddRestaurantResponse" message="tns:IEresService_AddRestaurant_OutputMessage" />
+    <wsdl:operation name="AddUsersToRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/AddUsersToRoles" message="tns:IEresService_AddUsersToRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/AddUsersToRolesResponse" message="tns:IEresService_AddUsersToRoles_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetRestaurantsByManagerLogin">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" message="tns:IEresService_GetRestaurantsByManagerLogin_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse" message="tns:IEresService_GetRestaurantsByManagerLogin_OutputMessage" />
+    <wsdl:operation name="CreateRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/CreateRole" message="tns:IEresService_CreateRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/CreateRoleResponse" message="tns:IEresService_CreateRole_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetCountriesList">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCountriesList" message="tns:IEresService_GetCountriesList_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCountriesListResponse" message="tns:IEresService_GetCountriesList_OutputMessage" />
+    <wsdl:operation name="DeleteRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/DeleteRole" message="tns:IEresService_DeleteRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/DeleteRoleResponse" message="tns:IEresService_DeleteRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetAllRoles" message="tns:IEresService_GetAllRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetAllRolesResponse" message="tns:IEresService_GetAllRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRolesForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRolesForUser" message="tns:IEresService_GetRolesForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRolesForUserResponse" message="tns:IEresService_GetRolesForUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetUsersInRole" message="tns:IEresService_GetUsersInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetUsersInRoleResponse" message="tns:IEresService_GetUsersInRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/IsUserInRole" message="tns:IEresService_IsUserInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/IsUserInRoleResponse" message="tns:IEresService_IsUserInRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUsersFromRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/RemoveUsersFromRoles" message="tns:IEresService_RemoveUsersFromRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/RemoveUsersFromRolesResponse" message="tns:IEresService_RemoveUsersFromRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RoleExists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/RoleExists" message="tns:IEresService_RoleExists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/RoleExistsResponse" message="tns:IEresService_RoleExists_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindUsersInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/FindUsersInRole" message="tns:IEresService_FindUsersInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/FindUsersInRoleResponse" message="tns:IEresService_FindUsersInRole_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEresService" type="tns:IEresService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddRestaurant">
+      <soap:operation soapAction="http://tempuri.org/IEresService/AddRestaurant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantsByManagerLogin">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountriesList">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetCountriesList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <soap:operation soapAction="http://tempuri.org/IEresService/ChangePassword" style="document" />
       <wsdl:input>
@@ -384,8 +511,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddRestaurant">
-      <soap:operation soapAction="http://tempuri.org/IEresService/AddRestaurant" style="document" />
+    <wsdl:operation name="AddUsersToRoles">
+      <soap:operation soapAction="http://tempuri.org/IEresService/AddUsersToRoles" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -393,8 +520,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetRestaurantsByManagerLogin">
-      <soap:operation soapAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" style="document" />
+    <wsdl:operation name="CreateRole">
+      <soap:operation soapAction="http://tempuri.org/IEresService/CreateRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -402,8 +529,71 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetCountriesList">
-      <soap:operation soapAction="http://tempuri.org/IEresService/GetCountriesList" style="document" />
+    <wsdl:operation name="DeleteRole">
+      <soap:operation soapAction="http://tempuri.org/IEresService/DeleteRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetAllRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRolesForUser">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetRolesForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersInRole">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetUsersInRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserInRole">
+      <soap:operation soapAction="http://tempuri.org/IEresService/IsUserInRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUsersFromRoles">
+      <soap:operation soapAction="http://tempuri.org/IEresService/RemoveUsersFromRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RoleExists">
+      <soap:operation soapAction="http://tempuri.org/IEresService/RoleExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindUsersInRole">
+      <soap:operation soapAction="http://tempuri.org/IEresService/FindUsersInRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

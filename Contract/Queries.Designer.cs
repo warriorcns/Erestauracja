@@ -70,7 +70,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `users_in_roles`(`login`, `rolename`, `applicationName`) VALUES (@login,@rolename,@applicationName).
+        ///   Looks up a localized string similar to INSERT INTO `users_in_roles`(`login`, `rolename`) VALUES (@login,@rolename).
         /// </summary>
         internal static string AddUsersToRoles {
             get {
@@ -106,7 +106,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `roles`(`rolename`, `applicationName`) VALUES (@rolename, @applicationName).
+        ///   Looks up a localized string similar to INSERT INTO `roles`(`rolename`) VALUES (@rolename).
         /// </summary>
         internal static string CreateRole {
             get {
@@ -124,7 +124,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteRole {
             get {
@@ -142,7 +142,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteUsersInRole {
             get {
@@ -169,7 +169,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `login` FROM `users_in_roles` WHERE `login` LIKE @login AND `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `login` FROM `users_in_roles` WHERE `login` LIKE @login AND `rolename` = @rolename.
         /// </summary>
         internal static string FindUsersInRole {
             get {
@@ -178,7 +178,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `rolename` FROM `roles`  WHERE `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `rolename` FROM `roles`.
         /// </summary>
         internal static string GetAllRoles {
             get {
@@ -260,7 +260,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login.
         /// </summary>
         internal static string GetRolesForUser {
             get {
@@ -325,7 +325,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string GetUsersInRole {
             get {
@@ -334,7 +334,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT COUNT(*) FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT COUNT(*) FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename.
         /// </summary>
         internal static string IsUserInRole {
             get {
@@ -352,7 +352,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename.
         /// </summary>
         internal static string RemoveUsersFromRoles {
             get {
@@ -370,7 +370,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string RoleExists {
             get {

@@ -19,7 +19,9 @@ namespace Contract
         private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
-        private string ConnectionString = "SERVER=" + "5.153.38.77" + ";DATABASE=" + "eres" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
+       //private string ConnectionString = "SERVER=" + "5.153.38.77" + ";DATABASE=" + "eres" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
+        private string ConnectionString = "SERVER=5.153.38.77;DATABASE=eres;UID=erestauracja;PASSWORD=Erestauracja123;charset=utf8;Encrypt=true;Connection Timeout=60";
+       // private string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60";
       
         //zabezpieczyć connectionString
         public Database()
@@ -30,6 +32,9 @@ namespace Contract
             //this.ConnectionString = settings[2].ConnectionString;
         }
 
+        //
+        //dorobić wewnętrzne ternzakcje ??
+        //
         private DataSet ExecuteQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
@@ -977,6 +982,513 @@ namespace Contract
             }
             return true;
         }
+        #endregion
+
+        #region role
+
+        public bool AddUsersToRoles(string[] logins, string[] rolenames)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.AddUsersToRoles);
+            command.Connection = conn;
+
+            MySqlTransaction tran=null;
+
+            try
+            {
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+
+                foreach (string login in logins)
+                {
+                    foreach (string rolename in rolenames)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@login", login);
+                        command.Parameters.AddWithValue("@rolename", rolename);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                tran.Commit();
+            }
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "AddUsersToRoles" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "AddUsersToRoles" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
+        }
+
+        public bool CreateRole(string rolename)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.CreateRole);
+            command.Parameters.AddWithValue("@rolename", rolename);
+
+            int rowsaffected = ExecuteNonQuery(command, "CreateRole");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteRole(string rolename)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.DeleteRole);
+            command.Parameters.AddWithValue("@rolename", rolename);
+            command.Connection = conn;
+
+            MySqlCommand command2 = new MySqlCommand(Queries.DeleteUsersInRole);
+            command2.Parameters.AddWithValue("@rolename", rolename);
+            command2.Connection = conn;
+
+            MySqlTransaction tran = null;
+
+            try
+            {
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+                command2.Transaction = tran;
+
+                command2.ExecuteNonQuery();
+                command.ExecuteNonQuery();
+
+                tran.Commit();
+            }
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "DeleteRole" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "DeleteRole" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
+        }
+
+        public string GetAllRoles()
+        {
+            string tmpRoleNames = "";
+
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetAllRoles);
+            command.Connection = conn;
+
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tmpRoleNames += reader.GetString(0) + ",";
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetAllRoles" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetAllRoles" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            return tmpRoleNames;
+        }
+
+        public string GetRolesForUser(string login)
+        {
+            string tmpRoleNames = "";
+
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetRolesForUser);
+            command.Parameters.AddWithValue("@login", login);
+
+            command.Connection = conn;
+            MySqlDataReader reader = null;
+
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tmpRoleNames += reader.GetString(0) + ",";
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRolesForUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRolesForUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return tmpRoleNames;
+        }
+
+        public string GetUsersInRole(string rolename)
+        {
+            string tmpUserNames = "";
+
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.GetUsersInRole);
+            command.Parameters.AddWithValue("@rolename", rolename);
+
+            command.Connection = conn;
+
+            MySqlDataReader reader = null;
+            try
+            {
+                conn.Open();
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tmpUserNames += reader.GetString(0) + ",";
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUsersInRole" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUsersInRole" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return tmpUserNames;
+        }
+
+        public bool IsUserInRole(string login, string rolename)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.IsUserInRole);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@rolename", rolename);
+
+            object value = ExecuteScalar(command, "IsUserInRole");
+            int numRecs = (value == null ? 0 : Convert.ToInt32(value.ToString()));
+
+            if (numRecs > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveUsersFromRoles(string[] logins, string[] rolenames)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.RemoveUsersFromRoles);
+            command.Connection = conn;
+
+            MySqlTransaction tran = null;
+
+            try
+            {
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+
+                foreach (string login in logins)
+                {
+                    foreach (string rolename in rolenames)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@login", login);
+                        command.Parameters.AddWithValue("@rolename", rolename);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                tran.Commit();
+            }
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "RemoveUsersFromRoles" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "RemoveUsersFromRoles" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
+        }
+
+        public bool RoleExists(string rolename)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.RoleExists);
+            command.Parameters.AddWithValue("@rolename", rolename);
+
+            object value = ExecuteScalar(command, "RoleExists");
+            int numRecs = (value == null ? 0 : Convert.ToInt32(value.ToString()));
+
+            if (numRecs > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string FindUsersInRole(string rolename, string loginToMatch)
+        {
+            string tmpUserNames = "";
+
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.FindUsersInRole);
+            if (String.IsNullOrWhiteSpace(loginToMatch))
+            {
+                command.Parameters.AddWithValue("@login", "%");
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@login", loginToMatch+"%");
+            }
+            command.Parameters.AddWithValue("@rolename", rolename);
+            command.Connection = conn;
+
+            MySqlDataReader reader = null;
+            try
+            {
+                conn.Open();
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tmpUserNames += reader.GetString(0) + ",";
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "FindUsersInRole" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "FindUsersInRole" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return tmpUserNames;
+        }
+
         #endregion
 
         #region Manage restaurant

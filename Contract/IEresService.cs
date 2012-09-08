@@ -66,17 +66,56 @@ namespace Contract
         bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
         #endregion
 
-        #region Manage restaurant
+        #region role
+
+        [OperationContract]
+        bool AddUsersToRoles(string[] logins, string[]rolenames);
+
+        [OperationContract]
+        bool CreateRole(string rolename);
+
+        [OperationContract]
+        bool DeleteRole(string rolename);
+
+        [OperationContract]
+        string GetAllRoles();
+
+        [OperationContract]
+        string GetRolesForUser(string login);
+
+        [OperationContract]
+        string GetUsersInRole(string rolename);
+
+        [OperationContract]
+        bool IsUserInRole(string login, string rolename);
+
+        [OperationContract]
+        bool RemoveUsersFromRoles(string[] logins, string[] rolenames);
+
+        [OperationContract]
+        bool RoleExists(string rolename);
+
+        [OperationContract]
+        string FindUsersInRole(string rolename, string loginToMatch);
+
+        #endregion
+
+        #region manage restaurant
 
         [OperationContract]
         bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
 
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
+
         #endregion
+
+        #region ogólne
 
         [OperationContract]
         List<string> GetCountriesList();
+
+        #endregion
     }
 
 

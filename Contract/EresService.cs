@@ -264,6 +264,142 @@ namespace Contract
 
         #endregion
 
+        #region roleProvider
+
+        public bool AddUsersToRoles(string[] logins, string[] rolenames)
+        {
+            if (logins!=null && rolenames!=null)
+            {
+                Database db = new Database();
+                bool value = db.AddUsersToRoles(logins, rolenames);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CreateRole(string rolename)
+        {
+            if ( !(String.IsNullOrEmpty(rolename)) )
+            {
+                Database db = new Database();
+                bool value = db.CreateRole(rolename);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteRole(string rolename)
+        {
+            if (!(String.IsNullOrEmpty(rolename)))
+            {
+                Database db = new Database();
+                bool value = db.DeleteRole(rolename);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string GetAllRoles()
+        {
+            Database db = new Database();
+            string value = db.GetAllRoles();
+            return value;
+        }
+
+        public string GetRolesForUser(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                string value = db.GetRolesForUser(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string GetUsersInRole(string rolename)
+        {
+            if (!(String.IsNullOrEmpty(rolename)))
+            {
+                Database db = new Database();
+                string value = db.GetUsersInRole(rolename);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool IsUserInRole(string login, string rolename)
+        {
+            if (!(String.IsNullOrEmpty(rolename) || String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                bool value = db.IsUserInRole(login, rolename);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveUsersFromRoles(string[] logins, string[] rolenames)
+        {
+            if (logins != null && rolenames != null)
+            {
+                Database db = new Database();
+                bool value = db.RemoveUsersFromRoles(logins, rolenames);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RoleExists(string rolename)
+        {
+            if (!(String.IsNullOrEmpty(rolename)))
+            {
+                Database db = new Database();
+                bool value = db.RoleExists(rolename);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string FindUsersInRole(string rolename, string loginToMatch)
+        {
+            if (!(String.IsNullOrEmpty(rolename)))
+            {
+                Database db = new Database();
+                string value = db.FindUsersInRole(rolename, loginToMatch);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
+
         #region Manage restaurant
 
         public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)

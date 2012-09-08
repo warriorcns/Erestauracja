@@ -34,6 +34,7 @@
                 <h1></h1>
             </div>
             <div id="logindisplay">
+                <%: Html.ActionLink("Wyloguj", "LogOff", "Account")%>
                 <% //Html.RenderPartial("LogOnUserControl", //("LogOnUserControl"); %>
             </div>
             <nav id="menucontainer">
