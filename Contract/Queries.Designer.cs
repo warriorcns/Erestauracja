@@ -151,7 +151,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName ORDER BY `login` Asc.
+        ///   Looks up a localized string similar to SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email ORDER BY `login` Asc.
         /// </summary>
         internal static string FindUsersByEmail {
             get {
@@ -160,7 +160,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName ORDER BY `login` Asc.
+        ///   Looks up a localized string similar to SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login ORDER BY `login` Asc.
         /// </summary>
         internal static string FindUsersByName {
             get {
@@ -224,7 +224,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate.
+        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate OR `lastLoginDate` &gt; @lastActivityDate.
         /// </summary>
         internal static string GetNumberOfUsersOnline {
             get {
@@ -289,7 +289,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `email` LIKE @email.
         /// </summary>
         internal static string GetUserCountByEmail {
             get {
@@ -298,7 +298,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName.
+        ///   Looks up a localized string similar to SELECT Count(*) FROM `users` WHERE `login` LIKE @login.
         /// </summary>
         internal static string GetUserCountByLogin {
             get {

@@ -148,10 +148,10 @@
     <value>DELETE FROM `users_in_roles` WHERE `rolename` = @rolename</value>
   </data>
   <data name="FindUsersByEmail" xml:space="preserve">
-    <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName ORDER BY `login` Asc</value>
+    <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email ORDER BY `login` Asc</value>
   </data>
   <data name="FindUsersByName" xml:space="preserve">
-    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName ORDER BY `login` Asc</value>
+    <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login ORDER BY `login` Asc</value>
   </data>
   <data name="FindUsersInRole" xml:space="preserve">
     <value>SELECT `login` FROM `users_in_roles` WHERE `login` LIKE @login AND `rolename` = @rolename</value>
@@ -173,7 +173,7 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetNumberOfUsersOnline" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate</value>
+    <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate OR `lastLoginDate` &gt; @lastActivityDate</value>
   </data>
   <data name="GetPassword" xml:space="preserve">
     <value>SELECT `password`, `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
@@ -196,10 +196,10 @@ ON u.`countryID` = c.`id` WHERE u.`id` = @id</value>
 ON u.`countryID` = c.`id` WHERE u.`login` = @login</value>
   </data>
   <data name="GetUserCountByEmail" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `email` LIKE @email AND `applicationName` = @applicationName</value>
+    <value>SELECT Count(*) FROM `users` WHERE `email` LIKE @email</value>
   </data>
   <data name="GetUserCountByLogin" xml:space="preserve">
-    <value>SELECT Count(*) FROM `users` WHERE `login` LIKE @login AND `applicationName` = @applicationName</value>
+    <value>SELECT Count(*) FROM `users` WHERE `login` LIKE @login</value>
   </data>
   <data name="GetUserNameByEmail" xml:space="preserve">
     <value>SELECT `login` FROM `users` WHERE `email` = @email</value>

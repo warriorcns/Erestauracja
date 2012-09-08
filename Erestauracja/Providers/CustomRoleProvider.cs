@@ -31,11 +31,6 @@ namespace Erestauracja.Providers
         /// </summary>
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
 
-//---------------------------------------------------------------------
-        //private ConnectionStringSettings pConnectionStringSettings;
-        //private string connectionString;
-//------------------------------------------------------------------------
-
         private bool pWriteExceptionsToEventLog = false;
         /// <summary>
         /// If false, exceptions are thrown to the caller. If true,
@@ -88,18 +83,6 @@ namespace Erestauracja.Providers
                     pWriteExceptionsToEventLog = true;
                 }
             }
-
-//---------------------------------------------------------------------------------------------------------------------
-            ////
-            //// InitializeMySQLConnection.
-            ////
-            //pConnectionStringSettings = ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
-            //if (pConnectionStringSettings == null || pConnectionStringSettings.ConnectionString.Trim() == "")
-            //{
-            //    throw new ProviderException("Connection string cannot be blank.");
-            //}
-            //connectionString = pConnectionStringSettings.ConnectionString;
-//--------------------------------------------------------------------------------------------------------------------
         }
 
         #endregion
