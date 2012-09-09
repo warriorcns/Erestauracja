@@ -121,7 +121,7 @@
     <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, @currentDeliveryTime, @isApproved, @lastActivityDate, @isOnline, @isLockedOut, @lastLockedOutDate)</value>
   </data>
   <data name="AddUsersToRoles" xml:space="preserve">
-    <value>INSERT INTO `users_in_roles`(`login`, `rolename`) VALUES (@login,@rolename)</value>
+    <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
   </data>
   <data name="AllUsersCount" xml:space="preserve">
     <value>SELECT Count(*) FROM `users`</value>
@@ -145,7 +145,7 @@
     <value>DELETE FROM `users`  WHERE `login` = @login</value>
   </data>
   <data name="DeleteUsersInRole" xml:space="preserve">
-    <value>DELETE FROM `users_in_roles` WHERE `rolename` = @rolename</value>
+    <value>DELETE FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
   </data>
   <data name="FindUsersByEmail" xml:space="preserve">
     <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email ORDER BY `login` Asc</value>
@@ -154,7 +154,7 @@
     <value>SELECT `id`, `login`,  `email`, `name`, `surname`, `address`, `townID`, `country`, `birthdate`, `sex`, `telephone`,  `comment`, `passwordQuestion`,  `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`,  `isLockedOut`, `lastLockedOutDate`   FROM `users` WHERE `login` LIKE @login ORDER BY `login` Asc</value>
   </data>
   <data name="FindUsersInRole" xml:space="preserve">
-    <value>SELECT `login` FROM `users_in_roles` WHERE `login` LIKE @login AND `rolename` = @rolename</value>
+    <value>SELECT `login` FROM `users` WHERE `id` IN (SELECT `userID` FROM `users_in_roles` WHERE `userID` IN (SELECT `id` FROM `users` WHERE `login` LIKE @login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
   </data>
   <data name="GetAllRoles" xml:space="preserve">
     <value>SELECT `rolename` FROM `roles`</value>
@@ -185,7 +185,7 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
     <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
   </data>
   <data name="GetRolesForUser" xml:space="preserve">
-    <value>SELECT `rolename` FROM `users_in_roles` WHERE `login` = @login</value>
+    <value>SELECT `rolename` FROM `roles` WHERE `id` IN (SELECT `roleID` FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login` = @login))</value>
   </data>
   <data name="GetUserByID" xml:space="preserve">
     <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
@@ -208,16 +208,16 @@ ON u.`countryID` = c.`id` WHERE u.`login` = @login</value>
     <value>SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetUsersInRole" xml:space="preserve">
-    <value>SELECT `login` FROM `users_in_roles` WHERE `rolename` = @rolename</value>
+    <value>SELECT `login` FROM `users` WHERE `id` IN (SELECT `userID` FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
   </data>
   <data name="IsUserInRole" xml:space="preserve">
-    <value>SELECT COUNT(*) FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename</value>
+    <value>SELECT COUNT(*) FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login`=@login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
   </data>
   <data name="LockOutUser" xml:space="preserve">
     <value>UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login</value>
   </data>
   <data name="RemoveUsersFromRoles" xml:space="preserve">
-    <value>DELETE FROM `users_in_roles` WHERE `login` = @login AND `rolename` = @rolename</value>
+    <value>DELETE FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login`=@login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
   </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>UPDATE `users` SET `password` = @password, `lastPasswordChangedDate` = @lastPasswordChangedDate WHERE `login` = @login AND `isLockedOut` = @isLockedOut</value>
