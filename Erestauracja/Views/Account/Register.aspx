@@ -178,8 +178,8 @@
                         <%: Html.LabelFor(m => m.Country)%> 
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Country)%>
-                        
+                        <%--<%: Html.TextBoxFor(m => m.Country)%>--%>
+                        <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"], new { style="width:206px" })%>
                     </li>
                     <li class="validation-labelR">
                        <%: Html.ValidationMessageFor(m => m.Country)%>
@@ -205,7 +205,7 @@
                     </li>
                     <li class="editor-labelR">
                         <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
-                        <%=Html.DropDownListFor(m=>m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
+                        <%=Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"], new { style = "width:206px" } )%>
                        
                     </li>
                     <li class="validation-labelR">

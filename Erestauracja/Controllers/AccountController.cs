@@ -288,6 +288,25 @@ namespace Erestauracja.Controllers
             sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});
             sex.Add(new SelectListItem {Text = "Kobieta", Value = "Kobieta"});
             ViewData["sex"] = sex;
+
+            try
+            {
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+
+                List<string> listapobrana = new List<string>(country.GetCountriesList());
+                List<SelectListItem> countryList = new List<SelectListItem>();
+
+
+                foreach (string item in listapobrana)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
             return View();
         }
 

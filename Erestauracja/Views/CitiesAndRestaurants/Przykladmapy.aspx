@@ -2,11 +2,13 @@
 <%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
 <%@ Import Namespace="Telerik.Web.Mvc.UI"%>
 
+​
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Przykladmapy
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
 <%:
         Html.Telerik().GoogleMap()
             .Name("map")
@@ -16,6 +18,7 @@
             .Longitude(-82)
             .Markers(m => m.Add().Title("Hello World!"))
     %>
+
 
 
 </asp:Content>

@@ -55,7 +55,7 @@
                     <%: Html.LabelFor(m => m.Country) %>
                     <%--<%: Html.TextBoxFor(m => m.Country)%>--%>
                     <%--Tu pobrac liste panstw z Bazy.--%>
-                    <%= Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"])%>
+                    <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"])%>
                     
                     <%: Html.ValidationMessageFor(m => m.Country)%>
                 </div>
