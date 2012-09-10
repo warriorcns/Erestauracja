@@ -1,0 +1,34 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/Admin/Admin.Master" AutoEventWireup="true"
+    CodeBehind="Index.master.cs" Inherits="Erestauracja.Views.Admin.Index" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
+    <div class="main">
+        <%--Menu dla admina--%>
+        <asp:Panel ID="AdminIndexPanel" class="AdminIndexPanel" runat="server">
+            <div class="UsersLabelDiv">
+                <asp:Label class="UsersLabel" runat="server" Text="Users"></asp:Label>
+            </div>
+            <ul class="UsersMenu">
+                <li>
+                    <%: Html.ActionLink("Create user", "CreateUser", "Admin")%></li>
+                <li>
+                    <%: Html.ActionLink("Manage users", "ManageUsers", "Admin")%></li>
+            </ul>
+            <div class="RolesLabelDiv">
+                <asp:Label ID="Label1" class="RolesLabel" runat="server" Text="Roles"></asp:Label>
+            </div>
+            <ul class="RolesMenu">
+                <li>
+                    <%: Html.ActionLink("Enable/Disable Roles", "CreateRoles", "Admin")%></li>
+                <li>
+                    <%: Html.ActionLink("Create or Manage Roles", "ManageRoles", "Admin")%></li>
+            </ul>
+        </asp:Panel>
+        <div class="AdminPlaceHolder">
+            <asp:ContentPlaceHolder ID="AdminPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+</asp:Content>
