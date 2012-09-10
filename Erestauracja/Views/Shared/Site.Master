@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
+<%@ Import Namespace="Telerik.Web.Mvc.UI"%>
 <%-- <%@ Import Namespace="Erestauracja.Models" %>--%>
 <!DOCTYPE html>
 <html>

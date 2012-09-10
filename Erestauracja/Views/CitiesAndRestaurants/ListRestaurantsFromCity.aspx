@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<%@ Register Assembly="GMaps" Namespace="Subgurim.Controles" TagPrefix="cc1" %>
+<%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
+<%@ Import Namespace="Telerik.Web.Mvc.UI"%>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
@@ -8,7 +9,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <% Html.Telerik().ScriptRegistrar().Render();%>
     <asp:Label class="LabelNazwaMiasta" runat="server" 
         Text="Nazwa wybranego miasta" CssClass="LabelNazwaMiasta"></asp:Label>
 
@@ -20,6 +21,7 @@
     <%--Dac tutaj mape z google maps wraz z znacznikami--%>
     
     
+    <%: Html.Telerik().GoogleMap().Name("map")%>
     </asp:Panel>
     </div>
 </asp:Content>
