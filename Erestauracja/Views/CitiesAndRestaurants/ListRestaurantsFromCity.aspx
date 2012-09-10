@@ -19,7 +19,7 @@
     <asp:Panel class="PanelMapa" runat="server">
     <%--Dac tutaj mape z google maps wraz z znacznikami--%>
     
-    <cc1:GMap ID="GMap1" runat="server" />
+    
     </asp:Panel>
     </div>
 </asp:Content>
