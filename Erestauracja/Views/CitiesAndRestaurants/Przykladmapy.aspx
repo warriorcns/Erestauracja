@@ -13,8 +13,8 @@
             .Name("map")
             .Width(300)
             .Height(300)
-            .Latitude(23)
-            .Longitude(-82)
+                .Latitude(54.093429)
+                .Longitude(18.777669)
             .Markers(m => m.Add().Title("Hello World!"))
     %>
 
