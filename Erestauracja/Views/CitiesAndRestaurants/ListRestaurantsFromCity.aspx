@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
+<%@ Register Assembly="GMaps" Namespace="Subgurim.Controles" TagPrefix="cc1" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     
@@ -16,7 +18,8 @@
     </asp:Panel>
     <asp:Panel class="PanelMapa" runat="server">
     <%--Dac tutaj mape z google maps wraz z znacznikami--%>
-
+    
+    <cc1:GMap ID="GMap1" runat="server" />
     </asp:Panel>
     </div>
 </asp:Content>

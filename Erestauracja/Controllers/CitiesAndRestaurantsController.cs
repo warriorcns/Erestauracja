@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Subgurim.Controles;
+using Erestauracja.Views;
 
 namespace Erestauracja.Controllers
 {
@@ -19,6 +21,9 @@ namespace Erestauracja.Controllers
 
         public ActionResult ListRestaurantsFromCity()
         {
+            //ciekawe czy to zadziala, pewnie nie, bo MVC ;D
+            GMap Gmap1 = new GMap();
+            Gmap1.enableHookMouseWheelToZoom = true;
             return View();
         }
     }

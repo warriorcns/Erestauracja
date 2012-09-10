@@ -45,12 +45,11 @@
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="AjaxControlToolkit, Version=4.1.60623.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AjaxControlToolkit.Binary.NET4\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="GMaps">
+      <HintPath>.\GMaps.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\AjaxControlToolkit.4.1.60623\lib\40\SanitizerProviders\HtmlAgilityPack.dll</HintPath>
@@ -693,6 +692,7 @@
     <Content Include="Views\Admin\ManageUsers.aspx" />
     <Content Include="Views\Admin\phpmyadmin.aspx" />
     <Content Include="Views\Basket\Index.aspx" />
+    <Content Include="Views\CitiesAndRestaurants\Index.aspx" />
     <Content Include="Views\CitiesAndRestaurants\ListRestaurantsFromCity.aspx" />
     <Content Include="Views\Find\Index.aspx" />
     <Content Include="Views\Help\Index.aspx" />
