@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
 <%@ Import Namespace="Telerik.Web.Mvc.UI"%>
 <%-- <%@ Import Namespace="Erestauracja.Models" %>--%>
 <!DOCTYPE html>

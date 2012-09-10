@@ -18,10 +18,16 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult ListRestaurantsFromCity()
+        public ActionResult ListRestaurantsFromCity(int? height, int? width)
         {
-            //ciekawe czy to zadziala, pewnie nie, bo MVC ;D
-           
+            ViewData["height"] = height ?? 100;
+            ViewData["width"] = width ?? 100;
+            return View();
+        }
+
+        public ActionResult Przykladmapy()
+        {
+
             return View();
         }
     }
