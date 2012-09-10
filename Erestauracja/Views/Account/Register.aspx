@@ -12,9 +12,13 @@
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>"
         type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
-            $("#Birthdate").datepicker();
-        });
+        $(function() {
+		$( "#Birthdate" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: 'c-100:c+0'
+		});
+	});
     </script>
     
     <script type="text/javascript">
