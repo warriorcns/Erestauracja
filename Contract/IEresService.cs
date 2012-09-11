@@ -115,6 +115,9 @@ namespace Contract
         [OperationContract]
         List<string> GetCountriesList();
 
+        [OperationContract]
+        List<Town> GetTowns(string townName, string postalCode, out string status);
+
         #endregion
     }
 
@@ -549,6 +552,59 @@ namespace Contract
         {
             get { return lastLockedOutDate; }
             set { lastLockedOutDate = value; }
+        }
+    }
+
+    [DataContract]
+    public class Town
+    {
+        private int id = -1;
+        private string postalCode = null;
+        private string townName = null;
+        private string province = null;
+        private string district = null;
+        private string community = null;
+
+        [DataMember]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
+        }
+
+        [DataMember]
+        public string TownName
+        {
+            get { return townName; }
+            set { townName = value; }
+        }
+
+        [DataMember]
+        public string Province
+        {
+            get { return province; }
+            set { province = value; }
+        }
+
+        [DataMember]
+        public string District
+        {
+            get { return district; }
+            set { district = value; }
+        }
+
+        [DataMember]
+        public string Community
+        {
+            get { return community; }
+            set { community = value; }
         }
     }
 }

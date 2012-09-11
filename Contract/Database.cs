@@ -1666,6 +1666,241 @@ namespace Contract
                 value = null;
             return value;
         }
+
+        public List<Town> GetTowns(string townName, string postalCode, out string status)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<Town> towns = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetTowns);
+                command.Parameters.AddWithValue("@townName", townName);
+                command.Parameters.AddWithValue("@postalCode", postalCode);
+                command.Connection = conn;
+                towns = new List<Town>();
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Town r = GetTownFromReader(reader);
+                    towns.Add(r);
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                status = "Błąd sql: "+e.Message;
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                status = "Błąd: " + ex.Message;
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            if (towns.Count == 1)
+            {
+                status = "OK";
+                return towns;
+            }
+            else if (towns.Count == 0)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetMoreTowns);
+                    command.Parameters.AddWithValue("@townName", "%" + townName + "%");
+                    command.Parameters.AddWithValue("@postalCode", postalCode);
+                    command.Connection = conn;
+                    towns = new List<Town>();
+                    conn.Open();
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Town r = GetTownFromReader(reader);
+                        towns.Add(r);
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    status = "Błąd sql: " + e.Message;
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    status = "Błąd: " + ex.Message;
+                    return null;
+                }
+                finally
+                {
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                }
+                if (towns.Count > 0)
+                {
+                    status = "Nie znaleziono podanego miasta, ale znaleziono podobne.";
+                    return towns;
+                }
+                else
+                {
+                    try
+                    {
+                        MySqlCommand command = new MySqlCommand(Queries.GetMoreMoreTowns);
+                        string regex = "^";
+                        for (int i = 0; i < townName.Length; i++)
+                        {
+                            regex += "[" + townName + "]";
+                        }
+
+                        command.Parameters.AddWithValue("@townName", regex);
+                        command.Parameters.AddWithValue("@postalCode", postalCode);
+                        command.Connection = conn;
+                        towns = new List<Town>();
+                        conn.Open();
+
+                        reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Town r = GetTownFromReader(reader);
+                            towns.Add(r);
+                        }
+                    }
+                    catch (MySqlException e)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message;
+                        wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                        wiadomosc += "Exception: " + e.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader != null) { reader.Close(); }
+                        conn.Close();
+                        status = "Błąd sql: " + e.Message;
+                        return null;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message2;
+                        wiadomosc += "Action: " + "GetTowns" + "\n\n";
+                        wiadomosc += "Exception: " + ex.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader != null) { reader.Close(); }
+                        conn.Close();
+                        status = "Błąd: " + ex.Message;
+                        return null;
+                    }
+                    finally
+                    {
+                        if (reader != null) { reader.Close(); }
+                        conn.Close();
+                    }
+
+                    if (towns.Count > 0)
+                    {
+                        status = "Nie znaleziono podanego miasta, ale znaleziono podobne (po szukaniu literówek).";
+                        return towns;
+                    }
+                    else
+                    {
+                        status = "Nie znaleziono żadnego pasującego miasta.";
+                        return null;
+                    }
+                }
+            }
+            else
+            {
+                status = "Błąd ";
+                return null;
+            }
+        }
+
+        private Town GetTownFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string townName = reader.GetString(2);
+            string postalCode = reader.GetString(1);
+            string province = reader.GetString(3);
+            string district = reader.GetString(4);
+            string community = reader.GetString(5);
+
+            Town u = new Town();
+            u.ID = id;
+            u.TownName = townName;
+            u.PostalCode = postalCode;
+            u.Province = province;
+            u.District = district;
+            u.Community = community;
+
+            return u;
+        }
     }
 
 

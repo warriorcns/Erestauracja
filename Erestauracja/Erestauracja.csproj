@@ -52,7 +52,7 @@
       <HintPath>..\packages\AjaxControlToolkit.4.1.60623\lib\40\SanitizerProviders\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Jmelosegui.Mvc.Controls">
-      <HintPath>..\packages\GooglemapMvc.0.1.0\lib\net40\Jmelosegui.Mvc.Controls.dll</HintPath>
+      <HintPath>C:\Users\GAWRON\Dropbox\Inżynierka\biblioteki do googlemaps\Jmelosegui.Mvc.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
@@ -884,6 +884,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Restaurant.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Town.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.User.datasource">

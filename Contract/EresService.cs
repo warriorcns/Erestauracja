@@ -434,6 +434,8 @@ namespace Contract
         }
         #endregion
 
+        #region ogólne
+        
         public List<string> GetCountriesList()
         {
             List<string> lista = null;
@@ -441,5 +443,22 @@ namespace Contract
             lista = db.GetCountriesList();
             return lista;
         }
+
+        public List<Town> GetTowns(string townName, string postalCode, out string status)
+        {
+            if (!(String.IsNullOrEmpty(townName) || String.IsNullOrEmpty(postalCode)))
+            {
+                Database db = new Database();
+                List<Town> value = db.GetTowns(townName, postalCode, out status);
+                return value;
+            }
+            else
+            {
+                status = "Błędne dane wejściowe";
+                return null;
+            }
+        }
+
+        #endregion
     }
 }

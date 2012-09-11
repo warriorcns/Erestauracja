@@ -380,6 +380,131 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Town", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class Town : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommunityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DistrictField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PostalCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProvinceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TownNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Community {
+            get {
+                return this.CommunityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommunityField, value) != true)) {
+                    this.CommunityField = value;
+                    this.RaisePropertyChanged("Community");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string District {
+            get {
+                return this.DistrictField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DistrictField, value) != true)) {
+                    this.DistrictField = value;
+                    this.RaisePropertyChanged("District");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PostalCode {
+            get {
+                return this.PostalCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PostalCodeField, value) != true)) {
+                    this.PostalCodeField = value;
+                    this.RaisePropertyChanged("PostalCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Province {
+            get {
+                return this.ProvinceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProvinceField, value) != true)) {
+                    this.ProvinceField = value;
+                    this.RaisePropertyChanged("Province");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TownName {
+            get {
+                return this.TownNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TownNameField, value) != true)) {
+                    this.TownNameField = value;
+                    this.RaisePropertyChanged("TownName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PasswordAndAnswer", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
     public partial class PasswordAndAnswer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1000,6 +1125,9 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetTowns", ReplyAction="http://tempuri.org/IEresService/GetTownsResponse")]
+        Erestauracja.ServiceReference.Town[] GetTowns(out string status, string townName, string postalCode);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ChangePassword", ReplyAction="http://tempuri.org/IEresService/ChangePasswordResponse")]
         bool ChangePassword(string login, string password);
         
@@ -1122,6 +1250,10 @@ namespace Erestauracja.ServiceReference {
         
         public string[] GetCountriesList() {
             return base.Channel.GetCountriesList();
+        }
+        
+        public Erestauracja.ServiceReference.Town[] GetTowns(out string status, string townName, string postalCode) {
+            return base.Channel.GetTowns(out status, townName, postalCode);
         }
         
         public bool ChangePassword(string login, string password) {

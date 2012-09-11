@@ -32,6 +32,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Restaurant" nillable="true" type="tns:Restaurant" />
+  <xs:complexType name="ArrayOfTown">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Town" nillable="true" type="tns:Town" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTown" nillable="true" type="tns:ArrayOfTown" />
+  <xs:complexType name="Town">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Community" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="District" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Province" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TownName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Town" nillable="true" type="tns:Town" />
   <xs:complexType name="PasswordAndAnswer">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
