@@ -937,7 +937,9 @@
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />
+    <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Index.aspx" />
+    <Content Include="Views\ManagePanel\ManageRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Personnel.aspx" />
     <Content Include="Views\ManagePanel\Reports.aspx" />
     <Content Include="Views\ManagePanel\Restaurant.aspx" />

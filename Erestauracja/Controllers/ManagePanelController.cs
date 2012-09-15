@@ -128,7 +128,56 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-        
+        //
+        // GET: /ManagePanel/EditRestaurant
+        public ActionResult EditRestaurant(Erestauracja.ServiceReference.Restaurant rest)
+        {
+            EditRestaurantModel model = new EditRestaurantModel();
+            model.Name = rest.Name;
+            model.DisplayName = rest.DisplayName;
+            model.Address = rest.Address;
+            model.TownId = rest.TownID;
+            model.Country = rest.Country;
+            model.Telephone = rest.Telephone;
+            model.Email = rest.Email;
+            model.Nip = rest.Nip;
+            model.Regon = rest.Regon;
+            model.DeliveryTime = rest.DeliveryTime;
+            if (model!=null)
+            {
+                    return View(model);
+            }
+
+            ModelState.AddModelError("", "Wczytywanie danych o restauracji nie powiodło się.");
+            return RedirectToAction("Index");
+        }
+
+        //
+        // POST: /ManagePanel/EditRestaurant
+        [HttpPost]
+        public ActionResult EditRestaurant(EditRestaurantModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                   return RedirectToAction("Restaurant", "ManagePanel");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/ManageRestaurant
+        public ActionResult ManageRestaurant(Erestauracja.ServiceReference.Restaurant model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
         
     }
 }

@@ -70,4 +70,57 @@ namespace Erestauracja.Models
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
     }
+
+    public class EditRestaurantModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwa firmy")]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwa wyświetlana")]
+        public string DisplayName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Adres lokalu")]
+        public string Address { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Town ID")]
+        public string TownId { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Kraj")]
+        public string Country { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Numer telefonu")]
+        public string Telephone { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Adres email")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "NIP")]
+        public string Nip { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "REGON")]
+        public string Regon { get; set; }
+
+        [Required]
+        [DataType(DataType.Time)]
+        [Display(Name = "Czas dostawy")]
+        public string DeliveryTime { get; set; }
+    }
 }

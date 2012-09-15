@@ -6,18 +6,19 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Wybierz restaurację, którą chcesz zarządzać lub kliknij <%: Html.ActionLink("tutaj", "AddRestaurant", "ManagePanel")%>, aby dodać nową. </h2>
-
 <script>
     $(function () {
         $("#accordion").accordion({
             collapsible: true
         });
     });
-	</script>
+</script>
+
+<h2>Wybierz restaurację, którą chcesz zarządzać lub kliknij <%: Html.ActionLink("tutaj", "AddRestaurant", "ManagePanel")%>, aby dodać nową. </h2>
+</br>
+</br>
 
 <div class="demo">
-
     <div id="accordion">
         <% foreach (Erestauracja.ServiceReference.Restaurant x in (IEnumerable<Erestauracja.ServiceReference.Restaurant>)ViewData["restauracje"]){%>
 	    <h3><a href="#"><%: x.Name %></a></h3>
@@ -52,6 +53,10 @@
                 <div class="editor-labelE">
                 DeliveryTime:  <%: x.DeliveryTime%>
                 </div>
+
+                <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", x, null)%>
+                <%: Html.ActionLink("Zarządzaj", "ManageRestaurant", "ManagePanel", x, null)%>
+
 	    </div>
 	<% } %>
     
