@@ -223,7 +223,7 @@
         <% } %>
         
         </form>
-        <%-- if lista pobranych miast jest > 1 then pokaz mapke--%>
+        <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
         <div class="mapTowns">
             <%:
         Html.Telerik().GoogleMap()
@@ -231,10 +231,11 @@
             .Width(400)
             .Height(400)
                 .Latitude(54.093429)
-                .Longitude(18.777669)
-            .Markers(m => m.Add().Title("Hello World!"))
+                                .Longitude(18.777669).Markers(m => m.Add().Title("Hello World!"))
             %>
-            <% Html.Telerik().ScriptRegistrar().Render();%>
+
+            <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
+            <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
         </div>
     </div>
 </asp:Content>
