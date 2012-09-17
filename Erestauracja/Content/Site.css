@@ -830,6 +830,40 @@ div#title {
     margin: 7px 0 7px 0;
     
 }
+
+/* glowny div*/
+.polaRejestracji
+{
+    z-index: 0;
+    width: 100%;
+    clear: both;
+    height: 100%;
+    overflow: hidden;
+}
+
+.formaRejestracji
+{
+    width: 50%;
+    margin: 0 0 -20000px 5px;
+    padding-bottom: 20000px;
+    height: 100%;
+    background: #ffe6c5;
+    float: left;    
+}
+
+
+/* MAPKA   */
+
+.mapTowns
+{
+    z-index: -1;
+    width: 45%;
+    padding: 70px 0 0 15px;
+    float: left;
+    height: 100%;
+}
+
+
 .display-labelR {
     /*margin: 1em 120px 0 0;*/
     position: relative;
@@ -872,3 +906,4 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
