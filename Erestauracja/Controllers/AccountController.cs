@@ -316,7 +316,6 @@ namespace Erestauracja.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-
         public ActionResult Register(RegisterModel model)
         {
             List<SelectListItem> sex = new List<SelectListItem>();
@@ -365,6 +364,16 @@ namespace Erestauracja.Controllers
                     {
                         ModelState.AddModelError("", ErrorCodeToString(createStatus));
                     }
+                }
+                else if(value.Count>1)
+                {
+                    ModelState.AddModelError("", status);
+                    ViewBag["miasta"] = value;
+                    return RedirectToAction("", "Account",model);
+                }
+                else
+                {
+                    ModelState.AddModelError("", status);
                 }
             }
 
