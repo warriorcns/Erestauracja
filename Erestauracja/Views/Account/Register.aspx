@@ -223,8 +223,9 @@
         <% } %>
         
         </form>
-        <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-        <div class="mapTowns">
+       
+           
+        <div class="mapTowns" id="mapka">
             <%:
         Html.Telerik().GoogleMap()
             .Name("map")
@@ -236,6 +237,21 @@
 
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+
         </div>
+
+         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
+
+        <% //if (ViewData["listaMiast"] > 1)
+           if(true)
+           { %> 
+           <script type="text/javascript">
+               document.getElementById('mapka').style.display = "block";
+           </script> 
+           <% } else {%>
+           <script type="text/javascript">
+               document.getElementById('mapka').style.display = "none";
+           </script> 
+            <% } %>
     </div>
 </asp:Content>
