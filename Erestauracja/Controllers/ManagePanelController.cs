@@ -45,18 +45,7 @@ namespace Erestauracja.Controllers
             }
 
             ViewData["restauracje"] = value;
-           /*
-            //string constr = "Server=TestServer;Database=TestDB;uid=test;pwd=test;";
-            //string query = "SELECT ProductID, ProductName, UnitPrice FROM Products";
-            ServiceReference.EresServiceClient res = new ServiceReference.EresServiceClient();    
-            //Tutaj wywolac metode ktora pobiera liste tablic stringow (restauracje)
-            //List<string>[] listaRes = res.
-            //SqlDataAdapter da = new SqlDataAdapter(query, constr);
-            //DataTable table = new DataTable();
-            //da.Fill(table);
-            //ListView1.DataSource = table;
-            //ListView1.DataBind();
-            * */
+
             return View();
         }
 
@@ -143,9 +132,9 @@ namespace Erestauracja.Controllers
             model.Nip = rest.Nip;
             model.Regon = rest.Regon;
             model.DeliveryTime = rest.DeliveryTime;
-            if (model!=null)
+            if (model != null)
             {
-                    return View(model);
+                return View(model);
             }
 
             ModelState.AddModelError("", "Wczytywanie danych o restauracji nie powiodło się.");
