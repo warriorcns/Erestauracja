@@ -860,6 +860,7 @@ div#title {
     padding: 70px 0 0 15px;
     float: left;
     height: 100%;
+    display: none;
 }
 
 

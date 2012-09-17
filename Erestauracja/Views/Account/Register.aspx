@@ -241,17 +241,19 @@
         </div>
 
          <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-
-        <% //if (ViewData["listaMiast"] > 1)
-           if(true)
-           { %> 
-           <script type="text/javascript">
-               document.getElementById('mapka').style.display = "block";
-           </script> 
-           <% } else {%>
-           <script type="text/javascript">
-               document.getElementById('mapka').style.display = "none";
-           </script> 
-            <% } %>
+         <% foreach (Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
+            {
+                if (((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"]).Count() > 1)
+                {%>
+                   <script type="text/javascript">
+                       document.getElementById('mapka').style.display = "block";
+                   </script>
+                <%} else {%> 
+                    <script type="text/javascript">
+                        document.getElementById('mapka').style.display = "none";
+                    </script>
+                <%}%> 
+                
+         <% }%>
     </div>
 </asp:Content>

@@ -313,6 +313,7 @@ namespace Erestauracja.Controllers
             {
                 ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
             }
+            ViewData["miasta"] = new List<Town>(); 
             return View();
         }
 
