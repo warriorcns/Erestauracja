@@ -16,6 +16,7 @@
             $("#DeliveryTime").mask("99:99:99");
         });
     </script>
+
     <form id="Form1" runat="server">
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja restauracji nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>

@@ -20,8 +20,8 @@ namespace Erestauracja.Controllers
 
         public ActionResult ListRestaurantsFromCity(int? height, int? width)
         {
-            ViewData["height"] = height ?? 100;
-            ViewData["width"] = width ?? 100;
+            ViewData["height"] = height ?? 300;
+            ViewData["width"] = width ?? 500;
             return View();
         }
 

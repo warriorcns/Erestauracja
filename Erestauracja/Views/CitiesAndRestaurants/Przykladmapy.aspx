@@ -17,10 +17,6 @@
                 .Longitude(18.777669)
             .Markers(m => m.Add().Title("Hello World!"))
     %>
-
-    
-
-
     <% Html.Telerik().ScriptRegistrar().Render();%>
 </asp:Content>
 

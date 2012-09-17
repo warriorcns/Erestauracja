@@ -56,7 +56,9 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/EditData
         //[Authorize]
+
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        
         public ActionResult EditData()
         {
             List<SelectListItem> sex = new List<SelectListItem>();
@@ -111,14 +113,16 @@ namespace Erestauracja.Controllers
                 }
                 ViewData["sex"] = sex;
 
-
-                return View(model);              
+                return View(model);
             }
             else
             {
                 return RedirectToAction("LogOn", "Account");
+                
             }
         }
+        
+
 
         //
         // POST: /Account/EditData

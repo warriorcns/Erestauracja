@@ -9,16 +9,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <% Html.Telerik().ScriptRegistrar().Render();%>
-
-    <%: Html.Telerik().StyleSheetRegistrar()
-                      .DefaultGroup(group => group
-                          .Add("Site.css")
-                          .Add("telerik.common.css")
-                          .Add("telerik.office2007.css")
-                          .Combined(false)
-                          .Compress(false))
-    %>
+   
     <asp:Label class="LabelNazwaMiasta" runat="server" 
         Text="Nazwa wybranego miasta" CssClass="LabelNazwaMiasta"></asp:Label>
 

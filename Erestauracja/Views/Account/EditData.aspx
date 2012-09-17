@@ -3,6 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AccountPlaceHolder" runat="server">
 
+
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
@@ -16,7 +17,7 @@
             $("#Birthdate").mask("9999/99/99");
         });
     </script>
-
+    
 
 <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Edycja danych nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
@@ -30,6 +31,7 @@
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Name) %>
                     <%: Html.TextBoxFor(m => m.Name)%>
+
                     <%: Html.ValidationMessageFor(m => m.Name)%>
                 </div>
 
@@ -86,5 +88,6 @@
             </fieldset>
         </div>
     <% } %>
-  <%  %>  
+  
 </asp:Content>
+

@@ -51,8 +51,8 @@
                 Numer telefonu:  <%: model.Telephone %>
                 </div>
                 <li>
-                <%: Html.ActionLink("Edytuj", "EditData", "Account",model,null)%>  <%: Html.ActionLink("Zmień hasło", "ChangePassword", "Account")%></li>
-
+                <%: Html.ActionLink("Edytuj", "EditData", "Account",model,null)%>  <%: Html.ActionLink("Zmień hasło", "ChangePassword", "Account")%>
+                </li>
             </fieldset>
         </div>
     <% } %>
