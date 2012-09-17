@@ -10,6 +10,7 @@ using Erestauracja.Providers;
 using System.Web.Mvc.Html;
 using Erestauracja.Authorization;
 using Erestauracja.ServiceReference;
+using System.Net;
 
 namespace Erestauracja.Controllers
 {
@@ -585,6 +586,42 @@ namespace Erestauracja.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+        //Geocoding
+        public struct Coordinate
+        {
+            private double lat;
+            private double lng;
+
+            public Coordinate(double latitude, double longitude)
+            {
+                lat = latitude;
+                lng = longitude;
+
+            }
+
+            public double Latitude { get { return lat; } set { lat = value; } }
+            public double Longitude { get { return lng; } set { lng = value; } }
+
+        }
+
+        public static Coordinate GetCoordinates(string region)
+        {
+            using (var client = new WebClient())
+            {
+
+                string uri = "http://maps.google.com/maps/geo?q='" + region +
+                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
+                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
+
+                string[] geocodeInfo = client.DownloadString(uri).Split(',');
+
+                return new Coordinate(Convert.ToDouble(geocodeInfo[2]),
+                           Convert.ToDouble(geocodeInfo[3]));
+            }
+        }
+
 
         //przetłumaczyć reszte
         //
