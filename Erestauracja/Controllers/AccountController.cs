@@ -74,6 +74,8 @@ namespace Erestauracja.Controllers
                     countryList.Add(new SelectListItem { Text = item, Value = item });
                 }
                 ViewData["countryList"] = countryList;
+
+                country.Close();
             }
             catch (Exception e)
             {
@@ -305,6 +307,7 @@ namespace Erestauracja.Controllers
                     countryList.Add(new SelectListItem { Text = item, Value = item });
                 }
                 ViewData["countryList"] = countryList;
+                country.Close();
             }
             catch (Exception e)
             {
@@ -336,6 +339,7 @@ namespace Erestauracja.Controllers
                     countryList.Add(new SelectListItem { Text = item, Value = item });
                 }
                 ViewData["countryList"] = countryList;
+                country.Close();
             }
             catch (Exception e)
             {
