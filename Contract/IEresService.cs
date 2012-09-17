@@ -30,7 +30,7 @@ namespace Contract
         PasswordQuestion GetUserQuestion(string login);
 
         [OperationContract]
-        bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
+        bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
 
         [OperationContract]
         bool DeleteUser(string login, bool deleteAllRelatedData);
@@ -203,7 +203,7 @@ namespace Contract
         private string name = null;
         private string surname = null;
         private string address = null;
-        private string townID = null;
+        private int townID = -1;
         private string country = null;
         private DateTime birthdate = new DateTime();
         private string sex = null;
@@ -261,7 +261,7 @@ namespace Contract
         }
 
         [DataMember]
-        public string TownID
+        public int TownID
         {
             get { return townID; }
             set { townID = value; }

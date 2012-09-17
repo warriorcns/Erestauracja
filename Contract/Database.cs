@@ -396,7 +396,7 @@ namespace Contract
             return value;
         }
 
-        public bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
+        public bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
         {
             DateTime createDate = DateTime.Now;
 
@@ -552,7 +552,7 @@ namespace Contract
             string name = reader.GetString(3);
             string surname = reader.GetString(4);
             string address = reader.GetString(5);
-            string townID = reader.GetString(6);
+            int townID = reader.GetInt32(6);
             string country = reader.GetString(7);
             DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
             string sex = "Mężczyzna";

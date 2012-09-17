@@ -95,10 +95,10 @@ namespace Contract
             }
         }
 
-        public bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
+        public bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
         {
             if (!(String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(name)
-                || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(address) || String.IsNullOrEmpty(townID) || String.IsNullOrEmpty(country)
+                || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(address) || townID==null || String.IsNullOrEmpty(country)
                 || String.IsNullOrEmpty(birthdate.ToString()) || String.IsNullOrEmpty(sex) || String.IsNullOrEmpty(telephone) || String.IsNullOrEmpty(passwordQuestion)
                 || String.IsNullOrEmpty(passwordAnswer) || String.IsNullOrEmpty(isApproved.ToString())))
             {

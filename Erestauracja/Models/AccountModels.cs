@@ -100,11 +100,15 @@ namespace Erestauracja.Models
         [Display(Name = "Adres ")]
         public string Address { get; set; }
 
-        //zmienić 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "TownID")]
-        public string TownID { get; set; }
+        [Display(Name = "Miasto")]
+        public string Town { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Kod pocztowy")]
+        public string PostalCode { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
@@ -159,7 +163,7 @@ namespace Erestauracja.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "TownID")]
-        public string TownID { get; set; }
+        public int TownID { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

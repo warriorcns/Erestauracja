@@ -818,7 +818,7 @@ namespace Erestauracja.Providers
         /// <returns>MembershipUser</returns>
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            return this.CreateUser("", password, email, "", "", "", "0", "", DateTime.Now, "", "", passwordQuestion, passwordAnswer, isApproved, out status);
+            return this.CreateUser("", password, email, "", "", "", 0, "", DateTime.Now, "", "", passwordQuestion, passwordAnswer, isApproved, out status);
         }
 
         /// <summary>
@@ -840,7 +840,7 @@ namespace Erestauracja.Providers
         /// <param name="isApproved">Czy zatwierdzony</param>
         /// <param name="status">out MembershipCreateStatus</param>
         /// <returns>CustomMembershipUser</returns>
-        public CustomMembershipUser CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved, out MembershipCreateStatus status)
+        public CustomMembershipUser CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved, out MembershipCreateStatus status)
         {
             ValidatePasswordEventArgs args =
               new ValidatePasswordEventArgs(login, password, true);
@@ -1017,7 +1017,7 @@ namespace Erestauracja.Providers
             string name = reader.Name;
             string surname = reader.Surname;
             string address = reader.Address;
-            string townID = reader.TownID;
+            int townID = reader.TownID;
             string country = reader.Country;
             DateTime birthdate = reader.Birthdate;
             string sex = reader.Sex;

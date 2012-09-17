@@ -769,7 +769,7 @@ namespace Erestauracja.ServiceReference {
         private string TelephoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TownIDField;
+        private int TownIDField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1029,12 +1029,12 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TownID {
+        public int TownID {
             get {
                 return this.TownIDField;
             }
             set {
-                if ((object.ReferenceEquals(this.TownIDField, value) != true)) {
+                if ((this.TownIDField.Equals(value) != true)) {
                     this.TownIDField = value;
                     this.RaisePropertyChanged("TownID");
                 }
@@ -1147,7 +1147,7 @@ namespace Erestauracja.ServiceReference {
         Erestauracja.ServiceReference.PasswordQuestion GetUserQuestion(string login);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/CreateUser", ReplyAction="http://tempuri.org/IEresService/CreateUserResponse")]
-        bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
+        bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/DeleteUser", ReplyAction="http://tempuri.org/IEresService/DeleteUserResponse")]
         bool DeleteUser(string login, bool deleteAllRelatedData);
@@ -1280,7 +1280,7 @@ namespace Erestauracja.ServiceReference {
             return base.Channel.GetUserQuestion(login);
         }
         
-        public bool CreateUser(string login, string password, string email, string name, string surname, string address, string townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved) {
+        public bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, System.DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved) {
             return base.Channel.CreateUser(login, password, email, name, surname, address, townID, country, birthdate, sex, telephone, passwordQuestion, passwordAnswer, isApproved);
         }
         

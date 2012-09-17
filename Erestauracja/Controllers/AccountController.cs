@@ -9,14 +9,13 @@ using Erestauracja.Models;
 using Erestauracja.Providers;
 using System.Web.Mvc.Html;
 using Erestauracja.Authorization;
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
     
     public class AccountController : Controller
-    {
-
-               
+    {    
         //
         // GET: /Account/Account
         //role ktore maja dostep do danego zasobu - inaczej przekierowuje na strone logowania - do zmiany.
@@ -37,7 +36,7 @@ namespace Erestauracja.Controllers
                 model.Name = user.Name;
                 model.Surname = user.Surname;
                 model.Address = user.Address;
-                model.TownID = user.TownID;
+                model.TownID = 111;
                 model.Country = user.Country;
                 model.Birthdate = user.Birthdate;
                 model.Sex = user.Sex;
@@ -324,25 +323,48 @@ namespace Erestauracja.Controllers
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
             sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
             ViewData["sex"] = sex;
-            
+
+            string status = String.Empty;
             if (ModelState.IsValid)
             {
-                MembershipCreateStatus createStatus;
-                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, model.TownID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
-                if (user != null)
+                List<Town> value=null;
+                try
                 {
-                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Town>(client.GetTowns(out status, model.Town,model.PostalCode));
+                    }
+                    client.Close();
                 }
-                if (createStatus == MembershipCreateStatus.Success)
+                catch (Exception e)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
                 }
-                else
+                if (value == null)
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+
+                if (value.Count == 1)
+                {
+                    MembershipCreateStatus createStatus;
+                    CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                    if (user != null)
+                    {
+                        CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                        role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+                    }
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    }
                 }
             }
 
@@ -474,7 +496,7 @@ namespace Erestauracja.Controllers
             {
                 MembershipCreateStatus createStatus;
                 CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, model.TownID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, 111, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
                 if (user != null)
                 {
                     CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
