@@ -368,8 +368,9 @@ namespace Erestauracja.Controllers
                 else if(value.Count>1)
                 {
                     ModelState.AddModelError("", status);
-                    ViewBag["miasta"] = value;
-                    return RedirectToAction("", "Account",model);
+                    ViewData["miasta"] = value;
+                    //return RedirectToAction("", "Account",model);
+                    return View(model);
                 }
                 else
                 {
