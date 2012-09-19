@@ -106,6 +106,9 @@ namespace Contract
         bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
 
         [OperationContract]
+        bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
+
+        [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
 
         #endregion
@@ -564,6 +567,8 @@ namespace Contract
         private string province = null;
         private string district = null;
         private string community = null;
+        private decimal latitude = 0;
+        private decimal longtitude = 0;
 
         [DataMember]
         public int ID
@@ -605,6 +610,20 @@ namespace Contract
         {
             get { return community; }
             set { community = value; }
+        }
+
+        [DataMember]
+        public decimal Latitude
+        {
+            get { return latitude; }
+            set { latitude = value; }
+        }
+
+        [DataMember]
+        public decimal Longtitude
+        {
+            get { return longtitude; }
+            set { longtitude = value; }
         }
     }
 }

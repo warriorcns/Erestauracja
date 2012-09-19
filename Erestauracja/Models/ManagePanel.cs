@@ -74,6 +74,9 @@ namespace Erestauracja.Models
     public class EditRestaurantModel
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa firmy")]
         public string Name { get; set; }
@@ -119,7 +122,7 @@ namespace Erestauracja.Models
         public string Regon { get; set; }
 
         [Required]
-        [DataType(DataType.Time)]
+        [DataType(DataType.Text)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
     }

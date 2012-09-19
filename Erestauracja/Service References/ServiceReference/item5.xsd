@@ -43,6 +43,8 @@
       <xs:element minOccurs="0" name="Community" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="District" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Latitude" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Longtitude" type="xs:decimal" />
       <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Province" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TownName" nillable="true" type="xs:string" />

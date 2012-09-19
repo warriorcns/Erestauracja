@@ -14,6 +14,12 @@
   <wsdl:message name="IEresService_AddRestaurant_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddRestaurantResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_EditRestaurant_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditRestaurant" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditRestaurant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditRestaurantResponse" />
+  </wsdl:message>
   <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLogin" />
   </wsdl:message>
@@ -205,6 +211,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/AddRestaurant" message="tns:IEresService_AddRestaurant_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/AddRestaurantResponse" message="tns:IEresService_AddRestaurant_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EditRestaurant">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditRestaurant" message="tns:IEresService_EditRestaurant_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditRestaurantResponse" message="tns:IEresService_EditRestaurant_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetRestaurantsByManagerLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" message="tns:IEresService_GetRestaurantsByManagerLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse" message="tns:IEresService_GetRestaurantsByManagerLogin_OutputMessage" />
@@ -334,6 +344,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="AddRestaurant">
       <soap:operation soapAction="http://tempuri.org/IEresService/AddRestaurant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditRestaurant">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditRestaurant" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -1529,6 +1529,34 @@ namespace Contract
             return false;
         }
 
+        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.EditRestaurant);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@displayName", displayName);
+            command.Parameters.AddWithValue("@address", address);
+            command.Parameters.AddWithValue("@townId", townId);
+            command.Parameters.AddWithValue("@country", country);
+            command.Parameters.AddWithValue("@telephone", telephone);
+            command.Parameters.AddWithValue("@email", email);
+            command.Parameters.AddWithValue("@nip", nip);
+            command.Parameters.AddWithValue("@regon", regon);
+            command.Parameters.AddWithValue("@deliveryTime", deliveryTime);
+
+            command.Parameters.AddWithValue("@menager", managerLogin);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+
+            int rowsaffected = ExecuteNonQuery(command, "EditRestaurant");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         public List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);

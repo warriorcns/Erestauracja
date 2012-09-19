@@ -397,6 +397,12 @@ namespace Erestauracja.ServiceReference {
         private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal LatitudeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal LongtitudeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PostalCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -450,6 +456,32 @@ namespace Erestauracja.ServiceReference {
                 if ((this.IDField.Equals(value) != true)) {
                     this.IDField = value;
                     this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Latitude {
+            get {
+                return this.LatitudeField;
+            }
+            set {
+                if ((this.LatitudeField.Equals(value) != true)) {
+                    this.LatitudeField = value;
+                    this.RaisePropertyChanged("Latitude");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Longtitude {
+            get {
+                return this.LongtitudeField;
+            }
+            set {
+                if ((this.LongtitudeField.Equals(value) != true)) {
+                    this.LongtitudeField = value;
+                    this.RaisePropertyChanged("Longtitude");
                 }
             }
         }
@@ -1119,6 +1151,9 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
         bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditRestaurant", ReplyAction="http://tempuri.org/IEresService/EditRestaurantResponse")]
+        bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin", ReplyAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse")]
         Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin);
         
@@ -1242,6 +1277,10 @@ namespace Erestauracja.ServiceReference {
         
         public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime) {
             return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
+        }
+        
+        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id) {
+            return base.Channel.EditRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, deliveryTime, managerLogin, id);
         }
         
         public Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin) {

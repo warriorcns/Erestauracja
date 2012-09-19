@@ -10,9 +10,9 @@
         <%: Html.ValidationSummary(true, "Edycja danych restauracji nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
             <fieldset>
-                <legend>Dane rejestracji</legend>
+                <legend>Dane restauracji</legend>
                 <p>
-                    Wprowadz swoje dane, a następnie kliknij 'Załóż konto' aby w pełni wykorzystać możliwości serwisu.
+                    Wprowadz nowe dane, a następnie kliknij 'Zapisz', aby edytować dane restauracji.
                 </p>
 
                 <ul class="rej">
@@ -64,7 +64,7 @@
                         <%: Html.LabelFor(m => m.Country)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Country)%>
+                        <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"])%>
                        </li>
                     <li class="validation-labelR">
                          <%: Html.ValidationMessageFor(m => m.Country)%>
@@ -131,6 +131,5 @@
             </fieldset>
         </div>
     <% } %>
-    </form>
 </asp:Content>
 

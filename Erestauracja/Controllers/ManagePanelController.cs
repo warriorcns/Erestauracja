@@ -95,7 +95,7 @@ namespace Erestauracja.Controllers
                     }
                     catch (Exception e)
                     {
-                        ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
+                        value = false;
                     }
 
                     if (value == false)
@@ -121,19 +121,43 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/EditRestaurant
         public ActionResult EditRestaurant(Erestauracja.ServiceReference.Restaurant rest)
         {
-            EditRestaurantModel model = new EditRestaurantModel();
-            model.Name = rest.Name;
-            model.DisplayName = rest.DisplayName;
-            model.Address = rest.Address;
-            model.TownId = rest.TownID;
-            model.Country = rest.Country;
-            model.Telephone = rest.Telephone;
-            model.Email = rest.Email;
-            model.Nip = rest.Nip;
-            model.Regon = rest.Regon;
-            model.DeliveryTime = rest.DeliveryTime;
-            if (model != null)
+            try
             {
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+
+                List<string> listapobrana = new List<string>(country.GetCountriesList());
+                List<SelectListItem> countryList = new List<SelectListItem>();
+
+
+                foreach (string item in listapobrana)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+
+                country.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+
+            if (rest != null)
+            {
+                EditRestaurantModel model = new EditRestaurantModel();
+                model.Id = rest.ID;
+                model.Name = rest.Name;
+                model.DisplayName = rest.DisplayName;
+                model.Address = rest.Address;
+                model.TownId = rest.TownID;
+                model.Country = rest.Country;
+                model.Telephone = rest.Telephone;
+                model.Email = rest.Email;
+                model.Nip = rest.Nip;
+                model.Regon = rest.Regon;
+                model.DeliveryTime = rest.DeliveryTime;
+
+                ModelState.Clear();
                 return View(model);
             }
 
@@ -146,9 +170,52 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult EditRestaurant(EditRestaurantModel model)
         {
+            try
+            {
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+
+                List<string> listapobrana = new List<string>(country.GetCountriesList());
+                List<SelectListItem> countryList = new List<SelectListItem>();
+
+
+                foreach (string item in listapobrana)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+
+                country.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+
             if (ModelState.IsValid)
             {
-                   return RedirectToAction("Restaurant", "ManagePanel");
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("Restaurant", "ManagePanel");
+                }
             }
 
             // If we got this far, something failed, redisplay form

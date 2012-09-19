@@ -407,10 +407,27 @@ namespace Contract
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
                 || String.IsNullOrEmpty(townId) || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
-                || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(managerLogin) || deliveryTime==null))
+                || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
             {
                 Database db = new Database();
                 bool value = db.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
+                || String.IsNullOrEmpty(townId) || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
+                || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
+                || id==null || id<0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
+            {
+                Database db = new Database();
+                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, deliveryTime, managerLogin, id);
                 return value;
             }
             else
