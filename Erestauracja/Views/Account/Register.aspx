@@ -233,6 +233,41 @@
             .Height(400)
                 .Latitude(54.093429).Longitude(18.777669).Markers(m => m.Add().Title("Hello World!"))
             %>
+            
+            <%--<% Html.Telerik().GoogleMap()
+                .Name("map")
+                .Width(880)
+                .Height(600)      
+                .Latitude(40)
+                .Longitude(-3)
+                .BindTo<RegionInfo, Marker>
+                (Model, mappings => mappings.For<RegionInfo>
+                        (
+                            binding => binding.ItemDataBound
+                            (
+                                (marker, obj) =>
+                                {
+                                    marker.Latitude = obj.Latitude;
+                                    marker.Longitude = obj.Longitude;
+                                    marker.Title = obj.Title;
+                                    marker.zIndex = obj.zIndex;
+                                    marker.Icon = new MarkerImage("/map/Images/Banderitas/{0}".FormatWith(obj.ImagePath)
+                                                                    , new Size(18, 12)
+                                                                    , new Point(0, 0)
+                                                                    , new Point(0, 12));
+                                    marker.Window = new InfoWindow(marker)
+                                                    {
+                                                        Template =
+                                                        {
+                                                            Content = () => Writer.Write(obj.InfoWindowContent)
+                                                        }
+                                                    };
+                                }
+                            )
+                        )
+                ).Render();%>--%>
+            
+
 
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>

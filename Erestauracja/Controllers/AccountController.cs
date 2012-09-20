@@ -327,6 +327,9 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
+
+            IEnumerable<MarkerData> data ;
+            data = DataContext.GetRegions();
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
             sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
@@ -400,6 +403,8 @@ namespace Erestauracja.Controllers
                     ModelState.AddModelError("", status);
                     ViewData["miasta"] = value;
                     //return RedirectToAction("", "Account",model);
+
+                    //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
                     return View(model);
                 }
                 else
