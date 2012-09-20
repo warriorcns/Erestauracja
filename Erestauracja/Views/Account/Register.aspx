@@ -231,8 +231,7 @@
             .Name("map")
             .Width(400)
             .Height(400)
-                .Latitude(54.093429)
-                                .Longitude(18.777669).Markers(m => m.Add().Title("Hello World!"))
+                .Latitude(54.093429).Longitude(18.777669).Markers(m => m.Add().Title("Hello World!"))
             %>
 
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 

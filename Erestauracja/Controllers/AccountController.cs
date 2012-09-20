@@ -11,6 +11,7 @@ using System.Web.Mvc.Html;
 using Erestauracja.Authorization;
 using Erestauracja.ServiceReference;
 using System.Net;
+using System.Globalization;
 
 namespace Erestauracja.Controllers
 {
@@ -318,6 +319,9 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+
+
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -591,18 +595,14 @@ namespace Erestauracja.Controllers
         //Geocoding
         public struct Coordinate
         {
-            private double lat;
-            private double lng;
+            public double Latitude;
+            public double Longitude;
 
-            public Coordinate(double latitude, double longitude)
+            public Coordinate(double Latitude, double Longitude)
             {
-                lat = latitude;
-                lng = longitude;
-
+                this.Latitude = Latitude;
+                this.Longitude = Longitude;
             }
-
-            public double Latitude { get { return lat; } set { lat = value; } }
-            public double Longitude { get { return lng; } set { lng = value; } }
 
         }
 
@@ -617,8 +617,18 @@ namespace Erestauracja.Controllers
 
                 string[] geocodeInfo = client.DownloadString(uri).Split(',');
 
-                return new Coordinate(Convert.ToDouble(geocodeInfo[2]),
-                           Convert.ToDouble(geocodeInfo[3]));
+                NumberStyles style;
+                CultureInfo culture;
+
+                style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+                culture = CultureInfo.CreateSpecificCulture("en-CA");
+
+                double lat;
+                double lng;
+
+                double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
+                double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
+                return new Coordinate(lat, lng);
             }
         }
 
