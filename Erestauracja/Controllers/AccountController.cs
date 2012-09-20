@@ -592,19 +592,7 @@ namespace Erestauracja.Controllers
         }
 
 
-        //Geocoding
-        public struct Coordinate
-        {
-            public double Latitude;
-            public double Longitude;
-
-            public Coordinate(double Latitude, double Longitude)
-            {
-                this.Latitude = Latitude;
-                this.Longitude = Longitude;
-            }
-
-        }
+        
 
         public static Coordinate GetCoordinates(string region)
         {
@@ -674,5 +662,19 @@ namespace Erestauracja.Controllers
             }
         }
         #endregion
+    }
+
+    //Geocoding
+    public class Coordinate
+    {
+        public double Latitude;
+        public double Longitude;
+
+        public Coordinate(double Latitude, double Longitude)
+        {
+            this.Latitude = Latitude;
+            this.Longitude = Longitude;
+        }
+
     }
 }
