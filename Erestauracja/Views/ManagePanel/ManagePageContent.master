@@ -1,0 +1,30 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" AutoEventWireup="true" CodeBehind="ManagePageContent.master.cs" Inherits="Erestauracja.Views.ManagePanel.ManagePageContent" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+
+<form id="form1" runat="server">
+<nav class="menu">
+                <ul id="menu">
+                    <li>
+                        <%: Html.ActionLink("Strona główna", "MainPage", "ManagePage")%></li>
+                    <li>
+                        <%: Html.ActionLink("Menu", "Menu", "Restaurant")%></li>
+                    <li>
+                        <%: Html.ActionLink("Dowóz", "Delivery", "Restaurant")%></li>
+                    <li>
+                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Parties", "Restaurant")%></li>
+                    <li>
+                        <%: Html.ActionLink("Galeria", "Gallery", "Restaurant")%></li>
+                    <li>
+                        <%: Html.ActionLink("Kontakt", "Contact", "Restaurant")%></li>
+                </ul>
+            </nav>
+ <asp:ContentPlaceHolder ID="Main" runat="server">
+ </asp:ContentPlaceHolder>
+    </form>
+
+</asp:Content>

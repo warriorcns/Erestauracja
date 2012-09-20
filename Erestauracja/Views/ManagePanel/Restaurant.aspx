@@ -54,7 +54,7 @@
                 DeliveryTime:  <%: x.DeliveryTime%>
                 </div>
                 <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", x, null)%>
-                <%: Html.ActionLink("Zarządzaj", "ManageRestaurant", "ManagePanel", x, null)%>
+                <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", x, null)%>
 
 	    </div>
 	<% } %>

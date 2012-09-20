@@ -74,6 +74,7 @@ namespace Erestauracja.Models
     public class EditRestaurantModel
     {
         [Required]
+        [DataType(DataType.Html)]
         public int Id { get; set; }
 
         [Required]
@@ -125,5 +126,11 @@ namespace Erestauracja.Models
         [DataType(DataType.Text)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
+    }
+
+    public class TestModel
+    {
+        [DataType(DataType.Html)]
+        public string Html { get; set; }
     }
 }

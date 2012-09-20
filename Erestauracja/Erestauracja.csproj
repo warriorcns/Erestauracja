@@ -325,6 +325,13 @@
     <Compile Include="Views\Admin\Index.master.designer.cs">
       <DependentUpon>Index.master</DependentUpon>
     </Compile>
+    <Compile Include="Views\ManagePanel\ManagePageContent.master.cs">
+      <DependentUpon>ManagePageContent.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ManagePanel\ManagePageContent.master.designer.cs">
+      <DependentUpon>ManagePageContent.master</DependentUpon>
+    </Compile>
     <Compile Include="Views\ManagePanel\ManagePanel.Master.cs">
       <DependentUpon>ManagePanel.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -973,7 +980,7 @@
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Index.aspx" />
     <Content Include="Views\ManagePanel\jHtmltest.aspx" />
-    <Content Include="Views\ManagePanel\ManageRestaurant.aspx" />
+    <Content Include="Views\ManagePanel\MainPage.aspx" />
     <Content Include="Views\ManagePanel\Personnel.aspx" />
     <Content Include="Views\ManagePanel\Reports.aspx" />
     <Content Include="Views\ManagePanel\Restaurant.aspx" />
@@ -1024,6 +1031,7 @@
     <Content Include="Views\Admin\Admin.Master" />
     <Content Include="Views\ManagePanel\ManagePanel.Master" />
     <Content Include="Views\Admin\Index.master" />
+    <Content Include="Views\ManagePanel\ManagePageContent.master" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

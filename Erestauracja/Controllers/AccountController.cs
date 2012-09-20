@@ -328,8 +328,8 @@ namespace Erestauracja.Controllers
         public ActionResult Register(RegisterModel model)
         {
 
-            IEnumerable<MarkerData> data ;
-            data = DataContext.GetRegions();
+            //IEnumerable<MarkerData> data ;
+            //data = DataContext.GetRegions();
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
             sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });

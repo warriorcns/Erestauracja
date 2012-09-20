@@ -224,15 +224,16 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /ManagePanel/ManageRestaurant
-        public ActionResult ManageRestaurant(Erestauracja.ServiceReference.Restaurant model)
+        public ActionResult MainPage(Erestauracja.ServiceReference.Restaurant model)
         {
-            if (ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            //if (ModelState.IsValid)
+            //{
+            //    ViewData["html"] = "<h3><strong><big>q</big><strike>wert</strike><em><big>y</big></em></strong></h3>";
+            //    return View(model);
+            //}
+            TestModel nowy = new TestModel();
+            nowy.Html="<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
+            return View(nowy);
         }
 
         public ActionResult jHtmltest()
