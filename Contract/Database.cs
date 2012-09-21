@@ -1918,6 +1918,8 @@ namespace Contract
             string province = reader.GetString(3);
             string district = reader.GetString(4);
             string community = reader.GetString(5);
+            double latitude = reader.GetDouble(6);
+            double longtitude = reader.GetDouble(7);
 
             Town u = new Town();
             u.ID = id;
@@ -1926,6 +1928,8 @@ namespace Contract
             u.Province = province;
             u.District = district;
             u.Community = community;
+            u.Latitude = latitude;
+            u.Longtitude = longtitude;
 
             return u;
         }

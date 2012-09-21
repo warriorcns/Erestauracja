@@ -233,7 +233,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` REGEXP @townName OR `postal_code` = @postalCode.
+        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` REGEXP @townName OR `postal_code` = @postalCode.
         /// </summary>
         internal static string GetMoreMoreTowns {
             get {
@@ -242,7 +242,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode.
+        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode.
         /// </summary>
         internal static string GetMoreTowns {
             get {
@@ -296,7 +296,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode.
+        ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode.
         /// </summary>
         internal static string GetTowns {
             get {

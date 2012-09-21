@@ -24,7 +24,7 @@
         <asp:Panel ID="Panel1" class="PanelOpisRestauracji" runat="server" ScrollBars="Auto">
            <p style="position: relative; padding: 10px 10px 10px 10px; font-size: 15px;"> 
              <!--   <textarea id="test" cols="50" rows="15"></textarea> -->
-                <% Html.TextAreaFor(m => m.Html, new { id = "test" }); %>
+                <%: Html.TextAreaFor(m => m.Html, new { id = "test" }) %>
            </p> 
                 
         </asp:Panel>

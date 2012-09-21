@@ -567,8 +567,8 @@ namespace Contract
         private string province = null;
         private string district = null;
         private string community = null;
-        private decimal latitude = 0;
-        private decimal longtitude = 0;
+        private double latitude = 0;
+        private double longtitude = 0;
 
         [DataMember]
         public int ID
@@ -613,14 +613,14 @@ namespace Contract
         }
 
         [DataMember]
-        public decimal Latitude
+        public double Latitude
         {
             get { return latitude; }
             set { latitude = value; }
         }
 
         [DataMember]
-        public decimal Longtitude
+        public double Longtitude
         {
             get { return longtitude; }
             set { longtitude = value; }

@@ -176,10 +176,10 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetMoreMoreTowns" xml:space="preserve">
-    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` REGEXP @townName OR `postal_code` = @postalCode</value>
+    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` REGEXP @townName OR `postal_code` = @postalCode</value>
   </data>
   <data name="GetMoreTowns" xml:space="preserve">
-    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode</value>
+    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode</value>
   </data>
   <data name="GetNumberOfUsersOnline" xml:space="preserve">
     <value>SELECT Count(*) FROM `users` WHERE `lastActivityDate` &gt; @lastActivityDate OR `lastLoginDate` &gt; @lastActivityDate</value>
@@ -197,7 +197,7 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
     <value>SELECT `rolename` FROM `roles` WHERE `id` IN (SELECT `roleID` FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login` = @login))</value>
   </data>
   <data name="GetTowns" xml:space="preserve">
-    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode</value>
+    <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `logitude` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode</value>
   </data>
   <data name="GetUserByID" xml:space="preserve">
     <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
