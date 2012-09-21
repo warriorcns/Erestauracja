@@ -1906,7 +1906,8 @@ namespace Contract
             else
             {
                 status = "Błąd ";
-                return null;
+         //       return null;
+                return towns;
             }
         }
 
