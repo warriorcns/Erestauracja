@@ -233,6 +233,19 @@ namespace Erestauracja.Controllers
             //}
             TestModel nowy = new TestModel();
             nowy.Html="<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
+            nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
+            nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
+            return View(nowy);
+        }
+
+        //
+        // GET: /ManagePanel/EditMainPage
+        public ActionResult EditMainPage()
+        {
+            TestModel nowy = new TestModel();
+            nowy.Html = "<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
+            nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
+            nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
             return View(nowy);
         }
 

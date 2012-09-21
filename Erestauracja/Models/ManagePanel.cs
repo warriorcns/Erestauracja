@@ -132,5 +132,11 @@ namespace Erestauracja.Models
     {
         [DataType(DataType.Html)]
         public string Html { get; set; }
+
+        [DataType(DataType.Html)]
+        public string Foto { get; set; }
+
+        [DataType(DataType.Html)]
+        public string Promocje { get; set; }
     }
 }
