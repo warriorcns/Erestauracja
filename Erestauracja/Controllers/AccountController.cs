@@ -12,6 +12,8 @@ using Erestauracja.Authorization;
 using Erestauracja.ServiceReference;
 using System.Net;
 using System.Globalization;
+using Jmelosegui.Mvc.Controls;
+
 
 namespace Erestauracja.Controllers
 {
@@ -289,17 +291,25 @@ namespace Erestauracja.Controllers
             //                                  new {ID="Mężczyzna", Name="Mężczyzna"},
             //                                  new {ID="Kobieta", Name="Kobieta"},
             //                              },"ID", "Name", 1);
-            
 
+            string status = String.Empty;
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});
             sex.Add(new SelectListItem {Text = "Kobieta", Value = "Kobieta"});
             ViewData["sex"] = sex;
-
+            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
             try
             {
-                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-
+                
+           
+                MapModel map = new MapModel();
+                foreach (Town t in data)
+                {
+                    map.latitude = (double)t.Latitude;
+                    map.longitude = (double)t.Longtitude;
+                }
+                ViewData["markers"] = map;
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();
 
@@ -309,13 +319,26 @@ namespace Erestauracja.Controllers
                     countryList.Add(new SelectListItem { Text = item, Value = item });
                 }
                 ViewData["countryList"] = countryList;
+                
                 country.Close();
             }
             catch (Exception e)
             {
                 ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
             }
-            ViewData["miasta"] = new List<Town>(); 
+            ViewData["miasta"] = new List<Town>();
+
+
+            //DataContext.GetRegions();
+            //ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            
+            //testowo wpisane statyczne dane
+
+            //country.GetTowns(out status, "Tczew", "83-110");
+
+            
+                 
+            
             return View();
         }
 
@@ -405,7 +428,16 @@ namespace Erestauracja.Controllers
                     //return RedirectToAction("", "Account",model);
 
                     //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
-                    return View(model);
+                    ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                    IEnumerable<ServiceReference.Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+                    MapModel map = new MapModel();
+                    foreach (ServiceReference.Town t in data)
+                    {
+                        map.latitude = (double)t.Latitude;
+                        map.longitude = (double)t.Longtitude;
+                    }
+                    ViewData["markers"] = map;
+                    return View(data);
                 }
                 else
                 {

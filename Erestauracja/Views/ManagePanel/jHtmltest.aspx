@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.TestModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     
@@ -23,6 +23,7 @@
     </script>
     
     <textarea id="test" cols="50" rows="15"></textarea>
+    <%: Html.TextAreaFor(m => m.Html, new { id = "test" })%>
 
 
 </asp:Content>

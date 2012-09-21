@@ -17,6 +17,11 @@
             $("#Birthdate").mask("9999/99/99");
         });
     </script>
+    <script type="text/javascript">
+        $(function () {
+            //window.location.href = window.location.href.split('?', 1)[0];
+        });
+    </script>
     
 
 <% using (Html.BeginForm()) { %>

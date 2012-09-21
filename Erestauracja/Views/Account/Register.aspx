@@ -1,4 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterModel>" %>
+<%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
+<%@ Import Namespace="Telerik.Web.Mvc.UI" %>
+<%@ Import Namespace="Erestauracja.Models" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Rejestracja
@@ -220,62 +224,64 @@
                 </p>
             </fieldset>
         </div>
-        <% } %>
+        <% }%>
         
         </form>
        
            
         <div class="mapTowns" id="mapka">
-            <%:
-        Html.Telerik().GoogleMap()
-            .Name("map")
-            .Width(400)
-            .Height(400)
-                .Latitude(54.093429).Longitude(18.777669).Markers(m => m.Add().Title("Hello World!"))
-            %>
-            
-            <%--<% Html.Telerik().GoogleMap()
+        
+            <%--<%:
+            Html.Telerik().GoogleMap().Name("map")
+            .Width(400).Height(400)  %>--%>
+                 
+            <%--<%: Html
+                .Telerik()
+                .GoogleMap()
                 .Name("map")
                 .Width(880)
-                .Height(600)      
-                .Latitude(40)
-                .Longitude(-3)
-                .BindTo<RegionInfo, Marker>
-                (Model, mappings => mappings.For<RegionInfo>
+                .Height(600)
+                .Latitude(50)
+                .Longitude(18)
+                                .BindTo<Erestauracja.Models.MapModel, Jmelosegui.Mvc.Controls.Overlays.Marker>(
+                    (System.Collections.Generic.IEnumerable<Erestauracja.Models.MapModel>) Model, mappings => mappings.For<Erestauracja.Models.MapModel>(
+                        binding => binding.ItemDataBound(
+                            (marker, obj) => {
+                                marker.Latitude = obj.latitude;
+                                marker.Longitude = obj.longitude;
+                                marker.Title = obj.Title;
+                                marker.zIndex = obj.zIndex;
+                                marker.Window = new Jmelosegui.Mvc.Controls.Overlays.InfoWindow(marker){ Template = { Content = () => Writer.Write(obj.InfoWindowContent) } };
+                            }
+                        )
+                    )
+                ) %>--%>
+
+        <% 
+            Jmelosegui.Mvc.Controls.GoogleMap map = Html.Telerik().GoogleMap()
+                .Name("map").Latitude(40).Longitude(-3).BindTo<Erestauracja.ServiceReference.Town, Jmelosegui.Mvc.Controls.Overlays.Marker>
+                ((System.Collections.Generic.IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["markers"], mappings => mappings.For<Erestauracja.ServiceReference.Town>
                         (
                             binding => binding.ItemDataBound
                             (
                                 (marker, obj) =>
                                 {
-                                    marker.Latitude = obj.Latitude;
-                                    marker.Longitude = obj.Longitude;
-                                    marker.Title = obj.Title;
-                                    marker.zIndex = obj.zIndex;
-                                    marker.Icon = new MarkerImage("/map/Images/Banderitas/{0}".FormatWith(obj.ImagePath)
-                                                                    , new Size(18, 12)
-                                                                    , new Point(0, 0)
-                                                                    , new Point(0, 12));
-                                    marker.Window = new InfoWindow(marker)
-                                                    {
-                                                        Template =
-                                                        {
-                                                            Content = () => Writer.Write(obj.InfoWindowContent)
-                                                        }
-                                                    };
+                                    //marker = new Jmelosegui.Mvc.Controls.Overlays.Marker();
+                                    //obj = new Erestauracja.ServiceReference.Town();
+                                    marker.Latitude = (double)obj.Latitude;
+                                    marker.Longitude = (double)obj.Longtitude;
                                 }
                             )
                         )
-                ).Render();%>--%>
-            
-
+                );%>
 
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
 
         </div>
-
+        
          <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-         <% foreach (Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
+         <% foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             {
                 if (((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"]).Count() > 1)
                 {%>
@@ -288,6 +294,7 @@
                     </script>
                 <%}%> 
                 
-         <% }%>
+         <% } %>
     </div>
+
 </asp:Content>
