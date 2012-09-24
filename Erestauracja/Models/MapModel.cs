@@ -15,6 +15,15 @@ namespace Erestauracja.Models
         public int zIndex { get; set; }
         public string InfoWindowContent { get; set; }
     }
+    public class TownModel
+    {
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public string Title { get; set; }
+        public int zIndex { get; set; }
+        public string InfoWindowContent { get; set; }
+    }
+
 
 
 }

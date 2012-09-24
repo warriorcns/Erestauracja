@@ -39,7 +39,21 @@ namespace Erestauracja.Controllers
             string status = string.Empty;
             ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
-            return View(data);
+            IEnumerable<Erestauracja.Controllers.RegionInfo> ttt;
+            ViewData["markers"] =  ttt;
+            return View();
         }
     }
+
+    public class RegionInfo
+    {
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public string Title { get; set; }
+        public int zIndex { get; set; }
+        public string ImagePath { get; set; }
+        public string InfoWindowContent { get; set; }
+    }
+
+
 }
