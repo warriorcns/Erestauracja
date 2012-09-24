@@ -569,6 +569,14 @@ namespace Contract
         private string community = null;
         private double latitude = 0;
         private double longtitude = 0;
+        private string infoWindowContent = "";
+
+        [DataMember]
+        public string InfoWindowContent
+        {
+            get { return infoWindowContent; }
+            set { infoWindowContent = value; }
+        }
 
         [DataMember]
         public int ID

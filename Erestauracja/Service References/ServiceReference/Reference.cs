@@ -397,10 +397,13 @@ namespace Erestauracja.ServiceReference {
         private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal LatitudeField;
+        private string InfoWindowContentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal LongtitudeField;
+        private double LatitudeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LongtitudeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PostalCodeField;
@@ -461,7 +464,20 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Latitude {
+        public string InfoWindowContent {
+            get {
+                return this.InfoWindowContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InfoWindowContentField, value) != true)) {
+                    this.InfoWindowContentField = value;
+                    this.RaisePropertyChanged("InfoWindowContent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Latitude {
             get {
                 return this.LatitudeField;
             }
@@ -474,7 +490,7 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Longtitude {
+        public double Longtitude {
             get {
                 return this.LongtitudeField;
             }

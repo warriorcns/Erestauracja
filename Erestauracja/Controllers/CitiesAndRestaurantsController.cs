@@ -36,12 +36,16 @@ namespace Erestauracja.Controllers
 
         public ActionResult Przykladmapy()
         {
-            string status = string.Empty;
+            string status = String.Empty;
             ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
-            IEnumerable<Erestauracja.Controllers.RegionInfo> ttt;
-            ViewData["markers"] =  ttt;
-            return View();
+            foreach (Town item in data)
+            {
+                item.InfoWindowContent = @"<h2>País Vasco</h2>";
+            }
+          //  IEnumerable<Erestauracja.Controllers.RegionInfo> ttt;
+           // ViewData["markers"] =  ttt;
+            return View(data);
         }
     }
 
