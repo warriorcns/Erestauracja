@@ -301,18 +301,19 @@ namespace Erestauracja.Controllers
             ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             try
             {
-                
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();
-
 
                 foreach (string item in listapobrana)
                 {
                     countryList.Add(new SelectListItem { Text = item, Value = item });
                 }
                 ViewData["countryList"] = countryList;
+
+                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                country.Close();
+                ViewData["Map"] = data;
                 
-                //country.Close();
             }
             catch (Exception e)
             {
@@ -320,27 +321,7 @@ namespace Erestauracja.Controllers
             }
             ViewData["miasta"] = new List<Town>();
 
-
-            //DataContext.GetRegions();
-            //ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-            
-            //testowo wpisane statyczne dane
-
-            //country.GetTowns(out status, "Tczew", "83-110");
-            //string status = String.Empty;
-           // ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-            IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
-            MapModel m = new MapModel();
-            foreach (Town item in data)
-            {
-                //item.InfoWindowContent = @"<h2>País Vasco</h2>";
-                m.Latitude = item.Latitude;
-                m.Longitude = item.Longtitude;
-                m.ID = item.ID;
-
-            }
-            country.Close();
-            return View(m);
+            return View();
         }
 
 
@@ -352,8 +333,6 @@ namespace Erestauracja.Controllers
         public ActionResult Register(RegisterModel model)
         {
 
-            //IEnumerable<MarkerData> data ;
-            //data = DataContext.GetRegions();
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
             sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
@@ -431,12 +410,9 @@ namespace Erestauracja.Controllers
                     //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
                     //string status = String.Empty;
                     ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-                    IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
-                    foreach (Town item in data)
-                    {
-                        item.InfoWindowContent = @"<h2>País Vasco</h2>";
-                    }
-                    return View(data);
+                    IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+                    ViewData["Map"] = data;
+                    return View();
                 }
                 else
                 {

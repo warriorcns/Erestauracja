@@ -1,22 +1,23 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<Erestauracja.Models.MapModel>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<Erestauracja.ServiceReference.Town>>" %>
+<%@ Import Namespace="Erestauracja.ServiceReference" %>
+<%@ Import Namespace="Erestauracja.Models" %>
+<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 
-    <%  Html.Telerik().GoogleMap().Width(500).Height(400)
-                .Name("mapTowns").Latitude(50).Longitude(18).BindTo<Erestauracja.Models.MapModel, Jmelosegui.Mvc.Controls.Overlays.Marker>
+<div class="mapTowns">
+    <%  Html.Telerik().GoogleMap().Name("map")
+            .Width(400).Height(400)
+                .Latitude(52.281602).Longitude(19.15686).BindTo<Erestauracja.ServiceReference.Town, Jmelosegui.Mvc.Controls.Overlays.Marker>
                 //( (System.Collections.Generic.IEnumerable<Erestauracja.Controllers.RegionInfo>)ViewData["markers"], mappings => mappings.For<Erestauracja.Controllers.RegionInfo>
-                  (Model, m => m.For<Erestauracja.Models.MapModel>
+                  (Model, m => m.For<Erestauracja.ServiceReference.Town>
                 (
                             binding => binding.ItemDataBound
                             (
                                 (marker, obj) =>
                                 {
                                     marker.Latitude = (double)obj.Latitude;
-                                    marker.Longitude = (double)obj.Longitude;
+                                    marker.Longitude = (double)obj.Longtitude;
                                     marker.Title = obj.TownName;
-                                    marker.zIndex = obj.ID;
-                                    //marker.Icon = new Jmelosegui.Mvc.Controls.Overlays.MarkerImage("/map/Images/Banderitas/{0}"
-                                    //                                , new Size(18, 12)
-                                    //                                , new Point(0, 0)
-                                    //                                , new Point(0, 12));
+                                    //marker.zIndex = obj.ID;
                                     marker.Window = new Jmelosegui.Mvc.Controls.Overlays.InfoWindow(marker)
                                     {
                                         Template =
@@ -29,6 +30,6 @@
                         )
                 ).Render();%>
 
-            <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
-            <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+            
 
+</div>
