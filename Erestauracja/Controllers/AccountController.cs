@@ -297,19 +297,11 @@ namespace Erestauracja.Controllers
             sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});
             sex.Add(new SelectListItem {Text = "Kobieta", Value = "Kobieta"});
             ViewData["sex"] = sex;
+
             ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-            IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
             try
             {
                 
-           
-                MapModel map = new MapModel();
-                foreach (Town t in data)
-                {
-                    map.latitude = (double)t.Latitude;
-                    map.longitude = (double)t.Longtitude;
-                }
-                ViewData["markers"] = map;
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();
 
@@ -320,7 +312,7 @@ namespace Erestauracja.Controllers
                 }
                 ViewData["countryList"] = countryList;
                 
-                country.Close();
+                //country.Close();
             }
             catch (Exception e)
             {
@@ -335,11 +327,20 @@ namespace Erestauracja.Controllers
             //testowo wpisane statyczne dane
 
             //country.GetTowns(out status, "Tczew", "83-110");
+            //string status = String.Empty;
+           // ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+            MapModel m = new MapModel();
+            foreach (Town item in data)
+            {
+                //item.InfoWindowContent = @"<h2>País Vasco</h2>";
+                m.Latitude = item.Latitude;
+                m.Longitude = item.Longtitude;
+                m.ID = item.ID;
 
-            
-                 
-            
-            return View();
+            }
+            country.Close();
+            return View(m);
         }
 
 
@@ -428,15 +429,13 @@ namespace Erestauracja.Controllers
                     //return RedirectToAction("", "Account",model);
 
                     //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
+                    //string status = String.Empty;
                     ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-                    IEnumerable<ServiceReference.Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
-                    MapModel map = new MapModel();
-                    foreach (ServiceReference.Town t in data)
+                    IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                    foreach (Town item in data)
                     {
-                        map.latitude = (double)t.Latitude;
-                        map.longitude = (double)t.Longtitude;
+                        item.InfoWindowContent = @"<h2>País Vasco</h2>";
                     }
-                    ViewData["markers"] = map;
                     return View(data);
                 }
                 else

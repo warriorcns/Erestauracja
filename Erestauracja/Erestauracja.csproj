@@ -995,6 +995,7 @@
     <Content Include="Views\Restaurant\Parties.aspx" />
     <Content Include="Views\Restaurant\Test.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
+    <Content Include="Views\Shared\Map.ascx" />
     <Content Include="Views\Shared\Unauthorized.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

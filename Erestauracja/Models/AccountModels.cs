@@ -131,6 +131,7 @@ namespace Erestauracja.Models
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
 
+        
     }
 
     public class UserDataModel
