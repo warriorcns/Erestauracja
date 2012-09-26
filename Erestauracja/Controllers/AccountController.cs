@@ -411,6 +411,11 @@ namespace Erestauracja.Controllers
                     //string status = String.Empty;
                     ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
                     IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+                    string but = "<a href="+"#"+" onclick="+"ChoseAndSend()"+" class="+"button"+" >"+"Wybierz."+"</a>";
+                    foreach (Town item in data)
+                    {
+                        item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + but;
+                    }
                     ViewData["Map"] = data;
                     return View();
                 }

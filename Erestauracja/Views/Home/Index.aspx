@@ -35,7 +35,7 @@
             <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
             <%=Html.DropDownList("Restauracje", ViewData["Restauracje"] as SelectList, new { @class = "DropDownListWybierzRestauracje" })%>
             <asp:Button ID="ButtonWybierzRestauracje" class="ButtonWybierzRestauracje" runat="server"
-                Text="Szczegółowe wyszukiwanie" Font-Size="Small" />
+                Text="Szczegółowe wyszukiwanie" Font-Size="Small"/>
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto"
             Wrap="true">

@@ -3,7 +3,7 @@
 <%@ Import Namespace="Erestauracja.Models" %>
 <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 
-<div class="mapTowns">
+<div>
     <%  Html.Telerik().GoogleMap().Name("map")
             .Width(400).Height(400)
                 .Latitude(52.281602).Longitude(19.15686).BindTo<Erestauracja.ServiceReference.Town, Jmelosegui.Mvc.Controls.Overlays.Marker>
