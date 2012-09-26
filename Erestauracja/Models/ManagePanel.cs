@@ -130,12 +130,15 @@ namespace Erestauracja.Models
 
     public class TestModel
     {
+        [AllowHtml]
         [DataType(DataType.Html)]
         public string Html { get; set; }
 
+        [AllowHtml]
         [DataType(DataType.Html)]
         public string Foto { get; set; }
 
+        [AllowHtml]
         [DataType(DataType.Html)]
         public string Promocje { get; set; }
     }

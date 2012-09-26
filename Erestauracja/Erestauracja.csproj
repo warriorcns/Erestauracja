@@ -981,7 +981,6 @@
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Index.aspx" />
-    <Content Include="Views\ManagePanel\jHtmltest.aspx" />
     <Content Include="Views\ManagePanel\MainPage.aspx" />
     <Content Include="Views\ManagePanel\Personnel.aspx" />
     <Content Include="Views\ManagePanel\Reports.aspx" />

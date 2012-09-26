@@ -245,16 +245,66 @@ namespace Erestauracja.Controllers
             TestModel nowy = new TestModel();
             nowy.Html = "<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
             nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
-            nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
+            nowy.Promocje = "<script>alert('Oops!')</script><h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
             return View(nowy);
         }
 
-        public ActionResult jHtmltest()
+        //
+        // POST: /ManagePanel/EditMainPage
+        [HttpPost]
+        public ActionResult EditMainPage(TestModel model)
         {
+            if (ModelState.IsValid)
+            {
+                //walidacja htmla
+                HtmlValidator hv = new HtmlValidator();
+                if (hv.isValid(model))
+                {
+                }
+               // model.
+                //edycja zmian
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        //zapisz
+                       // value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
 
-            return View();
-        }
-        
-        
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("Restaurant", "ManagePanel");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+            //TestModel nowy = new TestModel();
+            //nowy.Html = "<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
+            //nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
+            //nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
+            //return View(nowy);
+        }   
     }
+
+    public class HtmlValidator
+    {
+        public bool isValid(TestModel model)
+        {
+            return false;
+        }
+    }
+
 }
