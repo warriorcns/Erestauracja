@@ -265,8 +265,8 @@
             var TownName = document.getElementById("TownName");
             var PostalCode = document.getElementById("PostalCode");
             //tutaj potrzebujemy wklepac te wartosci do textboxow...
-            TownName.value = ;
-            PostalCode.value = ;
+            //TownName.value = ;
+            //PostalCode.value = ;
 
         }
     </script>
