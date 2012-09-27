@@ -966,7 +966,6 @@
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
-    <Content Include="Views\Admin\ManageRoles.aspx" />
     <Content Include="Views\Admin\ManageUsers.aspx" />
     <Content Include="Views\Admin\phpmyadmin.aspx" />
     <Content Include="Views\Basket\Index.aspx" />

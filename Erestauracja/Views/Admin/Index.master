@@ -20,9 +20,7 @@
                 <asp:Label ID="Label1" class="RolesLabel" runat="server" Text="Roles"></asp:Label>
             </div>
             <ul class="RolesMenu">
-                <li>
-                    <%: Html.ActionLink("Enable/Disable Roles", "ManageRoles", "Admin")%></li>
-                <li>
+               <li>
                     <%: Html.ActionLink("Create or Manage Roles", "CreateRoles", "Admin")%></li>
             </ul>
         </asp:Panel>

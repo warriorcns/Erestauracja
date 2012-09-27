@@ -286,12 +286,7 @@ namespace Erestauracja.Controllers
         // GET: /Account/Register
         public ActionResult Register()
         {
-            //var sex = new SelectList(new[]
-            //                              {
-            //                                  new {ID="Mężczyzna", Name="Mężczyzna"},
-            //                                  new {ID="Kobieta", Name="Kobieta"},
-            //                              },"ID", "Name", 1);
-
+            
             string status = String.Empty;
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});

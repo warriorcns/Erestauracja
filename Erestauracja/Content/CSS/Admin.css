@@ -178,7 +178,6 @@ nav,
     left: 10px;
     top: 20px;
     float: left;
-    height: 500px;
     
     margin-bottom: -20000px;
     padding-bottom: 20000px;
@@ -201,4 +200,85 @@ nav,
    border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
+}
+
+/* Create user*/
+
+.rej
+{
+    display: block;
+    
+    width: 750px;
+    position: relative;
+    margin: 7px 0 7px 0;
+    
+}
+
+/* glowny div*/
+.polaRejestracji
+{
+    z-index: 0;
+    width: 100%;
+    clear: both;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 0px 20px 20px 0;
+}
+
+.formaRejestracji
+{
+    width: 60%;
+    margin: 0 0 -20000px 5px;
+    padding-bottom: 20000px;
+    height: 100%;
+    float: left;    
+}
+.display-labelR {
+    /*margin: 1em 120px 0 0;*/
+    position: relative;
+    display: inline;
+    left: 0px;
+}
+.editor-labelR {
+    /*margin: 1em 120px 0 0;*/
+    position: absolute;
+    display: inline;
+    right: 350px;
+}
+.validation-labelR
+{
+   position: absolute;
+   display: inline;
+   right: 0px;  
+   top: 2px;   
+}
+
+
+.display-label, 
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.display-field, 
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+.text-box {
+    width: 30em;
+}
+
+.text-box.multi-line {
+    height: 6.5em;
+}
+
+.tri-state {
+    width: 6em;
+}
+
+input[type="text"], 
+input[type="datetime"],
+input[type="password"] {
+    width: 200px;
 }

@@ -259,6 +259,7 @@
                 
          <% //} %>
     </div>
+
     <script type="text/javascript">
         function ChoseAndSend() {
             //wstawia pola ze znacznika do textboxow
