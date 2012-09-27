@@ -36,9 +36,9 @@
                 </li>
                 <%foreach (string id in (IEnumerable<string>)ViewData["Roles"])
                   { %>
-                <li>
-                    <%: Html.Label(id)%>
-                    <%: Html.ActionLink("usuń rolę", "deleteRole", "Admin", new { role = id }, null)%>
+                <li class="mainRole">
+                    <div class="roleName"><%: Html.Label(id)%></div>
+                    <div class="deleteAction"><%: Html.ActionLink("usuń rolę", "deleteRole", "Admin", new { role = id }, null)%></div>
                     </li>
                 <% }%>
             </ul>

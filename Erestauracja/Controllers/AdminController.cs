@@ -264,10 +264,10 @@ namespace Erestauracja.Controllers
                 return "Odpowiedz do pytania pozwalającego odzyskać hasło jest nieprawidłowa. Wprowadź prawidłową odpowiedź.";
 
                 case MembershipCreateStatus.InvalidQuestion:
-                return "The password retrieval question provided is invalid. Please check the value and try again.";
+                return "Pytanie odzyskiwania hasła jest nieprawidłowe. Wprowadź poprawne pytanie.";
 
                 case MembershipCreateStatus.InvalidUserName:
-                return "The user name provided is invalid. Please check the value and try again.";
+                return "Login jest nieprawidłowy. Wprowadź prawidłowy login.";
 
                 case MembershipCreateStatus.ProviderError:
                 return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";

@@ -201,6 +201,39 @@ nav,
     -moz-border-radius: 4px 4px 4px 4px;
 }
 
+/* Glowny */
+.mainRole
+{
+    width: 100%;
+    clear: both;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*pierwszy*/
+.roleName
+{
+    position: relative;
+     
+    width: 40%;
+    margin: 0 0 -20000px 5px;
+    padding-bottom: 20000px;
+    height: 100%;
+    float: left;
+}
+
+/* drugi*/
+.deleteAction{
+    width: 20%;
+    position: relative;
+    float: right;
+    border-left: 1px black solid;
+    padding: 0 0 0 10px;
+    margin-bottom: -20000px;
+    padding-bottom: 20000px;
+}
+
+
 /* Create user*/
 
 .rej
@@ -288,3 +321,5 @@ input[type="password"] {
     position: relative;
     padding: 0 0 20px 0;
 }
+
+
