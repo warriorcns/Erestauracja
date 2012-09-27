@@ -222,6 +222,25 @@ namespace Erestauracja.Controllers
             }
             return View();
         }
+
+        public ActionResult deleteRole(string role) 
+        {
+            //usuwanie wybranej roli
+
+            //string test = role;
+            CustomRoleProvider r = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+            try
+            {
+                r.DeleteRole(role, true);
+            }
+            catch(Exception e)
+            {
+            
+            }
+            return RedirectToAction("CreateRoles");
+        }
+
+
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {

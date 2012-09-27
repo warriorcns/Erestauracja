@@ -5,8 +5,8 @@
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
-    <div>
-        <fieldset class="fields">
+    <div class="divfields">
+        <fieldset>
             
             <ul class="roles">
                 <li>
@@ -25,17 +25,24 @@
         </fieldset>
     </div>
     <%} %>
-    <fieldset class="fields">
-        <ul class="roles">
-            <li>
-                <p class="rolesHeader">
-                    Nazwa roli</p>
-            </li>
-            <%foreach (string item in (IEnumerable<string>)ViewData["Roles"])
-              { %>
-            <li>
-                <%: Html.Label(item) %></li>
-            <% }%>
-        </ul>
-    </fieldset>
+    <div class="divfields">
+    <% using (Html.BeginForm())
+       { %>
+        <fieldset>
+            <ul class="roles">
+                <li>
+                    <p class="rolesHeader">
+                        Nazwa roli</p>
+                </li>
+                <%foreach (string id in (IEnumerable<string>)ViewData["Roles"])
+                  { %>
+                <li>
+                    <%: Html.Label(id)%>
+                    <%: Html.ActionLink("usuń rolę", "deleteRole", "Admin", new { role = id }, null)%>
+                    </li>
+                <% }%>
+            </ul>
+        </fieldset>
+        <% } %>
+    </div>
 </asp:Content>
