@@ -179,7 +179,26 @@ nav,
     top: 20px;
     float: left;
     height: 500px;
-    background: #E6E6E6;
+    
     margin-bottom: -20000px;
     padding-bottom: 20000px;
+}
+
+/* Create roles  */
+
+.roles
+{
+    list-style: none;
+
+}
+.rolesHeader
+{
+    background-color: #4775FF;
+   color: Black;
+   position: relative;
+   padding: 10px 10px 10px 10px;
+   width: 300px;
+   border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
 }

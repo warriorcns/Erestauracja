@@ -187,4 +187,15 @@ namespace Erestauracja.Models
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
     }
+
+    public class UserRoleModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "RoleName")]
+        public string RoleName { get; set; }
+
+
+    }
+
 }
