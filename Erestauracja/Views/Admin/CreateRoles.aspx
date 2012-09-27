@@ -6,7 +6,7 @@
        { %>
     <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
     <div>
-        <fieldset>
+        <fieldset class="fields">
             
             <ul class="roles">
                 <li>
@@ -25,4 +25,17 @@
         </fieldset>
     </div>
     <%} %>
+    <fieldset class="fields">
+        <ul class="roles">
+            <li>
+                <p class="rolesHeader">
+                    Nazwa roli</p>
+            </li>
+            <%foreach (string item in (IEnumerable<string>)ViewData["Roles"])
+              { %>
+            <li>
+                <%: Html.Label(item) %></li>
+            <% }%>
+        </ul>
+    </fieldset>
 </asp:Content>

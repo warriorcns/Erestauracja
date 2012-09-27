@@ -196,6 +196,10 @@ namespace Erestauracja.Models
         public string RoleName { get; set; }
 
 
+        [Display(Name = "Roles")]
+        public List<string> Roles { get; set; }
+
+
     }
 
 }

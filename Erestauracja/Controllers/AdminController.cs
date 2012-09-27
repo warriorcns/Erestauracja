@@ -169,14 +169,28 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
+        // GET: /Admin/ManageUsers
         public ActionResult ManageUsers()
         {
             return View();
         }
 
+        // POST: /Admin/ManageUsers
+        //[HttpPost]
+        //public ActionResult ManageUsers()
+        //{
+        //    return View();
+        //}
+
         // GET: /Admin/CreateRoles
         public ActionResult CreateRoles()
         {
+            CustomRoleProvider r = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+
+
+            string[] roles = r.GetAllRoles();
+
+            ViewData["Roles"] = roles;
             return View();
         }
 
@@ -184,6 +198,14 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult CreateRoles(UserRoleModel model)
         {
+
+            CustomRoleProvider r = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+
+
+            string[] roles = r.GetAllRoles();
+            
+            ViewData["Roles"] = roles;
+
             if (ModelState.IsValid)
             {
                 //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
