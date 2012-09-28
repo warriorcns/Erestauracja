@@ -965,7 +965,6 @@
     <Content Include="Views\Account\RegisterManager.aspx" />
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
-    <Content Include="Views\Admin\deletetest.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Admin\ManageUsers.aspx" />
     <Content Include="Views\Admin\phpmyadmin.aspx" />

@@ -172,15 +172,19 @@ namespace Erestauracja.Controllers
         // GET: /Admin/ManageUsers
         public ActionResult ManageUsers()
         {
+            int count = 0;
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+            MembershipUserCollection users = customMemebership.GetAllUsers(0, 20, out count);
+            ViewData["users"] = users;
             return View();
         }
 
-        // POST: /Admin/ManageUsers
-        //[HttpPost]
-        //public ActionResult ManageUsers()
-        //{
-        //    return View();
-        //}
+        public ActionResult deleteUser(string user)
+        {
+            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+            customMemebership.DeleteUser(user, true);
+            return RedirectToAction("ManageUsers");
+        }
 
         // GET: /Admin/CreateRoles
         public ActionResult CreateRoles()
