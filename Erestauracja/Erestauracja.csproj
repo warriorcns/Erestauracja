@@ -957,12 +957,15 @@
     </None>
     <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
+    <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
     <Content Include="Views\Account\ExistingManager.aspx" />
+    <Content Include="Views\Account\OrderHistory.aspx" />
     <Content Include="Views\Account\PasswordReset.aspx" />
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
     <Content Include="Views\Account\RegisterManager.aspx" />
+    <Content Include="Views\Account\Settings.aspx" />
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
     <Content Include="Views\Admin\Index.aspx" />

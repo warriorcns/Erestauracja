@@ -261,13 +261,18 @@
     </div>
 
     <script type="text/javascript">
-        function ChoseAndSend() {
+        function ChoseAndSend(town, postalcode) {
             //wstawia pola ze znacznika do textboxow
             var TownName = document.getElementById("TownName");
             var PostalCode = document.getElementById("PostalCode");
             //tutaj potrzebujemy wklepac te wartosci do textboxow...
-            //TownName.value = ;
-            //PostalCode.value = ;
+            TownName.value = town;
+            PostalCode.value = postalcode;
+            
+            //var infowindow = null;
+            //infowindow = new google.maps.InfoWindow({ content: "holding..." });
+            //TownName.value = infowindow.valueOf(model.TownName);
+
 
         }
     </script>

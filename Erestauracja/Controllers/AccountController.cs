@@ -406,10 +406,13 @@ namespace Erestauracja.Controllers
                     //string status = String.Empty;
                     ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
                     IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
-                    string but = "<a href="+"#"+" onclick="+"ChoseAndSend()"+" class="+"button"+" >"+"Wybierz."+"</a>";
+                    
                     foreach (Town item in data)
                     {
-                        item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + but;
+                        string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+
+                        item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>"+
+                            "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                     }
                     ViewData["Map"] = data;
                     return View();
