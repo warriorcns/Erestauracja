@@ -151,6 +151,24 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `rest_page_content` SET `delivery`=@delivery WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string EditDeliveryPage {
+            get {
+                return ResourceManager.GetString("EditDeliveryPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `rest_page_content` SET `description`=@description,`foto`=@foto,`specialOffers`=@specialOffers WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string EditMainPage {
+            get {
+                return ResourceManager.GetString("EditMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`email`=@email,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id AND `isLockedOut`=@isLockedOut.
         /// </summary>
         internal static string EditRestaurant {
@@ -215,6 +233,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `delivery` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string GetDeliveryPage {
+            get {
+                return ResourceManager.GetString("GetDeliveryPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `email` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetEmailByLogin {
@@ -229,6 +256,15 @@ namespace Contract {
         internal static string GetFailureCount {
             get {
                 return ResourceManager.GetString("GetFailureCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `description`, `foto`, `specialOffers` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string GetMainPage {
+            get {
+                return ResourceManager.GetString("GetMainPage", resourceCulture);
             }
         }
         
@@ -274,6 +310,15 @@ namespace Contract {
         internal static string GetPasswordAnswer {
             get {
                 return ResourceManager.GetString("GetPasswordAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`deliveryTime` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id.
+        /// </summary>
+        internal static string GetRestaurant {
+            get {
+                return ResourceManager.GetString("GetRestaurant", resourceCulture);
             }
         }
         

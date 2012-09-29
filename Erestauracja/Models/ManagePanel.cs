@@ -128,11 +128,14 @@ namespace Erestauracja.Models
         public string DeliveryTime { get; set; }
     }
 
-    public class TestModel
+    public class MainPageModel
     {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
         [AllowHtml]
         [DataType(DataType.Html)]
-        public string Html { get; set; }
+        public string Description { get; set; }
 
         [AllowHtml]
         [DataType(DataType.Html)]
@@ -140,6 +143,16 @@ namespace Erestauracja.Models
 
         [AllowHtml]
         [DataType(DataType.Html)]
-        public string Promocje { get; set; }
+        public string SpecialOffers { get; set; }
+    }
+
+    public class DeliveryPageModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [AllowHtml]
+        [DataType(DataType.Html)]
+        public string Delivery { get; set; }
     }
 }

@@ -449,6 +449,77 @@ namespace Contract
                 return null;
             }
         }
+
+        public RestaurantInfo GetRestaurant(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id==null || id<0))
+            {
+                Database db = new Database();
+                RestaurantInfo value = db.GetRestaurant(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public MainPageContent GetMainPage(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id == null || id < 0))
+            {
+                Database db = new Database();
+                MainPageContent value = db.GetMainPage(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool EditMainPage(string description, string foto, string specialOffers, int id, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || description==null || foto==null || specialOffers==null || id == null || id < 0))
+            {
+                Database db = new Database();
+                bool value = db.EditMainPage(description, foto, specialOffers, id, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public DeliveryPageContent GetDeliveryPage(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id == null || id < 0))
+            {
+                Database db = new Database();
+                DeliveryPageContent value = db.GetDeliveryPage(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool EditDeliveryPage(string delivery, int id, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || delivery == null || id == null || id < 0))
+            {
+                Database db = new Database();
+                bool value = db.EditDeliveryPage(delivery, id, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region ogólne

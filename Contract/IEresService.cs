@@ -111,6 +111,21 @@ namespace Contract
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
 
+        [OperationContract]
+        RestaurantInfo GetRestaurant(string managerLogin, int id);
+
+        [OperationContract]
+        MainPageContent GetMainPage(string managerLogin, int id);
+
+        [OperationContract]
+        bool EditMainPage(string description, string foto, string specialOffers, int id, string managerLogin);
+
+        [OperationContract]
+        DeliveryPageContent GetDeliveryPage(string managerLogin, int id);
+
+        [OperationContract]
+        bool EditDeliveryPage(string delivery, int id, string managerLogin);
+
         #endregion
 
         #region ogólne
@@ -555,6 +570,141 @@ namespace Contract
         {
             get { return lastLockedOutDate; }
             set { lastLockedOutDate = value; }
+        }
+    }
+
+    [DataContract]
+    public class RestaurantInfo
+    {
+        private int id = -1;
+        private string name = null;
+        private string displayName = null;
+        private string address = null;
+        private string townID = null;
+        private string country = null;
+        private string telephone = null;
+        private string email = null;
+        private string nip = null;
+        private string regon = null;
+        private string deliveryTime = null;
+
+        [DataMember]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string TownID
+        {
+            get { return townID; }
+            set { townID = value; }
+        }
+
+        [DataMember]
+        public string Country
+        {
+            get { return country; }
+            set { country = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        [DataMember]
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+        }
+
+        [DataMember]
+        public string Nip
+        {
+            get { return nip; }
+            set { nip = value; }
+        }
+
+        [DataMember]
+        public string Regon
+        {
+            get { return regon; }
+            set { regon = value; }
+        }
+
+        [DataMember]
+        public string DeliveryTime
+        {
+            get { return deliveryTime; }
+            set { deliveryTime = value; }
+        }
+    }
+
+    [DataContract]
+    public class MainPageContent
+    {
+        private string description = null;
+        private string foto = null;
+        private string specialOffers = null;
+
+        [DataMember]
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+
+        [DataMember]
+        public string Foto
+        {
+            get { return foto; }
+            set { foto = value; }
+        }
+
+        [DataMember]
+        public string SpecialOffers
+        {
+            get { return specialOffers; }
+            set { specialOffers = value; }
+        }
+    }
+    
+    [DataContract]
+    public class DeliveryPageContent
+    {
+        private string delivery = null;
+
+        [DataMember]
+        public string Delivery
+        {
+            get { return delivery; }
+            set { delivery = value; }
         }
     }
 

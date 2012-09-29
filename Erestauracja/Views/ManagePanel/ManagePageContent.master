@@ -10,17 +10,17 @@
 <nav class="menu">
                 <ul id="menu">
                     <li>
-                        <%: Html.ActionLink("Strona główna", "MainPage", "ManagePage")%></li>
+                        <%: Html.ActionLink("Strona główna", "MainPage", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Menu", "Menu", "Restaurant")%></li>
+                        <%: Html.ActionLink("Menu", "Menu", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Dowóz", "Delivery", "Restaurant")%></li>
+                        <%: Html.ActionLink("Dowóz", "Delivery", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Parties", "Restaurant")%></li>
+                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Parties", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Galeria", "Gallery", "Restaurant")%></li>
+                        <%: Html.ActionLink("Galeria", "Gallery", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Kontakt", "Contact", "Restaurant")%></li>
+                        <%: Html.ActionLink("Kontakt", "Contact", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                 </ul>
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">

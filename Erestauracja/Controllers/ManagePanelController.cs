@@ -8,6 +8,7 @@ using Erestauracja.Models;
 using Erestauracja.Providers;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
@@ -119,7 +120,7 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /ManagePanel/EditRestaurant
-        public ActionResult EditRestaurant(Erestauracja.ServiceReference.Restaurant rest)
+        public ActionResult EditRestaurant(int id)
         {
             try
             {
@@ -142,7 +143,25 @@ namespace Erestauracja.Controllers
                 ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
             }
 
-            if (rest != null)
+            RestaurantInfo rest = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    rest = client.GetRestaurant(User.Identity.Name, id);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
+            }
+            if (rest == null)
+            {
+                ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
+            }
+            else
             {
                 EditRestaurantModel model = new EditRestaurantModel();
                 model.Id = rest.ID;
@@ -156,7 +175,6 @@ namespace Erestauracja.Controllers
                 model.Nip = rest.Nip;
                 model.Regon = rest.Regon;
                 model.DeliveryTime = rest.DeliveryTime;
-
                 ModelState.Clear();
                 return View(model);
             }
@@ -223,54 +241,98 @@ namespace Erestauracja.Controllers
         }
 
         //
-        // GET: /ManagePanel/ManageRestaurant
-        public ActionResult MainPage(Erestauracja.ServiceReference.Restaurant model)
+        // GET: /ManagePanel/MainPage
+        public ActionResult MainPage(int id)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    ViewData["html"] = "<h3><strong><big>q</big><strike>wert</strike><em><big>y</big></em></strong></h3>";
-            //    return View(model);
-            //}
-            TestModel nowy = new TestModel();
-            nowy.Html="<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
-            nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
-            nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
-            return View(nowy);
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
         }
 
         //
         // GET: /ManagePanel/EditMainPage
-        public ActionResult EditMainPage()
-        {
-            TestModel nowy = new TestModel();
-            nowy.Html = "<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
-            nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
-            nowy.Promocje = "<script>alert('Oops!')</script><h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
-            return View(nowy);
+        public ActionResult EditMainPage(int id)
+        { 
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
         }
 
         //
         // POST: /ManagePanel/EditMainPage
         [HttpPost]
-        public ActionResult EditMainPage(TestModel model)
+        public ActionResult EditMainPage(MainPageModel model)
         {
+            ViewData["id"] = model.RestaurantID;
             if (ModelState.IsValid)
             {
-                //walidacja htmla
-                HtmlValidator hv = new HtmlValidator();
-                if (hv.isValid(model))
-                {
-                }
-               // model.
-                //edycja zmian
                 bool value = false;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        //zapisz
-                       // value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                        value = client.EditMainPage(model.Description, model.Foto, model.SpecialOffers, model.RestaurantID, User.Identity.Name);
                     }
                     client.Close();
                 }
@@ -285,26 +347,249 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Restaurant", "ManagePanel");
+                    return RedirectToAction("MainPage", "ManagePanel", new { id = model.RestaurantID });
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
-            //TestModel nowy = new TestModel();
-            //nowy.Html = "<h3 align=\"center\"><b><u>Nasza</u></b> restauracja zajmuje się przygotowaniem posiłków:<br></h3><h3><ol><li><strong>kuchni polskiej;&nbsp;</strong></li></ol><p><strong>Dania można zamawiać telefonicznie, jak i zjeść <strike>na miejscu</strike> w bardzo klimatycznym <a href=\"http://lokal.pl\">lokalu</a>.</strong></p></h3>";
-            //nowy.Foto = "<p></p><h3><img src=\"http://imgll.trivago.com/itemimages/18/14/1814201_v1_m.jpeg\"><b></b></h3>";
-            //nowy.Promocje = "<h3 align=\"center\">Promocje</h3><hr><p>Przy każdym zamówieniu &nbsp;<u>w restauracji</u> powyżej 50 zł piwo gratis;</p>";
-            //return View(nowy);
-        }   
-    }
+        }
 
-    public class HtmlValidator
-    {
-        public bool isValid(TestModel model)
+        //
+        // GET: /ManagePanel/Menu
+        public ActionResult Menu(int id)
         {
-            return false;
+            ViewData["id"] = id;
+            return View();
+        }
+
+        //
+        // GET: /ManagePanel/Delivery
+        public ActionResult Delivery(int id)
+        {
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                DeliveryPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetDeliveryPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    DeliveryPageModel nowy = new DeliveryPageModel();
+                    nowy.Delivery = value.Delivery;
+                    nowy.RestaurantID = id;
+
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/EditDeliveryPage
+        public ActionResult EditDeliveryPage(int id)
+        {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                DeliveryPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetDeliveryPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    DeliveryPageModel nowy = new DeliveryPageModel();
+                    nowy.Delivery = value.Delivery;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // POST: /ManagePanel/EditDeliveryPage
+        [HttpPost]
+        public ActionResult EditDeliveryPage(DeliveryPageModel model)
+        {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.EditDeliveryPage(model.Delivery, model.RestaurantID, User.Identity.Name);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("Delivery", "ManagePanel", new { id = model.RestaurantID });
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/Parties
+        public ActionResult Parties(int id)
+        {
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/Gallery
+        public ActionResult Gallery(int id)
+        {
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/Contact
+        public ActionResult Contact(int id)
+        {
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
         }
     }
-
 }

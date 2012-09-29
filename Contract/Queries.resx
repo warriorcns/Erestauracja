@@ -147,6 +147,12 @@
   <data name="DeleteUsersInRole" xml:space="preserve">
     <value>DELETE FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
   </data>
+  <data name="EditDeliveryPage" xml:space="preserve">
+    <value>UPDATE `rest_page_content` SET `delivery`=@delivery WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
+  </data>
+  <data name="EditMainPage" xml:space="preserve">
+    <value>UPDATE `rest_page_content` SET `description`=@description,`foto`=@foto,`specialOffers`=@specialOffers WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
+  </data>
   <data name="EditRestaurant" xml:space="preserve">
     <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`email`=@email,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id AND `isLockedOut`=@isLockedOut</value>
   </data>
@@ -169,11 +175,17 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
   <data name="GetCountriesList" xml:space="preserve">
     <value>SELECT `name` FROM `countries`</value>
   </data>
+  <data name="GetDeliveryPage" xml:space="preserve">
+    <value>SELECT `delivery` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
+  </data>
   <data name="GetEmailByLogin" xml:space="preserve">
     <value>SELECT `email` FROM `users` WHERE `login` = @login</value>
   </data>
   <data name="GetFailureCount" xml:space="preserve">
     <value>SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login</value>
+  </data>
+  <data name="GetMainPage" xml:space="preserve">
+    <value>SELECT `description`, `foto`, `specialOffers` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
   </data>
   <data name="GetMoreMoreTowns" xml:space="preserve">
     <value>SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `longitude` FROM `towns` WHERE `town_name` REGEXP @townName OR `postal_code` = @postalCode</value>
@@ -189,6 +201,9 @@ ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC</value>
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
+  </data>
+  <data name="GetRestaurant" xml:space="preserve">
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`deliveryTime` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>
   </data>
   <data name="GetRestaurantsByManagerLogin" xml:space="preserve">
     <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>

@@ -1556,7 +1556,6 @@ namespace Contract
             return false;
         }
 
-
         public List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -1603,6 +1602,83 @@ namespace Contract
 
                 string wiadomosc = message2;
                 wiadomosc += "Action: " + "GetRestaurantsByManagerLogin" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public RestaurantInfo GetRestaurant(string managerLogin, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            RestaurantInfo rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurant);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new RestaurantInfo();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.ID = reader.GetInt32(0);
+                        rest.Name = reader.GetString(1);
+                        rest.DisplayName = reader.GetString(2);
+                        rest.Address = reader.GetString(3);
+                        rest.TownID = reader.GetString(4);
+                        rest.Country = reader.GetString(5);
+                        rest.Telephone = reader.GetString(6);
+                        rest.Email = reader.GetString(7);
+                        rest.Nip = reader.GetString(8);
+                        rest.Regon = reader.GetString(9);
+                        rest.DeliveryTime = reader.GetString(10);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRestaurant" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRestaurant" + "\n\n";
                 wiadomosc += "Exception: " + ex.ToString();
 
                 log.WriteEntry(wiadomosc, EventLogEntryType.Error);
@@ -1672,8 +1748,179 @@ namespace Contract
             return u;
         }
 
+        public MainPageContent GetMainPage(string managerLogin, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MainPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetMainPage);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new MainPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Description = reader.GetString(0);
+                        rest.Foto = reader.GetString(1);
+                        rest.SpecialOffers = reader.GetString(2);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetMainPage" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetMainPage" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public bool EditMainPage(string description, string foto, string specialOffers, int id, string managerLogin)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.EditMainPage);
+            command.Parameters.AddWithValue("@description", description);
+            command.Parameters.AddWithValue("@foto", foto);
+            command.Parameters.AddWithValue("@specialOffers", specialOffers);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@managerLogin", managerLogin);
+
+            int rowsaffected = ExecuteNonQuery(command, "EditMainPage");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public DeliveryPageContent GetDeliveryPage(string managerLogin, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            DeliveryPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetDeliveryPage);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new DeliveryPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Delivery = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetDeliveryPage" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetDeliveryPage" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public bool EditDeliveryPage(string delivery, int id, string managerLogin)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.EditDeliveryPage);
+            command.Parameters.AddWithValue("@delivery", delivery);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@managerLogin", managerLogin);
+
+            int rowsaffected = ExecuteNonQuery(command, "EditDeliveryPage");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+
+        }
         #endregion
 
+        #region ogólne
         public List<string> GetCountriesList()
         {
             MySqlCommand command = new MySqlCommand(Queries.GetCountriesList);
@@ -1934,6 +2181,8 @@ namespace Contract
 
             return u;
         }
+
+        #endregion
     }
 
 

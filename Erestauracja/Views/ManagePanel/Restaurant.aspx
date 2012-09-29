@@ -53,8 +53,8 @@
                 <div class="editor-labelE">
                 DeliveryTime:  <%: x.DeliveryTime%>
                 </div>
-                <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", x, null)%>
-                <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", x, null)%>
+                <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", new { id = x.ID }, null)%>
+                <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", new { id = x.ID }, null)%>
 
 	    </div>
 	<% } %>
