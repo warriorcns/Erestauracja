@@ -151,11 +151,29 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `rest_page_content` SET `contact`=@contact WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string EditContactPage {
+            get {
+                return ResourceManager.GetString("EditContactPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `rest_page_content` SET `delivery`=@delivery WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
         /// </summary>
         internal static string EditDeliveryPage {
             get {
                 return ResourceManager.GetString("EditDeliveryPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `rest_page_content` SET `events`=@events WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string EditEventsPage {
+            get {
+                return ResourceManager.GetString("EditEventsPage", resourceCulture);
             }
         }
         
@@ -224,6 +242,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `contact` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string GetContactPage {
+            get {
+                return ResourceManager.GetString("GetContactPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `name` FROM `countries`.
         /// </summary>
         internal static string GetCountriesList {
@@ -247,6 +274,15 @@ namespace Contract {
         internal static string GetEmailByLogin {
             get {
                 return ResourceManager.GetString("GetEmailByLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `events` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
+        /// </summary>
+        internal static string GetEventsPage {
+            get {
+                return ResourceManager.GetString("GetEventsPage", resourceCulture);
             }
         }
         

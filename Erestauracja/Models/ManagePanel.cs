@@ -155,4 +155,24 @@ namespace Erestauracja.Models
         [DataType(DataType.Html)]
         public string Delivery { get; set; }
     }
+
+    public class EventsPageModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [AllowHtml]
+        [DataType(DataType.Html)]
+        public string Events { get; set; }
+    }
+
+    public class ContactPageModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [AllowHtml]
+        [DataType(DataType.Html)]
+        public string Contact { get; set; }
+    }
 }

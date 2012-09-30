@@ -477,18 +477,18 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /ManagePanel/Parties
-        public ActionResult Parties(int id)
+        public ActionResult Events(int id)
         {
             ViewData["id"] = id;
             if (id > 0)
             {
-                MainPageContent value = null;
+                EventsPageContent value = null;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        value = client.GetMainPage(User.Identity.Name, id);
+                        value = client.GetEventsPage(User.Identity.Name, id);
                     }
                     client.Close();
                 }
@@ -503,10 +503,46 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    MainPageModel nowy = new MainPageModel();
-                    nowy.Description = value.Description;
-                    nowy.Foto = value.Foto;
-                    nowy.SpecialOffers = value.SpecialOffers;
+                    EventsPageModel nowy = new EventsPageModel();
+                    nowy.Events = value.Events;
+                    nowy.RestaurantID = id;
+
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/EditEventsPage
+        public ActionResult EditEventsPage(int id)
+        {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                EventsPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetEventsPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    EventsPageModel nowy = new EventsPageModel();
+                    nowy.Events = value.Events;
                     nowy.RestaurantID = id;
                     return View(nowy);
                 }
@@ -515,42 +551,80 @@ namespace Erestauracja.Controllers
         }
 
         //
-        // GET: /ManagePanel/Gallery
-        public ActionResult Gallery(int id)
+        // POST: /ManagePanel/EditEventsPage
+        [HttpPost]
+        public ActionResult EditEventsPage(EventsPageModel model)
         {
-            ViewData["id"] = id;
-            if (id > 0)
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
             {
-                MainPageContent value = null;
+                bool value = false;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        value = client.GetMainPage(User.Identity.Name, id);
+                        value = client.EditEventsPage(model.Events, model.RestaurantID, User.Identity.Name);
                     }
                     client.Close();
                 }
                 catch (Exception e)
                 {
-                    value = null;
+                    value = false;
                 }
 
-                if (value == null)
+                if (value == false)
                 {
-                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
                 }
                 else
                 {
-                    MainPageModel nowy = new MainPageModel();
-                    nowy.Description = value.Description;
-                    nowy.Foto = value.Foto;
-                    nowy.SpecialOffers = value.SpecialOffers;
-                    nowy.RestaurantID = id;
-                    return View(nowy);
+                    return RedirectToAction("Events", "ManagePanel", new { id = model.RestaurantID });
                 }
             }
-            return RedirectToAction("Restaurant");
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/Gallery
+        public ActionResult Gallery(int id)
+        {
+            ViewData["id"] = id;
+            return View();
+            //if (id > 0)
+            //{
+            //    MainPageContent value = null;
+            //    try
+            //    {
+            //        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            //        using (client)
+            //        {
+            //            value = client.GetMainPage(User.Identity.Name, id);
+            //        }
+            //        client.Close();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        value = null;
+            //    }
+
+            //    if (value == null)
+            //    {
+            //        ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+            //    }
+            //    else
+            //    {
+            //        MainPageModel nowy = new MainPageModel();
+            //        nowy.Description = value.Description;
+            //        nowy.Foto = value.Foto;
+            //        nowy.SpecialOffers = value.SpecialOffers;
+            //        nowy.RestaurantID = id;
+            //        return View(nowy);
+            //    }
+            //}
+            //return RedirectToAction("Restaurant");
         }
 
         //
@@ -560,13 +634,13 @@ namespace Erestauracja.Controllers
             ViewData["id"] = id;
             if (id > 0)
             {
-                MainPageContent value = null;
+                ContactPageContent value = null;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        value = client.GetMainPage(User.Identity.Name, id);
+                        value = client.GetContactPage(User.Identity.Name, id);
                     }
                     client.Close();
                 }
@@ -581,15 +655,87 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    MainPageModel nowy = new MainPageModel();
-                    nowy.Description = value.Description;
-                    nowy.Foto = value.Foto;
-                    nowy.SpecialOffers = value.SpecialOffers;
+                    ContactPageModel nowy = new ContactPageModel();
+                    nowy.Contact = value.Contact;
                     nowy.RestaurantID = id;
                     return View(nowy);
                 }
             }
             return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/EditContactPage
+        public ActionResult EditContactPage(int id)
+        {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                ContactPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetContactPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    ContactPageModel nowy = new ContactPageModel();
+                    nowy.Contact = value.Contact;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // POST: /ManagePanel/EditContactPage
+        [HttpPost]
+        public ActionResult EditContactPage(ContactPageModel model)
+        {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.EditContactPage(model.Contact, model.RestaurantID, User.Identity.Name);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("Contact", "ManagePanel", new { id = model.RestaurantID });
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
     }
 }

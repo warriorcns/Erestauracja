@@ -126,6 +126,18 @@ namespace Contract
         [OperationContract]
         bool EditDeliveryPage(string delivery, int id, string managerLogin);
 
+        [OperationContract]
+        EventsPageContent GetEventsPage(string managerLogin, int id);
+
+        [OperationContract]
+        bool EditEventsPage(string events, int id, string managerLogin);
+
+        [OperationContract]
+        ContactPageContent GetContactPage(string managerLogin, int id);
+
+        [OperationContract]
+        bool EditContactPage(string contact, int id, string managerLogin);
+
         #endregion
 
         #region ogólne
@@ -705,6 +717,32 @@ namespace Contract
         {
             get { return delivery; }
             set { delivery = value; }
+        }
+    }
+
+    [DataContract]
+    public class EventsPageContent
+    {
+        private string events = null;
+
+        [DataMember]
+        public string Events
+        {
+            get { return events; }
+            set { events = value; }
+        }
+    }
+
+    [DataContract]
+    public class ContactPageContent
+    {
+        private string contact = null;
+
+        [DataMember]
+        public string Contact
+        {
+            get { return contact; }
+            set { contact = value; }
         }
     }
 

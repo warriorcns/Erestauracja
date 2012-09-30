@@ -1918,6 +1918,174 @@ namespace Contract
             return false;
 
         }
+
+        public EventsPageContent GetEventsPage(string managerLogin, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            EventsPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetEventsPage);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new EventsPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Events = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetEventsPage" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetEventsPage" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public bool EditEventsPage(string events, int id, string managerLogin)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.EditEventsPage);
+            command.Parameters.AddWithValue("@events", events);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@managerLogin", managerLogin);
+
+            int rowsaffected = ExecuteNonQuery(command, "EditEventsPage");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        public ContactPageContent GetContactPage(string managerLogin, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            ContactPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetContactPage);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new ContactPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Contact = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetContactPage" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetContactPage" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public bool EditContactPage(string contact, int id, string managerLogin)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.EditContactPage);
+            command.Parameters.AddWithValue("@contact", contact);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@managerLogin", managerLogin);
+
+            int rowsaffected = ExecuteNonQuery(command, "EditContactPage");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+
+        }
         #endregion
 
         #region ogólne

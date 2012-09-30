@@ -32,6 +32,48 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Restaurant" nillable="true" type="tns:Restaurant" />
+  <xs:complexType name="RestaurantInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliveryTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Regon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TownID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RestaurantInfo" nillable="true" type="tns:RestaurantInfo" />
+  <xs:complexType name="MainPageContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Foto" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SpecialOffers" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MainPageContent" nillable="true" type="tns:MainPageContent" />
+  <xs:complexType name="DeliveryPageContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Delivery" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeliveryPageContent" nillable="true" type="tns:DeliveryPageContent" />
+  <xs:complexType name="EventsPageContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Events" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EventsPageContent" nillable="true" type="tns:EventsPageContent" />
+  <xs:complexType name="ContactPageContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Contact" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContactPageContent" nillable="true" type="tns:ContactPageContent" />
   <xs:complexType name="ArrayOfTown">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Town" nillable="true" type="tns:Town" />

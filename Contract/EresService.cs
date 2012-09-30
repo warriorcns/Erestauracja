@@ -520,6 +520,62 @@ namespace Contract
             }
         }
 
+        public EventsPageContent GetEventsPage(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id == null || id < 0))
+            {
+                Database db = new Database();
+                EventsPageContent value = db.GetEventsPage(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool EditEventsPage(string events, int id, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || events == null || id == null || id < 0))
+            {
+                Database db = new Database();
+                bool value = db.EditEventsPage(events, id, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public ContactPageContent GetContactPage(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id == null || id < 0))
+            {
+                Database db = new Database();
+                ContactPageContent value = db.GetContactPage(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool EditContactPage(string contact, int id, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || contact == null || id == null || id < 0))
+            {
+                Database db = new Database();
+                bool value = db.EditContactPage(contact, id, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region ogólne

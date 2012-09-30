@@ -16,7 +16,7 @@
                     <li>
                         <%: Html.ActionLink("Dowóz", "Delivery", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Parties", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
+                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Events", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
                         <%: Html.ActionLink("Galeria", "Gallery", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>

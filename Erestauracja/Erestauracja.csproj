@@ -915,7 +915,13 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <None Include="Service References\ServiceReference\EresService1.wsdl" />
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ContactPageContent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.DeliveryPageContent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.EventsPageContent.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.MainPageContent.datasource">
@@ -989,10 +995,15 @@
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />
+    <Content Include="Views\ManagePanel\Contact.aspx" />
     <Content Include="Views\ManagePanel\Delivery.aspx" />
+    <Content Include="Views\ManagePanel\EditContactPage.aspx" />
     <Content Include="Views\ManagePanel\EditDeliveryPage.aspx" />
+    <Content Include="Views\ManagePanel\EditEventsPage.aspx" />
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
+    <Content Include="Views\ManagePanel\Events.aspx" />
+    <Content Include="Views\ManagePanel\Gallery.aspx" />
     <Content Include="Views\ManagePanel\Index.aspx" />
     <Content Include="Views\ManagePanel\MainPage.aspx" />
     <Content Include="Views\ManagePanel\Menu.aspx" />

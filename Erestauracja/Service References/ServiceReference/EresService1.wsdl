@@ -26,6 +26,60 @@
   <wsdl:message name="IEresService_GetRestaurantsByManagerLogin_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRestaurantsByManagerLoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurant_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurant" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetMainPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMainPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetMainPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMainPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditMainPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditMainPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditMainPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditMainPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetDeliveryPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDeliveryPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetDeliveryPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDeliveryPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditDeliveryPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDeliveryPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditDeliveryPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDeliveryPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetEventsPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetEventsPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditEventsPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditEventsPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditEventsPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditEventsPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetContactPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContactPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetContactPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContactPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditContactPage_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditContactPage" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditContactPage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditContactPageResponse" />
+  </wsdl:message>
   <wsdl:message name="IEresService_GetCountriesList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCountriesList" />
   </wsdl:message>
@@ -219,6 +273,42 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" message="tns:IEresService_GetRestaurantsByManagerLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse" message="tns:IEresService_GetRestaurantsByManagerLogin_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetRestaurant">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurant" message="tns:IEresService_GetRestaurant_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantResponse" message="tns:IEresService_GetRestaurant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetMainPage" message="tns:IEresService_GetMainPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetMainPageResponse" message="tns:IEresService_GetMainPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditMainPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditMainPage" message="tns:IEresService_EditMainPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditMainPageResponse" message="tns:IEresService_EditMainPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeliveryPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetDeliveryPage" message="tns:IEresService_GetDeliveryPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetDeliveryPageResponse" message="tns:IEresService_GetDeliveryPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDeliveryPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditDeliveryPage" message="tns:IEresService_EditDeliveryPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditDeliveryPageResponse" message="tns:IEresService_EditDeliveryPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetEventsPage" message="tns:IEresService_GetEventsPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetEventsPageResponse" message="tns:IEresService_GetEventsPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditEventsPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditEventsPage" message="tns:IEresService_EditEventsPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditEventsPageResponse" message="tns:IEresService_EditEventsPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContactPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetContactPage" message="tns:IEresService_GetContactPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetContactPageResponse" message="tns:IEresService_GetContactPage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditContactPage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditContactPage" message="tns:IEresService_EditContactPage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditContactPageResponse" message="tns:IEresService_EditContactPage_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetCountriesList">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCountriesList" message="tns:IEresService_GetCountriesList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCountriesListResponse" message="tns:IEresService_GetCountriesList_OutputMessage" />
@@ -362,6 +452,87 @@
     </wsdl:operation>
     <wsdl:operation name="GetRestaurantsByManagerLogin">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurant">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetRestaurant" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetMainPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditMainPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditMainPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeliveryPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetDeliveryPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDeliveryPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditDeliveryPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetEventsPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditEventsPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditEventsPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContactPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetContactPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditContactPage">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditContactPage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

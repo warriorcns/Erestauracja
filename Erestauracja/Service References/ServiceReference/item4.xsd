@@ -67,6 +67,147 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRestaurant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRestaurantResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetRestaurantResult" nillable="true" type="q2:RestaurantInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMainPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMainPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetMainPageResult" nillable="true" type="q3:MainPageContent" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditMainPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="foto" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="specialOffers" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditMainPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditMainPageResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDeliveryPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDeliveryPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetDeliveryPageResult" nillable="true" type="q4:DeliveryPageContent" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditDeliveryPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="delivery" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditDeliveryPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditDeliveryPageResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEventsPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetEventsPageResult" nillable="true" type="q5:EventsPageContent" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditEventsPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="events" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditEventsPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditEventsPageResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetContactPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetContactPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetContactPageResult" nillable="true" type="q6:ContactPageContent" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditContactPage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="contact" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="managerLogin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditContactPageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditContactPageResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetCountriesList">
     <xs:complexType>
       <xs:sequence />
@@ -75,7 +216,7 @@
   <xs:element name="GetCountriesListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCountriesListResult" nillable="true" type="q2:ArrayOfstring" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCountriesListResult" nillable="true" type="q7:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -90,7 +231,7 @@
   <xs:element name="GetTownsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetTownsResult" nillable="true" type="q3:ArrayOfTown" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetTownsResult" nillable="true" type="q8:ArrayOfTown" />
         <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -136,7 +277,7 @@
   <xs:element name="GetPasswordResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetPasswordResult" nillable="true" type="q4:PasswordAndAnswer" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetPasswordResult" nillable="true" type="q9:PasswordAndAnswer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -150,7 +291,7 @@
   <xs:element name="GetPasswordAnswerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetPasswordAnswerResult" nillable="true" type="q5:PasswordAnswer" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetPasswordAnswerResult" nillable="true" type="q10:PasswordAnswer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -179,7 +320,7 @@
   <xs:element name="GetUserQuestionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserQuestionResult" nillable="true" type="q6:PasswordQuestion" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserQuestionResult" nillable="true" type="q11:PasswordQuestion" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -236,7 +377,7 @@
   <xs:element name="GetAllUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q7:ArrayOfUser" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q12:ArrayOfUser" />
         <xs:element minOccurs="0" name="totalRecords" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -244,7 +385,7 @@
   <xs:element name="GetNumberOfUsersOnline">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="onlineSpan" type="q8:duration" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="onlineSpan" type="q13:duration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -266,7 +407,7 @@
   <xs:element name="GetUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserResult" nillable="true" type="q9:User" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserResult" nillable="true" type="q14:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -281,7 +422,7 @@
   <xs:element name="GetUserByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserByIdResult" nillable="true" type="q10:User" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="GetUserByIdResult" nillable="true" type="q15:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -316,7 +457,7 @@
   <xs:element name="UpdateUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="user" nillable="true" type="q11:User" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="user" nillable="true" type="q16:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -337,7 +478,7 @@
   <xs:element name="ValidateUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="ValidateUserResult" nillable="true" type="q12:ValidateUser" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Contract" minOccurs="0" name="ValidateUserResult" nillable="true" type="q17:ValidateUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -375,8 +516,8 @@
   <xs:element name="AddUsersToRoles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="logins" nillable="true" type="q13:ArrayOfstring" />
-        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="rolenames" nillable="true" type="q14:ArrayOfstring" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="logins" nillable="true" type="q18:ArrayOfstring" />
+        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="rolenames" nillable="true" type="q19:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -473,8 +614,8 @@
   <xs:element name="RemoveUsersFromRoles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="logins" nillable="true" type="q15:ArrayOfstring" />
-        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="rolenames" nillable="true" type="q16:ArrayOfstring" />
+        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="logins" nillable="true" type="q20:ArrayOfstring" />
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="rolenames" nillable="true" type="q21:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
