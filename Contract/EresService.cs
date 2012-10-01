@@ -603,6 +603,19 @@ namespace Contract
             }
         }
 
+        public List<RestaurantInTown> GetRestaurantByTown(string townName)
+        {
+            if (!(String.IsNullOrEmpty(townName)))
+            {
+                Database db = new Database();
+                List<RestaurantInTown> value = db.GetRestaurantByTown(townName);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
     }
 }

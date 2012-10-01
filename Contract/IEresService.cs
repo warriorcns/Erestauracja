@@ -148,6 +148,9 @@ namespace Contract
         [OperationContract]
         List<Town> GetTowns(string townName, string postalCode, out string status);
 
+        [OperationContract]
+        List<RestaurantInTown> GetRestaurantByTown(string townName);
+
         #endregion
     }
 
@@ -820,6 +823,27 @@ namespace Contract
         {
             get { return longtitude; }
             set { longtitude = value; }
+        }
+    }
+
+    [DataContract]
+    public class RestaurantInTown
+    {
+        private int resId = -1;
+        private string name = null;
+
+        [DataMember]
+        public int ResId
+        {
+            get { return resId; }
+            set { resId = value; }
+        }
+
+        [DataMember]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
     }
 }

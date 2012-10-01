@@ -2350,6 +2350,80 @@ namespace Contract
             return u;
         }
 
+        public List<RestaurantInTown> GetRestaurantByTown(string townName)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<RestaurantInTown> rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantByTown);
+                command.Parameters.AddWithValue("@townName", townName+"%");
+                command.Connection = conn;
+                rest = new List<RestaurantInTown>();
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        RestaurantInTown u = new RestaurantInTown();
+                        u.ResId = reader.GetInt32(0);
+                        u.Name = reader.GetString(1) + " (" + reader.GetString(2) + ")";
+
+                        rest.Add(u);
+                    }
+                }
+                else
+                {
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    return null;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRestaurantByTown" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRestaurantByTown" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
         #endregion
     }
 
