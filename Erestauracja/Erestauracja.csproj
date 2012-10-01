@@ -942,6 +942,9 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.RestaurantInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.RestaurantInTown.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Town.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

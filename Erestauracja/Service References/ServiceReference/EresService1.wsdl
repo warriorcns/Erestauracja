@@ -92,6 +92,12 @@
   <wsdl:message name="IEresService_GetTowns_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTownsResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurantByTown_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantByTown" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetRestaurantByTown_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantByTownResponse" />
+  </wsdl:message>
   <wsdl:message name="IEresService_ChangePassword_InputMessage">
     <wsdl:part name="parameters" element="tns:ChangePassword" />
   </wsdl:message>
@@ -316,6 +322,10 @@
     <wsdl:operation name="GetTowns">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetTowns" message="tns:IEresService_GetTowns_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetTownsResponse" message="tns:IEresService_GetTowns_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantByTown">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetRestaurantByTown" message="tns:IEresService_GetRestaurantByTown_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetRestaurantByTownResponse" message="tns:IEresService_GetRestaurantByTown_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ChangePassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/ChangePassword" message="tns:IEresService_ChangePassword_InputMessage" />
@@ -551,6 +561,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetTowns">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetTowns" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantByTown">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetRestaurantByTown" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

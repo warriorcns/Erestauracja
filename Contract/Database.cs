@@ -552,34 +552,35 @@ namespace Contract
             string name = reader.GetString(3);
             string surname = reader.GetString(4);
             string address = reader.GetString(5);
-            int townID = reader.GetInt32(6);
-            string country = reader.GetString(7);
+            string town = reader.GetString(6);
+            string postalCode = reader.GetString(7);
+            string country = reader.GetString(8);
             DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
             string sex = "Mężczyzna";
            // bool plec = false;
-            if (reader.GetBoolean(9) == true)
+            if (reader.GetBoolean(10) == true)
                 sex = "Kobieta";
            // else
            //     command.Parameters.AddWithValue("@sex", false);
            //     reader.GetString(9);
-            string telephone = reader.GetString(10);
+            string telephone = reader.GetString(11);
             string comment = "";
-            if (reader.GetValue(11) != DBNull.Value)
-                comment = reader.GetString(11);
-            string passwordQuestion = "";
             if (reader.GetValue(12) != DBNull.Value)
-                passwordQuestion = reader.GetString(12);
-            bool isApproved = reader.GetBoolean(13);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(14)); //reader.GetDateTime(14);
+                comment = reader.GetString(12);
+            string passwordQuestion = "";
+            if (reader.GetValue(13) != DBNull.Value)
+                passwordQuestion = reader.GetString(13);
+            bool isApproved = reader.GetBoolean(14);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(14);
             DateTime lastLoginDate = new DateTime();
-            if (reader.GetValue(15) != DBNull.Value)
-                lastLoginDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(15);
-            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(16);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(17);
-            bool isLockedOut = reader.GetBoolean(18);
+            if (reader.GetValue(16) != DBNull.Value)
+                lastLoginDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(15);
+            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(16);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(18)); //reader.GetDateTime(17);
+            bool isLockedOut = reader.GetBoolean(19);
             DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(19) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(19)); //reader.GetDateTime(19);
+            if (reader.GetValue(20) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20)); //reader.GetDateTime(19);
             
             User u = new User();
             u.Email = email;
@@ -597,7 +598,8 @@ namespace Contract
             u.Name = name;
             u.Surname = surname;
             u.Address = address;
-            u.TownID = townID;
+            u.Town = town;
+            u.PostalCode = postalCode;
             u.Country = country;
             u.Birthdate = birthdate;
             u.Sex = sex;
@@ -815,7 +817,8 @@ namespace Contract
             command.Parameters.AddWithValue("@name", user.Name);
             command.Parameters.AddWithValue("@surname", user.Surname);
             command.Parameters.AddWithValue("@address", user.Address);
-            command.Parameters.AddWithValue("@townID", user.TownID);
+            command.Parameters.AddWithValue("@town_name", user.Town);
+            command.Parameters.AddWithValue("@postal_code", user.PostalCode);
             command.Parameters.AddWithValue("@country", user.Country);
             command.Parameters.AddWithValue("@birthdate", user.Birthdate);
             if (user.Sex == "Kobieta")
@@ -866,8 +869,8 @@ namespace Contract
         public bool UpdateUserLoginDate(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.UpdateUserLoginDate);
-            command.Parameters.Add("@lastLoginDate", DateTime.Now);
-            command.Parameters.Add("@login", login);
+            command.Parameters.AddWithValue("@lastLoginDate", DateTime.Now);
+            command.Parameters.AddWithValue("@login", login);
 
             int rowsaffected = ExecuteNonQuery(command, "UpdateUserLoginDate");
 
@@ -923,9 +926,9 @@ namespace Contract
 
                 command.Parameters.Clear();
 
-                command.Parameters.Add("@count", 1);
-                command.Parameters.Add("@windowStart", DateTime.Now);
-                command.Parameters.Add("@login", login);
+                command.Parameters.AddWithValue("@count", 1);
+                command.Parameters.AddWithValue("@windowStart", DateTime.Now);
+                command.Parameters.AddWithValue("@login", login);
 
                 int rowsaffected = ExecuteNonQuery(command, "UpdateFailed" + failureType + "Attempt");
 
@@ -945,9 +948,9 @@ namespace Contract
 
                     command.Parameters.Clear();
 
-                    command.Parameters.Add("@isLockedOut", true);
-                    command.Parameters.Add("@lastLockedOutDate", DateTime.Now);
-                    command.Parameters.Add("@login", login);
+                    command.Parameters.AddWithValue("@isLockedOut", true);
+                    command.Parameters.AddWithValue("@lastLockedOutDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@login", login);
 
                     int rowsaffected = ExecuteNonQuery(command, "LockOutUser");
 
@@ -969,8 +972,8 @@ namespace Contract
 
                     command.Parameters.Clear();
 
-                    command.Parameters.Add("@count", failureCount);
-                    command.Parameters.Add("@login", login);
+                    command.Parameters.AddWithValue("@count", failureCount);
+                    command.Parameters.AddWithValue("@login", login);
 
                     int rowsaffected = ExecuteNonQuery(command, "Unable to update failure count.");
 
@@ -1493,7 +1496,7 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
+        public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
         {
             DateTime createDate = DateTime.Now;
 
@@ -1529,7 +1532,7 @@ namespace Contract
             return false;
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditRestaurant);
             command.Parameters.AddWithValue("@name", name);
@@ -1642,13 +1645,14 @@ namespace Contract
                         rest.Name = reader.GetString(1);
                         rest.DisplayName = reader.GetString(2);
                         rest.Address = reader.GetString(3);
-                        rest.TownID = reader.GetString(4);
-                        rest.Country = reader.GetString(5);
-                        rest.Telephone = reader.GetString(6);
-                        rest.Email = reader.GetString(7);
-                        rest.Nip = reader.GetString(8);
-                        rest.Regon = reader.GetString(9);
-                        rest.DeliveryTime = reader.GetString(10);
+                        rest.Town = reader.GetString(4);
+                        rest.PostalCode = reader.GetString(5);
+                        rest.Country = reader.GetString(6);
+                        rest.Telephone = reader.GetString(7);
+                        rest.Email = reader.GetString(8);
+                        rest.Nip = reader.GetString(9);
+                        rest.Regon = reader.GetString(10);
+                        rest.DeliveryTime = reader.GetString(11);
                     }
                 }
                 else
@@ -1702,32 +1706,34 @@ namespace Contract
             string name = reader.GetString(1);
             string displayName = reader.GetString(2);
             string address = reader.GetString(3);
-            string townId = reader.GetString(4);
-            string country = reader.GetString(5);
-            string telephone = reader.GetString(6);
-            string email = reader.GetString(7);
-            string nip = reader.GetString(8);
-            string regon = reader.GetString(9);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(10));
-            int inputsCount = reader.GetInt32(11);
-            int averageRating = reader.GetInt32(12);
-            string password = reader.GetString(13);
-            int menagerId = reader.GetInt32(14);
-            string deliveryTime = reader.GetString(15);
-            string currentDeliveryTime = reader.GetString(16);
-            bool isApproved = reader.GetBoolean(17);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(18));
-            bool isLockedOut = reader.GetBoolean(19);
+            string town = reader.GetString(4);
+            string postalCode = reader.GetString(5);
+            string country = reader.GetString(6);
+            string telephone = reader.GetString(7);
+            string email = reader.GetString(8);
+            string nip = reader.GetString(9);
+            string regon = reader.GetString(10);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(11));
+            int inputsCount = reader.GetInt32(12);
+            int averageRating = reader.GetInt32(13);
+            string password = reader.GetString(14);
+            int menagerId = reader.GetInt32(15);
+            string deliveryTime = reader.GetString(16);
+            string currentDeliveryTime = reader.GetString(17);
+            bool isApproved = reader.GetBoolean(18);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(19));
+            bool isLockedOut = reader.GetBoolean(20);
             DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(20) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20));
+            if (reader.GetValue(21) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(21));
 
             Restaurant u = new Restaurant();
             u.ID = id;
             u.Name = name;
             u.DisplayName = displayName;
             u.Address = address;
-            u.TownID = townId;
+            u.Town = town;
+            u.PostalCode = postalCode;
             u.Country = country;
             u.Telephone = telephone;
             u.Email = email;

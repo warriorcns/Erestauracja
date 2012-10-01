@@ -36,7 +36,10 @@
                 Adres:  <%: model.Address %>
                 </div>
                 <div class="editor-labelE">
-                Miasto:  <%: model.TownID %>
+                Miasto:  <%: model.Town %>
+                </div>
+                <div class="editor-labelE">
+                Kod pocztowy:  <%: model.PostalCode %>
                 </div>
                 <div class="editor-labelE">
                 Kraj:  <%: model.Country %>

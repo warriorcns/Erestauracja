@@ -77,13 +77,16 @@ namespace Erestauracja.ServiceReference {
         private string PasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PostalCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RegonField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TelephoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TownIDField;
+        private string TownField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -330,6 +333,19 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PostalCode {
+            get {
+                return this.PostalCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PostalCodeField, value) != true)) {
+                    this.PostalCodeField = value;
+                    this.RaisePropertyChanged("PostalCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Regon {
             get {
                 return this.RegonField;
@@ -356,14 +372,14 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TownID {
+        public string Town {
             get {
-                return this.TownIDField;
+                return this.TownField;
             }
             set {
-                if ((object.ReferenceEquals(this.TownIDField, value) != true)) {
-                    this.TownIDField = value;
-                    this.RaisePropertyChanged("TownID");
+                if ((object.ReferenceEquals(this.TownField, value) != true)) {
+                    this.TownField = value;
+                    this.RaisePropertyChanged("Town");
                 }
             }
         }
@@ -412,13 +428,16 @@ namespace Erestauracja.ServiceReference {
         private string NipField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PostalCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RegonField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TelephoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TownIDField;
+        private string TownField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -535,6 +554,19 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PostalCode {
+            get {
+                return this.PostalCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PostalCodeField, value) != true)) {
+                    this.PostalCodeField = value;
+                    this.RaisePropertyChanged("PostalCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Regon {
             get {
                 return this.RegonField;
@@ -561,14 +593,14 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TownID {
+        public string Town {
             get {
-                return this.TownIDField;
+                return this.TownField;
             }
             set {
-                if ((object.ReferenceEquals(this.TownIDField, value) != true)) {
-                    this.TownIDField = value;
-                    this.RaisePropertyChanged("TownID");
+                if ((object.ReferenceEquals(this.TownField, value) != true)) {
+                    this.TownField = value;
+                    this.RaisePropertyChanged("Town");
                 }
             }
         }
@@ -970,6 +1002,67 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RestaurantInTown", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class RestaurantInTown : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ResIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ResId {
+            get {
+                return this.ResIdField;
+            }
+            set {
+                if ((this.ResIdField.Equals(value) != true)) {
+                    this.ResIdField = value;
+                    this.RaisePropertyChanged("ResId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PasswordAndAnswer", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
     public partial class PasswordAndAnswer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1225,6 +1318,9 @@ namespace Erestauracja.ServiceReference {
         private string PasswordQuestionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PostalCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SexField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1234,7 +1330,7 @@ namespace Erestauracja.ServiceReference {
         private string TelephoneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TownIDField;
+        private string TownField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1455,6 +1551,19 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PostalCode {
+            get {
+                return this.PostalCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PostalCodeField, value) != true)) {
+                    this.PostalCodeField = value;
+                    this.RaisePropertyChanged("PostalCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Sex {
             get {
                 return this.SexField;
@@ -1494,14 +1603,14 @@ namespace Erestauracja.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TownID {
+        public string Town {
             get {
-                return this.TownIDField;
+                return this.TownField;
             }
             set {
-                if ((this.TownIDField.Equals(value) != true)) {
-                    this.TownIDField = value;
-                    this.RaisePropertyChanged("TownID");
+                if ((object.ReferenceEquals(this.TownField, value) != true)) {
+                    this.TownField = value;
+                    this.RaisePropertyChanged("Town");
                 }
             }
         }
@@ -1582,10 +1691,10 @@ namespace Erestauracja.ServiceReference {
     public interface IEresService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
-        bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
+        bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditRestaurant", ReplyAction="http://tempuri.org/IEresService/EditRestaurantResponse")]
-        bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
+        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantsByManagerLogin", ReplyAction="http://tempuri.org/IEresService/GetRestaurantsByManagerLoginResponse")]
         Erestauracja.ServiceReference.Restaurant[] GetRestaurantsByManagerLogin(string managerLogin);
@@ -1622,6 +1731,9 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetTowns", ReplyAction="http://tempuri.org/IEresService/GetTownsResponse")]
         Erestauracja.ServiceReference.Town[] GetTowns(out string status, string townName, string postalCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantByTown", ReplyAction="http://tempuri.org/IEresService/GetRestaurantByTownResponse")]
+        Erestauracja.ServiceReference.RestaurantInTown[] GetRestaurantByTown(string townName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ChangePassword", ReplyAction="http://tempuri.org/IEresService/ChangePasswordResponse")]
         bool ChangePassword(string login, string password);
@@ -1735,11 +1847,11 @@ namespace Erestauracja.ServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime) {
+        public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime) {
             return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
         }
         
-        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id) {
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id) {
             return base.Channel.EditRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, deliveryTime, managerLogin, id);
         }
         
@@ -1789,6 +1901,10 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.Town[] GetTowns(out string status, string townName, string postalCode) {
             return base.Channel.GetTowns(out status, townName, postalCode);
+        }
+        
+        public Erestauracja.ServiceReference.RestaurantInTown[] GetRestaurantByTown(string townName) {
+            return base.Channel.GetRestaurantByTown(townName);
         }
         
         public bool ChangePassword(string login, string password) {

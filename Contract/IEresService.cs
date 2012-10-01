@@ -103,10 +103,10 @@ namespace Contract
         #region manage restaurant
 
         [OperationContract]
-        bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
+        bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
 
         [OperationContract]
-        bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
+        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
 
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
@@ -236,7 +236,8 @@ namespace Contract
         private string name = null;
         private string surname = null;
         private string address = null;
-        private int townID = -1;
+        private string town = null;
+        private string postalCode = null;
         private string country = null;
         private DateTime birthdate = new DateTime();
         private string sex = null;
@@ -294,10 +295,17 @@ namespace Contract
         }
 
         [DataMember]
-        public int TownID
+        public string Town
         {
-            get { return townID; }
-            set { townID = value; }
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
         }
 
         [DataMember]
@@ -421,7 +429,8 @@ namespace Contract
         private string name = null;
         private string displayName = null;
         private string address = null;
-        private string townID = null;
+        private string town = null;
+        private string postalCode = null;
         private string country = null;
         private string telephone = null;
         private string email = null;
@@ -468,10 +477,17 @@ namespace Contract
         }
 
         [DataMember]
-        public string TownID
+        public string Town
         {
-            get { return townID; }
-            set { townID = value; }
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
         }
 
         [DataMember]
@@ -595,7 +611,8 @@ namespace Contract
         private string name = null;
         private string displayName = null;
         private string address = null;
-        private string townID = null;
+        private string town = null;
+        private string postalCode = null;
         private string country = null;
         private string telephone = null;
         private string email = null;
@@ -632,10 +649,17 @@ namespace Contract
         }
 
         [DataMember]
-        public string TownID
+        public string Town
         {
-            get { return townID; }
-            set { townID = value; }
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
         }
 
         [DataMember]

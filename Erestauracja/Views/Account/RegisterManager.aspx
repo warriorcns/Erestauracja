@@ -137,11 +137,21 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
 
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.TownID)%> 
+                        <%: Html.LabelFor(m => m.Town)%> 
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.TownID)%>
-                        <%: Html.ValidationMessageFor(m => m.TownID)%>
+                        <%: Html.TextBoxFor(m => m.Town)%>
+                        <%: Html.ValidationMessageFor(m => m.Town)%>
+                    </li>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.PostalCode)%> 
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.PostalCode)%>
+                        <%: Html.ValidationMessageFor(m => m.PostalCode)%>
                     </li>
                 </ul>
 

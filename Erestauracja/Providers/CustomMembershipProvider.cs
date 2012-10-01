@@ -830,7 +830,7 @@ namespace Erestauracja.Providers
         /// <param name="name">Imię użytkownika</param>
         /// <param name="surname">Nazwisko użytkownika</param>
         /// <param name="address">Adres</param>
-        /// <param name="townID">!!</param>
+        /// <param name="townID">Id miasta</param>
         /// <param name="country">Kraj</param>
         /// <param name="birthdate">Data urodzenia</param>
         /// <param name="sex">Płeć</param>
@@ -1017,7 +1017,8 @@ namespace Erestauracja.Providers
             string name = reader.Name;
             string surname = reader.Surname;
             string address = reader.Address;
-            int townID = reader.TownID;
+            string town = reader.Town;
+            string postalCode = reader.PostalCode;
             string country = reader.Country;
             DateTime birthdate = reader.Birthdate;
             string sex = reader.Sex;
@@ -1051,7 +1052,8 @@ namespace Erestauracja.Providers
                                                   name,
                                                   surname,
                                                   address,
-                                                  townID,
+                                                  town,
+                                                  postalCode,
                                                   country,
                                                   birthdate,
                                                   sex,
@@ -1065,7 +1067,7 @@ namespace Erestauracja.Providers
         /// </summary>
         /// <param name="reader">CustomMembershipUser</param>
         /// <returns>User</returns>
-        private User GetCustomMembershipUserFromUser(CustomMembershipUser reader)
+        private User GetUserFromCustomMembershipUser(CustomMembershipUser reader)
         {
             User user = new User();
 
@@ -1075,7 +1077,8 @@ namespace Erestauracja.Providers
             user.Name = reader.Name;
             user.Surname = reader.Surname;
             user.Address = reader.Address;
-            user.TownID = reader.TownID;
+            user.Town = reader.Town;
+            user.PostalCode = reader.PostalCode;
             user.Country = reader.Country;
             user.Birthdate = reader.Birthdate;
             user.Sex = reader.Sex;
@@ -1349,7 +1352,7 @@ namespace Erestauracja.Providers
         /// <param name="muser">MembershipUser - CustomMembershipUser</param>
         public override void UpdateUser(MembershipUser muser)
         {
-            User user = GetCustomMembershipUserFromUser((CustomMembershipUser)muser);
+            User user = GetUserFromCustomMembershipUser((CustomMembershipUser)muser);
 
             bool value = false;
 

@@ -53,9 +53,15 @@
                 </div>
 
                 <div class="editor-label">
-                    <%: Html.LabelFor(m => m.TownID) %>
-                    <%: Html.TextBoxFor(m => m.TownID)%>
-                    <%: Html.ValidationMessageFor(m => m.TownID)%>
+                    <%: Html.LabelFor(m => m.Town) %>
+                    <%: Html.TextBoxFor(m => m.Town)%>
+                    <%: Html.ValidationMessageFor(m => m.Town)%>
+                </div>
+
+                <div class="editor-label">
+                    <%: Html.LabelFor(m => m.PostalCode) %>
+                    <%: Html.TextBoxFor(m => m.PostalCode)%>
+                    <%: Html.ValidationMessageFor(m => m.PostalCode)%>
                 </div>
 
                 <div class="editor-label">

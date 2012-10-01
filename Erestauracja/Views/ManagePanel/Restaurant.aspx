@@ -33,7 +33,10 @@
                 Address:  <%: x.Address%>
                 </div>
                 <div class="editor-labelE">
-                TownID:  <%: x.TownID%>
+                Town:  <%: x.Town%>
+                </div>
+                <div class="editor-labelE">
+                PostalCode:  <%: x.PostalCode%>
                 </div>
                 <div class="editor-labelE">
                 Country:  <%: x.Country%>

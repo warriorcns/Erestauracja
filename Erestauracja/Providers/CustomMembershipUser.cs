@@ -10,7 +10,8 @@ namespace Erestauracja.Providers
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Address { get; set; }
-        public int TownID { get; set; }
+        public string Town { get; set; }
+        public string PostalCode { get; set; }
         public string Country { get; set; }
         public DateTime Birthdate { get; set; }
         public string Sex { get; set; }
@@ -35,7 +36,8 @@ namespace Erestauracja.Providers
             string name,
             string surname,
             string address,
-            int townID,
+            string town,
+            string postalCode,
             string country,
             DateTime birthdate,
             string sex,
@@ -60,7 +62,8 @@ namespace Erestauracja.Providers
             Name = name;
             Surname = surname;
             Address = address;
-            TownID = townID;
+            Town = town;
+            PostalCode = postalCode;
             Country = country;
             Birthdate = birthdate;
             Sex = sex;

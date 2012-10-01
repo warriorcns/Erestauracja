@@ -90,7 +90,7 @@ namespace Erestauracja.Controllers
                         ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                         using (client)
                         {
-                            value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
+                            value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
                         }
                         client.Close();
                     }
@@ -168,7 +168,8 @@ namespace Erestauracja.Controllers
                 model.Name = rest.Name;
                 model.DisplayName = rest.DisplayName;
                 model.Address = rest.Address;
-                model.TownId = rest.TownID;
+                model.Town = rest.Town;
+                model.PostalCode = rest.PostalCode;
                 model.Country = rest.Country;
                 model.Telephone = rest.Telephone;
                 model.Email = rest.Email;
@@ -217,7 +218,7 @@ namespace Erestauracja.Controllers
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, model.TownId, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                        value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
                     }
                     client.Close();
                 }

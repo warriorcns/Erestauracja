@@ -40,7 +40,8 @@ namespace Erestauracja.Controllers
                 model.Name = user.Name;
                 model.Surname = user.Surname;
                 model.Address = user.Address;
-                model.TownID = 111;
+                model.Town = user.Town;
+                model.PostalCode=user.PostalCode;
                 model.Country = user.Country;
                 model.Birthdate = user.Birthdate;
                 model.Sex = user.Sex;
@@ -59,9 +60,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/EditData
         //[Authorize]
-
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
-        
         public ActionResult EditData()
         {
             List<SelectListItem> sex = new List<SelectListItem>();
@@ -99,7 +98,8 @@ namespace Erestauracja.Controllers
                 model.Name = user.Name;
                 model.Surname = user.Surname;
                 model.Address = user.Address;
-                model.TownID = user.TownID;
+                model.Town = user.Town;
+                model.PostalCode = user.PostalCode;
                 model.Country = user.Country;
                 model.Birthdate = user.Birthdate;
                 model.Sex = user.Sex;
@@ -127,8 +127,6 @@ namespace Erestauracja.Controllers
             }
         }
         
-
-
         //
         // POST: /Account/EditData
         //[Authorize]
@@ -150,7 +148,8 @@ namespace Erestauracja.Controllers
                         user.Name = model.Name;
                         user.Surname = model.Surname;
                         user.Address = model.Address;
-                        user.TownID = model.TownID;
+                        user.Town = model.Town;
+                        user.PostalCode = model.PostalCode;
                         user.Country = model.Country;
                         user.Birthdate = model.Birthdate;
                         user.Sex = model.Sex;
@@ -219,7 +218,6 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/LogOn
-        
         public ActionResult LogOn()
         {
             return View();
@@ -228,7 +226,6 @@ namespace Erestauracja.Controllers
         //
         // POST: /Account/LogOn
         [HttpPost]
-        
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -269,12 +266,9 @@ namespace Erestauracja.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-
-        
+   
         //
-        // GET: /Account/LogOff
-        
+        // GET: /Account/LogOff   
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -318,9 +312,6 @@ namespace Erestauracja.Controllers
 
             return View();
         }
-
-
-
 
         //
         // POST: /Account/Register
@@ -551,7 +542,7 @@ namespace Erestauracja.Controllers
             {
                 MembershipCreateStatus createStatus;
                 CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, 111, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, 123456, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
                 if (user != null)
                 {
                     CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
@@ -606,9 +597,6 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-
-        
-
         public static Coordinate GetCoordinates(string region)
         {
             using (var client = new WebClient())
@@ -634,7 +622,6 @@ namespace Erestauracja.Controllers
                 return new Coordinate(lat, lng);
             }
         }
-
 
         //przetłumaczyć reszte
         //

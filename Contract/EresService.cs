@@ -402,10 +402,10 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
+        public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
-                || String.IsNullOrEmpty(townId) || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
+                || townId==null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
                 || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
             {
@@ -419,10 +419,10 @@ namespace Contract
             }
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, string townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
-                || String.IsNullOrEmpty(townId) || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
+                || townId == null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
                 || id==null || id<0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
             {
@@ -616,6 +616,7 @@ namespace Contract
                 return null;
             }
         }
+
         #endregion
     }
 }

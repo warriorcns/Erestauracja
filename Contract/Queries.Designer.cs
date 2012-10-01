@@ -232,8 +232,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
-        ///ON u.`countryID` = c.`id` ORDER BY  u.`login` ASC.
+        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`,c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` ORDER BY  u.`login` ASC.
         /// </summary>
         internal static string GetAllUsers {
             get {
@@ -350,7 +349,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`deliveryTime` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`deliveryTime` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id.
         /// </summary>
         internal static string GetRestaurant {
             get {
@@ -368,7 +367,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, x.`townId`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin).
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` =  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetRestaurantsByManagerLogin {
             get {
@@ -395,8 +394,8 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
-        ///ON u.`countryID` = c.`id` WHERE u.`id` = @id.
+        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
+        ///ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`id` = @id.
         /// </summary>
         internal static string GetUserByID {
             get {
@@ -405,8 +404,8 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, u.`townID`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
-        ///ON u.`countryID` = c.`id` WHERE u.`login` = @login.
+        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
+        ///ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` = @login.
         /// </summary>
         internal static string GetUserByLogin {
             get {
@@ -550,7 +549,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = @townID, `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login.
+        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town_name AND `postal_code` LIKE @postal_code), `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login.
         /// </summary>
         internal static string UpdateUser {
             get {

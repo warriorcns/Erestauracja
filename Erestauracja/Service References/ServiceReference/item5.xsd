@@ -26,9 +26,10 @@
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nip" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Regon" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TownID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Restaurant" nillable="true" type="tns:Restaurant" />
@@ -42,9 +43,10 @@
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Regon" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TownID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RestaurantInfo" nillable="true" type="tns:RestaurantInfo" />
@@ -94,6 +96,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Town" nillable="true" type="tns:Town" />
+  <xs:complexType name="ArrayOfRestaurantInTown">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RestaurantInTown" nillable="true" type="tns:RestaurantInTown" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRestaurantInTown" nillable="true" type="tns:ArrayOfRestaurantInTown" />
+  <xs:complexType name="RestaurantInTown">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RestaurantInTown" nillable="true" type="tns:RestaurantInTown" />
   <xs:complexType name="PasswordAndAnswer">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
@@ -140,10 +155,11 @@
       <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PasswordQuestion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Sex" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TownID" type="xs:int" />
+      <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
