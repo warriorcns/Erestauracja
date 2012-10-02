@@ -1,6 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" ErrorPage="~/Views/Shared/Unauthorized.aspx"%>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.HomeModels>" ErrorPage="~/Views/Shared/Unauthorized.aspx"%>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="title" ContentPlaceHolderID="TitleContent" runat="server">
     Home Page
@@ -8,6 +9,7 @@
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         <%: ViewBag.Message %></h2>
+        
     <form id="form1" runat="server">
     <br />
     <div class="all">
@@ -28,14 +30,18 @@
             <asp:Label class="LabelWybierzMiasto" runat="server" Font-Size="Large" Text="Na stronie możesz zamówić posiłki przygotowane przez restauracje wraz z dowozem do domu !"></asp:Label>
         </asp:Panel>
         <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">
-            <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wybierz miasto:"></asp:Label>
-            <%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>
-            <asp:Button ID="ButtonWybierzMiasto" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
-                Font-Size="Small" />
+            <form>
+            <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wpisz miasto:"></asp:Label>
+            <%--<%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>--%>
+            <%: Html.TextBoxFor(m => m.TownName, new { id = "target", @class = "ButtonWybierzMiasto" })%>
+            <%--<asp:Button ID="ButtonWybierzMiasto" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
+                Font-Size="Small"/>--%>
+
             <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
-            <%=Html.DropDownList("Restauracje", ViewData["Restauracje"] as SelectList, new { @class = "DropDownListWybierzRestauracje" })%>
+            <%: Html.DropDownList("rest", ViewData["rest"] as SelectList, new { id = "Restauracje", @class = "DropDownListWybierzRestauracje" })%>
             <asp:Button ID="ButtonWybierzRestauracje" class="ButtonWybierzRestauracje" runat="server"
-                Text="Szczegółowe wyszukiwanie" Font-Size="Small"/>
+                Text="Szczegółowe wyszukiwanie" Font-Size="Small" />
+            </form>
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto"
             Wrap="true">
@@ -57,8 +63,39 @@
             <% CustomMembershipProvider onlineCount = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"]; %>
             <% int o = onlineCount.GetNumberOfUsersOnline(); %>
             <%: Html.Label(o.ToString())%>
-
+            
         </asp:Panel>
     </div>
     </form>
+    
+    <script type="text/javascript">
+        //document.getElementById("TxtBox").onblur() = document.getElementById("ButtonWybierzMiasto").onclick();
+        $('#target').blur(function () {
+            var town = $("#target").val();
+            var url = '<%: Url.Action("SearchRestaurants", "Home") %>';
+            var data = { value: town };
+            $.post(url, data, function (data) {
+                // TODO: do something with the response from the controller action
+                //alert('the value was successfully sent to the server');
+                //wypelniam dynamicznie DDL danymi zwroconymi przez metode - lista restauracji
+                $.each(data, function () {
+                    //czysci liste
+                    $('#Restauracje').empty();
+                    $('#Restauracje').append($("<option />").val('0').text('Wszystkie'));
+                    $("#Restauracje").append($("<option />").val(this.Value).text(this.Text));
+                    });
+            });
+
+            //pokazuje DDL z restauracjami
+            document.getElementById("Restauracje").style.display = "block";
+        });
+    </script>
+
+    <script type="text/javascript">
+        function test() {alert('test');}
+    </script>
+    <script type="text/javascript">
+        //przekierowanie po wyborze restauracji do strony restauracji z pobraniem id restauracji
+
+    </script>
 </asp:Content>

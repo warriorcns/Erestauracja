@@ -288,6 +288,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\modeltest.cs" />
@@ -914,7 +915,8 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <None Include="Service References\ServiceReference\EresService1.wsdl" />
+    <None Include="Service References\ServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference\configuration.svcinfo" />
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ContactPageContent.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -954,26 +956,10 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ValidateUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ServiceReference\item.disco" />
-    <None Include="Service References\ServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\ServiceReference\configuration.svcinfo" />
-    <None Include="Service References\ServiceReference\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item6.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
@@ -1052,12 +1038,6 @@
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
-    <None Include="Service References\ServiceReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Admin\Admin.Master" />
     <Content Include="Views\ManagePanel\ManagePanel.Master" />
     <Content Include="Views\Admin\Index.master" />
@@ -1278,8 +1258,17 @@
     <WCFMetadataStorage Include="Service References\ServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReference\EresService.wsdl" />
-    <None Include="Service References\ServiceReference\item.xsd">
+    <None Include="Service References\ServiceReference\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\Contract.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service.wsdl" />
+    <None Include="Service References\ServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

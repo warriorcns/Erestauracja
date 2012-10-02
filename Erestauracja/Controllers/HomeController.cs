@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Erestauracja;
 using System.Web.Security;
 using Erestauracja.Authorization;
+using Erestauracja.Models;
 
 namespace Erestauracja.Controllers
 {
@@ -36,17 +37,18 @@ namespace Erestauracja.Controllers
                                           },
                             "ID","Name",1);
             ViewData["Miasta"]=Miasta;
-
-            var Restauracje = new SelectList(new[]
+            //IEnumerable<SelectListItem> selectList = null;
+            var selectList = new SelectList(new[]
                                           {
-                                              new {ID="1",Name="De grasso"},
-                                              new{ID="2",Name="La Scalla"},
-                                              new{ID="3",Name="Mc Donald"},
-                                              new{ID="4",Name="Subway"},
+                                              new {ID="0",Name="Wszystkie"},
+                                              //new{ID="2",Name="La Scalla"},
+                                              //new{ID="3",Name="Mc Donald"},
+                                              //new{ID="4",Name="Subway"},
                                           },
                             "ID", "Name", 1);
-            ViewData["Restauracje"] = Restauracje;
-                        
+            
+            ViewData["rest"] = selectList;
+          
             return View();
         }
 
@@ -63,6 +65,29 @@ namespace Erestauracja.Controllers
         public ActionResult Unauthorized()
         {
             return View();
+        }
+
+        public ActionResult SearchRestaurants(String value) 
+        { 
+            //(m.TownName)
+            ServiceReference.EresServiceClient res = new ServiceReference.EresServiceClient();
+            Erestauracja.ServiceReference.RestaurantInTown[] listares = res.GetRestaurantByTown(value);
+           
+            //
+            //wazne
+            // przepisac tylko nazwy restauracji w petli i to przekazac do widoku za pomoca viewdata.
+            List<SelectList> r = new List<SelectList>();
+            IEnumerable<SelectListItem> selectList =
+            from c in listares
+            select new SelectListItem
+            {
+                Selected = ( c.ResId == 0 ),
+                Text = c.Name,
+                Value = c.ResId.ToString()
+            };
+            //ViewData["rest"] = selectList;
+            //return RedirectToAction("Index");
+            return Json(selectList);
         }
 
     }
