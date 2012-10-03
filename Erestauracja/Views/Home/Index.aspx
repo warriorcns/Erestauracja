@@ -78,24 +78,47 @@
                 // TODO: do something with the response from the controller action
                 //alert('the value was successfully sent to the server');
                 //wypelniam dynamicznie DDL danymi zwroconymi przez metode - lista restauracji
+                //czysci liste
+                $('#Restauracje').empty();
+                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wszystkie'));
                 $.each(data, function () {
-                    //czysci liste
-                    $('#Restauracje').empty();
-                    $('#Restauracje').append($("<option />").val('0').text('Wszystkie'));
-                    $("#Restauracje").append($("<option />").val(this.Value).text(this.Text));
-                    });
+                    
+                    
+                    $("#Restauracje").append($("<option selected=\"selected\"/>").val(this.Value).text(this.Text));
+                    
+                });
+                $("#Restauracje").val('0');
             });
 
             //pokazuje DDL z restauracjami
             document.getElementById("Restauracje").style.display = "block";
         });
     </script>
-
+    <%--<%: Url.Action("Restaurant", "CitiesAndRestaurants") %>--%>
     <script type="text/javascript">
         function test() {alert('test');}
     </script>
     <script type="text/javascript">
         //przekierowanie po wyborze restauracji do strony restauracji z pobraniem id restauracji
+
+        $("#Restauracje").change(function () {
+            var str = "";
+            $("select option:selected").each(function () {
+                str += $(this).val() + " ";
+            });
+            //$("div").text(str);
+            //redirect to res page
+            alert('test:' + str);
+
+            var url = '<%: Url.Action("Restaurant", "CitiesAndRestaurants") %>';
+            var data = { value: str };
+            if ( !$(str).val() ) {
+                $.post(url, data, function (data) {
+                    // TODO: do something with the response from the controller action
+                    alert('the value was successfully sent to the server' + str);
+                });
+            }
+        }).trigger('change');
 
     </script>
 </asp:Content>

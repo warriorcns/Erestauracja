@@ -64,9 +64,16 @@ namespace Erestauracja.Controllers
         public ActionResult EditData()
         {
             List<SelectListItem> sex = new List<SelectListItem>();
+            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
             try
             {
-                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                string status = string.Empty;
+                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                country.Close();
+                ViewData["Map"] = data;
+
+           
+                //ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
 
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();

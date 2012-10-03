@@ -27,10 +27,11 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult ListRestaurantsFromCity(int? height, int? width)
+        public ActionResult ListRestaurantsFromCity()
         {
-            ViewData["height"] = height ?? 300;
-            ViewData["width"] = width ?? 500;
+            ViewData["height"] = 300;
+            ViewData["width"] = 500;
+
             return View();
         }
 
@@ -45,19 +46,20 @@ namespace Erestauracja.Controllers
             }
           //  IEnumerable<Erestauracja.Controllers.RegionInfo> ttt;
            // ViewData["markers"] =  ttt;
+            
             return View(data);
         }
+
+        /// <summary>
+        /// Funkcja otrzymuje id restauracji wybranej w index.aspx w home
+        /// </summary>
+        /// <param name="value">id restauracji</param>
+        /// <returns>widok</returns>
+        public ActionResult Restaurant(int value)
+        {
+           
+            
+            return View();
+        }
     }
-
-    public class RegionInfo
-    {
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
-        public string Title { get; set; }
-        public int zIndex { get; set; }
-        public string ImagePath { get; set; }
-        public string InfoWindowContent { get; set; }
-    }
-
-
 }

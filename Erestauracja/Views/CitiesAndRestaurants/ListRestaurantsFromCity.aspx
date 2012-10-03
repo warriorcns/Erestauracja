@@ -18,16 +18,7 @@
 
     </asp:Panel>
     <asp:Panel class="PanelMapa" runat="server">
-    <%--Dac tutaj mape z google maps wraz z znacznikami--%>
     
-    
-    <%--<%: Html.Telerik().GoogleMap().Name("map")%>--%>
-
-    <%: Html.Telerik().GoogleMap()
-            .Name("map")
-            .Width((int)ViewData["width"])
-            .Height((int)ViewData["height"])
-    %>
     </asp:Panel>
     </div>
 </asp:Content>

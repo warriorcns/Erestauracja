@@ -38,17 +38,18 @@ namespace Erestauracja.Controllers
                             "ID","Name",1);
             ViewData["Miasta"]=Miasta;
             //IEnumerable<SelectListItem> selectList = null;
-            var selectList = new SelectList(new[]
-                                          {
-                                              new {ID="0",Name="Wszystkie"},
-                                              //new{ID="2",Name="La Scalla"},
-                                              //new{ID="3",Name="Mc Donald"},
-                                              //new{ID="4",Name="Subway"},
+            var selectList = new SelectList(new[]{
+                                              new {ID=String.Empty,Name=String.Empty},
                                           },
                             "ID", "Name", 1);
-            
-            ViewData["rest"] = selectList;
-          
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem
+            {
+                Text = String.Empty,
+                Value = String.Empty
+            });
+            //ViewData["rest"] = selectList;
+            ViewData["rest"] = items;
             return View();
         }
 
@@ -85,7 +86,7 @@ namespace Erestauracja.Controllers
                 Text = c.Name,
                 Value = c.ResId.ToString()
             };
-            //ViewData["rest"] = selectList;
+            ViewData["rest"] = selectList;
             //return RedirectToAction("Index");
             return Json(selectList);
         }

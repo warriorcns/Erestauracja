@@ -979,6 +979,7 @@
     <Content Include="Views\CitiesAndRestaurants\Index.aspx" />
     <Content Include="Views\CitiesAndRestaurants\ListRestaurantsFromCity.aspx" />
     <Content Include="Views\CitiesAndRestaurants\Przykladmapy.aspx" />
+    <Content Include="Views\CitiesAndRestaurants\Restaurant.aspx" />
     <Content Include="Views\Find\Index.aspx" />
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Content\CSS\home.css" />
