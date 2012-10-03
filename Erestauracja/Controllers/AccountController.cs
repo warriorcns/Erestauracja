@@ -666,32 +666,6 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-        public static Coordinate GetCoordinates(string region)
-        {
-            using (var client = new WebClient())
-            {
-
-                string uri = "http://maps.google.com/maps/geo?q='" + region +
-                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
-                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
-
-                string[] geocodeInfo = client.DownloadString(uri).Split(',');
-
-                NumberStyles style;
-                CultureInfo culture;
-
-                style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
-                culture = CultureInfo.CreateSpecificCulture("en-CA");
-
-                double lat;
-                double lng;
-
-                double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
-                double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
-                return new Coordinate(lat, lng);
-            }
-        }
-
         //przetłumaczyć reszte
         //
         #region Status Codes
@@ -733,19 +707,5 @@ namespace Erestauracja.Controllers
             }
         }
         #endregion
-    }
-
-    //Geocoding
-    public class Coordinate
-    {
-        public double Latitude;
-        public double Longitude;
-
-        public Coordinate(double Latitude, double Longitude)
-        {
-            this.Latitude = Latitude;
-            this.Longitude = Longitude;
-        }
-
     }
 }

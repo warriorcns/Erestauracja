@@ -296,11 +296,6 @@
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Providers\CustomMembershipUser.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
-    <Compile Include="Queries.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Queries.resx</DependentUpon>
-    </Compile>
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1007,7 +1002,6 @@
     <Content Include="Views\Restaurant\Index.aspx" />
     <Content Include="Views\Restaurant\Menu.aspx" />
     <Content Include="Views\Restaurant\Parties.aspx" />
-    <Content Include="Views\Restaurant\Test.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Map.ascx" />
     <Content Include="Views\Shared\Unauthorized.aspx" />
@@ -1201,11 +1195,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.bg-BG.designer.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Queries.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Queries.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\EditorTemplates\Week.cshtml" />
