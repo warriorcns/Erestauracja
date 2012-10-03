@@ -108,14 +108,14 @@
             });
             //$("div").text(str);
             //redirect to res page
-            alert('test:' + str);
+            //alert('test:' + str);
 
             var url = '<%: Url.Action("Restaurant", "CitiesAndRestaurants") %>';
             var data = { value: str };
             if ( !$(str).val() ) {
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
-                    alert('the value was successfully sent to the server' + str);
+                    //alert('the value was successfully sent to the server' + str);
                 });
             }
         }).trigger('change');

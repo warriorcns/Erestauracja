@@ -268,12 +268,6 @@
             //tutaj potrzebujemy wklepac te wartosci do textboxow...
             TownName.value = town;
             PostalCode.value = postalcode;
-            
-            //var infowindow = null;
-            //infowindow = new google.maps.InfoWindow({ content: "holding..." });
-            //TownName.value = infowindow.valueOf(model.TownName);
-
-
         }
     </script>
 </asp:Content>
