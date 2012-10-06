@@ -603,6 +603,48 @@ namespace Contract
                 return null;
             }
         }
+
+        public Category GetCategory(string managerLogin, int restaurantID, int categoryID)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1 || categoryID == null || categoryID < 1))
+            {
+                Database db = new Database();
+                Category value = db.GetCategory(managerLogin, restaurantID, categoryID);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2)
+        {
+            if (!(String.IsNullOrEmpty(categoryName) || String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1 || categoryID == null || categoryID < 1))
+            {
+                Database db = new Database();
+                bool value = db.EditCategory(managerLogin, restaurantID, categoryID, categoryName, categoryDescription, priceOption, nonPriceOption, nonPriceOption2);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteCategory(string managerLogin, int restaurantID, int categoryID)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1 || categoryID == null || categoryID < 1))
+            {
+                Database db = new Database();
+                bool value = db.DeleteCategory(managerLogin, restaurantID, categoryID);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region ogólne

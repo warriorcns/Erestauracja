@@ -144,6 +144,15 @@ namespace Contract
         [OperationContract]
         List<Category> GetCategories(string managerLogin, int restaurantID);
 
+        [OperationContract]
+        Category GetCategory(string managerLogin, int restaurantID, int categoryID);
+
+        [OperationContract]
+        bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2);
+        
+        [OperationContract]
+        bool DeleteCategory(string managerLogin, int restaurantID, int categoryID);
+
         #endregion
 
         #region ogólne

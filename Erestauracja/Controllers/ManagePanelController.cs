@@ -937,5 +937,110 @@ namespace Erestauracja.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+         //
+        // GET: /ManagePanel/EditCategoryPage
+        public ActionResult EditCategoryPage(int id, int cat)
+        {
+            if (id > 0 && cat >0)
+            {
+                ViewData["id"] = id;
+                Category value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetCategory(User.Identity.Name, id, cat);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    return View(value);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // POST: /ManagePanel/EditCategoryPage
+        [HttpPost]
+        public ActionResult EditCategoryPage(Category model)
+        {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.EditCategory(User.Identity.Name, model.RestaurantID, model.CategoryID, model.CategoryName, model.CategoryDescription, model.PriceOption, model.NonPriceOption, model.NonPriceOption2);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Edytowanie kategorii nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("EditMenuPage", "ManagePanel", new { id = model.RestaurantID });
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/DeleteCategory
+        public ActionResult DeleteCategory(int id, int cat)
+        {
+            if (id > 0 && cat >0)
+            {
+                ViewData["id"] = id;
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                      //  value = client.DeleteCategory(User.Identity.Name, id, cat);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Usuwanie kategorii nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("EditMenuPage", new { id = id});
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
     }
 }

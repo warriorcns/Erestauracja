@@ -133,6 +133,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `category` WHERE `id`=@id AND `restaurantId`=@restaurantId.
+        /// </summary>
+        internal static string DeleteCategory {
+            get {
+                return ResourceManager.GetString("DeleteCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteRole {
@@ -156,6 +165,15 @@ namespace Contract {
         internal static string DeleteUsersInRole {
             get {
                 return ResourceManager.GetString("DeleteUsersInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `category` SET `categoryName`=@categoryName,`categoryDescription`=@categoryDescription,`priceOption`=@priceOption,`nonPriceOption`=@nonPriceOption,`nonPriceOption2`=@nonPriceOption2 WHERE `restaurantId`=@restaurantId AND `id` = @id.
+        /// </summary>
+        internal static string EditCategory {
+            get {
+                return ResourceManager.GetString("EditCategory", resourceCulture);
             }
         }
         
@@ -255,6 +273,15 @@ namespace Contract {
         internal static string GetCategories {
             get {
                 return ResourceManager.GetString("GetCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId AND `id` = @id.
+        /// </summary>
+        internal static string GetCategory {
+            get {
+                return ResourceManager.GetString("GetCategory", resourceCulture);
             }
         }
         

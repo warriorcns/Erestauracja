@@ -1000,6 +1000,7 @@
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Contact.aspx" />
     <Content Include="Views\ManagePanel\Delivery.aspx" />
+    <Content Include="Views\ManagePanel\EditCategoryPage.aspx" />
     <Content Include="Views\ManagePanel\EditContactPage.aspx" />
     <Content Include="Views\ManagePanel\EditDeliveryPage.aspx" />
     <Content Include="Views\ManagePanel\EditEventsPage.aspx" />

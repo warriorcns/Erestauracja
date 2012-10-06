@@ -141,6 +141,9 @@
   <data name="CreateUser" xml:space="preserve">
     <value>INSERT INTO `users`(`login`, `password`, `email`, `name`, `surname`, `address`, `townID`, `countryID`, `birthdate`, `sex`, `telephone`, `comment`, `passwordQuestion`, `passwordAnswer`, `isApproved`, `lastActivityDate`, `lastLoginDate`, `lastPasswordChangedDate`, `creationDate`, `isOnLine`, `isLockedOut`, `lastLockedOutDate`, `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart`) VALUES(@login, @password, @email, @name, @surname, @address, @townID, (SELECT `id` FROM `countries` WHERE `name`=@country), @birthdate, @sex, @telephone, @comment, @passwordQuestion, @passwordAnswer, @isApproved, @lastActivityDate, @lastLoginDate, @lastPasswordChangedDate, @creationDate, @isOnLine, @isLockedOut, @lastLockedOutDate, @failedPasswordAttemptCount, @failedPasswordAttemptWindowStart, @failedPasswordAnswerAttemptCount, @failedPasswordAnswerAttemptWindowStart)</value>
   </data>
+  <data name="DeleteCategory" xml:space="preserve">
+    <value>DELETE FROM `category` WHERE `id`=@id AND `restaurantId`=@restaurantId</value>
+  </data>
   <data name="DeleteRole" xml:space="preserve">
     <value>DELETE FROM `roles` WHERE `rolename` = @rolename</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="DeleteUsersInRole" xml:space="preserve">
     <value>DELETE FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
+  </data>
+  <data name="EditCategory" xml:space="preserve">
+    <value>UPDATE `category` SET `categoryName`=@categoryName,`categoryDescription`=@categoryDescription,`priceOption`=@priceOption,`nonPriceOption`=@nonPriceOption,`nonPriceOption2`=@nonPriceOption2 WHERE `restaurantId`=@restaurantId AND `id` = @id</value>
   </data>
   <data name="EditContactPage" xml:space="preserve">
     <value>UPDATE `rest_page_content` SET `contact`=@contact WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
@@ -182,6 +188,9 @@
   </data>
   <data name="GetCategories" xml:space="preserve">
     <value>SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId</value>
+  </data>
+  <data name="GetCategory" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId AND `id` = @id</value>
   </data>
   <data name="GetContactPage" xml:space="preserve">
     <value>SELECT `contact` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>

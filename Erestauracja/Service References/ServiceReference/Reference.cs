@@ -1873,6 +1873,12 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCategories", ReplyAction="http://tempuri.org/IEresService/GetCategoriesResponse")]
         Erestauracja.ServiceReference.Category[] GetCategories(string managerLogin, int restaurantID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCategory", ReplyAction="http://tempuri.org/IEresService/GetCategoryResponse")]
+        Erestauracja.ServiceReference.Category GetCategory(string managerLogin, int restaurantID, int categoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditCategory", ReplyAction="http://tempuri.org/IEresService/EditCategoryResponse")]
+        bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
         
@@ -2048,6 +2054,14 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.Category[] GetCategories(string managerLogin, int restaurantID) {
             return base.Channel.GetCategories(managerLogin, restaurantID);
+        }
+        
+        public Erestauracja.ServiceReference.Category GetCategory(string managerLogin, int restaurantID, int categoryID) {
+            return base.Channel.GetCategory(managerLogin, restaurantID, categoryID);
+        }
+        
+        public bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2) {
+            return base.Channel.EditCategory(managerLogin, restaurantID, categoryID, categoryName, categoryDescription, priceOption, nonPriceOption, nonPriceOption2);
         }
         
         public string[] GetCountriesList() {

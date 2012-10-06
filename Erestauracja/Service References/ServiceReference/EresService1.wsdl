@@ -92,6 +92,18 @@
   <wsdl:message name="IEresService_GetCategories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCategoriesResponse" />
   </wsdl:message>
+  <wsdl:message name="IEresService_GetCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategory" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_GetCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditCategory" />
+  </wsdl:message>
+  <wsdl:message name="IEresService_EditCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditCategoryResponse" />
+  </wsdl:message>
   <wsdl:message name="IEresService_GetCountriesList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCountriesList" />
   </wsdl:message>
@@ -334,6 +346,14 @@
     <wsdl:operation name="GetCategories">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCategories" message="tns:IEresService_GetCategories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCategoriesResponse" message="tns:IEresService_GetCategories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCategory" message="tns:IEresService_GetCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/GetCategoryResponse" message="tns:IEresService_GetCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEresService/EditCategory" message="tns:IEresService_EditCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEresService/EditCategoryResponse" message="tns:IEresService_EditCategory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCountriesList">
       <wsdl:input wsaw:Action="http://tempuri.org/IEresService/GetCountriesList" message="tns:IEresService_GetCountriesList_InputMessage" />
@@ -581,6 +601,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetCategories">
       <soap:operation soapAction="http://tempuri.org/IEresService/GetCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategory">
+      <soap:operation soapAction="http://tempuri.org/IEresService/GetCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditCategory">
+      <soap:operation soapAction="http://tempuri.org/IEresService/EditCategory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

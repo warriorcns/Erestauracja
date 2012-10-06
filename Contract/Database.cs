@@ -2316,6 +2316,283 @@ namespace Contract
             return u;
         }
 
+        public Category GetCategory(string managerLogin, int restaurantID, int categoryID)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    //////////////////
+                    reader.Close();
+                    conn.Close();
+                    ///////////////////////////////
+                    MySqlDataReader reader2 = null;
+                    Category rest = null;
+                    try
+                    {
+                        MySqlCommand command = new MySqlCommand(Queries.GetCategory);
+                        command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                        command.Parameters.AddWithValue("@id", categoryID);
+                        command.Connection = conn;
+                      //  rest = new Category();
+                        conn.Open();
+
+                        reader2 = command.ExecuteReader();
+
+                        while (reader2.Read())
+                        {
+                            rest = GetCategoriesFromReader(reader2);
+                           // rest.Add(r);
+                        }
+                    }
+                    catch (MySqlException e)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message;
+                        wiadomosc += "Action: " + "GetCategory" + "\n\n";
+                        wiadomosc += "Exception: " + e.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                        return null;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message2;
+                        wiadomosc += "Action: " + "GetCategory" + "\n\n";
+                        wiadomosc += "Exception: " + ex.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                        return null;
+                    }
+                    finally
+                    {
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                    }
+
+                    return rest;
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            return null;
+
+        }
+
+        public bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    conn.Close();
+
+                    MySqlCommand command = new MySqlCommand(Queries.EditCategory);
+                    command.Parameters.AddWithValue("@categoryName", @categoryName);
+                    command.Parameters.AddWithValue("@categoryDescription", categoryDescription);
+                    command.Parameters.AddWithValue("@priceOption", priceOption);
+                    command.Parameters.AddWithValue("@nonPriceOption", nonPriceOption);
+                    command.Parameters.AddWithValue("@nonPriceOption2", nonPriceOption2);
+                    command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    command.Parameters.AddWithValue("@id", categoryID);
+
+                    int rowsaffected = ExecuteNonQuery(command, "EditCategory");
+
+                    if (rowsaffected > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            return false;
+        }
+
+        public bool DeleteCategory(string managerLogin, int restaurantID, int categoryID)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    conn.Close();
+
+                    MySqlCommand command = new MySqlCommand(Queries.DeleteCategory);
+                    command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    command.Parameters.AddWithValue("@id", categoryID);
+
+                    int rowsaffected = ExecuteNonQuery(command, "DeleteCategory");
+
+                    if (rowsaffected > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            return false;
+        }
+
         #endregion
 
         #region ogólne
