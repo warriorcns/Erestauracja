@@ -16,8 +16,9 @@
             $("#DeliveryTime").mask("99:99:99");
         });
     </script>
+    <div class="polaRejestracji">
 
-    <form id="Form1" runat="server">
+        <form id="Form1" class="formaRejestracji" runat="server">
     <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja restauracji nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
@@ -68,8 +69,8 @@
                     <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Town)%> 
                     </li>
-                    <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Town)%>
+                    <li class="editor-labelR"> 
+                        <%: Html.TextBoxFor(m => m.Town, new { id = "TownName"})%>
                         
                     </li>
                     <li class="validation-labelR">
@@ -82,7 +83,7 @@
                         <%: Html.LabelFor(m => m.PostalCode)%> 
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.PostalCode)%>
+                        <%: Html.TextBoxFor(m => m.PostalCode, new { id = "PostalCode" })%>
                         
                     </li>
                     <li class="validation-labelR">
@@ -201,6 +202,45 @@
         </div>
     <% } %>
     </form>
-     
+
+        <div class="mapTowns" id="mapka">
+            <%--<%:
+            Html.Telerik().GoogleMap().Name("map")
+            .Width(400).Height(400)  %>--%>
+            <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>);%>
+            <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
+            <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+        </div>
+
+
+        <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
+        <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
+            //{
+            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"] ).Count() > 1)
+            //if(true)
+            {%>
+        <script type="text/javascript">
+            document.getElementById('mapka').style.display = "block";
+        </script>
+        <%}
+                else
+                {%>
+        <script type="text/javascript">
+            document.getElementById('mapka').style.display = "none";
+        </script>
+        <%}%>
+        <% //} %>
+    </div>
+
+      <script type="text/javascript">
+          function ChoseAndSend(town, postalcode) {
+              //wstawia pola ze znacznika do textboxow
+              var TownName = document.getElementById("TownName");
+              var PostalCode = document.getElementById("PostalCode");
+              //tutaj potrzebujemy wklepac te wartosci do textboxow...
+              TownName.value = town;
+              PostalCode.value = postalcode;
+          }
+    </script>
 
 </asp:Content>

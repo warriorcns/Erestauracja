@@ -9,12 +9,17 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#Birthdate").datepicker();
+            $("#Birthdate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 'c-100:c+0',
+                dateFormat: 'dd/mm/yy'
+            });
         });
     </script>
     <script type="text/javascript">
         jQuery(function ($) {
-            $("#Birthdate").mask("9999/99/99");
+            $("#Birthdate").mask("99/99/9999");
         });
     </script>
     <script type="text/javascript">

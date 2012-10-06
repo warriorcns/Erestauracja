@@ -119,6 +119,7 @@ namespace Erestauracja.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Birthdate { get; set; }
         
         [Required]
@@ -179,6 +180,7 @@ namespace Erestauracja.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Birthdate { get; set; }
 
         [Required]

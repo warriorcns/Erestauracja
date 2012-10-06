@@ -69,6 +69,18 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/AddRestaurant
         public ActionResult AddRestaurant()
         {
+            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            try
+            {
+                string status = string.Empty;
+                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                ViewData["Map"] = data;
+                country.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy Miast nie powiodło się.");
+            }
             return View();
         }
 
@@ -77,43 +89,76 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult AddRestaurant(RegisterRestaurantModel model)
         {
+            List<Town> val = null;
+            string status = string.Empty;
             if (ModelState.IsValid)
             {
-                //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                //CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
-                CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
-                {
-                    bool value = false;
-                    try
-                    {
-                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                        using (client)
-                        {
-                            value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
-                        }
-                        client.Close();
-                    }
-                    catch (Exception e)
-                    {
-                        value = false;
-                    }
 
-                    if (value == false)
+                if (val.Count == 1)
+                {
+                    //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    //CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
                     {
-                        ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
+                        bool value = false;
+                        try
+                        {
+                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                            using (client)
+                            {
+                                value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
+                            }
+                            client.Close();
+                        }
+                        catch (Exception e)
+                        {
+                            value = false;
+                        }
+
+                        if (value == false)
+                        {
+                            ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Restaurant", "ManagePanel");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Restaurant", "ManagePanel");
+                        ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
-                }
+
+                
             }
 
+            else if (val.Count > 1)
+            {
+                ModelState.AddModelError("", status);
+                ViewData["miasta"] = val;
+                //return RedirectToAction("", "Account",model);
+
+                //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
+                //string status = String.Empty;
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+
+                foreach (Town item in data)
+                {
+                    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+
+                    item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" +
+                        "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                }
+                ViewData["Map"] = data;
+                return View();
+            }
+            else
+            {
+                ModelState.AddModelError("", status);
+            }
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -125,7 +170,7 @@ namespace Erestauracja.Controllers
             try
             {
                 ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-
+                
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();
 
@@ -136,7 +181,12 @@ namespace Erestauracja.Controllers
                 }
                 ViewData["countryList"] = countryList;
 
+                string status = string.Empty;
+                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                ViewData["miasta"] = new List<Town>();
+                ViewData["Map"] = data;
                 country.Close();
+
             }
             catch (Exception e)
             {
@@ -189,13 +239,21 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult EditRestaurant(EditRestaurantModel model)
         {
+            List<Town> val = null;
+            string status = string.Empty;
             try
             {
                 ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                val = new List<Town>(country.GetTowns(out status, model.Town, model.PostalCode));
+                
 
                 List<string> listapobrana = new List<string>(country.GetCountriesList());
                 List<SelectListItem> countryList = new List<SelectListItem>();
 
+
+                IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+                
+                ViewData["Map"] = data;
 
                 foreach (string item in listapobrana)
                 {
@@ -209,34 +267,77 @@ namespace Erestauracja.Controllers
             {
                 ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
             }
-
-            if (ModelState.IsValid)
+            if (val == null)
             {
-                bool value = false;
-                try
+                ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+            }
+            if (val.Count == 1)
+            {
+                ViewData["miasta"] = val;
+                if (ModelState.IsValid)
                 {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
+                    bool value = false;
+                    try
                     {
-                        value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        
+                        
+                        using (client)
+                        {
+                            int townID = 0;
+                            Town[] towns = client.GetTowns(out status, model.Town, model.PostalCode);
+                            foreach (Town item in towns)
+                            { 
+                                //if( == item. )
+                                {
+                                    //resID = item.ResId;
+                                }
+                            }
+                            value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                        }
+                        client.Close();
                     }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    value = false;
-                }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
 
-                if (value == false)
-                {
-                    ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
-                }
-                else
-                {
-                    return RedirectToAction("Restaurant", "ManagePanel");
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Restaurant", "ManagePanel");
+                    }
                 }
             }
+            else if (val.Count > 1)
+            {
 
+                ModelState.AddModelError("", status);
+                ViewData["miasta"] = val;
+                //return RedirectToAction("", "Account",model);
+
+                //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
+
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+
+                foreach (Town item in data)
+                {
+                    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+
+                    item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" +
+                        "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                }
+                ViewData["Map"] = data;
+                return View();
+            }
+            else
+            {
+                ModelState.AddModelError("", status);
+            }
             // If we got this far, something failed, redisplay form
             return View(model);
         }

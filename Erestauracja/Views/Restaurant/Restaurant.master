@@ -1,12 +1,20 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<% 
+    HttpCookie c = new HttpCookie("MyCookie");
+    c.Value = "TEST";
+    Response.Cookies.Add(c); %>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
 </asp:Content>
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
+
+
 <form id="form1" runat="server">
+
 <nav class="menu">
                 <ul id="menu">
                     <li>

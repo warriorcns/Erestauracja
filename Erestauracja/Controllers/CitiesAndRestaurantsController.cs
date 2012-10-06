@@ -57,9 +57,9 @@ namespace Erestauracja.Controllers
         /// <returns>widok</returns>
         public ActionResult Restaurant(int value)
         {
-           
-            
-            return View();
+
+            return RedirectToAction("Action", new { id = 99 });
+            //return View();
         }
     }
 }

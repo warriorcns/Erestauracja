@@ -82,10 +82,7 @@
                 $('#Restauracje').empty();
                 $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wszystkie'));
                 $.each(data, function () {
-                    
-                    
                     $("#Restauracje").append($("<option selected=\"selected\"/>").val(this.Value).text(this.Text));
-                    
                 });
                 $("#Restauracje").val('0');
             });
@@ -106,17 +103,19 @@
             $("select option:selected").each(function () {
                 str += $(this).val() + " ";
             });
-            //$("div").text(str);
             //redirect to res page
             //alert('test:' + str);
 
-            var url = '<%: Url.Action("Restaurant", "CitiesAndRestaurants") %>';
-            var data = { value: str };
-            if ( !$(str).val() ) {
+            var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
+            var data = { id: str };
+
+            if (!$(str).val()) {
                 $.post(url, data, function (data) {
-                    // TODO: do something with the response from the controller action
+                   // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + str);
+                    window.location.href = data.redirectToUrl;
                 });
+               
             }
         }).trigger('change');
 

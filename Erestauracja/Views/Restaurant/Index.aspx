@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Restaurant/Restaurant.master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
+
+
 <asp:Content class="main" ContentPlaceHolderID="Main" runat="server">
     <div class="PaneleOpisRestauracji">
         <asp:Panel class="PanelOpisRestauracji" runat="server" ScrollBars="Auto">
