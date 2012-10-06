@@ -76,6 +76,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ContactPageContent" nillable="true" type="tns:ContactPageContent" />
+  <xs:complexType name="ArrayOfCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true" type="tns:Category" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategory" nillable="true" type="tns:ArrayOfCategory" />
+  <xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NonPriceOption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NonPriceOption2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PriceOption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestaurantID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Category" nillable="true" type="tns:Category" />
   <xs:complexType name="ArrayOfTown">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Town" nillable="true" type="tns:Town" />

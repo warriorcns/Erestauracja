@@ -754,38 +754,11 @@
     <Content Include="Content\2012.2.607\Windows7\sprite.png" />
     <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
-    <Content Include="Content\CSS\jquery.nailthumb.1.1.css" />
-    <Content Include="Content\CSS\jquery.nailthumb.1.1.min.css" />
     <Content Include="Content\CSS\Restaurants.css" />
     <Content Include="Content\images\disk.png" />
-    <Content Include="Content\images\empty.gif" />
     <Content Include="Content\images\favicon.ico" />
-    <Content Include="Content\images\help_panel.png" />
-    <Content Include="Content\images\left.png" />
-    <Content Include="Content\images\left_empty.png" />
-    <Content Include="Content\images\left_eng.png" />
-    <Content Include="Content\images\left_prev.png" />
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
-    <Content Include="Content\images\popup_ajax_loader.gif" />
-    <Content Include="Content\images\resid1\1.jpg" />
-    <Content Include="Content\images\resid1\2.jpg" />
-    <Content Include="Content\images\resid1\foto2.jpg" />
-    <Content Include="Content\images\resid1\img_1226605537_774909157_vabank restauracja 600.jpg" />
-    <Content Include="Content\images\resid1\restauracja-a-catering2.jpg" />
-    <Content Include="Content\images\resid1\restauracja-a6225_s.jpg" />
-    <Content Include="Content\images\resid1\restauracja.gif" />
-    <Content Include="Content\images\resid1\restauracja.jpg" />
-    <Content Include="Content\images\resid1\restauracja03_750.jpg" />
-    <Content Include="Content\images\resid1\restauracja2.jpg" />
-    <Content Include="Content\images\resid1\restauracja_amadeus.jpg" />
-    <Content Include="Content\images\resid1\restauracja_pod_baranem.jpg" />
-    <Content Include="Content\images\resid1\slide3.jpg" />
-    <Content Include="Content\images\resid1\stol.png" />
-    <Content Include="Content\images\right.png" />
-    <Content Include="Content\images\right_empty.png" />
-    <Content Include="Content\images\right_eng.png" />
-    <Content Include="Content\images\sprites.png" />
     <Content Include="Content\images\wooden_fence_boards.jpg" />
     <Content Include="Content\style\jHtmlArea.ColorPickerMenu.css" />
     <Content Include="Content\style\jHtmlArea.css" />
@@ -851,63 +824,6 @@
     <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="Content\themes\redmond\jquery-ui.css" />
-    <Content Include="Content\yoxview\data\flickr.js" />
-    <Content Include="Content\yoxview\data\flickr.source.js" />
-    <Content Include="Content\yoxview\data\picasa.js" />
-    <Content Include="Content\yoxview\data\picasa.source.js" />
-    <Content Include="Content\yoxview\data\youtube.js" />
-    <Content Include="Content\yoxview\data\youtube.source.js" />
-    <Content Include="Content\yoxview\images\empty.gif" />
-    <Content Include="Content\yoxview\images\help_panel.png" />
-    <Content Include="Content\yoxview\images\left.png" />
-    <Content Include="Content\yoxview\images\left_empty.png" />
-    <Content Include="Content\yoxview\images\left_eng.png" />
-    <Content Include="Content\yoxview\images\left_prev.png" />
-    <Content Include="Content\yoxview\images\popup_ajax_loader.gif" />
-    <Content Include="Content\yoxview\images\right.png" />
-    <Content Include="Content\yoxview\images\right_empty.png" />
-    <Content Include="Content\yoxview\images\right_eng.png" />
-    <Content Include="Content\yoxview\images\sprites.png" />
-    <Content Include="Content\yoxview\jquery.yoxthumbs.js" />
-    <Content Include="Content\yoxview\jquery.yoxview-2.21.js" />
-    <Content Include="Content\yoxview\jquery.yoxview-2.21.min.js" />
-    <Content Include="Content\yoxview\lang\ar.js" />
-    <Content Include="Content\yoxview\lang\bg.js" />
-    <Content Include="Content\yoxview\lang\ca.js" />
-    <Content Include="Content\yoxview\lang\cs.js" />
-    <Content Include="Content\yoxview\lang\de.js" />
-    <Content Include="Content\yoxview\lang\dk.js" />
-    <Content Include="Content\yoxview\lang\en.js" />
-    <Content Include="Content\yoxview\lang\es.js" />
-    <Content Include="Content\yoxview\lang\fr.js" />
-    <Content Include="Content\yoxview\lang\gr.js" />
-    <Content Include="Content\yoxview\lang\he.js" />
-    <Content Include="Content\yoxview\lang\hu.js" />
-    <Content Include="Content\yoxview\lang\ie.js" />
-    <Content Include="Content\yoxview\lang\ir.js" />
-    <Content Include="Content\yoxview\lang\it.js" />
-    <Content Include="Content\yoxview\lang\ja.js" />
-    <Content Include="Content\yoxview\lang\mk.js" />
-    <Content Include="Content\yoxview\lang\nl.js" />
-    <Content Include="Content\yoxview\lang\pl.js" />
-    <Content Include="Content\yoxview\lang\pt-br.js" />
-    <Content Include="Content\yoxview\lang\pt.js" />
-    <Content Include="Content\yoxview\lang\ro.js" />
-    <Content Include="Content\yoxview\lang\ru.js" />
-    <Content Include="Content\yoxview\lang\sk.js" />
-    <Content Include="Content\yoxview\lang\sl.js" />
-    <Content Include="Content\yoxview\lang\sv.js" />
-    <Content Include="Content\yoxview\lang\tr.js" />
-    <Content Include="Content\yoxview\lang\ua.js" />
-    <Content Include="Content\yoxview\lang\zh-cn.js" />
-    <Content Include="Content\yoxview\lang\zh-tw.js" />
-    <Content Include="Content\yoxview\skins\top_menu\sprites.png" />
-    <Content Include="Content\yoxview\skins\top_menu\yoxview.top_menu.css" />
-    <Content Include="Content\yoxview\skins\top_menu\yoxview.top_menu.js" />
-    <Content Include="Content\yoxview\yox.js" />
-    <Content Include="Content\yoxview\yoxview-init.js" />
-    <Content Include="Content\yoxview\yoxview-nojquery.js" />
-    <Content Include="Content\yoxview\yoxview.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\2012.1.214\jquery-1.7.1.min.js" />
     <Content Include="Scripts\2012.1.214\jquery.validate.min.js" />
@@ -988,8 +904,6 @@
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jQuery.datepicker-pl.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.js" />
-    <Content Include="Scripts\jquery.nailthumb.1.1.js" />
-    <Content Include="Scripts\jquery.nailthumb.1.1.min.js" />
     <Content Include="Scripts\jQuery.tmpl.js" />
     <Content Include="Scripts\jQuery.tmpl.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -998,6 +912,10 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference\EresService1.wsdl" />
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Category.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ContactPageContent.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1037,11 +955,23 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ValidateUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\item6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Content\CSS\yoxview.css" />
+    <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
@@ -1066,6 +996,7 @@
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\TopRestaurants.aspx" />
+    <Content Include="Views\ManagePanel\AddCategory.aspx" />
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Contact.aspx" />
     <Content Include="Views\ManagePanel\Delivery.aspx" />
@@ -1073,6 +1004,7 @@
     <Content Include="Views\ManagePanel\EditDeliveryPage.aspx" />
     <Content Include="Views\ManagePanel\EditEventsPage.aspx" />
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
+    <Content Include="Views\ManagePanel\EditMenuPage.aspx" />
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Events.aspx" />
     <Content Include="Views\ManagePanel\Gallery.aspx" />

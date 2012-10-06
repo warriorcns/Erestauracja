@@ -61,6 +61,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `category`(`restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2`) VALUES (@restaurantID,@categoryName,@categoryDescription,@priceOption,@nonPriceOption,@nonPriceOption2).
+        /// </summary>
+        internal static string AddCategory {
+            get {
+                return ResourceManager.GetString("AddCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SE [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddRestaurant {
@@ -237,6 +246,15 @@ namespace Contract {
         internal static string GetAllUsers {
             get {
                 return ResourceManager.GetString("GetAllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId.
+        /// </summary>
+        internal static string GetCategories {
+            get {
+                return ResourceManager.GetString("GetCategories", resourceCulture);
             }
         }
         
@@ -455,6 +473,15 @@ namespace Contract {
         internal static string GetUsersInRole {
             get {
                 return ResourceManager.GetString("GetUsersInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT 0 FROM `restaurants` WHERE `id` = @restaurantID AND `menagerId` = (SELECT `id` FROM `users` WHERE `login` LIKE @managerLogin).
+        /// </summary>
+        internal static string IsRestaurantOwner {
+            get {
+                return ResourceManager.GetString("IsRestaurantOwner", resourceCulture);
             }
         }
         

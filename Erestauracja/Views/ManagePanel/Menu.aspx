@@ -14,11 +14,14 @@
         $(function () {
             $("#accordion").accordion({
                 autoHeight: false,
+                active:false,
                 event: "mouseover"
             });
         });
 	</script>
-
+<fieldset>
+    <legend>Menu - kliknij <%: Html.ActionLink("tutaj", "EditMenuPage", "ManagePanel", new { id = 1 }, null) %> aby edytować</legend>
+     
 <div id="tabs">
 	<ul>
 		<li><a href="#tabs-1">PIZZA</a></li>
@@ -29,7 +32,6 @@
 		<li><a href="#tabs-6">MAKARONY</a></li>
         <li><a href="#tabs-7">SAŁATKA</a></li>
         <li><a href="#tabs-8">INNE</a></li>
-		<li><a href="#tabs-9">ZUPY</a></li>
 	</ul>
 	<div id="tabs-1">
     <p>Wszystkie pizze zawierają sos pomidorowy oraz ser mazzarella, do wyboru zwykłe lub podwójne ciasto.</p>
@@ -84,5 +86,5 @@
 	</div>
 </div>
 
-
+</fieldset>
 </asp:Content>

@@ -2092,6 +2092,230 @@ namespace Contract
             return false;
 
         }
+
+        public bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.AddCategory);
+                    command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                    command.Parameters.AddWithValue("@categoryName", categoryName);
+                    command.Parameters.AddWithValue("@categoryDescription", categoryDescription);
+                    command.Parameters.AddWithValue("@priceOption", priceOption);
+                    command.Parameters.AddWithValue("@nonPriceOption", nonPriceOption);
+                    command.Parameters.AddWithValue("@nonPriceOption2", nonPriceOption2);
+
+                    int rowsaffected = ExecuteNonQuery(command, "AddCategory");
+
+                    if (rowsaffected > 0)
+                    {
+                        return true;
+                    }
+                }
+                else
+                    return false;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return false;
+        }
+
+        public List<Category> GetCategories(string managerLogin, int restaurantID)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    conn.Close();
+                    ///////////////////////////////
+                    MySqlDataReader reader2 = null;
+                    List<Category> rest = null;
+                    try
+                    {
+                        MySqlCommand command = new MySqlCommand(Queries.GetCategories);
+                        command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                        command.Connection = conn;
+                        rest = new List<Category>();
+                        conn.Open();
+
+                        reader2 = command.ExecuteReader();
+
+                        while (reader2.Read())
+                        {
+                            Category r = GetCategoriesFromReader(reader2);
+                            rest.Add(r);
+                        }
+                    }
+                    catch (MySqlException e)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message;
+                        wiadomosc += "Action: " + "GetCategories" + "\n\n";
+                        wiadomosc += "Exception: " + e.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                        return null;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message2;
+                        wiadomosc += "Action: " + "GetCategories" + "\n\n";
+                        wiadomosc += "Exception: " + ex.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                        return null;
+                    }
+                    finally
+                    {
+                        if (reader2 != null) { reader2.Close(); }
+                        conn.Close();
+                    }
+
+                    return rest;
+                    //////////////////////////
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            return null;
+        }
+
+        private Category GetCategoriesFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            int restaurantID = reader.GetInt32(1);
+            string categoryName = reader.GetString(2);
+            string categoryDescription = null;
+            if (!reader.IsDBNull(3)) categoryDescription = reader.GetString(3);
+            string priceOption = null;
+            if (!reader.IsDBNull(4)) priceOption = reader.GetString(4);
+            string nonPriceOption = null;
+            if (!reader.IsDBNull(5)) nonPriceOption = reader.GetString(5);
+            string nonPriceOption2 = null;
+            if (!reader.IsDBNull(6)) nonPriceOption2 = reader.GetString(6);
+
+            Category u = new Category();
+            u.CategoryID = id;
+            u.RestaurantID = restaurantID;
+            u.CategoryName = categoryName;
+            u.CategoryDescription = categoryDescription;
+            u.PriceOption = priceOption;
+            u.NonPriceOption = nonPriceOption;
+            u.NonPriceOption2 = nonPriceOption2;
+
+            return u;
+        }
+
         #endregion
 
         #region ogólne

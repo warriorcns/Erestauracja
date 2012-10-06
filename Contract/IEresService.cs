@@ -138,6 +138,12 @@ namespace Contract
         [OperationContract]
         bool EditContactPage(string contact, int id, string managerLogin);
 
+        [OperationContract]
+        bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin);
+
+        [OperationContract]
+        List<Category> GetCategories(string managerLogin, int restaurantID);
+
         #endregion
 
         #region ogólne
@@ -422,6 +428,7 @@ namespace Contract
     }
     #endregion
 
+    #region restaurant dataContract
     [DataContract]
     public class Restaurant
     { 
@@ -772,6 +779,69 @@ namespace Contract
             set { contact = value; }
         }
     }
+
+    [DataContract]
+    public class Category
+    {
+        private int restaurantID = -1;
+        private int categoryID = -1;
+        private string categoryName = null;
+        private string categoryDescription = null;
+        private string priceOption = null;
+        private string nonPriceOption = null;
+        private string nonPriceOption2 = null;
+
+        [DataMember]
+        public int RestaurantID
+        {
+            get { return restaurantID; }
+            set { restaurantID = value; }
+        }
+
+        [DataMember]
+        public int CategoryID
+        {
+            get { return categoryID; }
+            set { categoryID = value; }
+        }
+
+        [DataMember]
+        public string CategoryName
+        {
+            get { return categoryName; }
+            set { categoryName = value; }
+        }
+
+        [DataMember]
+        public string CategoryDescription
+        {
+            get { return categoryDescription; }
+            set { categoryDescription = value; }
+        }
+
+        [DataMember]
+        public string PriceOption
+        {
+            get { return priceOption; }
+            set { priceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption
+        {
+            get { return nonPriceOption; }
+            set { nonPriceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption2
+        {
+            get { return nonPriceOption2; }
+            set { nonPriceOption2 = value; }
+        }
+    }
+
+    #endregion
 
     [DataContract]
     public class Town

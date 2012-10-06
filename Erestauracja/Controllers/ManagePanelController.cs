@@ -466,6 +466,104 @@ namespace Erestauracja.Controllers
         }
 
         //
+        // GET: /ManagePanel/EditMainPage
+        public ActionResult EditMenuPage(int id)
+        { 
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                
+                List<Category> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Category>(client.GetCategories(User.Identity.Name, id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    List<string> asd = new List<string>();
+                    asd.Add("asd");
+
+                    MenuModel model = new MenuModel();
+                    model.RestaurantID = id;
+                    model.Kategorie = value;
+                    model.Produkty = asd;
+
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Restaurant", "ManagePanel");
+        }
+        
+        //
+        // GET: /ManagePanel/AddCategory
+        public ActionResult AddCategory(int id)
+        {
+            ViewData["id"] = id;
+            CategoryModel model = new CategoryModel();
+            model.RestaurantID = id;
+            return View(model);
+        }
+
+        //
+        // POST: /ManagePanel/AddCategory
+        [HttpPost]
+        public ActionResult AddCategory(CategoryModel model)
+        {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
+                {
+                    bool value = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.AddCategory(model.RestaurantID, model.CategoryName, model.CategoryDescription, model.PriceOption, model.NonPriceOption, model.NonPriceOption2, User.Identity.Name);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
+
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Dodawanie kategori nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditMenuPage", "ManagePanel", new { id = model.RestaurantID});
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
         // GET: /ManagePanel/Delivery
         public ActionResult Delivery(int id)
         {

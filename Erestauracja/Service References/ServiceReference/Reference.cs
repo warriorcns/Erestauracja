@@ -829,6 +829,147 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Category", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class Category : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CategoryIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NonPriceOptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NonPriceOption2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PriceOptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RestaurantIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CategoryDescription {
+            get {
+                return this.CategoryDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryDescriptionField, value) != true)) {
+                    this.CategoryDescriptionField = value;
+                    this.RaisePropertyChanged("CategoryDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CategoryID {
+            get {
+                return this.CategoryIDField;
+            }
+            set {
+                if ((this.CategoryIDField.Equals(value) != true)) {
+                    this.CategoryIDField = value;
+                    this.RaisePropertyChanged("CategoryID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CategoryName {
+            get {
+                return this.CategoryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryNameField, value) != true)) {
+                    this.CategoryNameField = value;
+                    this.RaisePropertyChanged("CategoryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NonPriceOption {
+            get {
+                return this.NonPriceOptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NonPriceOptionField, value) != true)) {
+                    this.NonPriceOptionField = value;
+                    this.RaisePropertyChanged("NonPriceOption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NonPriceOption2 {
+            get {
+                return this.NonPriceOption2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NonPriceOption2Field, value) != true)) {
+                    this.NonPriceOption2Field = value;
+                    this.RaisePropertyChanged("NonPriceOption2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PriceOption {
+            get {
+                return this.PriceOptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PriceOptionField, value) != true)) {
+                    this.PriceOptionField = value;
+                    this.RaisePropertyChanged("PriceOption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RestaurantID {
+            get {
+                return this.RestaurantIDField;
+            }
+            set {
+                if ((this.RestaurantIDField.Equals(value) != true)) {
+                    this.RestaurantIDField = value;
+                    this.RaisePropertyChanged("RestaurantID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Town", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
     public partial class Town : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1726,6 +1867,12 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditContactPage", ReplyAction="http://tempuri.org/IEresService/EditContactPageResponse")]
         bool EditContactPage(string contact, int id, string managerLogin);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddCategory", ReplyAction="http://tempuri.org/IEresService/AddCategoryResponse")]
+        bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCategories", ReplyAction="http://tempuri.org/IEresService/GetCategoriesResponse")]
+        Erestauracja.ServiceReference.Category[] GetCategories(string managerLogin, int restaurantID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
         
@@ -1893,6 +2040,14 @@ namespace Erestauracja.ServiceReference {
         
         public bool EditContactPage(string contact, int id, string managerLogin) {
             return base.Channel.EditContactPage(contact, id, managerLogin);
+        }
+        
+        public bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin) {
+            return base.Channel.AddCategory(restaurantID, categoryName, categoryDescription, priceOption, nonPriceOption, nonPriceOption2, managerLogin);
+        }
+        
+        public Erestauracja.ServiceReference.Category[] GetCategories(string managerLogin, int restaurantID) {
+            return base.Channel.GetCategories(managerLogin, restaurantID);
         }
         
         public string[] GetCountriesList() {

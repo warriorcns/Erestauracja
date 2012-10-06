@@ -576,6 +576,33 @@ namespace Contract
             }
         }
 
+        public bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(categoryName) || String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1))
+            {
+                Database db = new Database();
+                bool value = db.AddCategory(restaurantID, categoryName, categoryDescription, priceOption, nonPriceOption, nonPriceOption2, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<Category> GetCategories(string managerLogin, int restaurantID)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1))
+            {
+                Database db = new Database();
+                List<Category> value = db.GetCategories(managerLogin, restaurantID);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
 
         #region ogólne

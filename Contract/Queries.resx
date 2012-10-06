@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCategory" xml:space="preserve">
+    <value>INSERT INTO `category`(`restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2`) VALUES (@restaurantID,@categoryName,@categoryDescription,@priceOption,@nonPriceOption,@nonPriceOption2)</value>
+  </data>
   <data name="AddRestaurant" xml:space="preserve">
     <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, @currentDeliveryTime, @isApproved, @lastActivityDate, @isOnline, @isLockedOut, @lastLockedOutDate)</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="GetAllUsers" xml:space="preserve">
     <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`,c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` ORDER BY  u.`login` ASC</value>
+  </data>
+  <data name="GetCategories" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId</value>
   </data>
   <data name="GetContactPage" xml:space="preserve">
     <value>SELECT `contact` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
@@ -250,6 +256,9 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   </data>
   <data name="GetUsersInRole" xml:space="preserve">
     <value>SELECT `login` FROM `users` WHERE `id` IN (SELECT `userID` FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
+  </data>
+  <data name="IsRestaurantOwner" xml:space="preserve">
+    <value>SELECT 0 FROM `restaurants` WHERE `id` = @restaurantID AND `menagerId` = (SELECT `id` FROM `users` WHERE `login` LIKE @managerLogin)</value>
   </data>
   <data name="IsUserInRole" xml:space="preserve">
     <value>SELECT COUNT(*) FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login`=@login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>

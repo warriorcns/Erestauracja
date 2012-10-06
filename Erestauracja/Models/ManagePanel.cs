@@ -185,4 +185,43 @@ namespace Erestauracja.Models
         [DataType(DataType.Html)]
         public string Contact { get; set; }
     }
+
+    public class CategoryModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [HiddenInput]
+        public int CategoryID { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwa kategori")]
+        public string CategoryName { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opis")]
+        public string CategoryDescription { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opcja wpływająca na cene")]
+        public string PriceOption { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opcja niewpływająca na cene")]
+        public string NonPriceOption { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opcja niewpływająca na cene")]
+        public string NonPriceOption2 { get; set; }
+    }
+
+    public class MenuModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        public List<Erestauracja.ServiceReference.Category> Kategorie { get; set; }
+        public List<string> Produkty { get; set; }
+    }
 }
