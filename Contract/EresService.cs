@@ -645,6 +645,21 @@ namespace Contract
                 return false;
             }
         }
+
+        public bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(productName) || String.IsNullOrEmpty(price) || String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1 || categoryID == null || categoryID < 1))
+            {
+                Database db = new Database();
+                bool value = db.AddProduct(restaurantID, categoryID, productName, productDescription, price, managerLogin);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region ogólne

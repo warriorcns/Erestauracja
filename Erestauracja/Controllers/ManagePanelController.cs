@@ -1078,11 +1078,7 @@ namespace Erestauracja.Controllers
                     {
                         categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
                     }
-                    //List<string> categories = new List<string>();
-                    //foreach (Category item in value)
-                    //{
-                    //    categories.Add(item.CategoryName);
-                    //}
+
                     ViewData["categories"] = categories;
 
                     AddProductModel model = new AddProductModel();
@@ -1094,11 +1090,132 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Restaurant");
         }
 
-        public ActionResult GetPrices(String id, String txt) 
+        //
+        // POST: /ManagePanel/AddProduct
+        [HttpPost]
+        public ActionResult AddProduct(AddProductModel model)
         {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
+                {
+                    bool value = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.AddProduct(model.RestaurantID, model.Category, model.ProductName, model.ProductDescription, model.Price, User.Identity.Name);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
 
-            string prices = string.Empty;
-            //prices = "dupa";
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Dodawanie produktu nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditMenuPage", "ManagePanel", new { id = model.RestaurantID });
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
+                }
+            }
+
+            List<Category> value2 = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value2 = new List<Category>(client.GetCategories(User.Identity.Name, model.RestaurantID));
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value2 = null;
+            }
+
+            if (value2 == null)
+            {
+                ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+            }
+            else
+            {
+                List<SelectListItem> categories = new List<SelectListItem>();
+                categories.Add(new SelectListItem { Text = "", Value = "" });
+                foreach (Category item in value2)
+                {
+                    categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
+                }
+
+                ViewData["categories"] = categories;
+
+              //  AddProductModel model = new AddProductModel();
+             //   model.RestaurantID = id;
+
+             //   return View(model);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        public ActionResult GetPrices(int id, string txt, int resid)
+        {
+            string prices = String.Empty;
+
+            if (resid > 0)
+            {
+                ViewData["id"] = resid;
+
+                Category value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetCategory(User.Identity.Name, resid, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    prices = "Wprowadz cenę kolejno dla: "+value.PriceOption+ " (np. ";
+                    string[] tab = value.PriceOption.Split(',');
+                    int j = 10;
+                    for (int i = 1; i <= tab.Length; i++)
+                    {
+                        if(i==tab.Length)
+                            prices += j.ToString() + ".00";
+                        else
+                            prices += j.ToString() + ".00|";
+                        j += 5;
+                    }
+                    prices += ")";
+                }
+            }
+          //  prices = "Wprowadz cenę kolejno dla ";
+
+            //Cena (Wprowadz cene kolejno dla mała|srednia|duża np. (10.00|20.00|30.00) )
 
             //to zostawiam Ci dla przykladu, moze sie przyda
             //
@@ -1110,7 +1227,7 @@ namespace Erestauracja.Controllers
             //    Text = c.Name,
             //    Value = c.ResId.ToString()
             //};
-  
+
 
             return Json(prices);
         }

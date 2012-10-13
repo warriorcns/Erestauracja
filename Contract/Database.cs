@@ -2331,10 +2331,9 @@ namespace Contract
                 reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
                 if (reader.HasRows)
                 {
-                    //////////////////
                     reader.Close();
                     conn.Close();
-                    ///////////////////////////////
+
                     MySqlDataReader reader2 = null;
                     Category rest = null;
                     try
@@ -2343,7 +2342,7 @@ namespace Contract
                         command.Parameters.AddWithValue("@restaurantID", restaurantID);
                         command.Parameters.AddWithValue("@id", categoryID);
                         command.Connection = conn;
-                      //  rest = new Category();
+
                         conn.Open();
 
                         reader2 = command.ExecuteReader();
@@ -2351,7 +2350,6 @@ namespace Contract
                         while (reader2.Read())
                         {
                             rest = GetCategoriesFromReader(reader2);
-                           // rest.Add(r);
                         }
                     }
                     catch (MySqlException e)
@@ -2590,6 +2588,320 @@ namespace Contract
                 if (reader != null) { reader.Close(); }
                 conn.Close();
             }
+            return false;
+        }
+
+        public bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", managerLogin);
+                commandTest.Parameters.AddWithValue("@restaurantID", restaurantID);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    Category category = GetCategory(managerLogin, restaurantID, categoryID);
+                    if (category == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        DateTime creationDate = DateTime.Now;
+                        MySqlTransaction trans;
+                        trans = conn.BeginTransaction();
+
+                        MySqlCommand command = new MySqlCommand(Queries.AddProduct);
+                        //command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                        //command.Parameters.AddWithValue("@categoryId", categoryID);
+                        //command.Parameters.AddWithValue("@name", productName);
+                        //command.Parameters.AddWithValue("@description", productDescription);
+                        //command.Parameters.AddWithValue("@creationDate", creationDate);
+                        //command.Parameters.AddWithValue("@isAvailable", false);
+                        //command.Parameters.AddWithValue("@isEnabled", true);
+
+                        command.Connection = conn;
+                        command.Transaction = trans;
+                        try
+                        {
+                            string[] option = category.PriceOption.Split(',');
+                            string[] prices = price.Split('|');
+                            for (int i = 0; i < option.Length; i++)
+                            {
+                                int rowsAffected = 0;
+                                command.Parameters.Clear();
+                               // command.Parameters.AddWithValue("@price", prices[i]);
+                               // command.Parameters.AddWithValue("@priceOption", option[i]);
+                                if (i == 0)
+                                {
+                                    command.Parameters.AddWithValue("@price", prices[i]);
+                                    command.Parameters.AddWithValue("@priceOption", option[i]);
+                                    command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                                    command.Parameters.AddWithValue("@categoryId", categoryID);
+                                    command.Parameters.AddWithValue("@name", productName);
+                                    command.Parameters.AddWithValue("@description", productDescription);
+                                    command.Parameters.AddWithValue("@creationDate", creationDate);
+                                    command.Parameters.AddWithValue("@isAvailable", false);
+                                    command.Parameters.AddWithValue("@isEnabled", true);
+                                    command.Parameters.AddWithValue("@isSubproduct", false);
+                                }
+                                else
+                                {
+                                    command.Parameters.AddWithValue("@price", prices[i]);
+                                    command.Parameters.AddWithValue("@priceOption", option[i]);
+                                    command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                                    command.Parameters.AddWithValue("@categoryId", categoryID);
+                                    command.Parameters.AddWithValue("@name", productName);
+                                    command.Parameters.AddWithValue("@description", productDescription);
+                                    command.Parameters.AddWithValue("@creationDate", creationDate);
+                                    command.Parameters.AddWithValue("@isAvailable", false);
+                                    command.Parameters.AddWithValue("@isEnabled", true);
+                                    command.Parameters.AddWithValue("@isSubproduct", true);
+                                }
+
+                                rowsAffected = command.ExecuteNonQuery();
+
+                                if (rowsAffected <= 0)
+                                {
+                                    trans.Rollback();
+                                    return false;
+                                }
+                            }
+                            trans.Commit();
+                            return true;
+                        }
+                        catch (MySqlException e)
+                        {
+                            EventLog log = new EventLog();
+                            log.Source = eventSource;
+                            log.Log = eventLog;
+
+                            string wiadomosc = message;
+                            wiadomosc += "Action: " + "AddProduct" + "\n\n";
+                            wiadomosc += "Exception: " + e.ToString();
+
+                            log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                            trans.Rollback();
+                        }
+                        catch (Exception ex)
+                        {
+                            EventLog log = new EventLog();
+                            log.Source = eventSource;
+                            log.Log = eventLog;
+
+                            string wiadomosc = message2;
+                            wiadomosc += "Action: " + "AddProduct" + "\n\n";
+                            wiadomosc += "Exception: " + ex.ToString();
+
+                            log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                            trans.Rollback();
+                        }
+                        finally
+                        {
+                            if (reader != null) { reader.Close(); }
+                            conn.Close();
+                        }
+                    }
+////////////////////////////////////////////////////////////
+                    //try
+                    //{
+                    // //   MySqlConnection conn = new MySqlConnection(ConnectionString);
+                    //    conn.Close();
+                    //    conn.Open();
+                    //    MySqlTransaction trans;
+                    //    trans = conn.BeginTransaction();
+
+                    //    Category category = null;
+                    //    MySqlCommand command = new MySqlCommand(Queries.GetCategory);
+                    //    command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                    //    command.Parameters.AddWithValue("@id", categoryID);
+                    //    command.Connection = conn;
+                    //    command.Transaction = trans;
+                    //    //  rest = new Category();
+                    //    //conn.Open();
+
+                    //    reader2 = command.ExecuteReader();
+
+                    //    while (reader2.Read())
+                    //    {
+                    //        rest = GetCategoriesFromReader(reader2);
+                    //        // rest.Add(r);
+                    //    }
+                    //    ///
+                    //    MySqlCommand reset = new MySqlCommand(Queries.ResetPassword);
+                    //    reset.Parameters.AddWithValue("@password", password);
+                    //    reset.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
+                    //    reset.Parameters.AddWithValue("@login", login);
+                    //    reset.Parameters.AddWithValue("@isLockedOut", false);
+                    //    reset.Connection = conn;
+                    //    reset.Transaction = trans;
+                    //    try
+                    //    {
+                    //        MySqlCommand getcommand = new MySqlCommand(Queries.GetEmailByLogin);
+                    //        getcommand.Parameters.AddWithValue("@login", login);
+                    //        getcommand.Connection = conn;
+
+                    //        DataSet ds = new DataSet();
+                    //        ds = ExecuteQuery(getcommand, "GetEmailByLogin");
+
+                    //        if (ds.Tables.Count > 0)
+                    //        {
+                    //            foreach (DataRow row in ds.Tables[0].Rows)
+                    //            {
+                    //                if (row["email"] != DBNull.Value) email = row["email"].ToString();
+                    //                else return false;
+                    //            }
+                    //        }
+                    //        else return false;
+
+                    //        rowsAffected = reset.ExecuteNonQuery();
+
+                    //        if (rowsAffected > 0)
+                    //        {
+                    //            if (!String.IsNullOrEmpty(email))
+                    //            {
+                    //                SmtpClient klient = new SmtpClient("smtp.gmail.com");
+                    //                MailMessage wiadomosc = new MailMessage();
+                    //                try
+                    //                {
+                    //                    wiadomosc.From = new MailAddress("erestauracja@gmail.com");
+                    //                    wiadomosc.To.Add(email);
+                    //                    wiadomosc.Subject = "Erestauracja - restet hasła.";
+                    //                    wiadomosc.Body = "Nowe hasło: " + password;
+
+                    //                    klient.Port = 587;
+                    //                    klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
+                    //                    klient.EnableSsl = true;
+                    //                    klient.Send(wiadomosc);
+
+                    //                    trans.Commit();
+                    //                    return true;
+                    //                }
+                    //                catch (Exception ex)
+                    //                {
+                    //                    EventLog log = new EventLog();
+                    //                    log.Source = eventSource;
+                    //                    log.Log = eventLog;
+
+                    //                    string info = "Błąd podczas wysyłania wiadomości email";
+                    //                    info += "Action: " + "Email sending" + "\n\n";
+                    //                    info += "Exception: " + ex.ToString();
+
+                    //                    trans.Rollback();
+                    //                    return false;
+                    //                }
+                    //            }
+                    //            else return false;
+                    //        }
+                    //        else
+                    //        {
+                    //            trans.Rollback();
+                    //            return false;
+                    //        }
+                    //    }
+                    //    catch (Exception e)
+                    //    {
+                    //        EventLog log = new EventLog();
+                    //        log.Source = eventSource;
+                    //        log.Log = eventLog;
+
+                    //        string info = "Błąd podczas dodawania produktu";
+                    //        info += "Action: " + "AddProduct" + "\n\n";
+                    //        info += "Exception: " + e.ToString();
+                    //        trans.Rollback();
+                    //        return false;
+                    //    }
+                    //    finally
+                    //    {
+                    //        conn.Close();
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    EventLog log = new EventLog();
+                    //    log.Source = eventSource;
+                    //    log.Log = eventLog;
+
+                    //    string info = "Błąd podczas dodawania produktu";
+                    //    info += "Action: " + "AddProduct" + "\n\n";
+                    //    info += "Exception: " + ex.ToString();
+                    //}
+/////////////////////////////////////////
+                    //DateTime creationDate = DateTime.Now;
+
+                    //MySqlCommand command = new MySqlCommand(Queries.AddProduct);
+                    //command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                    //command.Parameters.AddWithValue("@categoryName", categoryID);
+                    //command.Parameters.AddWithValue("@categoryDescription", productName);
+                    //command.Parameters.AddWithValue("@priceOption", productDescription);
+                    //command.Parameters.AddWithValue("@nonPriceOption", price);
+                    //// command.Parameters.AddWithValue("@restaurantID", priceOption);
+                    //command.Parameters.AddWithValue("@categoryName", creationDate);
+                    //command.Parameters.AddWithValue("@categoryDescription", false);
+                    ////command.Parameters.AddWithValue("@priceOption", subproduct);
+                    //command.Parameters.AddWithValue("@nonPriceOption", true);
+
+                    //int rowsaffected = ExecuteNonQuery(command, "AddCategory");
+
+                    //if (rowsaffected > 0)
+                    //{
+                    //    return true;
+                    //}
+//////////////////////////////////////////////
+                }
+                else
+                    return false;
+/////////////////////////////////////////////////////
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
             return false;
         }
 

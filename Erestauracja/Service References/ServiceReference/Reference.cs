@@ -1879,6 +1879,12 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditCategory", ReplyAction="http://tempuri.org/IEresService/EditCategoryResponse")]
         bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/DeleteCategory", ReplyAction="http://tempuri.org/IEresService/DeleteCategoryResponse")]
+        bool DeleteCategory(string managerLogin, int restaurantID, int categoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddProduct", ReplyAction="http://tempuri.org/IEresService/AddProductResponse")]
+        bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
         
@@ -2062,6 +2068,14 @@ namespace Erestauracja.ServiceReference {
         
         public bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2) {
             return base.Channel.EditCategory(managerLogin, restaurantID, categoryID, categoryName, categoryDescription, priceOption, nonPriceOption, nonPriceOption2);
+        }
+        
+        public bool DeleteCategory(string managerLogin, int restaurantID, int categoryID) {
+            return base.Channel.DeleteCategory(managerLogin, restaurantID, categoryID);
+        }
+        
+        public bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin) {
+            return base.Channel.AddProduct(restaurantID, categoryID, productName, productDescription, price, managerLogin);
         }
         
         public string[] GetCountriesList() {

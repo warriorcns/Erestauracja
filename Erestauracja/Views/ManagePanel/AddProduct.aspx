@@ -34,17 +34,16 @@
 
                 <div id="cenalabele" class="editor-label" style="display:none;">
                 
-                    <%: Html.LabelFor(m => m.Price)%> (
+                    <%: Html.LabelFor(m => m.Price)%>
                     <label id="pricelbl"></label>
-                    )
                 </div>
-                <div class="editor-field">
+                <div id="cenatb" class="editor-field" style="display:none;">
                     <%: Html.TextBoxFor(m => m.Price, new { id = "pricetxb" })%>
                     <%: Html.ValidationMessageFor(m => m.Price)%>
                 </div>
                 
 
-                <%: Html.HiddenFor(m => m.RestaurantID) %>
+                <%: Html.HiddenFor(m => m.RestaurantID, new { id = "resid"}) %>
                 </br>
                 <p>
                     <input type="submit" value="Dodaj"/>
@@ -66,15 +65,17 @@
             });
 
             //alert('id:' + id + 'text:' + txt);
-            
+
+            var resid = $("#resid").val();
             var url = '<%: Url.Action("GetPrices", "ManagePanel") %>';
-            var data = { id: id, txt: txt };
+            var data = { id: id, txt: txt, resid: resid };
 
             if (!$(id).val()) {
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + id);
 
+                    $('#cenatb').show();
                     $('#cenalabele').show();
                     $('#pricelbl').text(data);
                 });

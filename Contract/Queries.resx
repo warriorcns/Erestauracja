@@ -120,6 +120,9 @@
   <data name="AddCategory" xml:space="preserve">
     <value>INSERT INTO `category`(`restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2`) VALUES (@restaurantID,@categoryName,@categoryDescription,@priceOption,@nonPriceOption,@nonPriceOption2)</value>
   </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isSubproduct`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption, @creationDate, @isAvailable, @isSubproduct, @isEnabled)</value>
+  </data>
   <data name="AddRestaurant" xml:space="preserve">
     <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, @currentDeliveryTime, @isApproved, @lastActivityDate, @isOnline, @isLockedOut, @lastLockedOutDate)</value>
   </data>

@@ -153,6 +153,10 @@ namespace Contract
         [OperationContract]
         bool DeleteCategory(string managerLogin, int restaurantID, int categoryID);
 
+        [OperationContract]
+        bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin);
+
+
         #endregion
 
         #region ogólne

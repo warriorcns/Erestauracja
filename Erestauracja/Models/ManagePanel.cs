@@ -233,7 +233,7 @@ namespace Erestauracja.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Kategoria")]
-        public string Category { get; set; }
+        public int Category { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
