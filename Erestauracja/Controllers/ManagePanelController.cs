@@ -1042,5 +1042,55 @@ namespace Erestauracja.Controllers
             }
             return RedirectToAction("Restaurant");
         }
+
+        //
+        // GET: /ManagePanel/AddProduct
+        public ActionResult AddProduct(int id)
+        {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+
+                List<Category> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Category>(client.GetCategories(User.Identity.Name, id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    List<SelectListItem> categories = new List<SelectListItem>();
+                    foreach (Category item in value)
+                    {
+                        categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
+                    }
+                    //List<string> categories = new List<string>();
+                    //foreach (Category item in value)
+                    //{
+                    //    categories.Add(item.CategoryName);
+                    //}
+                    ViewData["categories"] = categories;
+
+                    AddProductModel model = new AddProductModel();
+                    model.RestaurantID = id;
+
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
     }
 }

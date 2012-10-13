@@ -54,7 +54,7 @@
     </fieldset>
     </br>
     <fieldset>
-    <legend>Produkty - kliknij <%: Html.ActionLink("tutaj", "EditContactPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby dodać nowy</legend>
+    <legend>Produkty - kliknij <%: Html.ActionLink("tutaj", "AddProduct", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby dodać nowy</legend>
 
     </fieldset>
 

@@ -216,6 +216,31 @@ namespace Erestauracja.Models
         public string NonPriceOption2 { get; set; }
     }
 
+    public class AddProductModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwa produktu")]
+        public string ProductName { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opis")]
+        public string ProductDescription { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Kategoria")]
+        public string Category { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cena")]
+        public string Price { get; set; }
+    }
+
     public class MenuModel
     {
         [HiddenInput]
