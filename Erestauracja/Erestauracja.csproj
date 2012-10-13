@@ -287,6 +287,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
@@ -1048,7 +1049,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_LocalResources\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

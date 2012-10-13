@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePageContent.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.AddProductModel>" %>
-
+<%@ Import Namespace="Erestauracja.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
 
 <% using (Html.BeginForm()) { %>
@@ -34,6 +34,8 @@
 
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Price)%> (
+                    <label id="pricelbl">test</label>
+                    )
                 </div>
                 <div class="editor-field">
                     <%: Html.TextBoxFor(m => m.Price, new { id = "pricetxb" })%>
@@ -58,8 +60,8 @@
             var txt = "";
 
             $("select option:selected").each(function () {
-                id += $(this).val() + " ";
-                txt += $(this).text() + " ";
+                id = $(this).val() + " ";
+                txt = $(this).text() + " ";
             });
 
             //alert('id:' + id + 'text:' + txt);
@@ -71,7 +73,7 @@
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + id);
-                    $('#pricetxb').val(data);
+                    $('#pricelbl').text(data);
                 });
             }
         }).trigger('change');

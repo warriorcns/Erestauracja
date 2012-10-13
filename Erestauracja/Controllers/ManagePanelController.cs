@@ -1098,7 +1098,7 @@ namespace Erestauracja.Controllers
         {
 
             string prices = string.Empty;
-
+            //prices = "dupa";
 
             //to zostawiam Ci dla przykladu, moze sie przyda
             //
