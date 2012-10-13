@@ -32,9 +32,10 @@
                     <%: Html.ValidationMessageFor(m => m.Category)%>
                 </div>
 
-                <div class="editor-label">
+                <div id="cenalabele" class="editor-label" style="display:none;">
+                
                     <%: Html.LabelFor(m => m.Price)%> (
-                    <label id="pricelbl">test</label>
+                    <label id="pricelbl"></label>
                     )
                 </div>
                 <div class="editor-field">
@@ -73,6 +74,8 @@
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + id);
+
+                    $('#cenalabele').show();
                     $('#pricelbl').text(data);
                 });
             }
