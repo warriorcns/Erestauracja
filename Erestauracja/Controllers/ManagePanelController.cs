@@ -1093,5 +1093,26 @@ namespace Erestauracja.Controllers
             }
             return RedirectToAction("Restaurant");
         }
+
+        public ActionResult GetPrices(String id, String txt) 
+        {
+
+            string prices = string.Empty;
+
+
+            //to zostawiam Ci dla przykladu, moze sie przyda
+            //
+            //IEnumerable<SelectListItem> selectList =
+            //from c in listares
+            //select new SelectListItem
+            //{
+            //    Selected = ( c.ResId == 0 ),
+            //    Text = c.Name,
+            //    Value = c.ResId.ToString()
+            //};
+  
+
+            return Json(prices);
+        }
     }
 }

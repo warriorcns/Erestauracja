@@ -28,7 +28,7 @@
                     <%: Html.LabelFor(m => m.Category)%>
                 </div>
                 <div class="editor-field">
-                    <%: Html.DropDownListFor(m => m.Category, (IEnumerable<SelectListItem>)ViewData["categories"])%>
+                    <%: Html.DropDownListFor(m => m.Category, (IEnumerable<SelectListItem>)ViewData["categories"], new { id = "kategorie", selected = "selected" })%>
                     <%: Html.ValidationMessageFor(m => m.Category)%>
                 </div>
 
@@ -36,7 +36,7 @@
                     <%: Html.LabelFor(m => m.Price)%> (
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Price)%>
+                    <%: Html.TextBoxFor(m => m.Price, new { id = "pricetxb" })%>
                     <%: Html.ValidationMessageFor(m => m.Price)%>
                 </div>
                 
@@ -50,4 +50,31 @@
         </div>
     <% } %>
 
+         
+    <script type="text/javascript">
+
+        $("#kategorie").change(function () {
+            var id = "";
+            var txt = "";
+
+            $("select option:selected").each(function () {
+                id += $(this).val() + " ";
+                txt += $(this).text() + " ";
+            });
+
+            //alert('id:' + id + 'text:' + txt);
+            
+            var url = '<%: Url.Action("GetPrices", "ManagePanel") %>';
+            var data = { id: id, txt: txt };
+
+            if (!$(id).val()) {
+                $.post(url, data, function (data) {
+                    // TODO: do something with the response from the controller action
+                    //alert('the value was successfully sent to the server' + id);
+                    $('#pricetxb').val(data);
+                });
+            }
+        }).trigger('change');
+
+    </script>
 </asp:Content>

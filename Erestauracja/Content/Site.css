@@ -940,3 +940,56 @@ a.button:hover{
     -moz-box-shadow:3px 3px 3px #333;
     -webkit-box-shadow:3px 3px 3px #333;
 }
+
+hr {
+    display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+big
+{
+    font-size: larger;    
+}
+
+blockquote
+{
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 40px;
+    -webkit-margin-end: 40px;   
+}
+
+s, strike, del {
+    text-decoration: line-through;
+}
+
+u, ins {
+    text-decoration: underline;
+}
+
+i, cite, em, var, address, dfn {
+    font-style: italic;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+/* gorny indeks*/
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+/* dolny indeks*/
+sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+

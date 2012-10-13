@@ -23,14 +23,6 @@
         </a>
     </div>
 
-    <%--<div class="yoxview">
-        <div class="thumbnail">
-            <img src="/Content/images/resid1/1.jpg" alt="Zdjecie" />
-        </div>
-        <div class="thumbnail">
-            <img src="/Content/images/resid1/2.jpg" alt="Zdjecie" />
-        </div>
-    </div>--%>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery('.thumbnail').nailthumb({ width: 150, height: 150, method: 'resize', fitDirection: 'center center' });
