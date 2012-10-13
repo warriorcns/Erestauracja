@@ -24,9 +24,14 @@
                     <%: Html.ValidationMessageFor(m => m.ProductDescription)%>
                 </div>
 
+                <div class="editor-label">
+                    <%: Html.LabelFor(m => m.Category)%>
+                </div>
                 <div class="editor-field">
                     <%: Html.DropDownListFor(m => m.Category, (IEnumerable<SelectListItem>)ViewData["categories"])%>
+                    <%: Html.ValidationMessageFor(m => m.Category)%>
                 </div>
+
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Price)%> (
                 </div>

@@ -1073,6 +1073,7 @@ namespace Erestauracja.Controllers
                 else
                 {
                     List<SelectListItem> categories = new List<SelectListItem>();
+                    categories.Add(new SelectListItem { Text = "", Value = "" });
                     foreach (Category item in value)
                     {
                         categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
