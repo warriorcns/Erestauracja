@@ -45,6 +45,24 @@
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="AppLimit.CloudComputing.SharpBox">
+      <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\AppLimit.CloudComputing.SharpBox.dll</HintPath>
+    </Reference>
+    <Reference Include="AppLimit.CloudComputing.SharpBox.ExperimentalProvider">
+      <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\AppLimit.CloudComputing.SharpBox.ExperimentalProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="AppLimit.CloudComputing.SharpBox.MockProvider">
+      <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\AppLimit.CloudComputing.SharpBox.MockProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.0.0.12084\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.0.0.12084\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DropBoxTokenIssuer">
+      <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\DropBoxTokenIssuer.exe</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -56,6 +74,12 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json.Net40">
+      <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\Newtonsoft.Json.Net40.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SanitizerProviders">
       <HintPath>..\packages\AjaxControlToolkit.4.1.60623\lib\40\SanitizerProviders\SanitizerProviders.dll</HintPath>
     </Reference>
@@ -293,6 +317,7 @@
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\modeltest.cs" />
+    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Providers\CustomMembershipUser.cs" />
@@ -825,6 +850,7 @@
     <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="Content\themes\redmond\jquery-ui.css" />
+    <Content Include="Content\token.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\2012.1.214\jquery-1.7.1.min.js" />
     <Content Include="Scripts\2012.1.214\jquery.validate.min.js" />
@@ -886,6 +912,8 @@
     <Content Include="Scripts\2012.2.607\telerik.treeview.min.js" />
     <Content Include="Scripts\2012.2.607\telerik.upload.min.js" />
     <Content Include="Scripts\2012.2.607\telerik.window.min.js" />
+    <Content Include="Scripts\galleria-1.2.8.js" />
+    <Content Include="Scripts\galleria-1.2.8.min.js" />
     <Content Include="Scripts\jHtmlArea-0.7.5-vsdoc.js" />
     <Content Include="Scripts\jHtmlArea-0.7.5.js" />
     <Content Include="Scripts\jHtmlArea-0.7.5.min-vsdoc.js" />
@@ -900,6 +928,9 @@
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.2.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
@@ -911,6 +942,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <None Include="Scripts\LICENSE" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
     <None Include="Service References\ServiceReference\EresService1.wsdl" />
@@ -972,7 +1004,24 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ServiceReference\item1.disco" />
+    <Content Include="Scripts\plugins\flickr\flickr-demo.html" />
+    <Content Include="Scripts\plugins\flickr\flickr-loader.gif" />
+    <Content Include="Scripts\plugins\flickr\galleria.flickr.js" />
+    <Content Include="Scripts\plugins\flickr\galleria.flickr.min.js" />
+    <Content Include="Scripts\plugins\flickr\loader.gif" />
+    <Content Include="Scripts\plugins\history\galleria.history.js" />
+    <Content Include="Scripts\plugins\history\galleria.history.min.js" />
+    <Content Include="Scripts\plugins\history\history-demo.html" />
+    <Content Include="Scripts\plugins\picasa\galleria.picasa.js" />
+    <Content Include="Scripts\plugins\picasa\galleria.picasa.min.js" />
+    <Content Include="Scripts\plugins\picasa\loader.gif" />
+    <Content Include="Scripts\plugins\picasa\picasa-demo.html" />
+    <Content Include="Scripts\themes\classic\classic-demo.html" />
+    <Content Include="Scripts\themes\classic\classic-loader.gif" />
+    <Content Include="Scripts\themes\classic\classic-map.png" />
+    <Content Include="Scripts\themes\classic\galleria.classic.css" />
+    <Content Include="Scripts\themes\classic\galleria.classic.js" />
+    <Content Include="Scripts\themes\classic\galleria.classic.min.js" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />

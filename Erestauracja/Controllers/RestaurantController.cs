@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.IO;
+using RestSharp;
+using Erestauracja.Models;
+using AppLimit.CloudComputing.SharpBox;
+using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
 
 
 namespace Erestauracja.Controllers
@@ -22,7 +26,7 @@ namespace Erestauracja.Controllers
 
             #region ciasteczka - zapis
 
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             DateTime now = DateTime.Now;
             myCookie.Expires = now.AddMinutes(1);
             myCookie.Value = id.ToString();
@@ -41,7 +45,7 @@ namespace Erestauracja.Controllers
             //int test = this.Restaurantid;
 
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
             int id;
             if (myCookie != null)
@@ -56,7 +60,7 @@ namespace Erestauracja.Controllers
         public ActionResult Menu()
         {
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
             int id;
             if (myCookie != null)
@@ -74,7 +78,7 @@ namespace Erestauracja.Controllers
         public ActionResult Delivery()
         {
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
             int id;
             if (myCookie != null)
@@ -88,7 +92,7 @@ namespace Erestauracja.Controllers
         public ActionResult Parties()
         {
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
             int id;
             if (myCookie != null)
@@ -99,15 +103,78 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult Gallery()
+        public ActionResult Gallery(int id)
         {
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
-            int id;
+            //int id;
             if (myCookie != null)
             {
                 id = int.Parse(myCookie.Value);
+            }
+            #endregion
+
+            #region DropBox Connection
+            try
+            {
+                // Creating the cloudstorage object 
+                CloudStorage dropBoxStorage = new CloudStorage();
+
+                // get the configuration for dropbox 
+                var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                // declare an access token
+                ICloudStorageAccessToken accessToken = null;
+
+                // load a valid security token from file
+                string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                }
+
+                // open the connection 
+                var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                // get a specific directory in the cloud storage eg. "/images/1"
+                var publicFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+
+                ICloudFileSystemEntry fse;
+
+                // lista linkow uri
+                List<Uri> uris = new List<Uri>();
+
+                // enumerate all child (folder and files) 
+                foreach (var fof in publicFolder)
+                {
+                    // check if we have a directory 
+                    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                    fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
+                    if (!bIsDirectory)
+                    {
+                        //pobiera liste linkow do plikow w katalogu rodzica
+                        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                    }
+                }
+
+                dropBoxStorage.Close();
+
+                ViewData["imagesuris"] = uris;
+                string test, test1;
+                foreach (Uri link in uris)
+                {
+
+                    test = link.ToString();
+                    test1 = link.AbsoluteUri;
+                }
+            }
+            catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+            {
+                ;
             }
             #endregion
 
@@ -117,7 +184,7 @@ namespace Erestauracja.Controllers
         public ActionResult Contact()
         {
             #region ciasteczka - odczyt
-            HttpCookie myCookie = new HttpCookie("MyTestCookie");
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
             myCookie = Request.Cookies["MyTestCookie"];
             int id;
             if (myCookie != null)
@@ -229,5 +296,36 @@ namespace Erestauracja.Controllers
             responseStream.Close();
 
         }
+
+        //stara metoda.
+        private void connection()
+        {
+            // Creating the cloudstorage object 
+            CloudStorage dropBoxStorage = new CloudStorage();
+
+            // get the configuration for dropbox 
+            var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+            // declare an access token
+            ICloudStorageAccessToken accessToken = null;
+
+            // load a valid security token from file
+            using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+            }
+
+
+            // open the connection 
+            var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+
+
+
+            // close the connection 
+            dropBoxStorage.Close();
+            
+        }
+       
     }
 }

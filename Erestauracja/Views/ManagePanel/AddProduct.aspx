@@ -64,8 +64,8 @@
                 txt = $(this).text() + " ";
             });
 
-            //alert('id:' + id + 'text:' + txt);
 
+            var resid = $("#resid").val();
             var resid = $("#resid").val();
             var url = '<%: Url.Action("GetPrices", "ManagePanel") %>';
             var data = { id: id, txt: txt, resid: resid };
