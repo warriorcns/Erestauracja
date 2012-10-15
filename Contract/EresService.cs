@@ -660,6 +660,20 @@ namespace Contract
             }
         }
 
+        public List<Menu> GetMenuManager(string managerLogin, int restaurantID)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || restaurantID == null || restaurantID < 1))
+            {
+                Database db = new Database();
+                List<Menu> value = db.GetMenuManager(managerLogin, restaurantID);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
 
         #region ogólne

@@ -3,7 +3,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
 
     <meta charset="utf-8">
-	
+
+	<script>
+	    $(function () {
+	        $("#tabs").tabs();
+	    });
+	</script>
+
+    <script>
+        $(function () {
+            $(".accordion2").accordion({
+                autoHeight: false,
+                active: false,
+                event: "mouseover"
+            });
+        });
+	</script>
+
     <script>
         $(function () {
             $("#accordion").accordion({
@@ -55,6 +71,54 @@
     </br>
     <fieldset>
     <legend>Produkty - kliknij <%: Html.ActionLink("tutaj", "AddProduct", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby dodać nowy</legend>
+    <div id="tabs">
+	    <ul>
+            <% 
+            int i = 1;
+            foreach (Erestauracja.ServiceReference.Menu menu in Model.Menu) { %>
+                <li><a href="#<%: "tabs-"+i %>"> <%: menu.CategoryName %> </a></li>
+	        <%  i++; } %>	
+	    </ul>
+        <% 
+        int j = 1;
+        foreach (Erestauracja.ServiceReference.Menu menu in Model.Menu)
+        { %>
+            <div id="<%: "tabs-"+j %>">
+                <p><%: menu.CategoryDescription %></p>
+                <div class="accordion2">
+                    <% foreach (Erestauracja.ServiceReference.Product product in menu.Products) { %>
+                        <h3><a href="#"><%: product.ProductName %></a></h3>
+                            <div>
+                                <p><%: product.ProductDescription %></p>
+                                </br>
+                                <p>Cena:</p>
+                                <div>
+                                    <% if (product.PriceOption != null)
+                                       {%>
+                                        <%  string[] ceny = product.Price.Split('|');
+                                            string[] opcje = product.PriceOption.Split(',');%>
+                                        <% if(ceny.Length == opcje.Length) {%>
+                                            <% for (int x = 0; x < opcje.Length; x++) { %>
+                                                <div>
+                                                    <span><%: opcje[x] %>  -</span>
+                                                    <span>  <%: ceny[x] %></span>
+                                                </div>
+                                            <% } %>
+                                        <% }
+                                           else{ %>
+                                           <div> Błąd </div>
+                                            <% } %>
+                                    <% }
+                                        else{ %>
+                                           <div> Błąd </div>
+                                    <% } %>
+                                </div>  
+                            </div>
+                    <% } %>
+                </div>
+            </div>
+	    <%  j++;  } %>	
+    </div>
 
     </fieldset>
 

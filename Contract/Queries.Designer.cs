@@ -70,7 +70,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isSubproduct`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption, @creationDate, @isAvailable, @isSubproduct, @isEnabled).
+        ///   Looks up a localized string similar to INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled).
         /// </summary>
         internal static string AddProduct {
             get {
@@ -259,6 +259,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`,`price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId.
+        /// </summary>
+        internal static string GetAllProducts {
+            get {
+                return ResourceManager.GetString("GetAllProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `rolename` FROM `roles`.
         /// </summary>
         internal static string GetAllRoles {
@@ -399,6 +408,15 @@ namespace Contract {
         internal static string GetPasswordAnswer {
             get {
                 return ResourceManager.GetString("GetPasswordAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId.
+        /// </summary>
+        internal static string GetProducts {
+            get {
+                return ResourceManager.GetString("GetProducts", resourceCulture);
             }
         }
         

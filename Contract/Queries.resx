@@ -121,7 +121,7 @@
     <value>INSERT INTO `category`(`restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2`) VALUES (@restaurantID,@categoryName,@categoryDescription,@priceOption,@nonPriceOption,@nonPriceOption2)</value>
   </data>
   <data name="AddProduct" xml:space="preserve">
-    <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isSubproduct`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption, @creationDate, @isAvailable, @isSubproduct, @isEnabled)</value>
+    <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled)</value>
   </data>
   <data name="AddRestaurant" xml:space="preserve">
     <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, @currentDeliveryTime, @isApproved, @lastActivityDate, @isOnline, @isLockedOut, @lastLockedOutDate)</value>
@@ -183,6 +183,9 @@
   <data name="FindUsersInRole" xml:space="preserve">
     <value>SELECT `login` FROM `users` WHERE `id` IN (SELECT `userID` FROM `users_in_roles` WHERE `userID` IN (SELECT `id` FROM `users` WHERE `login` LIKE @login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
   </data>
+  <data name="GetAllProducts" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`,`price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId</value>
+  </data>
   <data name="GetAllRoles" xml:space="preserve">
     <value>SELECT `rolename` FROM `roles`</value>
   </data>
@@ -230,6 +233,9 @@
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
+  </data>
+  <data name="GetProducts" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId</value>
   </data>
   <data name="GetRestaurant" xml:space="preserve">
     <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`deliveryTime` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>

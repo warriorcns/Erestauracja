@@ -247,6 +247,6 @@ namespace Erestauracja.Models
         public int RestaurantID { get; set; }
 
         public List<Erestauracja.ServiceReference.Category> Kategorie { get; set; }
-        public List<string> Produkty { get; set; }
+        public List<Erestauracja.ServiceReference.Menu> Menu { get; set; }
     }
 }

@@ -474,33 +474,33 @@ namespace Erestauracja.Controllers
                 ViewData["id"] = id;
                 
                 List<Category> value = null;
+                List<Menu> value2 = null;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
                         value = new List<Category>(client.GetCategories(User.Identity.Name, id));
+                        value2 = new List<Menu>(client.GetMenuManager(User.Identity.Name, id));
                     }
                     client.Close();
                 }
                 catch (Exception e)
                 {
                     value = null;
+                    value2 = null;
                 }
 
-                if (value == null)
+                if (value == null || value2==null)
                 {
                     ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
                 }
                 else
                 {
-                    List<string> asd = new List<string>();
-                    asd.Add("asd");
-
                     MenuModel model = new MenuModel();
                     model.RestaurantID = id;
                     model.Kategorie = value;
-                    model.Produkty = asd;
+                    model.Menu = value2;
 
                     return View(model);
                 }

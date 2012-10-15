@@ -961,6 +961,9 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.MainPageContent.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Menu.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.PasswordAndAnswer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

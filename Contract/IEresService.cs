@@ -156,6 +156,8 @@ namespace Contract
         [OperationContract]
         bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin);
 
+        [OperationContract]
+        List<Menu> GetMenuManager(string managerLogin, int restaurantID);
 
         #endregion
 
@@ -851,6 +853,160 @@ namespace Contract
         {
             get { return nonPriceOption2; }
             set { nonPriceOption2 = value; }
+        }
+    }    
+        
+    [DataContract]
+    public class Menu
+    {
+        private int restaurantID = -1;
+        private int categoryID = -1;
+        private string categoryName = null;
+        private string categoryDescription = null;
+        private string priceOption = null;
+        private string nonPriceOption = null;
+        private string nonPriceOption2 = null;
+        private List<Product> products = null;
+
+        [DataMember]
+        public int RestaurantID
+        {
+            get { return restaurantID; }
+            set { restaurantID = value; }
+        }
+
+        [DataMember]
+        public int CategoryID
+        {
+            get { return categoryID; }
+            set { categoryID = value; }
+        }
+
+        [DataMember]
+        public string CategoryName
+        {
+            get { return categoryName; }
+            set { categoryName = value; }
+        }
+
+        [DataMember]
+        public string CategoryDescription
+        {
+            get { return categoryDescription; }
+            set { categoryDescription = value; }
+        }
+
+        [DataMember]
+        public string PriceOption
+        {
+            get { return priceOption; }
+            set { priceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption
+        {
+            get { return nonPriceOption; }
+            set { nonPriceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption2
+        {
+            get { return nonPriceOption2; }
+            set { nonPriceOption2 = value; }
+        }
+
+        [DataMember]
+        public List<Product> Products
+        {
+            get { return products; }
+            set { products = value; }
+        }
+    }
+
+    [DataContract]
+    public class Product
+    {
+        int productId = -1;
+        int restaurantId = -1;
+        int categoryId = -1;
+        string productName = null;
+        string productDescription = null;
+        string price = null;
+        string priceOption = null;
+        DateTime creationDate = new DateTime();
+        bool isAvailable = false;
+        bool isEnabled = false;
+
+        [DataMember]
+        public int ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
+
+        [DataMember]
+        public int RestaurantId
+        {
+            get { return restaurantId; }
+            set { restaurantId = value; }
+        }
+
+        [DataMember]
+        public int CategoryId
+        {
+            get { return categoryId; }
+            set { categoryId = value; }
+        }
+
+        [DataMember]
+        public string ProductName
+        {
+            get { return productName; }
+            set { productName = value; }
+        }
+
+        [DataMember]
+        public string ProductDescription
+        {
+            get { return productDescription; }
+            set { productDescription = value; }
+        }
+
+        [DataMember]
+        public string Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        [DataMember]
+        public string PriceOption
+        {
+            get { return priceOption; }
+            set { priceOption = value; }
+        }
+
+        [DataMember]
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
+        }
+
+        [DataMember]
+        public bool IsAvailable
+        {
+            get { return isAvailable; }
+            set { isAvailable = value; }
+        }
+
+        [DataMember]
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set { isEnabled = value; }
         }
     }
 
