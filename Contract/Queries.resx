@@ -171,6 +171,9 @@
   <data name="EditMainPage" xml:space="preserve">
     <value>UPDATE `rest_page_content` SET `description`=@description,`foto`=@foto,`specialOffers`=@specialOffers WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
   </data>
+  <data name="EditProduct" xml:space="preserve">
+    <value>UPDATE `products` SET `categoryId` = @categoryId,`name` = @name,`description` = @description,`price` = @price,`priceOption` = @priceOption,`isAvailable` = @isAvailable,`isEnabled` = @isEnabled WHERE `restaurantId` = @restaurantId AND `id` = @id</value>
+  </data>
   <data name="EditRestaurant" xml:space="preserve">
     <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`email`=@email,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id AND `isLockedOut`=@isLockedOut</value>
   </data>
@@ -233,6 +236,9 @@
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
+  </data>
+  <data name="GetProduct" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `id` = @id AND `restaurantId` = @restaurantId</value>
   </data>
   <data name="GetProducts" xml:space="preserve">
     <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId</value>

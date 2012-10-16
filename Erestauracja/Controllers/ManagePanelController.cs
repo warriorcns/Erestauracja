@@ -1231,5 +1231,159 @@ namespace Erestauracja.Controllers
 
             return Json(prices);
         }
+
+        //id produktu
+        //cat żeby wyśiwetlić kategorie w ddl
+        //res żeby sprawdzić czy jest właścicielem
+        //
+        // GET: /ManagePanel/EditProduct
+        public ActionResult EditProduct(int id, int cat, int res)
+        {
+            
+            if (id > 0 && cat >-1 && res > 0)
+            {
+                ViewData["id"] = res;
+
+                List<Category> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Category>(client.GetCategories(User.Identity.Name, res));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    List<SelectListItem> categories = new List<SelectListItem>();
+                 //   categories.Add(new SelectListItem { Text = "", Value = "" });
+                    foreach (Category item in value)
+                    {
+                        categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
+                    }
+
+                    ViewData["categories"] = categories;
+                    /////////////////////////////////
+                    Product value2 = null;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value2 = client.GetProduct(User.Identity.Name, res, id);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value2 = null;
+                    }
+
+                    if (value2 == null)
+                    {
+                        ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                    }
+                    else
+                    {
+                        ProductModel model = new ProductModel();
+                        model.isAvailable = value2.IsAvailable;
+                        model.Category = value2.CategoryId;
+                        model.Price = value2.Price;
+                        model.ProductDescription = value2.ProductDescription;
+                        model.ProductName = value2.ProductName;
+                        model.RestaurantID = value2.RestaurantId;
+                        model.ProductId = value2.ProductId;
+                        return View(model);
+                    }
+                }
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+
+        //
+        // POST: /ManagePanel/EditProduct
+        [HttpPost]
+        public ActionResult EditProduct(ProductModel model)
+        {
+            ViewData["id"] = model.RestaurantID;
+            if (ModelState.IsValid)
+            {
+                CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
+                {
+                    bool value = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.EditProduct(User.Identity.Name, model.RestaurantID, model.ProductId, model.Category, model.ProductName, model.ProductDescription, model.Price, model.isAvailable);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
+
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Edycja produktu nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditMenuPage", "ManagePanel", new { id = model.RestaurantID });
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
+                }
+            }
+
+            List<Category> value2 = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value2 = new List<Category>(client.GetCategories(User.Identity.Name, model.RestaurantID));
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value2 = null;
+            }
+
+            if (value2 == null)
+            {
+                ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+            }
+            else
+            {
+                List<SelectListItem> categories = new List<SelectListItem>();
+                categories.Add(new SelectListItem { Text = "", Value = "" });
+                foreach (Category item in value2)
+                {
+                    categories.Add(new SelectListItem { Text = item.CategoryName, Value = item.CategoryID.ToString() });
+                }
+
+                ViewData["categories"] = categories;
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
     }
 }

@@ -973,6 +973,9 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.PasswordQuestion.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Product.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Restaurant.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1025,6 +1028,7 @@
     <Content Include="Scripts\themes\classic\galleria.classic.css" />
     <Content Include="Scripts\themes\classic\galleria.classic.js" />
     <Content Include="Scripts\themes\classic\galleria.classic.min.js" />
+    <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />
@@ -1060,6 +1064,7 @@
     <Content Include="Views\ManagePanel\EditEventsPage.aspx" />
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
     <Content Include="Views\ManagePanel\EditMenuPage.aspx" />
+    <Content Include="Views\ManagePanel\EditProduct.aspx" />
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Events.aspx" />
     <Content Include="Views\ManagePanel\Gallery.aspx" />

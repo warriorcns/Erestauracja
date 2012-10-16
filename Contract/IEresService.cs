@@ -159,6 +159,12 @@ namespace Contract
         [OperationContract]
         List<Menu> GetMenuManager(string managerLogin, int restaurantID);
 
+        [OperationContract]
+        Product GetProduct(string managerLogin, int restaurantID, int productID);
+
+        [OperationContract]
+        bool EditProduct(string managerLogin, int restaurantID, int id, int categoryID, string productName, string productDescription, string price, bool isAvailable);
+
         #endregion
 
         #region ogólne

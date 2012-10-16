@@ -223,6 +223,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `products` SET `categoryId` = @categoryId,`name` = @name,`description` = @description,`price` = @price,`priceOption` = @priceOption,`isAvailable` = @isAvailable,`isEnabled` = @isEnabled WHERE `restaurantId` = @restaurantId AND `id` = @id.
+        /// </summary>
+        internal static string EditProduct {
+            get {
+                return ResourceManager.GetString("EditProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`email`=@email,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id AND `isLockedOut`=@isLockedOut.
         /// </summary>
         internal static string EditRestaurant {
@@ -408,6 +417,15 @@ namespace Contract {
         internal static string GetPasswordAnswer {
             get {
                 return ResourceManager.GetString("GetPasswordAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `id` = @id AND `restaurantId` = @restaurantId.
+        /// </summary>
+        internal static string GetProduct {
+            get {
+                return ResourceManager.GetString("GetProduct", resourceCulture);
             }
         }
         

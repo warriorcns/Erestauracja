@@ -249,4 +249,40 @@ namespace Erestauracja.Models
         public List<Erestauracja.ServiceReference.Category> Kategorie { get; set; }
         public List<Erestauracja.ServiceReference.Menu> Menu { get; set; }
     }
+
+    public class ProductModel
+    {
+       // string priceOption = null;
+      //  DateTime creationDate = new DateTime();
+      //  bool isAvailable = false;
+      //  bool isEnabled = false;
+
+        [HiddenInput]
+        public int ProductId { get; set; }
+
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nazwa produktu")]
+        public string ProductName { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Opis")]
+        public string ProductDescription { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Kategoria")]
+        public int Category { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cena")]
+        public string Price { get; set; }
+
+        [Display(Name = "Dostępny")]
+        public bool isAvailable { get; set; }
+    }
 }

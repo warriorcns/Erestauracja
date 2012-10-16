@@ -88,11 +88,13 @@
                 <div class="accordion2">
                     <% foreach (Erestauracja.ServiceReference.Product product in menu.Products) { %>
                         <h3><a href="#"><%: product.ProductName %></a></h3>
-                            <div>
-                                <p><%: product.ProductDescription %></p>
+                            <div><% if (product.IsEnabled != false)
+                                       {%>
+                                <p>Opis: <%: product.ProductDescription %></p>
                                 </br>
                                 <p>Cena:</p>
                                 <div>
+                                
                                     <% if (product.PriceOption != null)
                                        {%>
                                         <%  string[] ceny = product.Price.Split('|');
@@ -112,7 +114,12 @@
                                         else{ %>
                                            <div> Błąd </div>
                                     <% } %>
-                                </div>  
+                                 
+                                </div><% } 
+                                    else{ %>
+                                           <div> Produkt zawiera nieprawidłowe dane i wymaga edycji! </div>
+                                    <% } %> 
+                                <p><%: Html.ActionLink("Edytuj", "EditProduct", "ManagePanel", new { id = product.ProductId, cat = product.CategoryId, res= product.RestaurantId }, null) %></p> 
                             </div>
                     <% } %>
                 </div>
