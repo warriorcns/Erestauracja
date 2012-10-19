@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web;
 
 namespace Erestauracja.Models
 {
@@ -154,6 +155,10 @@ namespace Erestauracja.Models
         [AllowHtml]
         [DataType(DataType.Html)]
         public string SpecialOffers { get; set; }
+
+        [AllowHtml]
+        [DataType(DataType.Html)]
+        public HttpPostedFileBase file { get; set; }
     }
 
     public class DeliveryPageModel

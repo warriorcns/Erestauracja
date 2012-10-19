@@ -23,9 +23,12 @@ namespace Erestauracja.Controllers
             if (User.IsInRole("Admin"))
             {
                 Response.Redirect("/Admin/Index");
-                //Response.Write("Pomyslnie zweryfikowano role uzytkownika");
-                //Response.Redirect("Unauthorized.aspx");
             }
+            if (User.IsInRole("Menadżer"))
+            {
+                Response.Redirect("/ManagePanel/Index");
+            }
+
             ViewBag.Message = "Witaj na stronie głównej!";
     
             var Miasta = new SelectList(new []

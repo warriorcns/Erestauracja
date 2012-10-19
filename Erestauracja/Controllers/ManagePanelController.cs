@@ -286,14 +286,8 @@ namespace Erestauracja.Controllers
                         {
                             int townID = 0;
                             Town[] towns = client.GetTowns(out status, model.Town, model.PostalCode);
-                            foreach (Town item in towns)
-                            { 
-                                //if( == item. )
-                                {
-                                    //resID = item.ResId;
-                                }
-                            }
-                            value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
+                            
+                            value = client.EditRestaurant(model.Name, model.DisplayName, model.Address, val[0].ID, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, model.Id);
                         }
                         client.Close();
                     }

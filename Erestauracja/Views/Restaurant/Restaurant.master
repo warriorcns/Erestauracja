@@ -5,9 +5,11 @@
     HttpCookie c = new HttpCookie("MyCookie");
     c.Value = "TEST";
     Response.Cookies.Add(c); %>
-
+    <asp:ContentPlaceHolder ID="head" runat="server" />
 </asp:Content>
+    
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
+    <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 </asp:Content>
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 

@@ -13,6 +13,24 @@ namespace Erestauracja.Views.Restaurant {
     public partial class Restaurant {
         
         /// <summary>
+        /// Kontrolka head.
+        /// </summary>
+        /// <remarks>
+        /// Autogenerowane pole.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        
+        /// <summary>
+        /// Kontrolka TitleContent.
+        /// </summary>
+        /// <remarks>
+        /// Autogenerowane pole.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder TitleContent;
+        
+        /// <summary>
         /// Kontrolka form1.
         /// </summary>
         /// <remarks>

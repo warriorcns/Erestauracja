@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.IO;
-//using RestSharp;
 using Erestauracja.Models;
 using AppLimit.CloudComputing.SharpBox;
 using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
@@ -326,6 +325,79 @@ namespace Erestauracja.Controllers
             dropBoxStorage.Close();
             
         }
-       
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult FileUpload(HttpPostedFileBase fileUpload)
+        {
+
+            #region ciasteczka - odczyt
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            if (myCookie != null)
+            {
+                //model.RestaurantID = int.Parse(myCookie.Value);
+            }
+            #endregion
+
+            #region DropBox Connection
+            try
+            {
+                // Creating the cloudstorage object 
+                CloudStorage dropBoxStorage = new CloudStorage();
+
+                // get the configuration for dropbox 
+                var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                // declare an access token
+                ICloudStorageAccessToken accessToken = null;
+
+                // load a valid security token from file
+                string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                }
+
+                // open the connection 
+                var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                // get a specific directory in the cloud storage eg. "/images/1"
+                var publicFolder = dropBoxStorage.GetFolder("/Public/images/1");
+
+                //ICloudFileSystemEntry fse;
+
+                if (fileUpload != null)
+                {
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                    fileUpload.SaveAs(filepath);
+                    String srcFile = Environment.ExpandEnvironmentVariables(filepath);
+                    dropBoxStorage.UploadFile(srcFile, publicFolder); 
+                    //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
+                    System.IO.File.Delete(filepath);
+                }
+                
+                dropBoxStorage.Close();
+                
+
+            }
+            catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+            {
+                Response.Write(ex.ToString()) ;
+            }
+            #endregion
+
+            return View();
+        }
+
+        public ActionResult FileUpload(int id)
+        {
+            MainPageModel model = new MainPageModel();
+            model.RestaurantID = id;
+            return View(model);
+        }
     }
 }
