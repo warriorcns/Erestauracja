@@ -1228,7 +1228,6 @@ namespace Erestauracja.Controllers
             //    Value = c.ResId.ToString()
             //};
 
-
             return Json(prices);
         }
 

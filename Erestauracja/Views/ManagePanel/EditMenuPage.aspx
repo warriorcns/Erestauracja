@@ -13,9 +13,10 @@
     <script>
         $(function () {
             $(".accordion2").accordion({
-                autoHeight: false,
                 active: false,
-                event: "mouseover"
+                autoHeight: false,
+                event: "mouseover",
+                collapsible: true
             });
         });
 	</script>
@@ -79,52 +80,76 @@
                 <li><a href="#<%: "tabs-"+i %>"> <%: menu.CategoryName %> </a></li>
 	        <%  i++; } %>	
 	    </ul>
-        <% 
-        int j = 1;
-        foreach (Erestauracja.ServiceReference.Menu menu in Model.Menu)
-        { %>
+        
+        <% int j = 1; %>
+        <% foreach (Erestauracja.ServiceReference.Menu menu in Model.Menu) %>
+        <% { %>
             <div id="<%: "tabs-"+j %>">
                 <p><%: menu.CategoryDescription %></p>
                 <div class="accordion2">
-                    <% foreach (Erestauracja.ServiceReference.Product product in menu.Products) { %>
-                        <h3><a href="#"><%: product.ProductName %></a></h3>
-                            <div><% if (product.IsEnabled != false)
-                                       {%>
-                                <p>Opis: <%: product.ProductDescription %></p>
-                                </br>
-                                <p>Cena:</p>
-                                <div>
-                                
-                                    <% if (product.PriceOption != null)
-                                       {%>
-                                        <%  string[] ceny = product.Price.Split('|');
-                                            string[] opcje = product.PriceOption.Split(',');%>
-                                        <% if(ceny.Length == opcje.Length) {%>
-                                            <% for (int x = 0; x < opcje.Length; x++) { %>
-                                                <div>
-                                                    <span><%: opcje[x] %>  -</span>
-                                                    <span>  <%: ceny[x] %></span>
-                                                </div>
+                    <% foreach (Erestauracja.ServiceReference.Product product in menu.Products) %>
+                    <% { %>
+                        <h3><a href="#"><%: product.ProductName %> (
+                            <% if(product.IsAvailable == true) %>
+                            <% { %>
+                                    dostępny)
+                            <% } %>
+                            <% else %>
+                            <% { %>
+                                    niedostępny)
+                            <% } %>
+                        </a></h3>
+                            <div>
+                            <% if(product.IsEnabled != false) %>
+                            <% { %>
+                                    <p>Opis: <%: product.ProductDescription %></p>
+                                    </br>
+                                    <p>Cena:</p>
+                                    <% if(product.Price != null) %>
+                                    <% { %>
+                                            <% if(product.PriceOption == null) %>
+                                            <% { %>
+                                                    <div> <%: product.Price %> </div>
                                             <% } %>
-                                        <% }
-                                           else{ %>
-                                           <div> Błąd </div>
+                                            <% else %>
+                                            <% { %>
+                                                    <div>
+                                                            <% string[] ceny = product.Price.Split('|'); %>
+                                                            <% string[] opcje = product.PriceOption.Split(','); %>
+                                                            <% if(ceny.Length == opcje.Length) %>
+                                                            <% { %>
+                                                                    <% for(int x = 0; x < opcje.Length; x++) %>
+                                                                    <% { %>
+                                                                            <div>
+                                                                                <span><%: opcje[x] %>  -</span>
+                                                                                <span>  <%: ceny[x] %></span>
+                                                                            </div>
+                                                                    <% } %>
+                                                            <% } %>
+                                                            <% else %>
+                                                            <% { %>
+                                                                    <div> Błąd: Wymaga edycji! </div>
+                                                            <% } %>
+                                                    </div>
                                             <% } %>
-                                    <% }
-                                        else{ %>
-                                           <div> Błąd </div>
                                     <% } %>
-                                 
-                                </div><% } 
-                                    else{ %>
-                                           <div> Produkt zawiera nieprawidłowe dane i wymaga edycji! </div>
+                                    <% else %>
+                                    <% { %>
+                                           <div> Błąd: Nieznana cena, wymaga edycji! </div>
                                     <% } %> 
-                                <p><%: Html.ActionLink("Edytuj", "EditProduct", "ManagePanel", new { id = product.ProductId, cat = product.CategoryId, res= product.RestaurantId }, null) %></p> 
+                            <% } %>
+                            <% else %>
+                            <% { %>
+                                    <div> Produkt zawiera nieprawidłowe dane i wymaga edycji! </div>
+                            <% } %>
+
+                            <p><%: Html.ActionLink("Edytuj", "EditProduct", "ManagePanel", new { id = product.ProductId, cat = product.CategoryId, res= product.RestaurantId }, null) %></p> 
                             </div>
                     <% } %>
                 </div>
             </div>
-	    <%  j++;  } %>	
+	    <% j++; %>
+        <% } %>	
     </div>
 
     </fieldset>

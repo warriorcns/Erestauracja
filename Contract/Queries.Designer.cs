@@ -178,6 +178,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId.
+        /// </summary>
+        internal static string DisableProduct {
+            get {
+                return ResourceManager.GetString("DisableProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `category` SET `categoryName`=@categoryName,`categoryDescription`=@categoryDescription,`priceOption`=@priceOption,`nonPriceOption`=@nonPriceOption,`nonPriceOption2`=@nonPriceOption2 WHERE `restaurantId`=@restaurantId AND `id` = @id.
         /// </summary>
         internal static string EditCategory {

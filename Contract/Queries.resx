@@ -156,6 +156,9 @@
   <data name="DeleteUsersInRole" xml:space="preserve">
     <value>DELETE FROM `users_in_roles` WHERE `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename)</value>
   </data>
+  <data name="DisableProduct" xml:space="preserve">
+    <value>UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId</value>
+  </data>
   <data name="EditCategory" xml:space="preserve">
     <value>UPDATE `category` SET `categoryName`=@categoryName,`categoryDescription`=@categoryDescription,`priceOption`=@priceOption,`nonPriceOption`=@nonPriceOption,`nonPriceOption2`=@nonPriceOption2 WHERE `restaurantId`=@restaurantId AND `id` = @id</value>
   </data>

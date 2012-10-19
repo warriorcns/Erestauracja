@@ -2455,22 +2455,104 @@ namespace Contract
                 {
                     reader.Close();
                     conn.Close();
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+                 //   MySqlConnection conn = new MySqlConnection(ConnectionString);
                     MySqlCommand command = new MySqlCommand(Queries.EditCategory);
-                    command.Parameters.AddWithValue("@categoryName", @categoryName);
+                    command.Parameters.AddWithValue("@categoryName", categoryName);
                     command.Parameters.AddWithValue("@categoryDescription", categoryDescription);
                     command.Parameters.AddWithValue("@priceOption", priceOption);
                     command.Parameters.AddWithValue("@nonPriceOption", nonPriceOption);
                     command.Parameters.AddWithValue("@nonPriceOption2", nonPriceOption2);
                     command.Parameters.AddWithValue("@restaurantId", restaurantID);
                     command.Parameters.AddWithValue("@id", categoryID);
+                    command.Connection = conn;
 
-                    int rowsaffected = ExecuteNonQuery(command, "EditCategory");
+                    MySqlCommand command2 = new MySqlCommand(Queries.DisableProduct);
+                    command2.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    command2.Parameters.AddWithValue("@categoryId", categoryID);
+                    command2.Parameters.AddWithValue("@isEnabled", false);
+                    command2.Parameters.AddWithValue("@isAvailable", false);
+                    command2.Connection = conn;
 
-                    if (rowsaffected > 0)
+                    MySqlTransaction tran = null;
+
+                    try
                     {
-                        return true;
+                        conn.Open();
+                        tran = conn.BeginTransaction();
+                        command.Transaction = tran;
+                        command2.Transaction = tran;
+
+                        command2.ExecuteNonQuery();
+                        int rows = command.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            tran.Commit();
+                            return true;
+                        }
+                        else
+                            tran.Rollback();
                     }
+                    catch (MySqlException e)
+                    {
+                        try
+                        {
+                            tran.Rollback();
+                        }
+                        catch { }
+
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message;
+                        wiadomosc += "Action: " + "EditCategory" + "\n\n";
+                        wiadomosc += "Exception: " + e.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            tran.Rollback();
+                        }
+                        catch { }
+
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message2;
+                        wiadomosc += "Action: " + "EditCategory" + "\n\n";
+                        wiadomosc += "Exception: " + ex.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        return false;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    //MySqlCommand command = new MySqlCommand(Queries.EditCategory);
+                    //command.Parameters.AddWithValue("@categoryName", @categoryName);
+                    //command.Parameters.AddWithValue("@categoryDescription", categoryDescription);
+                    //command.Parameters.AddWithValue("@priceOption", priceOption);
+                    //command.Parameters.AddWithValue("@nonPriceOption", nonPriceOption);
+                    //command.Parameters.AddWithValue("@nonPriceOption2", nonPriceOption2);
+                    //command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    //command.Parameters.AddWithValue("@id", categoryID);
+
+                    //int rowsaffected = ExecuteNonQuery(command, "EditCategory");
+
+                    //if (rowsaffected > 0)
+                    //{
+                    //    return true;
+                    //}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     return false;
                 }
                 else
