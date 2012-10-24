@@ -6,7 +6,9 @@
 
 	<script>
 	    $(function () {
-	        $("#tabs").tabs();
+	        $("#tabs-left").tabs({
+                heightStyle: 'auto'
+            });
 	    });
 	</script>
 
@@ -70,9 +72,9 @@
 	        </div>
     </fieldset>
     </br>
-    <fieldset>
+    <fieldset class="produkty-fieldset">
     <legend>Produkty - kliknij <%: Html.ActionLink("tutaj", "AddProduct", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby dodać nowy</legend>
-    <div id="tabs">
+    <div id="tabs-left">
 	    <ul>
             <% 
             int i = 1;
