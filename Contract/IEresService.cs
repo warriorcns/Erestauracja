@@ -178,6 +178,9 @@ namespace Contract
         [OperationContract]
         List<RestaurantInTown> GetRestaurantByTown(string townName);
 
+        [OperationContract]
+        List<Menu> GetMenu(int restaurantID);
+
         #endregion
     }
 

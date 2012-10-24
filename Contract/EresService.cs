@@ -743,6 +743,20 @@ namespace Contract
             }
         }
 
+        public List<Menu> GetMenu(int restaurantID)
+        {
+            if (!(restaurantID == null || restaurantID < 1))
+            {
+                Database db = new Database();
+                List<Menu> value = db.GetMenu(restaurantID);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

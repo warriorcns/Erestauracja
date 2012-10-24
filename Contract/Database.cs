@@ -3830,6 +3830,136 @@ namespace Contract
             return rest;
         }
 
+        public List<Menu> GetMenu(int restaurantID)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+
+            MySqlDataReader reader2 = null;
+            List<Menu> rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetCategories);
+                command.Parameters.AddWithValue("@restaurantID", restaurantID);
+                command.Connection = conn;
+                rest = new List<Menu>();
+                conn.Open();
+
+                reader2 = command.ExecuteReader();
+
+                while (reader2.Read())
+                {
+                    Menu r = GetMenuFromReader(reader2);
+                    rest.Add(r);
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetCategories" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetCategories" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+            }
+
+            foreach (Menu menu in rest)
+            {
+                List<Product> prod = null;
+                MySqlDataReader reader3 = null;
+                try
+                {
+
+                    MySqlCommand command = new MySqlCommand(Queries.GetClientProducts);
+                    command.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    command.Parameters.AddWithValue("@categoryId", menu.CategoryID);
+
+                    command.Connection = conn;
+                    prod = new List<Product>();
+                    conn.Open();
+
+                    reader3 = command.ExecuteReader();
+
+                    while (reader3.Read())
+                    {
+                        Product r = GetProductFromReader(reader3);
+                        prod.Add(r);
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetProducts" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetProducts" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                }
+
+                menu.Products = prod;
+            }
+
+            return rest;
+
+        }
+
         #endregion
     }
 

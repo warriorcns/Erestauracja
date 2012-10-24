@@ -204,6 +204,9 @@
   <data name="GetCategory" xml:space="preserve">
     <value>SELECT `id`, `restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2` FROM `category` WHERE `restaurantId` = @restaurantId AND `id` = @id</value>
   </data>
+  <data name="GetClientProducts" xml:space="preserve">
+    <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId AND `isAvailable`=1 AND `isEnabled`=1</value>
+  </data>
   <data name="GetContactPage" xml:space="preserve">
     <value>SELECT `contact` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>
   </data>

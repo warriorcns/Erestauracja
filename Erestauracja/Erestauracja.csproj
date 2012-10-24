@@ -1070,6 +1070,7 @@
     <Content Include="Views\ManagePanel\Gallery.aspx" />
     <Content Include="Views\ManagePanel\Index.aspx" />
     <Content Include="Views\ManagePanel\MainPage.aspx" />
+    <Content Include="Views\ManagePanel\Menu3.aspx" />
     <Content Include="Views\ManagePanel\Menu.aspx" />
     <Content Include="Views\ManagePanel\Personnel.aspx" />
     <Content Include="Views\ManagePanel\Reports.aspx" />

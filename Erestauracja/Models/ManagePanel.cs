@@ -255,6 +255,14 @@ namespace Erestauracja.Models
         public List<Erestauracja.ServiceReference.Menu> Menu { get; set; }
     }
 
+    public class ClientMenuModel
+    {
+        [HiddenInput]
+        public int RestaurantID { get; set; }
+
+        public List<Erestauracja.ServiceReference.Menu> Menu { get; set; }
+    }
+
     public class ProductModel
     {
        // string priceOption = null;

@@ -455,8 +455,39 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/Menu
         public ActionResult Menu(int id)
         {
-            ViewData["id"] = id;
-            return View();
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+
+                List<Menu> value2 = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value2 = new List<Menu>(client.GetMenu(id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value2 = null;
+                }
+
+                if (value2 == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    ClientMenuModel model = new ClientMenuModel();
+                    model.RestaurantID = id;
+                    model.Menu = value2;
+
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Restaurant", "ManagePanel");
         }
 
         //
