@@ -1,0 +1,112 @@
+﻿body
+{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 750px;
+    max-width: 1200px;    
+    
+}
+    
+a {
+    text-decoration: none;
+    font-size: large;
+    color: Black;
+}
+
+.topka
+{
+     display: block;
+     padding: 0 0 75px 0;
+     position: relative;
+     top: 10px;
+     background-color: Black;
+     border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
+     z-index: 3;
+}
+
+ .ikonka
+{
+    
+    background: url(/Content/images/logo.png) no-repeat left top;
+     height: 75px;
+     float: left;
+     position: relative;
+     z-index: 1;
+    overflow: visible;
+    width: 200px;
+    
+}
+
+.buttons-container {
+    min-width: 100px ;
+    width: 200px;
+
+}
+
+
+
+.button {
+	position: relative;
+	border: none;
+	display: block;
+	box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2),
+			    inset 0px -5px 0px 0px rgba(0,0,0,0.3),
+				inset 0px 2px 0px 0px rgba(255,255,255,0.5);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+	cursor: pointer;
+	margin: 36px;
+}
+.button:active {
+	box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2),
+			    inset 0px -2px 0px 0px rgba(0,0,0,0.3),
+				inset 0px 2px 0px 0px rgba(255,255,255,0.5);
+	top: 3px;
+}
+.button div {
+	padding: 30px 20px 32px 20px;
+	color: rgba(0,0,0,0.7);
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+
+    
+}
+.button:active div {
+	padding-bottom: 32px;
+}
+.wood {
+	background: url(http://subtlepatterns.com/patterns/wood_pattern.png);
+}
+.wood2 {
+	background: url(http://subtlepatterns.com/patterns/tileable_wood_texture.png);
+}
+
+.shine {
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0.62) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.62)), color-stop(100%,rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.62) 0%,rgba(255,255,255,0) 100%);
+	background: -o-linear-gradient(top,  rgba(255,255,255,0.62) 0%,rgba(255,255,255,0) 100%);
+	background: -ms-linear-gradient(top,  rgba(255,255,255,0.62) 0%,rgba(255,255,255,0) 100%);
+	background: linear-gradient(top,  rgba(255,255,255,0.62) 0%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9effffff', endColorstr='#00ffffff',GradientType=0 );
+}
+
+orders-header-main
+{
+    width: 500px;    
+    
+}
+
+.orders-header {
+    border-right: 2px black solid;
+    padding: 0px 10px 0px 10px ;
+    position: relative;
+    margin: 0;
+    text-align: center;
+    top: 20px;
+    
+}
