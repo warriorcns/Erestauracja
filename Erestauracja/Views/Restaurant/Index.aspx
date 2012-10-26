@@ -1,19 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Restaurant/Restaurant.master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Restaurant/Restaurant.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.MainPageModel>" %>
 
-
-
-<asp:Content class="main" ContentPlaceHolderID="Main" runat="server">
-    <div class="PaneleOpisRestauracji">
-        <asp:Panel class="PanelOpisRestauracji" runat="server" ScrollBars="Auto">
-            <p style="position: relative; padding: 10px 10px 10px 10px; font-size: 15px;">
-                Nasza restauracja zajmuje się przygotowaniem posiłków kuchni polskiej. Dania można
-                zamawiać telefonicznie, jak i zjeść na miejscu w bardzo klimatycznym lokalu.</p>
+<asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
+<div class="PaneleOpisRestauracji">
+<fieldset>    
+        <asp:Panel ID="Panel1" class="PanelOpisRestauracji" runat="server" ScrollBars="Auto">
+           <p style="position: relative; padding: 10px 10px 10px 10px; font-size: 15px;"> 
+                <%= Html.DisplayFor(m => m.Description)%>
+           </p> 
         </asp:Panel>
-        <asp:Panel class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
-            <asp:Panel class="PanelToto" runat="server" ScrollBars="Auto">
+        <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
+            <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="Auto">
+                <%= Html.DisplayFor(m => m.Foto)%>
             </asp:Panel>
-            <asp:Panel class="PanelPromocje" runat="server" ScrollBars="Auto">
+            <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="Auto">
+                <%= Html.DisplayFor(m => m.SpecialOffers)%>
             </asp:Panel>
         </asp:Panel>
-    </div>
+        </fieldset>
+</div>
 </asp:Content>

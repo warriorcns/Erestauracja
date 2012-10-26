@@ -15,6 +15,51 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContactPageContent", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class ContactPageContent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContactField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Contact {
+            get {
+                return this.ContactField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContactField, value) != true)) {
+                    this.ContactField = value;
+                    this.RaisePropertyChanged("Contact");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Restaurant", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
     public partial class Restaurant : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -784,51 +829,6 @@ namespace Erestauracja.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ContactPageContent", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
-    [System.SerializableAttribute()]
-    public partial class ContactPageContent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContactField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Contact {
-            get {
-                return this.ContactField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContactField, value) != true)) {
-                    this.ContactField = value;
-                    this.RaisePropertyChanged("Contact");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Category", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
     [System.SerializableAttribute()]
     public partial class Category : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -954,6 +954,352 @@ namespace Erestauracja.ServiceReference {
                 if ((this.RestaurantIDField.Equals(value) != true)) {
                     this.RestaurantIDField = value;
                     this.RaisePropertyChanged("RestaurantID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Menu", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class Menu : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CategoryIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NonPriceOptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NonPriceOption2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PriceOptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Erestauracja.ServiceReference.Product[] ProductsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RestaurantIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CategoryDescription {
+            get {
+                return this.CategoryDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryDescriptionField, value) != true)) {
+                    this.CategoryDescriptionField = value;
+                    this.RaisePropertyChanged("CategoryDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CategoryID {
+            get {
+                return this.CategoryIDField;
+            }
+            set {
+                if ((this.CategoryIDField.Equals(value) != true)) {
+                    this.CategoryIDField = value;
+                    this.RaisePropertyChanged("CategoryID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CategoryName {
+            get {
+                return this.CategoryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryNameField, value) != true)) {
+                    this.CategoryNameField = value;
+                    this.RaisePropertyChanged("CategoryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NonPriceOption {
+            get {
+                return this.NonPriceOptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NonPriceOptionField, value) != true)) {
+                    this.NonPriceOptionField = value;
+                    this.RaisePropertyChanged("NonPriceOption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NonPriceOption2 {
+            get {
+                return this.NonPriceOption2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NonPriceOption2Field, value) != true)) {
+                    this.NonPriceOption2Field = value;
+                    this.RaisePropertyChanged("NonPriceOption2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PriceOption {
+            get {
+                return this.PriceOptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PriceOptionField, value) != true)) {
+                    this.PriceOptionField = value;
+                    this.RaisePropertyChanged("PriceOption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Erestauracja.ServiceReference.Product[] Products {
+            get {
+                return this.ProductsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductsField, value) != true)) {
+                    this.ProductsField = value;
+                    this.RaisePropertyChanged("Products");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RestaurantID {
+            get {
+                return this.RestaurantIDField;
+            }
+            set {
+                if ((this.RestaurantIDField.Equals(value) != true)) {
+                    this.RestaurantIDField = value;
+                    this.RaisePropertyChanged("RestaurantID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Product", Namespace="http://schemas.datacontract.org/2004/07/Contract")]
+    [System.SerializableAttribute()]
+    public partial class Product : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CategoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime CreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAvailableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEnabledField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PriceOptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ProductIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RestaurantIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CategoryId {
+            get {
+                return this.CategoryIdField;
+            }
+            set {
+                if ((this.CategoryIdField.Equals(value) != true)) {
+                    this.CategoryIdField = value;
+                    this.RaisePropertyChanged("CategoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreationDate {
+            get {
+                return this.CreationDateField;
+            }
+            set {
+                if ((this.CreationDateField.Equals(value) != true)) {
+                    this.CreationDateField = value;
+                    this.RaisePropertyChanged("CreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAvailable {
+            get {
+                return this.IsAvailableField;
+            }
+            set {
+                if ((this.IsAvailableField.Equals(value) != true)) {
+                    this.IsAvailableField = value;
+                    this.RaisePropertyChanged("IsAvailable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEnabled {
+            get {
+                return this.IsEnabledField;
+            }
+            set {
+                if ((this.IsEnabledField.Equals(value) != true)) {
+                    this.IsEnabledField = value;
+                    this.RaisePropertyChanged("IsEnabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PriceField, value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PriceOption {
+            get {
+                return this.PriceOptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PriceOptionField, value) != true)) {
+                    this.PriceOptionField = value;
+                    this.RaisePropertyChanged("PriceOption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductDescription {
+            get {
+                return this.ProductDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductDescriptionField, value) != true)) {
+                    this.ProductDescriptionField = value;
+                    this.RaisePropertyChanged("ProductDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ProductId {
+            get {
+                return this.ProductIdField;
+            }
+            set {
+                if ((this.ProductIdField.Equals(value) != true)) {
+                    this.ProductIdField = value;
+                    this.RaisePropertyChanged("ProductId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductName {
+            get {
+                return this.ProductNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductNameField, value) != true)) {
+                    this.ProductNameField = value;
+                    this.RaisePropertyChanged("ProductName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RestaurantId {
+            get {
+                return this.RestaurantIdField;
+            }
+            set {
+                if ((this.RestaurantIdField.Equals(value) != true)) {
+                    this.RestaurantIdField = value;
+                    this.RaisePropertyChanged("RestaurantId");
                 }
             }
         }
@@ -1831,6 +2177,9 @@ namespace Erestauracja.ServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IEresService")]
     public interface IEresService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetContactPageUser", ReplyAction="http://tempuri.org/IEresService/GetContactPageUserResponse")]
+        Erestauracja.ServiceReference.ContactPageContent GetContactPageUser(int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddRestaurant", ReplyAction="http://tempuri.org/IEresService/AddRestaurantResponse")]
         bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
         
@@ -1885,6 +2234,15 @@ namespace Erestauracja.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/AddProduct", ReplyAction="http://tempuri.org/IEresService/AddProductResponse")]
         bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetMenuManager", ReplyAction="http://tempuri.org/IEresService/GetMenuManagerResponse")]
+        Erestauracja.ServiceReference.Menu[] GetMenuManager(string managerLogin, int restaurantID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetProduct", ReplyAction="http://tempuri.org/IEresService/GetProductResponse")]
+        Erestauracja.ServiceReference.Product GetProduct(string managerLogin, int restaurantID, int productID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/EditProduct", ReplyAction="http://tempuri.org/IEresService/EditProductResponse")]
+        bool EditProduct(string managerLogin, int restaurantID, int id, int categoryID, string productName, string productDescription, string price, bool isAvailable);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetCountriesList", ReplyAction="http://tempuri.org/IEresService/GetCountriesListResponse")]
         string[] GetCountriesList();
         
@@ -1893,6 +2251,18 @@ namespace Erestauracja.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetRestaurantByTown", ReplyAction="http://tempuri.org/IEresService/GetRestaurantByTownResponse")]
         Erestauracja.ServiceReference.RestaurantInTown[] GetRestaurantByTown(string townName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetMenu", ReplyAction="http://tempuri.org/IEresService/GetMenuResponse")]
+        Erestauracja.ServiceReference.Menu[] GetMenu(int restaurantID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetMainPageUser", ReplyAction="http://tempuri.org/IEresService/GetMainPageUserResponse")]
+        Erestauracja.ServiceReference.MainPageContent GetMainPageUser(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetDeliveryPageUser", ReplyAction="http://tempuri.org/IEresService/GetDeliveryPageUserResponse")]
+        Erestauracja.ServiceReference.DeliveryPageContent GetDeliveryPageUser(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/GetEventsPageUser", ReplyAction="http://tempuri.org/IEresService/GetEventsPageUserResponse")]
+        Erestauracja.ServiceReference.EventsPageContent GetEventsPageUser(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEresService/ChangePassword", ReplyAction="http://tempuri.org/IEresService/ChangePasswordResponse")]
         bool ChangePassword(string login, string password);
@@ -2006,6 +2376,10 @@ namespace Erestauracja.ServiceReference {
                 base(binding, remoteAddress) {
         }
         
+        public Erestauracja.ServiceReference.ContactPageContent GetContactPageUser(int id) {
+            return base.Channel.GetContactPageUser(id);
+        }
+        
         public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime) {
             return base.Channel.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
         }
@@ -2078,6 +2452,18 @@ namespace Erestauracja.ServiceReference {
             return base.Channel.AddProduct(restaurantID, categoryID, productName, productDescription, price, managerLogin);
         }
         
+        public Erestauracja.ServiceReference.Menu[] GetMenuManager(string managerLogin, int restaurantID) {
+            return base.Channel.GetMenuManager(managerLogin, restaurantID);
+        }
+        
+        public Erestauracja.ServiceReference.Product GetProduct(string managerLogin, int restaurantID, int productID) {
+            return base.Channel.GetProduct(managerLogin, restaurantID, productID);
+        }
+        
+        public bool EditProduct(string managerLogin, int restaurantID, int id, int categoryID, string productName, string productDescription, string price, bool isAvailable) {
+            return base.Channel.EditProduct(managerLogin, restaurantID, id, categoryID, productName, productDescription, price, isAvailable);
+        }
+        
         public string[] GetCountriesList() {
             return base.Channel.GetCountriesList();
         }
@@ -2088,6 +2474,22 @@ namespace Erestauracja.ServiceReference {
         
         public Erestauracja.ServiceReference.RestaurantInTown[] GetRestaurantByTown(string townName) {
             return base.Channel.GetRestaurantByTown(townName);
+        }
+        
+        public Erestauracja.ServiceReference.Menu[] GetMenu(int restaurantID) {
+            return base.Channel.GetMenu(restaurantID);
+        }
+        
+        public Erestauracja.ServiceReference.MainPageContent GetMainPageUser(int id) {
+            return base.Channel.GetMainPageUser(id);
+        }
+        
+        public Erestauracja.ServiceReference.DeliveryPageContent GetDeliveryPageUser(int id) {
+            return base.Channel.GetDeliveryPageUser(id);
+        }
+        
+        public Erestauracja.ServiceReference.EventsPageContent GetEventsPageUser(int id) {
+            return base.Channel.GetEventsPageUser(id);
         }
         
         public bool ChangePassword(string login, string password) {

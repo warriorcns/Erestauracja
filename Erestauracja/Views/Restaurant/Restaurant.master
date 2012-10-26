@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<% 
+    <% 
     HttpCookie c = new HttpCookie("MyCookie");
     c.Value = "TEST";
     Response.Cookies.Add(c); %>
@@ -13,24 +13,21 @@
 </asp:Content>
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
-
-
-<form id="form1" runat="server">
-
+    <form id="form1" runat="server">
 <nav class="menu">
                 <ul id="menu">
                     <li>
-                        <%: Html.ActionLink("Opis", "Index", "Restaurant")%></li>
+                        <%: Html.ActionLink("Strona główna", "Index", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Menu", "Menu", "Restaurant")%></li>
+                        <%: Html.ActionLink("Menu", "Menu", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Dowóz", "Delivery", "Restaurant")%></li>
+                        <%: Html.ActionLink("Dowóz", "Delivery", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Parties", "Restaurant")%></li>
+                        <%: Html.ActionLink("Imprezy okolicznosciowe", "Events", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Galeria", "Gallery", "Restaurant")%></li>
+                        <%: Html.ActionLink("Galeria", "Gallery", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
-                        <%: Html.ActionLink("Kontakt", "Contact", "Restaurant")%></li>
+                        <%: Html.ActionLink("Kontakt", "Contact", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                 </ul>
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">

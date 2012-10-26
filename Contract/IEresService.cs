@@ -181,6 +181,18 @@ namespace Contract
         [OperationContract]
         List<Menu> GetMenu(int restaurantID);
 
+        [OperationContract]
+        MainPageContent GetMainPageUser(int id);
+
+        [OperationContract]
+        DeliveryPageContent GetDeliveryPageUser(int id);
+
+        [OperationContract]
+        EventsPageContent GetEventsPageUser(int id);
+
+        [OperationContract]
+        ContactPageContent GetContactPageUser(int id);
+
         #endregion
     }
 

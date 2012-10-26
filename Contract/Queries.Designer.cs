@@ -340,6 +340,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `contact` FROM `rest_page_content` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string GetContactPageUser {
+            get {
+                return ResourceManager.GetString("GetContactPageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `name` FROM `countries`.
         /// </summary>
         internal static string GetCountriesList {
@@ -354,6 +363,15 @@ namespace Contract {
         internal static string GetDeliveryPage {
             get {
                 return ResourceManager.GetString("GetDeliveryPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `delivery` FROM `rest_page_content` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string GetDeliveryPageUser {
+            get {
+                return ResourceManager.GetString("GetDeliveryPageUser", resourceCulture);
             }
         }
         
@@ -376,6 +394,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `events` FROM `rest_page_content` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string GetEventsPageUser {
+            get {
+                return ResourceManager.GetString("GetEventsPageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `failedPasswordAttemptCount`, `failedPasswordAttemptWindowStart`, `failedPasswordAnswerAttemptCount`, `failedPasswordAnswerAttemptWindowStart` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetFailureCount {
@@ -390,6 +417,15 @@ namespace Contract {
         internal static string GetMainPage {
             get {
                 return ResourceManager.GetString("GetMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `description`, `foto`, `specialOffers` FROM `rest_page_content` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string GetMainPageUser {
+            get {
+                return ResourceManager.GetString("GetMainPageUser", resourceCulture);
             }
         }
         

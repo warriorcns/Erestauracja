@@ -3960,6 +3960,276 @@ namespace Contract
 
         }
 
+        public MainPageContent GetMainPageUser(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MainPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetMainPageUser);
+               // command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new MainPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Description = reader.GetString(0);
+                        rest.Foto = reader.GetString(1);
+                        rest.SpecialOffers = reader.GetString(2);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetMainPageUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetMainPageUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public DeliveryPageContent GetDeliveryPageUser(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            DeliveryPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetDeliveryPageUser);
+              //  command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new DeliveryPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Delivery = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetDeliveryPageUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetDeliveryPageUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public EventsPageContent GetEventsPageUser(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            EventsPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetEventsPageUser);
+             //   command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new EventsPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Events = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetEventsPageUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetEventsPageUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public ContactPageContent GetContactPageUser(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            ContactPageContent rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetContactPageUser);
+               // command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+                rest = new ContactPageContent();
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rest.Contact = reader.GetString(0);
+                    }
+                }
+                else
+                    return null;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetContactPageUser" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetContactPageUser" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
         #endregion
     }
 

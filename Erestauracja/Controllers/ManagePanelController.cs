@@ -1335,7 +1335,6 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Restaurant");
         }
 
-
         //
         // POST: /ManagePanel/EditProduct
         [HttpPost]

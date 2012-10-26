@@ -757,6 +757,62 @@ namespace Contract
             }
         }
 
+        public MainPageContent GetMainPageUser(int id)
+        {
+            if (!(id == null || id < 0))
+            {
+                Database db = new Database();
+                MainPageContent value = db.GetMainPageUser(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DeliveryPageContent GetDeliveryPageUser(int id)
+        {
+            if (!(id == null || id < 0))
+            {
+                Database db = new Database();
+                DeliveryPageContent value = db.GetDeliveryPageUser(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public EventsPageContent GetEventsPageUser(int id)
+        {
+            if (!(id == null || id < 0))
+            {
+                Database db = new Database();
+                EventsPageContent value = db.GetEventsPageUser(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public ContactPageContent GetContactPageUser(int id)
+        {
+            if (!(id == null || id < 0))
+            {
+                Database db = new Database();
+                ContactPageContent value = db.GetContactPageUser(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

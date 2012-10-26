@@ -8,7 +8,7 @@ using System.IO;
 using Erestauracja.Models;
 using AppLimit.CloudComputing.SharpBox;
 using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
-
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
@@ -37,82 +37,215 @@ namespace Erestauracja.Controllers
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            ViewData["id"] = id;
+            if (id > 0)
+            {
+                MainPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPageUser(id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    MainPageModel nowy = new MainPageModel();
+                    nowy.Description = value.Description;
+                    nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            return RedirectToAction("Restaurant");
+
             //return RedirectToAction("Index");
             //this.Restaurantid = id;
             //int test = this.Restaurantid;
-
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            int id;
-            if (myCookie != null)
-            {
-                id = int.Parse(myCookie.Value);
-            }
-            #endregion
-
-            return View();
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
+            //return View();
         }
 
-        public ActionResult Menu()
+        public ActionResult Menu(int id)
         {
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            int id;
-            if (myCookie != null)
+            if (id > 0)
             {
-                id = int.Parse(myCookie.Value);
-            }
-            #endregion
-            
-            //dziala pobieranie do c:/Data
-            //DownloadFiles("*.jpg");
+                ViewData["id"] = id;
 
-            return View();
+                List<Menu> value2 = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value2 = new List<Menu>(client.GetMenu(id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value2 = null;
+                }
+
+                if (value2 == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    ClientMenuModel model = new ClientMenuModel();
+                    model.RestaurantID = id;
+                    model.Menu = value2;
+
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Restaurant");
+            //return RedirectToAction("Restaurant", "ManagePanel");
+
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
+            ////dziala pobieranie do c:/Data
+            ////DownloadFiles("*.jpg");
+            //return View();
         }
 
-        public ActionResult Delivery()
+        public ActionResult Delivery(int id)
         {
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            int id;
-            if (myCookie != null)
+            ViewData["id"] = id;
+            if (id > 0)
             {
-                id = int.Parse(myCookie.Value);
+                DeliveryPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetDeliveryPageUser(id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    DeliveryPageModel nowy = new DeliveryPageModel();
+                    nowy.Delivery = value.Delivery;
+                    nowy.RestaurantID = id;
+
+                    return View(nowy);
+                }
             }
-            #endregion
-            return View();
+            return RedirectToAction("Restaurant");
+
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
+            //return View();
         }
 
-        public ActionResult Parties()
+        public ActionResult Events(int id)
         {
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            int id;
-            if (myCookie != null)
+            ViewData["id"] = id;
+            if (id > 0)
             {
-                id = int.Parse(myCookie.Value);
+                EventsPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetEventsPageUser(id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    EventsPageModel nowy = new EventsPageModel();
+                    nowy.Events = value.Events;
+                    nowy.RestaurantID = id;
+
+                    return View(nowy);
+                }
             }
-            #endregion
-            return View();
+            return RedirectToAction("Restaurant");
+
+
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
+            //return View();
         }
 
         public ActionResult Gallery(int id)
         {
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            //int id;
-            if (myCookie != null)
-            {
-                id = int.Parse(myCookie.Value);
-            }
-            #endregion
+            ViewData["id"] = id;
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            ////int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
 
             #region DropBox Connection
             try
@@ -180,26 +313,52 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(int id)
         {
-            #region ciasteczka - odczyt
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            myCookie = Request.Cookies["MyTestCookie"];
-            int id;
-            if (myCookie != null)
+            ViewData["id"] = id;
+            if (id > 0)
             {
-                id = int.Parse(myCookie.Value);
+                ContactPageContent value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetContactPageUser(id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    ContactPageModel nowy = new ContactPageModel();
+                    nowy.Contact = value.Contact;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
             }
-            #endregion
-            return View();
+            return RedirectToAction("Restaurant");
+            //#region ciasteczka - odczyt
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //myCookie = Request.Cookies["MyTestCookie"];
+            //int id;
+            //if (myCookie != null)
+            //{
+            //    id = int.Parse(myCookie.Value);
+            //}
+            //#endregion
+            //return View();
         }
 
-        public ActionResult Test()
-        {
-            return View();
-
-        }
-
+        # region dropBox
         public static void DownloadFileFTP(string ftpfilepath)
         {
             // The serverUri parameter should start with the ftp:// scheme. 
@@ -222,7 +381,6 @@ namespace Erestauracja.Controllers
             file.Close();
             //MessageBox.Show("Download Complete");
         }
-
 
         public void DownloadFiles(string WildCard)
         {
@@ -399,5 +557,7 @@ namespace Erestauracja.Controllers
             model.RestaurantID = id;
             return View(model);
         }
+
+        # endregion
     }
 }
