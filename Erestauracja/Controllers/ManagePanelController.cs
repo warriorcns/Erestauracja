@@ -487,7 +487,8 @@ namespace Erestauracja.Controllers
                     return View(model);
                 }
             }
-            return RedirectToAction("Restaurant", "ManagePanel");
+            return RedirectToAction("Restaurant");
+            //return RedirectToAction("Restaurant", "ManagePanel");
         }
 
         //

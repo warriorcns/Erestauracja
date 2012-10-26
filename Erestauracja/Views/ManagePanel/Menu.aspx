@@ -83,11 +83,23 @@
                                     <% if(menu.NonPriceOption != null) %>
                                     <% { %>
                                     <div>Do wyboru:
-                                        <asp:DropDownList ID="DropDownList" runat="server">
-
-                                                <asp:ListItem>Zwykłe</asp:ListItem>
-
-                                        </asp:DropDownList>
+                                        <% List<SelectListItem> lista = new List<SelectListItem>(); %>
+                                        <% foreach(string item in menu.NonPriceOption.Split(',')) %>
+                                        <% { %>
+                                                <% lista.Add(new SelectListItem{Text = item, Value = item}); %>
+                                        <% } %>
+                                        <%: Html.DropDownList("DropDownList", (IEnumerable<SelectListItem>)lista )%>
+                                    </div>
+                                    <% } %>
+                                    <% if(menu.NonPriceOption2 != null) %>
+                                    <% { %>
+                                    <div>Do wyboru:
+                                        <% List<SelectListItem> lista2 = new List<SelectListItem>(); %>
+                                        <% foreach(string item in menu.NonPriceOption2.Split(',')) %>
+                                        <% { %>
+                                                <% lista2.Add(new SelectListItem{Text = item, Value = item}); %>
+                                        <% } %>
+                                        <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2 )%>
                                     </div>
                                     <% } %>
                             </div>
