@@ -4,11 +4,7 @@
 
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
-    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-
-	<script>
+	<script type="text/javascript">
 	    $(function () {
 	        $("#tabs-left").tabs({
 	            heightStyle: 'auto'
@@ -16,27 +12,29 @@
 	    });
 	</script>
 
-    <script>
+    <script type="text/javascript">
         $(function () {
             $(".accordion2").accordion({
                 active: false,
                 autoHeight: false,
-                event: "mouseover",
+                event: "click",
                 collapsible: true
             });
         });
-	</script>
+    </script>
 
-    <script>
-        $(function () {
+    <script type="text/javascript">
+       $(function () {
             $(".selector").spinner({
                 min: 0,
                 max: 100,
                 icons: { down: "custom-down-icon", up: "custom-up-icon" },
-                disabled: true
+                disabled: false
             });
-        });
+       });
 	</script>
+
+    <%--<input id="selector">--%>
 
     <fieldset class="produkty-fieldset">
     <legend>Menu - kliknij <%: Html.ActionLink("tutaj", "EditMenuPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby edytować</legend>
@@ -130,11 +128,12 @@
                                     <% } %>
                                     <div>
                                         Ilość
-                                        <span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
+                                        <input class="selector">
+                                        <%--<span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
                                         <input id="spinner" class="ui-spinner-input" autocomplete="off" role="spinbutton"/>
                                             <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
                                             <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
-                                        </span>
+                                        </span>--%>
                                     </div>
                             </div>
                     <% } %>

@@ -5,6 +5,9 @@
     HttpCookie c = new HttpCookie("MyCookie");
     c.Value = "TEST";
     Response.Cookies.Add(c); %>
+    
+    
+
     <asp:ContentPlaceHolder ID="head" runat="server" />
 </asp:Content>
     
