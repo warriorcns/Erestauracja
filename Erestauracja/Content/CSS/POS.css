@@ -3,7 +3,7 @@
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    min-width: 750px;
+    min-width: 960px;
     max-width: 1200px;    
     
 }
@@ -40,9 +40,23 @@ a {
     
 }
 
+
+/* MAIN */
+.main
+{ 
+    z-index: 0;
+    clear: both;
+    min-height: 600px;
+    overflow: hidden;    
+    width: 100%;
+}
+
 .buttons-container {
     min-width: 100px ;
-    width: 200px;
+    width: 20%;
+    position: relative;
+    height: 100%;
+    float: left;
 
 }
 
@@ -78,8 +92,9 @@ a {
 .button:active div {
 	padding-bottom: 32px;
 }
-.wood {
-	background: url(http://subtlepatterns.com/patterns/wood_pattern.png);
+.wood
+{
+    background: url(http://subtlepatterns.com/patterns/wood_pattern.png);
 }
 .wood2 {
 	background: url(http://subtlepatterns.com/patterns/tileable_wood_texture.png);
@@ -95,18 +110,77 @@ a {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9effffff', endColorstr='#00ffffff',GradientType=0 );
 }
 
-orders-header-main
+.orders-header-main
 {
-    width: 500px;    
-    
+    display: -webkit-box;
 }
 
-.orders-header {
+/* naglowek tabelki z zamowieniami*/
+ .orders-container
+ {
+        position: relative;
+        width: 80%;
+        float: left;
+        top: 20px;
+        height: 100%;
+ }
+
+.order-container
+{
+    position: relative;
+    top: 50px;
+    width: 100%;
+}
+
+.order {
     border-right: 2px black solid;
-    padding: 0px 10px 0px 10px ;
+    
     position: relative;
     margin: 0;
     text-align: center;
-    top: 20px;
+    float: left;
+    left: 30px;
+    display: inline-block;
+    margin : 0px auto;
+}
+
+.orders-header
+{
+    position: relative;
+    top: 20px;     
+    left:  65px;
+    border-right: 2px black solid;
+    padding: 0px 10px 10px 10px ;
+    font-size: large;
+    text-align: center;
+    font-family: Verdana,Arial,sans-serif;
+    display: inline-block;
+    margin: 0px auto;
+}
+
+.orders-header-phone, .orders-header-name
+{
+    max-width: 100px;    
+}
+
+.orders-header-adress
+{
+    width: 200px;    
+}
+
+.orders-header-status
+{
+    width: 300px;
+    border-right: none;    
+}
+
+.ui-icon-triangle-1-e
+{
+    position: relative;    
     
 }
+.ui-accordion .ui-accordion-header a 
+{
+    padding: 0px 10px 10px 10px ;
+ }
+
