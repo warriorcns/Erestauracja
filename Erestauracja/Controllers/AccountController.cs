@@ -344,6 +344,11 @@ namespace Erestauracja.Controllers
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
                         return RedirectToAction("Index", "Admin");
                     }
+                    else if (role.IsUserInRole(model.Login, "Restauracja"))
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                        return RedirectToAction("Index", "POS");
+                    }
                     else
                     {
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);

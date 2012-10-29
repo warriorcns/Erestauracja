@@ -107,7 +107,7 @@ namespace Erestauracja.Controllers
                             ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                             using (client)
                             {
-                                value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, 123456, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
+                                value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, val[0].ID, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
                             }
                             client.Close();
                         }

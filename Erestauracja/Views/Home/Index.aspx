@@ -106,7 +106,7 @@
             //redirect to res page
             //alert('test:' + str);
 
-            var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
+            var url = '<%: Url.Action("Index", "Restaurant") %>';
             var data = { id: str };
 
             if (!$(str).val()) {

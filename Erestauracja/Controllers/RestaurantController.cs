@@ -13,28 +13,34 @@ using Erestauracja.ServiceReference;
 namespace Erestauracja.Controllers
 {
     //[Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+    //[AllowAnonymous] - zastosowac ten atrybut
     public class RestaurantController : Controller
     {
         //public int Restaurantid ; 
         //
         // GET: /Restaurant/
-        public ActionResult GetRequest(int id)
-        {
-            //this.Restaurantid = id;
-            //return RedirectToAction ("Index", new { id = id });
+        /// <summary>
+        /// Nie uzywana stara metoda, wychwytywala przekierowanie z wyszukiwania
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        //public ActionResult GetRequest(int id)
+        //{
+        //    //this.Restaurantid = id;
+        //    //return RedirectToAction ("Index", new { id = id });
 
-            #region ciasteczka - zapis
+        //    #region ciasteczka - zapis
 
-            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            DateTime now = DateTime.Now;
-            myCookie.Expires = now.AddMinutes(1);
-            myCookie.Value = id.ToString();
-            Response.Cookies.Add(myCookie);
+        //    System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+        //    DateTime now = DateTime.Now;
+        //    myCookie.Expires = now.AddMinutes(1);
+        //    myCookie.Value = id.ToString();
+        //    Response.Cookies.Add(myCookie);
 
-            #endregion
+        //    #endregion
 
-            return Json(new { redirectToUrl = Url.Action("Index/" + id) });
-        }
+        //    return Json(new { redirectToUrl = Url.Action("Index/" + id) });
+        //}
 
 
         public ActionResult Index(int id)

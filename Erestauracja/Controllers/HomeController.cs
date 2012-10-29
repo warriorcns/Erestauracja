@@ -14,20 +14,10 @@ namespace Erestauracja.Controllers
 {
     
     //[CustomAuthorizeAttribute(Roles = "Admin")]
-    //tu admin musi wejsc by go przekierowalo
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-
-            if (User.IsInRole("Admin"))
-            {
-                Response.Redirect("/Admin/Index");
-            }
-            if (User.IsInRole("Menadżer"))
-            {
-                Response.Redirect("/ManagePanel/Index");
-            }
 
             ViewBag.Message = "Witaj na stronie głównej!";
     
@@ -59,7 +49,7 @@ namespace Erestauracja.Controllers
         
         
 
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        //[CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult TopRestaurants()
         {
             return View();
@@ -93,6 +83,12 @@ namespace Erestauracja.Controllers
             //return RedirectToAction("Index");
             return Json(selectList);
         }
+
+        public ActionResult Info()
+        {
+            return View();
+        }
+
 
     }
 }
