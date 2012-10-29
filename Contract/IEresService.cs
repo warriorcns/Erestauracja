@@ -1115,6 +1115,7 @@ namespace Contract
     {
         private int resId = -1;
         private string name = null;
+        private int townId = -1;
 
         [DataMember]
         public int ResId
@@ -1128,6 +1129,13 @@ namespace Contract
         {
             get { return name; }
             set { name = value; }
+        }
+
+        [DataMember]
+        public int TownId
+        {
+            get { return townId; }
+            set { townId = value; }
         }
     }
 }

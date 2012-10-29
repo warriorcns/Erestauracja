@@ -502,7 +502,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, y.`town_name` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName.
         /// </summary>
         internal static string GetRestaurantByTown {
             get {

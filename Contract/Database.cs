@@ -3777,7 +3777,7 @@ namespace Contract
                         RestaurantInTown u = new RestaurantInTown();
                         u.ResId = reader.GetInt32(0);
                         u.Name = reader.GetString(1) + " (" + reader.GetString(2) + ")";
-
+                        u.TownId = reader.GetInt32(3);
                         rest.Add(u);
                     }
                 }

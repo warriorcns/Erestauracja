@@ -156,9 +156,9 @@ namespace Erestauracja.Models
         [DataType(DataType.Html)]
         public string SpecialOffers { get; set; }
 
-        [AllowHtml]
-        [DataType(DataType.Html)]
-        public HttpPostedFileBase file { get; set; }
+        //[AllowHtml]
+        //[DataType(DataType.Html)]
+        public HttpPostedFileBase File { get; set; }
     }
 
     public class DeliveryPageModel

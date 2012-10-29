@@ -130,7 +130,7 @@
                                         Ilość
                                         <input class="selector">
                                         <%--<span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
-                                        <input id="spinner" class="ui-spinner-input" autocomplete="off" role="spinbutton"/>
+                                        <input class="spinner" class="ui-spinner-input" autocomplete="off" role="spinbutton"/>
                                             <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
                                             <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
                                         </span>--%>
