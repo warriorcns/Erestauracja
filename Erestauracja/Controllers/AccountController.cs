@@ -385,8 +385,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Register
         public ActionResult Register()
-        {
-            
+        { 
             string status = String.Empty;
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem {Text = "Mężczyzna", Value = "Mężczyzna"});
@@ -636,6 +635,35 @@ namespace Erestauracja.Controllers
         // GET: /Account/RegisterManager
         public ActionResult RegisterManager()
         {
+            string status = String.Empty;
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
+
+            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            try
+            {
+                List<string> listapobrana = new List<string>(country.GetCountriesList());
+                List<SelectListItem> countryList = new List<SelectListItem>();
+
+                foreach (string item in listapobrana)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+
+                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
+                country.Close();
+                ViewData["Map"] = data;
+
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+            ViewData["miasta"] = new List<Town>();
+
             return View();
         }
 
@@ -644,25 +672,100 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult RegisterManager(RegisterModel model)
         {
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
+
+            try
+            {
+                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+
+                List<string> listapobrana = new List<string>(country.GetCountriesList());
+                List<SelectListItem> countryList = new List<SelectListItem>();
+
+
+                foreach (string item in listapobrana)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+                country.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+
+            string status = String.Empty;
+
             if (ModelState.IsValid)
             {
-                MembershipCreateStatus createStatus;
-                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, 123, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
-                if (user != null)
+                List<Town> value = null;
+                try
                 {
-                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Menadżer" });
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                    }
+                    client.Close();
                 }
-                if (createStatus == MembershipCreateStatus.Success)
+                catch (Exception e)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "ManagePanel");
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+
+                if (value.Count == 1)
+                {
+                    MembershipCreateStatus createStatus;
+                    CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                    if (user != null)
+                    {
+                        CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                        role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Menadżer" });
+                    }
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
+                        return RedirectToAction("Index", "ManagePanel");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    }
+                }
+                else if (value.Count > 1)
+                {
+                    ModelState.AddModelError("", status);
+                    ViewData["miasta"] = value;
+                    //return RedirectToAction("", "Account",model);
+
+                    //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
+                    //string status = String.Empty;
+                    ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+                    IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
+
+                    foreach (Town item in data)
+                    {
+                        string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+
+                        item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" +
+                            "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    }
+                    ViewData["Map"] = data;
+                    return View(model);
                 }
                 else
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    ModelState.AddModelError("", status);
                 }
+                
             }
 
             // If we got this far, something failed, redisplay form

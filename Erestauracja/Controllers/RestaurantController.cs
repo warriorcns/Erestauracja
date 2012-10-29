@@ -70,10 +70,12 @@ namespace Erestauracja.Controllers
                 else
                 {
                     MainPageModel nowy = new MainPageModel();
+               //     HttpPostedFileBase baza = new HttpPostedFileBase();
                     nowy.Description = value.Description;
                     nowy.Foto = value.Foto;
                     nowy.SpecialOffers = value.SpecialOffers;
                     nowy.RestaurantID = id;
+               //     nowy.File = new HttpPostedFileBase("");
                     return View(nowy);
                 }
             }
