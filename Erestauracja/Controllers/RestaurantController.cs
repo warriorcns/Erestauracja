@@ -20,27 +20,46 @@ namespace Erestauracja.Controllers
         //
         // GET: /Restaurant/
         /// <summary>
-        /// Nie uzywana stara metoda, wychwytywala przekierowanie z wyszukiwania
+        /// chwyta przekierowanie z wyszukiwania
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        //public ActionResult GetRequest(int id)
-        //{
-        //    //this.Restaurantid = id;
-        //    //return RedirectToAction ("Index", new { id = id });
+        public ActionResult GetRequest(string id)
+        {
+            //this.Restaurantid = id;
+            //return RedirectToAction ("Index", new { id = id });
 
-        //    #region ciasteczka - zapis
+            #region ciasteczka - zapis
 
-        //    System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-        //    DateTime now = DateTime.Now;
-        //    myCookie.Expires = now.AddMinutes(1);
-        //    myCookie.Value = id.ToString();
-        //    Response.Cookies.Add(myCookie);
+            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
+            //DateTime now = DateTime.Now;
+            //myCookie.Expires = now.AddMinutes(1);
+            //myCookie.Value = id.ToString();
+            //Response.Cookies.Add(myCookie);
 
-        //    #endregion
+            #endregion
+            if (id != string.Empty)
+            {
+                string[] temp = new string[2];
+                temp = id.Split('|');
+                if (int.Parse(temp[0]) != 0)
+                {
+                    return Json(new { redirectToUrl = Url.Action("Index/" + int.Parse(temp[0])) });
+                }
+                else
+                {
+                    //redirect do wszystkich
+                    //return RedirectToAction("ListRestaurantsFromCity","CitiesAndRestaurants");
+                    return Json(new { redirectToUrl = Url.Action("ListRestaurantsFromCity","CitiesAndRestaurants", new{ id = temp[1]}) });
+                }
+            }
+            else
+            {
+                return Json(new { redirectToUrl = Url.Action("Index/1") });
+            }
 
-        //    return Json(new { redirectToUrl = Url.Action("Index/" + id) });
-        //}
+            //return Json(new { redirectToUrl = Url.Action("Index/" + int.Parse(id)) });
+        }
 
 
         public ActionResult Index(int id)
@@ -77,6 +96,7 @@ namespace Erestauracja.Controllers
                     nowy.RestaurantID = id;
                //     nowy.File = new HttpPostedFileBase("");
                     return View(nowy);
+                    
                 }
             }
             return RedirectToAction("Restaurant");

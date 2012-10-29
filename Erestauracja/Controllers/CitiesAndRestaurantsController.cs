@@ -16,7 +16,7 @@ using Jmelosegui.Mvc.Controls;
 
 namespace Erestauracja.Controllers
 {
-    [Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+    //[Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
     public class CitiesAndRestaurantsController : Controller
     {
         //
@@ -27,7 +27,7 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult ListRestaurantsFromCity()
+        public ActionResult ListRestaurantsFromCity(string id)
         {
             ViewData["height"] = 300;
             ViewData["width"] = 500;

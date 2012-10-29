@@ -80,7 +80,8 @@
                 //wypelniam dynamicznie DDL danymi zwroconymi przez metode - lista restauracji
                 //czysci liste
                 $('#Restauracje').empty();
-                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wszystkie'));
+                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wybierz z listy..'));
+                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0|' + town).text('Wszystkie'));
                 $.each(data, function () {
                     $("#Restauracje").append($("<option selected=\"selected\"/>").val(this.Value).text(this.Text));
                 });
@@ -91,25 +92,28 @@
             document.getElementById("Restauracje").style.display = "block";
         });
     </script>
-    <%--<%: Url.Action("Restaurant", "CitiesAndRestaurants") %>--%>
+    
     <script type="text/javascript">
         function test() {alert('test');}
     </script>
+
     <script type="text/javascript">
         //przekierowanie po wyborze restauracji do strony restauracji z pobraniem id restauracji
 
         $("#Restauracje").change(function () {
             var str = "";
             $("select option:selected").each(function () {
-                str += $(this).val() + " ";
+                str = $(this).val();
             });
             //redirect to res page
-            //alert('test:' + str);
+            //alert('test->' + str.length + '<-test');
+            //przekierowac do innej metody jezeli user wybierze opcje 'wszystkie'
 
-            var url = '<%: Url.Action("Index", "Restaurant") %>';
+
+            var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
             var data = { id: str };
 
-            if (!$(str).val()) {
+            if (str.length != 0) {
                 $.post(url, data, function (data) {
                    // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + str);

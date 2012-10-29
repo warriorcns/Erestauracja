@@ -66,22 +66,27 @@ namespace Erestauracja.Controllers
             //(m.TownName)
             ServiceReference.EresServiceClient res = new ServiceReference.EresServiceClient();
             Erestauracja.ServiceReference.RestaurantInTown[] listares = res.GetRestaurantByTown(value);
-           
+            
             //
             //wazne
             // przepisac tylko nazwy restauracji w petli i to przekazac do widoku za pomoca viewdata.
             List<SelectList> r = new List<SelectList>();
-            IEnumerable<SelectListItem> selectList =
+            IEnumerable<SelectListItem> selectList;
+            //selectList = new SelectListItem { Text = "Wszystkie", Value = value};
+            selectList =
             from c in listares
             select new SelectListItem
             {
                 Selected = ( c.ResId == 0 ),
                 Text = c.Name,
-                Value = c.ResId.ToString()
+                Value = c.ResId.ToString() + "|" + c.TownId.ToString()
+                
             };
             ViewData["rest"] = selectList;
             //return RedirectToAction("Index");
             return Json(selectList);
+
+            
         }
 
         public ActionResult Info()
