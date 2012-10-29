@@ -11,8 +11,7 @@
     <h2>
         Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
-    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>"
-        type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $("#Birthdate").datepicker({
@@ -22,14 +21,16 @@
             });
         });
     </script>
+
     <script type="text/javascript">
-        jQuery(function ($) {
+    jQuery(function($){
             $("#Birthdate").mask("99/99/9999");
-        });
+            });
     </script>
     
 
     <div class="polaRejestracji">
+
         <form class="formaRejestracji" runat="server">
         <% using (Html.BeginForm())
            { %>
@@ -180,7 +181,6 @@
                         <%: Html.LabelFor(m => m.Country)%>
                     </li>
                     <li class="editor-labelR">
-                        <%--<%: Html.TextBoxFor(m => m.Country)%>--%>
                         <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"], new { style="width:206px" })%>
                     </li>
                     <li class="validation-labelR">
@@ -203,7 +203,6 @@
                         <%: Html.LabelFor(m => m.Sex)%>
                     </li>
                     <li class="editor-labelR">
-                        <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
                         <%=Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"], new { style = "width:206px" } )%>
                     </li>
                     <li class="validation-labelR">
@@ -233,9 +232,7 @@
            
         <div class="mapTowns" id="mapka">
         
-            <%--<%:
-            Html.Telerik().GoogleMap().Name("map")
-            .Width(400).Height(400)  %>--%>
+            <%--<%: Html.Telerik().GoogleMap().Name("map").Width(400).Height(400)  %>--%>
             <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>);%>
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>

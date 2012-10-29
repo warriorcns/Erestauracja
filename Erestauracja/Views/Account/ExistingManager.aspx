@@ -11,7 +11,7 @@
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
     <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "Rejestracja z wykorzystaniemistniejącego konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
+        <%: Html.ValidationSummary(true, "Rejestracja z wykorzystaniem istniejącego konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
         <div>
             <fieldset>
                 <legend>Dane rejestracji</legend>

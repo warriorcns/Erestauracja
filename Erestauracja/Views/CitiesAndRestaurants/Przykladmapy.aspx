@@ -12,7 +12,7 @@
     
     
              Html.Telerik().GoogleMap().Width(500).Height(400)
-                .Name("mapTowns").Latitude(50).Longitude(18).BindTo<Erestauracja.ServiceReference.Town, Jmelosegui.Mvc.Controls.Overlays.Marker>
+                .Name("map").Latitude(50).Longitude(18).BindTo<Erestauracja.ServiceReference.Town, Jmelosegui.Mvc.Controls.Overlays.Marker>
                 //( (System.Collections.Generic.IEnumerable<Erestauracja.Controllers.RegionInfo>)ViewData["markers"], mappings => mappings.For<Erestauracja.Controllers.RegionInfo>
                   (Model, m => m.For<Erestauracja.ServiceReference.Town>
                 (

@@ -28,9 +28,12 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
             $("#Birthdate").mask("99/99/9999");
         });
     </script>
-    
-    <form id="Form1" runat="server">
-    <% using (Html.BeginForm()) { %>
+
+
+    <div class="polaRejestracji">
+        <form class="formaRejestracji" id="Form1" runat="server">
+        <% using (Html.BeginForm())
+           { %>
         <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
             <fieldset>
@@ -38,7 +41,6 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                 <p>
                     Wprowadz swoje dane, a następnie kliknij 'Załóż konto'.
                 </p>
-
                 <ul class="rej">
                     <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Login) %>
@@ -48,7 +50,6 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                         <%: Html.ValidationMessageFor(m => m.Login)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Email)%>
@@ -58,7 +59,6 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                         <%: Html.ValidationMessageFor(m => m.Email)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
                         <%: Html.LabelFor(m => m.ConfirmEmail)%>
@@ -68,172 +68,159 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                         <%: Html.ValidationMessageFor(m => m.ConfirmEmail)%>
                     </li>
                 </ul>
-               
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Password)%> (Minimum <%: Membership.MinRequiredPasswordLength %> znaków.)
-                    </li>
+                        <%: Html.LabelFor(m => m.Password)%>
+                        (Minimum
+                        <%: Membership.MinRequiredPasswordLength %>
+                        znaków.) </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Password)%>
+                        <%: Html.PasswordFor(m => m.Password)%>
                         <%: Html.ValidationMessageFor(m => m.Password)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.ConfirmPassword)%> 
+                        <%: Html.LabelFor(m => m.ConfirmPassword)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.ConfirmPassword)%>
+                        <%: Html.PasswordFor(m => m.ConfirmPassword)%>
                         <%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Question)%> 
+                        <%: Html.LabelFor(m => m.Question)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Question)%>
                         <%: Html.ValidationMessageFor(m => m.Question)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Answer)%> 
+                        <%: Html.LabelFor(m => m.Answer)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Answer)%>
                         <%: Html.ValidationMessageFor(m => m.Answer)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Name)%> 
+                        <%: Html.LabelFor(m => m.Name)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Name)%>
                         <%: Html.ValidationMessageFor(m => m.Name)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Surname)%> 
+                        <%: Html.LabelFor(m => m.Surname)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Surname)%>
                         <%: Html.ValidationMessageFor(m => m.Surname)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Address)%> 
+                        <%: Html.LabelFor(m => m.Address)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Address)%>
                         <%: Html.ValidationMessageFor(m => m.Address)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Town)%> 
+                        <%: Html.LabelFor(m => m.Town)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Town)%>
                         <%: Html.ValidationMessageFor(m => m.Town)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.PostalCode)%> 
+                        <%: Html.LabelFor(m => m.PostalCode)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.PostalCode)%>
                         <%: Html.ValidationMessageFor(m => m.PostalCode)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Country)%> 
+                        <%: Html.LabelFor(m => m.Country)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"], new { style="width:206px" })%>
                         <%: Html.ValidationMessageFor(m => m.Country)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Birthdate)%> 
+                        <%: Html.LabelFor(m => m.Birthdate)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
                         <%: Html.ValidationMessageFor(m => m.Birthdate)%>
                     </li>
                 </ul>
-                
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Sex)%> 
+                        <%: Html.LabelFor(m => m.Sex)%>
                     </li>
                     <li class="editor-labelR">
                         <%=Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"], new { style = "width:206px" } )%>
                         <%: Html.ValidationMessageFor(m => m.Sex)%>
                     </li>
                 </ul>
-
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Telephone)%> 
+                        <%: Html.LabelFor(m => m.Telephone)%>
                     </li>
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Telephone)%>
                         <%: Html.ValidationMessageFor(m => m.Telephone)%>
                     </li>
                 </ul>
-
                 <p>
-                    <input type="submit" value="Załóż konto"/>
+                    <input type="submit" value="Załóż konto" />
                 </p>
             </fieldset>
         </div>
-    <% } %>
-    </form>
+        <% } %>
+        </form>
 
-    <div class="mapTowns" id="mapka">
-        
+        <div class="mapTowns" id="mapka">
             <%--<%:
             Html.Telerik().GoogleMap().Name("map")
             .Width(400).Height(400)  %>--%>
             <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>);%>
-            <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
+            <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
-
         </div>
-        
-         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-         <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
+
+        <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
+        <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             //{
-                if (((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"]).Count() > 1)
-                //if(true)
+            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"] ).Count() > 1)
+            //if(true)
+            {%>
+        <script type="text/javascript">
+            document.getElementById('mapka').style.display = "block";
+        </script>
+        <%}
+                else
                 {%>
-                   <script type="text/javascript">
-                       document.getElementById('mapka').style.display = "block";
-                   </script>
-                <%} else {%> 
-                    <script type="text/javascript">
-                        document.getElementById('mapka').style.display = "none";
-                    </script>
-                <%}%> 
-                
-         <% //} %>
+        <script type="text/javascript">
+            document.getElementById('mapka').style.display = "none";
+        </script>
+        <%}%>
+        <% //} %>
     </div>
 
     <script type="text/javascript">
