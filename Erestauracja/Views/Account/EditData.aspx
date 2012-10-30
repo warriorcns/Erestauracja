@@ -65,8 +65,6 @@
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(m => m.Country) %>
-                        <%--<%: Html.TextBoxFor(m => m.Country)%>--%>
-                        <%--Tu pobrac liste panstw z Bazy.--%>
                         <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"])%>
                         <%: Html.ValidationMessageFor(m => m.Country)%>
                     </div>
@@ -77,7 +75,6 @@
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(m => m.Sex) %>
-                        <%--<%: Html.TextBoxFor(m => m.Sex)%>--%>
                         <%: Html.DropDownListFor(m=>m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
                         <%: Html.ValidationMessageFor(m => m.Sex)%>
                     </div>
@@ -107,7 +104,7 @@
         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
         <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             //{
-            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"] ).Count() > 1)
+            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
             //if(true)
             {%>
         <script type="text/javascript">

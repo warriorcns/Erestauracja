@@ -7,11 +7,14 @@
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Rejestracja
 </asp:Content>
+
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>
-        Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
+
+    <h2>Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
+
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    
     <script type="text/javascript">
         $(function () {
             $("#Birthdate").datepicker({
@@ -23,17 +26,16 @@
     </script>
 
     <script type="text/javascript">
-    jQuery(function($){
+        jQuery(function($){
             $("#Birthdate").mask("99/99/9999");
             });
     </script>
     
-
     <div class="polaRejestracji">
 
         <form class="formaRejestracji" runat="server">
-        <% using (Html.BeginForm())
-           { %>
+        <% using (Html.BeginForm()) %>
+        <% { %>
         <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
             <fieldset>
@@ -203,7 +205,7 @@
                         <%: Html.LabelFor(m => m.Sex)%>
                     </li>
                     <li class="editor-labelR">
-                        <%=Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"], new { style = "width:206px" } )%>
+                        <%: Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"], new { style = "width:206px" } )%>
                     </li>
                     <li class="validation-labelR">
                         <%: Html.ValidationMessageFor(m => m.Sex)%>
@@ -242,7 +244,7 @@
          <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
          <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             //{
-                if (((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"]).Count() > 1)
+                if (((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"]).Count() > 1)
                 //if(true)
                 {%>
                    <script type="text/javascript">

@@ -58,6 +58,7 @@
                 DeliveryTime:  <%: x.DeliveryTime%>
                 </div>
                 <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", new { id = x.ID }, null)%>
+                <%: Html.ActionLink("Zmiana hasła", "EditPassword", "ManagePanel", new { id = x.ID }, null)%>
                 <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", new { id = x.ID }, null)%>
 
 	    </div>

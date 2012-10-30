@@ -12,6 +12,32 @@ namespace Erestauracja.Models
     {
         [Required]
         [DataType(DataType.Text)]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Adres email")]
+        public string Email { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Powtórz email")]
+        [Compare("Email", ErrorMessage = "Pola Email oraz Powtórz email nie są zgodne.")]
+        public string ConfirmEmail { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Hasło")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "Nazwa firmy")]
         public string Name { get; set; }
 
@@ -46,11 +72,6 @@ namespace Erestauracja.Models
         public string Telephone { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Adres email")]
-        public string Email { get; set; }
-
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "NIP")]
         public string Nip { get; set; }
@@ -59,17 +80,6 @@ namespace Erestauracja.Models
         [DataType(DataType.Text)]
         [Display(Name = "REGON")]
         public string Regon { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Hasło terminala")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Powtórz hasło")]
-        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
-        public string ConfirmPassword { get; set; }
 
         [Required]
         [DataType(DataType.Time)]

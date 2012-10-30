@@ -7,7 +7,6 @@ using System.Web.Security;
 
 namespace Erestauracja.Models
 {
-    //sprawdzić poprawność
     public class ChangePasswordModel
     {
         [Required]
@@ -201,11 +200,7 @@ namespace Erestauracja.Models
         [Display(Name = "RoleName")]
         public string RoleName { get; set; }
 
-
         [Display(Name = "Roles")]
         public List<string> Roles { get; set; }
-
-
     }
-
 }

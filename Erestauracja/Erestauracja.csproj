@@ -316,7 +316,6 @@
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />
-    <Compile Include="Models\modeltest.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />

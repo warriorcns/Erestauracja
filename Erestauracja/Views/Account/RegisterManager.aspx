@@ -138,7 +138,7 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                         <%: Html.LabelFor(m => m.Town)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Town)%>
+                        <%: Html.TextBoxFor(m => m.Town, new { id = "TownName" })%>
                         <%: Html.ValidationMessageFor(m => m.Town)%>
                     </li>
                 </ul>
@@ -147,7 +147,7 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
                         <%: Html.LabelFor(m => m.PostalCode)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.PostalCode)%>
+                        <%: Html.TextBoxFor(m => m.PostalCode, new { id = "PostalCode" })%>
                         <%: Html.ValidationMessageFor(m => m.PostalCode)%>
                     </li>
                 </ul>
@@ -207,7 +207,7 @@ Aby dodać nową restaurację należy stwożyć konto menadżera, które umożli
         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
         <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             //{
-            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"] ).Count() > 1)
+            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
             //if(true)
             {%>
         <script type="text/javascript">
