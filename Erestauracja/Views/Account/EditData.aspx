@@ -12,7 +12,7 @@
             $("#Birthdate").datepicker({
                 changeMonth: true,
                 changeYear: true,
-                yearRange: 'c-100:c+5',
+                yearRange: '-100:+0',
                 dateFormat: 'dd/mm/yy'
             });
         });
