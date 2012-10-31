@@ -15,6 +15,7 @@ namespace Erestauracja
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            //filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -37,7 +38,6 @@ namespace Erestauracja
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }

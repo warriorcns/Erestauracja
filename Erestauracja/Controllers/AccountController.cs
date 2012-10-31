@@ -13,6 +13,7 @@ using Erestauracja.ServiceReference;
 using System.Net;
 using System.Globalization;
 using Jmelosegui.Mvc.Controls;
+using System.Threading;
 
 
 namespace Erestauracja.Controllers
@@ -27,6 +28,8 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult Account()
         {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
             if (Request.IsAuthenticated)
             {
               //  MembershipCreateStatus createStatus;
@@ -43,6 +46,12 @@ namespace Erestauracja.Controllers
                 model.Town = user.Town;
                 model.PostalCode=user.PostalCode;
                 model.Country = user.Country;
+
+                //string tmp = string.Empty;
+                //tmp = user.Birthdate.ToString("dd/MM/yyyy");
+                //model.Birthdate = DateTime.Parse(tmp, cultureinfo);
+                
+
                 model.Birthdate = user.Birthdate;
                 model.Sex = user.Sex;
                 model.Telephone = user.Telephone;
@@ -63,6 +72,8 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData()
         {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
             if (Request.IsAuthenticated)
             {
                 CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
@@ -136,6 +147,8 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
         public ActionResult EditData(UserDataModel model)
         {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
             List<Town> value = null;
             if (ModelState.IsValid)
             {

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Threading;
 
 namespace Erestauracja.Models
 {
@@ -114,11 +115,11 @@ namespace Erestauracja.Models
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
-        
+
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birthdate { get; set; }
         
         [Required]

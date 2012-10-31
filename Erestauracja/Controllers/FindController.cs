@@ -11,7 +11,6 @@ namespace Erestauracja.Controllers
     {
         //
         // GET: /Find/
-
         public ActionResult Index()
         {
             return View();
