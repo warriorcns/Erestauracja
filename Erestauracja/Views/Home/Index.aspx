@@ -69,26 +69,25 @@
     </form>
     
     <script type="text/javascript">
-        //document.getElementById("TxtBox").onblur() = document.getElementById("ButtonWybierzMiasto").onclick();
         $('#target').blur(function () {
             var town = $("#target").val();
             var url = '<%: Url.Action("SearchRestaurants", "Home") %>';
             var data = { value: town };
             $.post(url, data, function (data) {
-                // TODO: do something with the response from the controller action
-                //alert('the value was successfully sent to the server');
-                //wypelniam dynamicznie DDL danymi zwroconymi przez metode - lista restauracji
-                //czysci liste
                 $('#Restauracje').empty();
-                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wybierz z listy..'));
-                $('#Restauracje').append($("<option selected=\"selected\"/>").val('0|' + town).text('Wszystkie'));
-                $.each(data, function () {
-                    $("#Restauracje").append($("<option selected=\"selected\"/>").val(this.Value).text(this.Text));
-                });
-                $("#Restauracje").val('0');
+                if (data.length !== 0) {
+                    $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Wybierz z listy..'));
+                    $('#Restauracje').append($("<option selected=\"selected\"/>").val('0|' + town).text('Wszystkie'));
+                    $.each(data, function () {
+                        $("#Restauracje").append($("<option selected=\"selected\"/>").val(this.Value).text(this.Text));
+                    });
+                    $("#Restauracje").val('0');
+                }
+                else {
+                    $('#Restauracje').append($("<option selected=\"selected\"/>").val('0').text('Brak restauracji dla tego miasta..'));
+                    $("#Restauracje").val('0');
+                }
             });
-
-            //pokazuje DDL z restauracjami
             document.getElementById("Restauracje").style.display = "block";
         });
     </script>

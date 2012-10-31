@@ -21,8 +21,7 @@ namespace Erestauracja.Controllers
 
             ViewBag.Message = "Witaj na stronie głównej!";
     
-            var Miasta = new SelectList(new []
-                                          {
+            var Miasta = new SelectList(new []{
                                               new {ID="1",Name="Tczew"},
                                               new{ID="2",Name="Gdansk"},
                                               new{ID="3",Name="Gdynia"},
@@ -61,32 +60,41 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult SearchRestaurants(String value) 
-        { 
+        public ActionResult SearchRestaurants(String value)
+        {
             //(m.TownName)
             ServiceReference.EresServiceClient res = new ServiceReference.EresServiceClient();
             Erestauracja.ServiceReference.RestaurantInTown[] listares = res.GetRestaurantByTown(value);
-            
+
             //
             //wazne
             // przepisac tylko nazwy restauracji w petli i to przekazac do widoku za pomoca viewdata.
             List<SelectList> r = new List<SelectList>();
             IEnumerable<SelectListItem> selectList;
-            //selectList = new SelectListItem { Text = "Wszystkie", Value = value};
-            selectList =
-            from c in listares
-            select new SelectListItem
+            if (listares != null)
             {
-                Selected = ( c.ResId == 0 ),
-                Text = c.Name,
-                Value = c.ResId.ToString() + "|" + c.TownId.ToString()
-                
-            };
-            ViewData["rest"] = selectList;
-            //return RedirectToAction("Index");
-            return Json(selectList);
+                selectList =
+                from c in listares
+                select new SelectListItem
+                {
+                    Selected = ( c.ResId == 0 ),
+                    Text = c.Name,
+                    Value = c.ResId.ToString() + "|" + c.TownId.ToString()
 
+                };
+                ViewData["rest"] = selectList;
+                return Json(selectList);
+            }
+            else
+            {
+                var smth = string.Empty;
+                return Json(smth);
+            }
+
+            //return RedirectToAction("Index");
             
+
+
         }
 
         public ActionResult Info()
