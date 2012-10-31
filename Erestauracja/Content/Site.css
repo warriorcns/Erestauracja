@@ -82,7 +82,7 @@ page width. Or, you can specify an exact pixel width. */
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    min-width: 750px;
+    min-width: 950px;
     max-width: 1200px;
     
 }
@@ -823,31 +823,36 @@ div#title {
 .rej
 {
     display: block;
-    
-    width: 800px;
     position: relative;
     margin: 7px 0 7px 0;
-    
+    min-width: 900px;
+    max-width: 1200px;
+    z-index: 0;
 }
 
 /* glowny div*/
 .polaRejestracji
 {
-    z-index: 0;
     width: 100%;
     clear: both;
     height: 100%;
     overflow: hidden;
+    z-index: 1;
+    min-width: 900px;
 }
 
+.polaRejWidth
+{
+    min-width: 500px; 
+}
 .formaRejestracji
 {
-    width: 60%;
+    width: 45%;
     margin: 0 0 -20000px 5px;
     padding-bottom: 20000px;
     height: 100%;
     background: #ffe6c5;
-    float: left;    
+    float: left; 
 }
 
 
@@ -855,12 +860,14 @@ div#title {
 
 .mapTowns
 {
-    z-index: -1;
-    width: 35%;
-    padding: 0px 0 0 0px;
-    float: left;
+    position: relative;
+    z-index: 2;
+    padding: 10px 0 0 0px;
+    float: right;
     height: 100%;
-    display: none;
+    display: block;
+    top: 40px;
+    min-width: 450px;
 }
 
 
@@ -874,7 +881,7 @@ div#title {
     /*margin: 1em 120px 0 0;*/
     position: absolute;
     display: inline;
-    right: 350px;
+    right: 480px;
 }
 .validation-labelR
 {
