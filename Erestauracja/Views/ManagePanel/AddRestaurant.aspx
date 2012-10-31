@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterRestaurantModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterRestaurantModel>" %>
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
 <%@ Import Namespace="Telerik.Web.Mvc.UI" %>
 <%@ Import Namespace="Erestauracja.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    AddRestaurant
+    Dodaj nową restaurację
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -17,17 +17,17 @@
     
     <script type="text/javascript">
         jQuery(function ($) {
-            $("#DeliveryTime").mask("99:99:99");
+            $("#DeliveryTimeID").mask("99:99:99");
         });
     </script>
 
     <div class="polaRejestracji">
-        <form id="Form1" class="formaRejestracji" runat="server">
-        <% using (Html.BeginForm()) %>
-        <% { %>
+
+        <form class="formaRejestracji" runat="server">
+        <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja restauracji nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
-            <fieldset>
+            <fieldset class="polaRejestracji polaRejWidth">
                 <legend>Dane rejestracji</legend>
                 
                 <ul class="rej">
@@ -37,10 +37,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Login)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Login)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -49,10 +53,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Email)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Email)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -61,10 +69,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.ConfirmEmail)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.ConfirmEmail)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -73,10 +85,14 @@
                     <li class="editor-labelR">
                         <%: Html.PasswordFor(m => m.Password)%>
                     </li>
-                    <li class="validation-labelR">
-                         <%: Html.ValidationMessageFor(m => m.Password)%>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
+                       <%: Html.ValidationMessageFor(m => m.Password)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -85,10 +101,14 @@
                     <li class="editor-labelR">
                         <%: Html.PasswordFor(m => m.ConfirmPassword)%>     
                     </li>
-                    <li class="validation-labelR">
-                         <%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
+                       <%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -97,10 +117,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Question)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Question)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -109,10 +133,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Answer)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Answer)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -121,10 +149,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Name)%>  
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Name)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -133,10 +165,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.DisplayName)%>   
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.DisplayName)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -145,10 +181,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Address)%>
                     </li>
-                    <li class="validation-labelR">
-                          <%: Html.ValidationMessageFor(m => m.Address)%>
-                    </li> 
                 </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
+                         <%: Html.ValidationMessageFor(m => m.Address)%>
+                    </li>
+                </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -157,10 +197,14 @@
                     <li class="editor-labelR"> 
                         <%: Html.TextBoxFor(m => m.Town, new { id = "TownName"})%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Town)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -169,10 +213,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.PostalCode, new { id = "PostalCode" })%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.PostalCode)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -181,10 +229,14 @@
                     <li class="editor-labelR">
                         <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"], new { style="width:206px" })%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Country)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -193,10 +245,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Telephone)%>  
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Telephone)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -205,11 +261,14 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Nip)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Nip)%>
                     </li>
-
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
@@ -218,22 +277,30 @@
                     <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Regon)%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.Regon)%>
                     </li>
                 </ul>
+
 
                 <ul class="rej">
                     <li class="display-labelR">
                         <%: Html.LabelFor(m => m.DeliveryTime)%> 
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.DeliveryTime, new { id = "DeliveryTime" })%>
+                        <%: Html.TextBoxFor(m => m.DeliveryTime, new { id = "DeliveryTimeID" })%>
                     </li>
-                    <li class="validation-labelR">
+                </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                          <%: Html.ValidationMessageFor(m => m.DeliveryTime)%>
                     </li>
                 </ul>
+
 
                 <p>
                     <input type="submit" value="Zapisz"/>
@@ -244,21 +311,19 @@
         </form>
 
 
-    <div class="mapTowns" id="mapka">
-        <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>);%>
+        <div class="mapTowns" id="mapka">
+        
+        <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>); %>
         <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%> 
         <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
     </div>
         
-    <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-    <% if(((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"]).Count() > 1) %>
-    <% { %>
-            <script type="text/javascript"> document.getElementById('mapka').style.display = "block"; </script>
-    <% } %>
-    <% else %>
-    <% { %> 
-            <script type="text/javascript"> document.getElementById('mapka').style.display = "none"; </script>
-    <% } %> 
+        <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
+        <% if(((IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"]).Count() > 1) { %>
+                <script type="text/javascript"> document.getElementById('mapka').style.display = "block"; </script>
+        <% } else { %> 
+                <script type="text/javascript"> document.getElementById('mapka').style.display = "none"; </script>
+        <% } %> 
                 
     </div>
 
