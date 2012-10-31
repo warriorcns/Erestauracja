@@ -88,7 +88,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login)).
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled).
         /// </summary>
         internal static string AddRestaurant {
             get {
@@ -520,7 +520,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`email`, x.`nip`, x.`regon`, x.`creationData`, x.`inputsCount`, x.`averageRating`, x.`password`, x.`menagerId`, x.`deliveryTime`, x.`currentDeliveryTime`, x.`isApproved`, x.`lastActivityDate`, x.`isLockedOut`, x.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` =  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELE [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetRestaurantsByManagerLogin {
             get {

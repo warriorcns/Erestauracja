@@ -481,18 +481,19 @@ namespace Contract
         private string postalCode = null;
         private string country = null;
         private string telephone = null;
-        private string email = null;
         private string nip = null;
         private string regon = null;
-        private DateTime creationDate = new DateTime();
         private int inputsCount = -1;
         private int averageRating = -1;
-        private string password = null;
         private int menagerId = -1;
         private string deliveryTime = null;
-        private string currentDeliveryTime = null;
+        private int userId = -1;
+        private bool isEnabled = false;
+        private string login = null;
+        private string email = null;
         private bool isApproved = false;
         private DateTime lastActivityDate = new DateTime();
+        private DateTime creationDate = new DateTime();
         private bool isLockedOut = false;
         private DateTime lastLockedOutDate = new DateTime();
 
@@ -553,13 +554,6 @@ namespace Contract
         }
 
         [DataMember]
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-        [DataMember]
         public string Nip
         {
             get { return nip; }
@@ -571,13 +565,6 @@ namespace Contract
         {
             get { return regon; }
             set { regon = value; }
-        }
-
-        [DataMember]
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-            set { creationDate = value; }
         }
 
         [DataMember]
@@ -595,13 +582,6 @@ namespace Contract
         }
 
         [DataMember]
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
-
-        [DataMember]
         public int MenagerId
         {
             get { return menagerId; }
@@ -616,13 +596,33 @@ namespace Contract
         }
 
         [DataMember]
-        public string CurrentDeliveryTime
+        public int UserId
         {
-            get { return currentDeliveryTime; }
-            set { currentDeliveryTime = value; }
+            get { return userId; }
+            set { userId = value; }
         }
 
+        [DataMember]
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set { isEnabled = value; }
+        }
 
+        [DataMember]
+        public string Login
+        {
+            get { return login; }
+            set { login = value; }
+        }
+
+        [DataMember]
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+        }
+        
         [DataMember]
         public bool IsApproved
         {
@@ -635,6 +635,13 @@ namespace Contract
         {
             get { return lastActivityDate; }
             set { lastActivityDate = value; }
+        }
+
+        [DataMember]
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
         }
 
         [DataMember]

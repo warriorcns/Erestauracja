@@ -1554,6 +1554,7 @@ namespace Contract
             command3.Parameters.AddWithValue("@menager", managerLogin);
             command3.Parameters.AddWithValue("@deliveryTime", deliveryTime);
             command3.Parameters.AddWithValue("@login", login);
+            command3.Parameters.AddWithValue("@isEnabled", false);
             command3.Connection = conn;
 
             //dodawanie pustej zawartości strony restauracji
@@ -1812,22 +1813,23 @@ namespace Contract
             string postalCode = reader.GetString(5);
             string country = reader.GetString(6);
             string telephone = reader.GetString(7);
-            string email = reader.GetString(8);
-            string nip = reader.GetString(9);
-            string regon = reader.GetString(10);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(11));
-            int inputsCount = reader.GetInt32(12);
-            int averageRating = reader.GetInt32(13);
-            string password = reader.GetString(14);
-            int menagerId = reader.GetInt32(15);
-            string deliveryTime = reader.GetString(16);
-            string currentDeliveryTime = reader.GetString(17);
+            string nip = reader.GetString(8);
+            string regon = reader.GetString(9);
+            int inputsCount = reader.GetInt32(10);
+            int averageRating = reader.GetInt32(11);
+            int menagerId = reader.GetInt32(12);
+            string deliveryTime = reader.GetString(13);
+            int userId = reader.GetInt32(14);
+            bool isEnabled = reader.GetBoolean(15);
+            string login = reader.GetString(16);
+            string email = reader.GetString(17);
             bool isApproved = reader.GetBoolean(18);
             DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(19));
-            bool isLockedOut = reader.GetBoolean(20);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(20));
+            bool isLockedOut = reader.GetBoolean(21);
             DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(21) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(21));
+            if (reader.GetValue(22) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(22));
 
             Restaurant u = new Restaurant();
             u.ID = id;
@@ -1838,18 +1840,19 @@ namespace Contract
             u.PostalCode = postalCode;
             u.Country = country;
             u.Telephone = telephone;
-            u.Email = email;
             u.Nip = nip;
             u.Regon = regon;
-            u.CreationDate = creationDate;
             u.InputsCount = inputsCount;
             u.AverageRating = averageRating;
-            u.Password = password;
             u.MenagerId = menagerId;
             u.DeliveryTime = deliveryTime;
-            u.CurrentDeliveryTime = currentDeliveryTime;
+            u.UserId = userId;
+            u.IsEnabled = isEnabled;
+            u.Login = login;
+            u.Email = email;
             u.IsApproved = isApproved;
             u.LastActivityDate = lastActivityDate;
+            u.CreationDate = creationDate;
             u.IsLockedOut = isLockedOut;
             u.LastLockedOutDate = lastLockedOutDate;
 
