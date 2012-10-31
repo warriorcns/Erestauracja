@@ -1496,38 +1496,140 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
+        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin)
         {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlTransaction tran = null;
+
+            //dodawanie restauracji jako usera
             DateTime createDate = DateTime.Now;
 
-            MySqlCommand command = new MySqlCommand(Queries.AddRestaurant);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@displayName", displayName);
-            command.Parameters.AddWithValue("@address", address);
-            command.Parameters.AddWithValue("@townId", townId);
-            command.Parameters.AddWithValue("@country", country);
-            command.Parameters.AddWithValue("@telephone", telephone);
-            command.Parameters.AddWithValue("@email", email);
-            command.Parameters.AddWithValue("@nip", nip);
-            command.Parameters.AddWithValue("@regon", regon);
-            command.Parameters.AddWithValue("@creationData", createDate);
-            command.Parameters.AddWithValue("@inputsCount", 0);
-            command.Parameters.AddWithValue("@averageRating", 0);
+            MySqlCommand command = new MySqlCommand(Queries.CreateUser);
+            command.Parameters.AddWithValue("@login", login);
             command.Parameters.AddWithValue("@password", password);
-            command.Parameters.AddWithValue("@menager", managerLogin);
-            command.Parameters.AddWithValue("@deliveryTime", deliveryTime);
-            command.Parameters.AddWithValue("@currentDeliveryTime", "00:00:00");
+            command.Parameters.AddWithValue("@email", email);
+            command.Parameters.AddWithValue("@name", String.Empty);
+            command.Parameters.AddWithValue("@surname", String.Empty);
+            command.Parameters.AddWithValue("@address", String.Empty);
+            command.Parameters.AddWithValue("@townID", 0);
+            command.Parameters.AddWithValue("@country", country);
+            command.Parameters.AddWithValue("@birthdate", new DateTime());
+            command.Parameters.AddWithValue("@sex", false);
+            command.Parameters.AddWithValue("@telephone", String.Empty);
+            command.Parameters.AddWithValue("@comment", "R");
+            command.Parameters.AddWithValue("@passwordQuestion", passwordQuestion);
+            command.Parameters.AddWithValue("@passwordAnswer", passwordAnswer);
             command.Parameters.AddWithValue("@isApproved", true);
             command.Parameters.AddWithValue("@lastActivityDate", createDate);
+            command.Parameters.AddWithValue("@lastLoginDate", createDate);
+            command.Parameters.AddWithValue("@lastPasswordChangedDate", createDate);
+            command.Parameters.AddWithValue("@creationDate", createDate);
             command.Parameters.AddWithValue("@isOnLine", false);
             command.Parameters.AddWithValue("@isLockedOut", false);
             command.Parameters.AddWithValue("@lastLockedOutDate", createDate);
+            command.Parameters.AddWithValue("@failedPasswordAttemptCount", 0);
+            command.Parameters.AddWithValue("@failedPasswordAttemptWindowStart", createDate);
+            command.Parameters.AddWithValue("@failedPasswordAnswerAttemptCount", 0);
+            command.Parameters.AddWithValue("@failedPasswordAnswerAttemptWindowStart", createDate);
+            command.Connection = conn;
 
-            int rowsaffected = ExecuteNonQuery(command, "AddRestaurant");
+            //dodawanie roli do restauracji jako user
+            MySqlCommand command2 = new MySqlCommand(Queries.AddUsersToRoles);
+            command2.Parameters.AddWithValue("@login", login);
+            command2.Parameters.AddWithValue("@rolename", "Restauracja");
+            command2.Connection = conn;
 
-            if (rowsaffected > 0)
+            //dodawanie restauracji
+            MySqlCommand command3 = new MySqlCommand(Queries.AddRestaurant);
+            command3.Parameters.AddWithValue("@name", name);
+            command3.Parameters.AddWithValue("@displayName", displayName);
+            command3.Parameters.AddWithValue("@address", address);
+            command3.Parameters.AddWithValue("@townId", townID);
+            command3.Parameters.AddWithValue("@country", country);
+            command3.Parameters.AddWithValue("@telephone", telephone);
+            command3.Parameters.AddWithValue("@nip", nip);
+            command3.Parameters.AddWithValue("@regon", regon);
+            command3.Parameters.AddWithValue("@inputsCount", 0);
+            command3.Parameters.AddWithValue("@averageRating", 0);
+            command3.Parameters.AddWithValue("@menager", managerLogin);
+            command3.Parameters.AddWithValue("@deliveryTime", deliveryTime);
+            command3.Parameters.AddWithValue("@login", login);
+            command3.Connection = conn;
+
+            //dodawanie pustej zawartości strony restauracji
+            MySqlCommand command4 = new MySqlCommand(Queries.AddEmptyContent);
+            command4.Parameters.AddWithValue("@menager", managerLogin);
+            command4.Parameters.AddWithValue("@login", login);
+            command4.Connection = conn;
+
+            try
             {
-                return true;
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+                command2.Transaction = tran;
+                command3.Transaction = tran;
+                command4.Transaction = tran;
+
+                int com1 = command.ExecuteNonQuery();
+                int com2 = command2.ExecuteNonQuery();
+                int com3 = command3.ExecuteNonQuery();
+                int com4 = command4.ExecuteNonQuery();
+
+                if (com1 > 0 && com2 > 0 && com3 > 0 && com4 > 0)
+                {
+                    tran.Commit();
+                    return true;
+                }
+                else
+                {
+                    tran.Rollback();
+                    return false;
+                }
+            }
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "AddRestaurant" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "AddRestaurant" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            finally
+            {
+                conn.Close();
             }
             return false;
         }

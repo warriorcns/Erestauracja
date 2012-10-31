@@ -402,15 +402,17 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime)
+        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin)
         {
-            if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
-                || townId==null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
-                || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
-                || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
+            if (!(String.IsNullOrEmpty(login) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password) 
+                || String.IsNullOrEmpty(passwordQuestion) || String.IsNullOrEmpty(passwordAnswer) || String.IsNullOrEmpty(name) 
+                || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
+                || townID==null || townID < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
+                || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
+                || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
             {
                 Database db = new Database();
-                bool value = db.AddRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, password, managerLogin, deliveryTime);
+                bool value = db.AddRestaurant(login, email, password, passwordQuestion, passwordAnswer, name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin);
                 return value;
             }
             else

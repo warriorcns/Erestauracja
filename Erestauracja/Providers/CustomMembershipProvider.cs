@@ -1592,6 +1592,94 @@ namespace Erestauracja.Providers
             //return users;
         }
 
+        /// <summary>
+        /// Tworzy nową restaurację oraz zapisuje ją w bazie danych. 
+        /// </summary>
+        /// <param name="login">Login restauracji</param>
+        /// <param name="email">Adres email</param>
+        /// <param name="password">Hasło restauracji</param>
+        /// <param name="passwordQuestion">Pytanie do odzyskiwania hasła</param>
+        /// <param name="passwordAnswer">Odpowiedź do odzyskiwania hasła</param>
+        /// <param name="name">Nazwa restauracji</param>
+        /// <param name="displayName">Nazwa wyświetlana</param>
+        /// <param name="address">Adres lokalu</param>
+        /// <param name="townID">Id miasta</param>
+        /// <param name="country">Kraj</param>
+        /// <param name="telephone">Numer telefonu</param>
+        /// <param name="nip">Nip</param>
+        /// <param name="regon">REGON</param>
+        /// <param name="deliveryTime">Czas dostawy</param>
+        /// <param name="status">out MembershipCreateStatus</param>
+        /// <returns>True jeśli restauracja została utworzona pomyslnie</returns>
+        public bool CreateRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, out MembershipCreateStatus status)
+        {
+            ValidatePasswordEventArgs args =
+              new ValidatePasswordEventArgs(login, password, true);
+
+            OnValidatingPassword(args);
+
+            if (args.Cancel)
+            {
+                status = MembershipCreateStatus.InvalidPassword;
+                return false;
+            }
+
+            if (RequiresUniqueEmail && !(String.IsNullOrEmpty(GetUserNameByEmail(email))))
+            {
+                status = MembershipCreateStatus.DuplicateEmail;
+                return false;
+            }
+
+            MembershipUser u = GetUser(login, false);
+
+            if (u == null)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.AddRestaurant(login, email, EncodePassword(password), passwordQuestion, EncodePassword(passwordAnswer), name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "CreateRestaurant");
+                        status = MembershipCreateStatus.ProviderError;
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        status = MembershipCreateStatus.ProviderError;
+                        throw e;
+                    }
+                }
+
+                if (value == true)
+                {
+                    status = MembershipCreateStatus.Success;
+                    return true;
+                }
+                else
+                {
+                    status = MembershipCreateStatus.UserRejected;
+                    return false;
+                }
+            }
+            else
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+                return false;
+            }
+
+            return false;
+        }
+
+
         #endregion
 
         /// <summary>

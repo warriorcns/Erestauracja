@@ -9,6 +9,7 @@ using Erestauracja.Providers;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Erestauracja.ServiceReference;
+using System.Web.Security;
 
 namespace Erestauracja.Controllers
 {
@@ -69,18 +70,33 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/AddRestaurant
         public ActionResult AddRestaurant()
         {
-            ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
+            //pobranie listy państw
             try
             {
-                string status = string.Empty;
-                IEnumerable<Town> data = country.GetTowns(out status, "Tczew", "83-110");
-                ViewData["Map"] = data;
-                country.Close();
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                List<string> listaPanstw = null;
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    listaPanstw = new List<string>(client.GetCountriesList());
+                }
+                client.Close();
+
+                foreach (string item in listaPanstw)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", "Pobranie listy Miast nie powiodło się.");
+                ViewData["countryList"] = new List<SelectListItem>();
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
             }
+
+            //ustawienie pustych danych do mapki
+            ViewData["Map"] = (IEnumerable<Town>)(new List<Town>());
+
             return View();
         }
 
@@ -89,77 +105,98 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult AddRestaurant(RegisterRestaurantModel model)
         {
-            List<Town> val = null;
-            string status = string.Empty;
+            List<Town> value = null;
             if (ModelState.IsValid)
             {
+                string status = String.Empty;
 
-                if (val.Count == 1)
+                try
                 {
-                    //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                    //CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+
+                if (value.Count == 1)//dodaj usera
+                {
                     CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
                     if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
                     {
-                        bool value = false;
-                        try
-                        {
-                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                            using (client)
-                            {
-                                value = client.AddRestaurant(model.Name, model.DisplayName, model.Address, 123, model.Country, model.Telephone, model.Email, model.Nip, model.Regon, model.Password, User.Identity.Name, model.DeliveryTime);
-                            }
-                            client.Close();
-                        }
-                        catch (Exception e)
-                        {
-                            value = false;
-                        }
+                        MembershipCreateStatus createStatus;
+                        CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                        bool user = customMemebership.CreateRestaurant(model.Login, model.Email, model.Password, model.Question, model.Answer, model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, out createStatus);
 
-                        if (value == false)
-                        {
-                            ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
-                        }
-                        else
+                        if (createStatus == MembershipCreateStatus.Success && user == true)
                         {
                             return RedirectToAction("Restaurant", "ManagePanel");
                         }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Nie jesteś zalogowany jako menadżer.");
+                        else
+                        {
+                            ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
+                        }
                     }
                 }
-
-                
+                else if (value.Count > 1)//wczytaj miasta do mapki
+                {
+                    foreach (Town item in value)
+                    {
+                        string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+                        item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", status);
+                }
             }
 
-            else if (val.Count > 1)
+            // If we got this far, something failed, redisplay form
+
+            //pobranie listy państw
+            try
             {
-                ModelState.AddModelError("", status);
-                ViewData["miasta"] = val;
-                //return RedirectToAction("", "Account",model);
-
-                //tu trzeba przekazac modelem (miasta razem z jego wartosciami) wspolrzedne i inne dane z miasta do wypelnienia markerow..
-                //string status = String.Empty;
-                ServiceReference.EresServiceClient country = new ServiceReference.EresServiceClient();
-                IEnumerable<Town> data = country.GetTowns(out status, model.Town, model.PostalCode);
-
-                foreach (Town item in data)
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                List<string> listaPanstw = null;
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
                 {
-                    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
-
-                    item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" +
-                        "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    listaPanstw = new List<string>(client.GetCountriesList());
                 }
-                ViewData["Map"] = data;
-                return View();
+                client.Close();
+
+                foreach (string item in listaPanstw)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+            }
+            catch (Exception e)
+            {
+                ViewData["countryList"] = new List<SelectListItem>();
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+
+            //ustawienie pustych danych do mapki
+            if (value == null)
+            {
+                ViewData["Map"] = (IEnumerable<Town>)(new List<Town>());
             }
             else
             {
-                ModelState.AddModelError("", status);
+                ViewData["Map"] = value;
             }
-            // If we got this far, something failed, redisplay form
+
             return View(model);
         }
 

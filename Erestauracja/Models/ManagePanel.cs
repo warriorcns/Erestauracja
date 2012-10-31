@@ -38,6 +38,16 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.Text)]
+        [Display(Name = "Pytanie do przywracania hasła")]
+        public string Question { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Odpowiedz")]
+        public string Answer { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "Nazwa firmy")]
         public string Name { get; set; }
 

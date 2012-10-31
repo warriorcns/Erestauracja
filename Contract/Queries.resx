@@ -120,11 +120,14 @@
   <data name="AddCategory" xml:space="preserve">
     <value>INSERT INTO `category`(`restaurantId`, `categoryName`, `categoryDescription`, `priceOption`, `nonPriceOption`, `nonPriceOption2`) VALUES (@restaurantID,@categoryName,@categoryDescription,@priceOption,@nonPriceOption,@nonPriceOption2)</value>
   </data>
+  <data name="AddEmptyContent" xml:space="preserve">
+    <value>INSERT INTO `rest_page_content`(`menagerId`, `restaurantId`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @menager),(SELECT `id` FROM `restaurants` WHERE `userId`=(SELECT `id` FROM `users` WHERE `login` = @login)))</value>
+  </data>
   <data name="AddProduct" xml:space="preserve">
     <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled)</value>
   </data>
   <data name="AddRestaurant" xml:space="preserve">
-    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, @currentDeliveryTime, @isApproved, @lastActivityDate, @isOnline, @isLockedOut, @lastLockedOutDate)</value>
+    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login))</value>
   </data>
   <data name="AddUsersToRoles" xml:space="preserve">
     <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>

@@ -11,6 +11,7 @@ namespace Contract
     public interface IEresService
     {
         #region membership
+
         [OperationContract]
         bool ChangePassword(string login, string password);
 
@@ -64,6 +65,7 @@ namespace Contract
 
         [OperationContract]
         bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);
+
         #endregion
 
         #region role
@@ -103,7 +105,7 @@ namespace Contract
         #region manage restaurant
 
         [OperationContract]
-        bool AddRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string password, string managerLogin, string deliveryTime);
+        bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin);
 
         [OperationContract]
         bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
@@ -198,6 +200,7 @@ namespace Contract
 
 
     #region membership dataContract
+
     [DataContract]
     public class PasswordAndAnswer
     {
@@ -462,9 +465,11 @@ namespace Contract
             set { isApproved = value; }
         }
     }
+
     #endregion
 
     #region restaurant dataContract
+
     [DataContract]
     public class Restaurant
     { 

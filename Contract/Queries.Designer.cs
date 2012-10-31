@@ -70,6 +70,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `rest_page_content`(`menagerId`, `restaurantId`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @menager),(SELECT `id` FROM `restaurants` WHERE `userId`=(SELECT `id` FROM `users` WHERE `login` = @login))).
+        /// </summary>
+        internal static string AddEmptyContent {
+            get {
+                return ResourceManager.GetString("AddEmptyContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled).
         /// </summary>
         internal static string AddProduct {
@@ -79,7 +88,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `email`, `nip`, `regon`, `creationData`, `inputsCount`, `averageRating`, `password`, `menagerId`, `deliveryTime`, `currentDeliveryTime`, `isApproved`, `lastActivityDate`, `isOnline`, `isLockedOut`, `lastLockedOutDate`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @email, @nip, @regon, @creationData, @inputsCount, @averageRating, @password, (SE [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login)).
         /// </summary>
         internal static string AddRestaurant {
             get {
