@@ -108,7 +108,7 @@ namespace Contract
         bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin);
 
         [OperationContract]
-        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id);
+        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id);
 
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
@@ -670,10 +670,10 @@ namespace Contract
         private string postalCode = null;
         private string country = null;
         private string telephone = null;
-        private string email = null;
         private string nip = null;
         private string regon = null;
         private string deliveryTime = null;
+        private bool isEnabled = false;
 
         [DataMember]
         public int ID
@@ -732,13 +732,6 @@ namespace Contract
         }
 
         [DataMember]
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-        [DataMember]
         public string Nip
         {
             get { return nip; }
@@ -757,6 +750,13 @@ namespace Contract
         {
             get { return deliveryTime; }
             set { deliveryTime = value; }
+        }
+        
+        [DataMember]
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set { isEnabled = value; }
         }
     }
 

@@ -22,31 +22,39 @@
 <div class="demo">
     <div id="accordion">
         <% foreach (Erestauracja.ServiceReference.Restaurant x in (IEnumerable<Erestauracja.ServiceReference.Restaurant>)ViewData["restauracje"]){%>
-	    <h3><a href="#"><%: x.Name %></a></h3>
+	    <h3><a href="#"><%: x.Name %>
+        <% if(x.IsEnabled == false) %>
+        <% { %>
+                (Niewidoczna dla klientów)
+        <% } %>
+        </a></h3>
 	    <div>
                 <div class="editor-labelE">
-                Name:  <%: x.Name%>
+                Login:  <%: x.Login%>
                 </div>
                 <div class="editor-labelE">
-                DisplayName:  <%: x.DisplayName%>
+                Adres email:  <%: x.Email%>
                 </div>
                 <div class="editor-labelE">
-                Address:  <%: x.Address%>
+                Nazwa:  <%: x.Name%>
                 </div>
                 <div class="editor-labelE">
-                Town:  <%: x.Town%>
+                Nazwa wyświetlana:  <%: x.DisplayName%>
                 </div>
                 <div class="editor-labelE">
-                PostalCode:  <%: x.PostalCode%>
+                Adres:  <%: x.Address%>
                 </div>
                 <div class="editor-labelE">
-                Country:  <%: x.Country%>
+                Miasto:  <%: x.Town%>
                 </div>
                 <div class="editor-labelE">
-                Telephone:  <%: x.Telephone%>
+                Kod pocztowy:  <%: x.PostalCode%>
                 </div>
                 <div class="editor-labelE">
-                Email:  <%: x.Email%>
+                Kraj:  <%: x.Country%>
+                </div>
+                <div class="editor-labelE">
+                Numer telefonu:  <%: x.Telephone%>
                 </div>
                 <div class="editor-labelE">
                 Nip:  <%: x.Nip%>
@@ -55,10 +63,19 @@
                 Regon:  <%: x.Regon%>
                 </div>
                 <div class="editor-labelE">
-                DeliveryTime:  <%: x.DeliveryTime%>
+                Czas dostawy:  <%: x.DeliveryTime%>
+                </div>
+                <div class="editor-labelE">
+                Ilość odwiedzin:  <%: x.InputsCount%>
+                </div>
+                <div class="editor-labelE">
+                Srednia ocena:  <%: x.AverageRating%>
+                </div>
+                <div class="editor-labelE">
+                Ostatnio aktywna:  <%: x.LastActivityDate %>
                 </div>
                 <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", new { id = x.ID }, null)%>
-                <%: Html.ActionLink("Zmiana hasła", "EditPassword", "ManagePanel", new { id = x.ID }, null)%>
+                <%: Html.ActionLink("Zmiana hasła", "ChangePassword", "ManagePanel", new { login = x.Login }, null)%>
                 <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", new { id = x.ID }, null)%>
 
 	    </div>

@@ -1511,7 +1511,7 @@ namespace Contract
             command.Parameters.AddWithValue("@name", String.Empty);
             command.Parameters.AddWithValue("@surname", String.Empty);
             command.Parameters.AddWithValue("@address", String.Empty);
-            command.Parameters.AddWithValue("@townID", 0);
+            command.Parameters.AddWithValue("@townID", townID);
             command.Parameters.AddWithValue("@country", country);
             command.Parameters.AddWithValue("@birthdate", new DateTime());
             command.Parameters.AddWithValue("@sex", false);
@@ -1635,7 +1635,7 @@ namespace Contract
             return false;
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditRestaurant);
             command.Parameters.AddWithValue("@name", name);
@@ -1644,14 +1644,12 @@ namespace Contract
             command.Parameters.AddWithValue("@townId", townId);
             command.Parameters.AddWithValue("@country", country);
             command.Parameters.AddWithValue("@telephone", telephone);
-            command.Parameters.AddWithValue("@email", email);
             command.Parameters.AddWithValue("@nip", nip);
             command.Parameters.AddWithValue("@regon", regon);
             command.Parameters.AddWithValue("@deliveryTime", deliveryTime);
-
+            command.Parameters.AddWithValue("@isEnabled", isEnabled);
             command.Parameters.AddWithValue("@menager", managerLogin);
             command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@isLockedOut", false);
 
             int rowsaffected = ExecuteNonQuery(command, "EditRestaurant");
 
@@ -1752,10 +1750,10 @@ namespace Contract
                         rest.PostalCode = reader.GetString(5);
                         rest.Country = reader.GetString(6);
                         rest.Telephone = reader.GetString(7);
-                        rest.Email = reader.GetString(8);
-                        rest.Nip = reader.GetString(9);
-                        rest.Regon = reader.GetString(10);
-                        rest.DeliveryTime = reader.GetString(11);
+                        rest.Nip = reader.GetString(8);
+                        rest.Regon = reader.GetString(9);
+                        rest.DeliveryTime = reader.GetString(10);
+                        rest.IsEnabled = reader.GetBoolean(11);
                     }
                 }
                 else

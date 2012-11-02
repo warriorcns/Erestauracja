@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.EditRestaurantModel>" %>
+﻿<%@ Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.EditRestaurantModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     EditRestaurant
@@ -97,17 +97,6 @@
                 </ul>
                 <ul class="rej">
                     <li class="display-labelR">
-                        <%: Html.LabelFor(m => m.Email)%>
-                    </li>
-                    <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Email)%>
-                    </li>
-                    <li class="validation-labelR">
-                        <%: Html.ValidationMessageFor(m => m.Email)%>
-                    </li>
-                </ul>
-                <ul class="rej">
-                    <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Nip)%>
                     </li>
                     <li class="editor-labelR">
@@ -139,6 +128,17 @@
                         <%: Html.ValidationMessageFor(m => m.DeliveryTime)%>
                     </li>
                 </ul>
+                <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.IsEnabled)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.CheckBoxFor(m => m.IsEnabled)%>
+                    </li>
+                    <li class="validation-labelR">
+                        <%: Html.ValidationMessageFor(m => m.IsEnabled)%>
+                    </li>
+                </ul>
                 <p>
                     <input type="submit" value="Zatwierdz zmiany" />
                 </p>
@@ -160,7 +160,7 @@
         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
         <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
             //{
-            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"] ).Count() > 1)
+            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
             //if(true)
             {%>
         <script type="text/javascript">

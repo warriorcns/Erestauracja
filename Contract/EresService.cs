@@ -421,15 +421,15 @@ namespace Contract
             }
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string email, string nip, string regon, string deliveryTime, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
                 || townId == null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
-                || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
+                || isEnabled==null || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
                 || id==null || id<0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
             {
                 Database db = new Database();
-                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, email, nip, regon, deliveryTime, managerLogin, id);
+                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, nip, regon, deliveryTime, isEnabled, managerLogin, id);
                 return value;
             }
             else

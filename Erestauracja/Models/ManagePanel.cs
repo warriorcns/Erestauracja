@@ -139,11 +139,6 @@ namespace Erestauracja.Models
         public string Telephone { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Adres email")]
-        public string Email { get; set; }
-
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "NIP")]
         public string Nip { get; set; }
@@ -157,6 +152,33 @@ namespace Erestauracja.Models
         [DataType(DataType.Text)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
+
+        [Required]
+        [Display(Name = "Widoczna dla klientów")]
+        public bool IsEnabled { get; set; }
+    }
+
+    public class ChangeResPasswordModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Dotychczasowe hasło")]
+        public string OldPassword { get; set; }
+
+        //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Nowe hasło")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("NewPassword", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
+        public string ConfirmPassword { get; set; }
+
+        [HiddenInput]
+        public string Login { get; set; }
     }
 
     public class MainPageModel
