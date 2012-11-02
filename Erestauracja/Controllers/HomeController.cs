@@ -9,10 +9,10 @@ using Erestauracja;
 using System.Web.Security;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
+using Erestauracja.Helpers;
 
 namespace Erestauracja.Controllers
 {
-    
     //[CustomAuthorizeAttribute(Roles = "Admin")]
     public class HomeController : Controller
     {
@@ -48,6 +48,8 @@ namespace Erestauracja.Controllers
         
         
 
+        
+        
         //[CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult TopRestaurants()
         {

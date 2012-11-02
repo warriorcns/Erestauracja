@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security;
 using System.Web.Routing;
+using Erestauracja.Helpers;
 
 namespace Erestauracja.Authorization
 {
@@ -28,5 +29,19 @@ namespace Erestauracja.Authorization
                 return;
             }
         } 
+    }
+
+    public class CustomAllowAnonymousAttribute : AuthorizeAttribute
+    {
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            bool skipAuthorization = filterContext.ActionDescriptor.IsDefined(typeof(AllowAnnonymous), true)
+                || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnnonymous), true);
+            if (!skipAuthorization)
+            {
+                base.OnAuthorization(filterContext);
+            }
+        }
+    
     }
 }

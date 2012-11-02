@@ -8,6 +8,7 @@ using Erestauracja.Providers;
 using Erestauracja.Models;
 using System.Web.Security;
 using Erestauracja.ServiceReference;
+using Erestauracja.Helpers;
 
 namespace Erestauracja.Controllers
 {
