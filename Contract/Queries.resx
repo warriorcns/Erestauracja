@@ -127,7 +127,7 @@
     <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled)</value>
   </data>
   <data name="AddRestaurant" xml:space="preserve">
-    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled)</value>
+    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @longitude)</value>
   </data>
   <data name="AddUsersToRoles" xml:space="preserve">
     <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
@@ -181,7 +181,7 @@
     <value>UPDATE `products` SET `categoryId` = @categoryId,`name` = @name,`description` = @description,`price` = @price,`priceOption` = @priceOption,`isAvailable` = @isAvailable,`isEnabled` = @isEnabled WHERE `restaurantId` = @restaurantId AND `id` = @id</value>
   </data>
   <data name="EditRestaurant" xml:space="preserve">
-    <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id</value>
+    <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id</value>
   </data>
   <data name="FindUsersByEmail" xml:space="preserve">
     <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email ORDER BY `login` Asc</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="GetCountriesList" xml:space="preserve">
     <value>SELECT `name` FROM `countries`</value>
+  </data>
+  <data name="GetDataForGeolock" xml:space="preserve">
+    <value>SELECT `town_name`, `postal_code`, `community`, `district`, `province` FROM `towns` WHERE `id`=@id</value>
   </data>
   <data name="GetDeliveryPage" xml:space="preserve">
     <value>SELECT `delivery` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id</value>

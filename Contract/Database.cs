@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Net.Mail;
 using System.Net;
+using System.Globalization;
 
 namespace Contract
 {
@@ -1500,6 +1501,7 @@ namespace Contract
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             MySqlTransaction tran = null;
+            Coordinate wspol = new Coordinate(0.0, 0.0);
 
             //dodawanie restauracji jako usera
             DateTime createDate = DateTime.Now;
@@ -1539,6 +1541,75 @@ namespace Contract
             command2.Parameters.AddWithValue("@rolename", "Restauracja");
             command2.Connection = conn;
 
+            //pobranie współrzędnych restauracji
+            string region = String.Empty;
+
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand wspolrzedne = new MySqlCommand(Queries.GetDataForGeolock);
+                wspolrzedne.Parameters.AddWithValue("@id", townID);
+                wspolrzedne.Connection = conn;
+                conn.Open();
+
+                string miejscowosc = String.Empty;
+                string kod = String.Empty;
+                string gmina = String.Empty;
+                string powiat = String.Empty;
+                string wojewodztwo = String.Empty;
+
+                reader = wspolrzedne.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        miejscowosc = reader.GetString(0);
+                        kod = reader.GetString(1);
+                        gmina = reader.GetString(2);
+                        powiat = reader.GetString(3);
+                        wojewodztwo = reader.GetString(4);
+                    }
+                }
+                reader.Close();
+                region= address + ", " + miejscowosc + ", " + kod + ", " + gmina + ", " + powiat + ", " + wojewodztwo + ", " + country;
+                wspol = GetCoordinates(region);
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "Pobieranie danych do współrzędnych" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "Pobieranie danych do współrzędnych" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
             //dodawanie restauracji
             MySqlCommand command3 = new MySqlCommand(Queries.AddRestaurant);
             command3.Parameters.AddWithValue("@name", name);
@@ -1555,6 +1626,8 @@ namespace Contract
             command3.Parameters.AddWithValue("@deliveryTime", deliveryTime);
             command3.Parameters.AddWithValue("@login", login);
             command3.Parameters.AddWithValue("@isEnabled", false);
+            command3.Parameters.AddWithValue("@latitude", wspol.Latitude);
+            command3.Parameters.AddWithValue("@longitude", wspol.Longitude);
             command3.Connection = conn;
 
             //dodawanie pustej zawartości strony restauracji
@@ -1637,6 +1710,78 @@ namespace Contract
 
         public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id)
         {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            Coordinate wspol = new Coordinate(0.0, 0.0);
+
+            //pobranie współrzędnych restauracji
+            string region = String.Empty;
+
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand wspolrzedne = new MySqlCommand(Queries.GetDataForGeolock);
+                wspolrzedne.Parameters.AddWithValue("@id", townId);
+                wspolrzedne.Connection = conn;
+                conn.Open();
+
+                string miejscowosc = String.Empty;
+                string kod = String.Empty;
+                string gmina = String.Empty;
+                string powiat = String.Empty;
+                string wojewodztwo = String.Empty;
+
+                reader = wspolrzedne.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        miejscowosc = reader.GetString(0);
+                        kod = reader.GetString(1);
+                        gmina = reader.GetString(2);
+                        powiat = reader.GetString(3);
+                        wojewodztwo = reader.GetString(4);
+                    }
+                }
+                reader.Close();
+                region = address + ", " + miejscowosc + ", " + kod + ", " + gmina + ", " + powiat + ", " + wojewodztwo + ", " + country;
+                wspol = GetCoordinates(region);
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "Pobieranie danych do współrzędnych" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "Pobieranie danych do współrzędnych" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
             MySqlCommand command = new MySqlCommand(Queries.EditRestaurant);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@displayName", displayName);
@@ -1650,6 +1795,8 @@ namespace Contract
             command.Parameters.AddWithValue("@isEnabled", isEnabled);
             command.Parameters.AddWithValue("@menager", managerLogin);
             command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@latitude", wspol.Latitude);
+            command.Parameters.AddWithValue("@longitude", wspol.Longitude);
 
             int rowsaffected = ExecuteNonQuery(command, "EditRestaurant");
 
@@ -4331,6 +4478,49 @@ namespace Contract
             }
 
             return rest;
+        }
+
+        #endregion
+
+        #region Geocoding
+
+        public class Coordinate
+        {
+            public double Latitude;
+            public double Longitude;
+
+            public Coordinate(double Latitude, double Longitude)
+            {
+                this.Latitude = Latitude;
+                this.Longitude = Longitude;
+            }
+        }
+
+        public static Coordinate GetCoordinates(string region)
+        {
+            using (var client = new WebClient())
+            {
+
+                string uri = "http://maps.google.com/maps/geo?q='" + region +
+                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
+                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
+
+                string[] geocodeInfo = client.DownloadString(uri).Split(',');
+
+                NumberStyles style;
+                CultureInfo culture;
+
+                style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+                culture = CultureInfo.CreateSpecificCulture("en-CA");
+
+                double lat;
+                double lng;
+
+                double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
+                double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
+                return new Coordinate(lat, lng);
+
+            }
         }
 
         #endregion

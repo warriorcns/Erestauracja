@@ -88,7 +88,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled).
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled,  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddRestaurant {
             get {
@@ -250,7 +250,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id.
+        ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id.
         /// </summary>
         internal static string EditRestaurant {
             get {
@@ -363,6 +363,15 @@ namespace Contract {
         internal static string GetCountriesList {
             get {
                 return ResourceManager.GetString("GetCountriesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `town_name`, `postal_code`, `community`, `district`, `province` FROM `towns` WHERE `id`=@id.
+        /// </summary>
+        internal static string GetDataForGeolock {
+            get {
+                return ResourceManager.GetString("GetDataForGeolock", resourceCulture);
             }
         }
         
