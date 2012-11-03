@@ -8,4 +8,6 @@
 
 <h2>Index</h2>
 
+taki samouczek - prosty tutorala + opis
+
 </asp:Content>

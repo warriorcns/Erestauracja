@@ -19,10 +19,10 @@
             </asp:DropDownList>
             <asp:BulletedList class="BulletedListRestauracje" runat="server" BulletStyle="CustomImage"
                 BulletImageUrl="">
-                <asp:ListItem>Restauracja 1</asp:ListItem>
-                <asp:ListItem>Restauracja 2</asp:ListItem>
-                <asp:ListItem>Restauracja 3</asp:ListItem>
-                <asp:ListItem>Restauracja 4</asp:ListItem>
+                <asp:ListItem>10</asp:ListItem>
+                <asp:ListItem>najnowszych</asp:ListItem>
+                <asp:ListItem>restauracji</asp:ListItem>
+                <asp:ListItem>...</asp:ListItem>
                 <asp:ListItem>Restauracja 5</asp:ListItem>
             </asp:BulletedList>
         </asp:Panel>

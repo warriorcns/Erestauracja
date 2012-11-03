@@ -50,6 +50,8 @@
             <nav id="menucontainer">
                 <ul id="menu">
                     <li>
+                        <%: Html.ActionLink("Strona główna", "Index", "ManagePanel")%></li>
+                    <li>
                         <%: Html.ActionLink("Twoje restauracje", "Restaurant", "ManagePanel")%></li>
                     <li>
                         <%: Html.ActionLink("Pracownicy", "Personnel", "ManagePanel")%></li>

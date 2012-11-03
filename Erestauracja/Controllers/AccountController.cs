@@ -258,22 +258,6 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/Settings
-        [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
-        public ActionResult Settings()
-        {
-            if (Request.IsAuthenticated)
-            {
-
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("LogOn", "Account");
-            }
-        }
 
         //
         // GET: /Account/OrderHistory

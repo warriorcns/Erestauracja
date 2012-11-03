@@ -50,8 +50,6 @@
                     <li>
                         <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>
                     <li>
-                        <%: Html.ActionLink("Top Restauracje", "TopRestaurants", "Home")%></li>
-                    <li>
                         <%: Html.ActionLink("Konto", "Account", "Account")%></li>
                     <li>
                         <%: Html.ActionLink("Koszyk", "Index", "Basket")%></li>
@@ -90,7 +88,10 @@
                             <p>
                                 <%: Html.ActionLink("Informacje", "Info", "Home")%></p>
                         </li>
-                        
+                        <li>
+                            <p>
+                                <%: Html.ActionLink("Zgłaszanie błędów", "Errors", "Home")%></p>
+                        </li>
                     </ul>
                     <ul id="footer-links-secondary">
                         

@@ -44,19 +44,7 @@ namespace Erestauracja.Controllers
             ViewData["rest"] = items;
             return View();
         }
-
-        
-        
-
-        
-        
-        //[CustomAuthorizeAttribute(Roles = "Klient")]
-        public ActionResult TopRestaurants()
-        {
-            return View();
-        }
-        
-        
+  
         public ActionResult Unauthorized()
         {
             return View();
@@ -104,6 +92,11 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        public ActionResult Errors()
+        {
+            return View();
+        }
+        
 
     }
 }

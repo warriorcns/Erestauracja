@@ -311,6 +311,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AllowAnonymous.cs" />
     <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
@@ -1075,7 +1076,6 @@
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
     <Content Include="Views\Account\RegisterManager.aspx" />
-    <Content Include="Views\Account\Settings.aspx" />
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
@@ -1089,7 +1089,8 @@
     <Content Include="Views\Find\Index.aspx" />
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Content\CSS\home.css" />
-    <Content Include="Views\Home\TopRestaurants.aspx" />
+    <Content Include="Views\Home\Errors.aspx" />
+    <Content Include="Views\Home\Info.aspx" />
     <Content Include="Views\ManagePanel\AddCategory.aspx" />
     <Content Include="Views\ManagePanel\AddProduct.aspx" />
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />

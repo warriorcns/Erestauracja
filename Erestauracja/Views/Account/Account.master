@@ -12,8 +12,6 @@
                     <li>
                       <%: Html.ActionLink("Dane użytkownika", "Account", "Account")%></li>
                     <li>
-                      <%: Html.ActionLink("Ustawienia", "Settings", "Account")%></li>
-                    <li>
                       <%: Html.ActionLink("Historia zamówień", "OrderHistory", "Account")%></li>
                     <li>
                       <%: Html.ActionLink("Komentarze", "Comments", "Account")%></li>
