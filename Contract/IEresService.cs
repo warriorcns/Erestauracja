@@ -167,6 +167,12 @@ namespace Contract
         [OperationContract]
         bool EditProduct(string managerLogin, int restaurantID, int id, int categoryID, string productName, string productDescription, string price, bool isAvailable);
 
+        [OperationContract]
+        List<Presonnel> GetPersonnel(string managerLogin);
+
+        [OperationContract]
+        bool AddUserToRestaurant(int userId, int restaurantId);
+
         #endregion
 
         #region ogólne
@@ -961,16 +967,16 @@ namespace Contract
     [DataContract]
     public class Product
     {
-        int productId = -1;
-        int restaurantId = -1;
-        int categoryId = -1;
-        string productName = null;
-        string productDescription = null;
-        string price = null;
-        string priceOption = null;
-        DateTime creationDate = new DateTime();
-        bool isAvailable = false;
-        bool isEnabled = false;
+        private int productId = -1;
+        private int restaurantId = -1;
+        private int categoryId = -1;
+        private string productName = null;
+        private string productDescription = null;
+        private string price = null;
+        private string priceOption = null;
+        private DateTime creationDate = new DateTime();
+        private bool isAvailable = false;
+        private bool isEnabled = false;
 
         [DataMember]
         public int ProductId
@@ -1040,6 +1046,47 @@ namespace Contract
         {
             get { return isEnabled; }
             set { isEnabled = value; }
+        }
+    }
+
+    [DataContract]
+    public class Presonnel
+    {
+        private int restaurantId = -1;
+        private string restaurantName = null;
+        private string restaurantAddress = null;
+        private string restaurantTown = null;
+        private List<User> employees = new List<User>();
+
+        [DataMember]
+        public int RestaurantId
+        {
+            get { return restaurantId; }
+            set { restaurantId = value; }
+        }
+        [DataMember]
+        public string RestaurantName
+        {
+            get { return restaurantName; }
+            set { restaurantName = value; }
+        }
+        [DataMember]
+        public string RestaurantAddress
+        {
+            get { return restaurantAddress; }
+            set { restaurantAddress = value; }
+        }
+        [DataMember]
+        public string RestaurantTown
+        {
+            get { return restaurantTown; }
+            set { restaurantTown = value; }
+        }
+        [DataMember]
+        public List<User> Employees
+        {
+            get { return employees; }
+            set { employees = value; }
         }
     }
 

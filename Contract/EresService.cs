@@ -703,7 +703,35 @@ namespace Contract
                 return false;
             }
         }
-        
+
+        public List<Presonnel> GetPersonnel(string managerLogin)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin)))
+            {
+                Database db = new Database();
+                List<Presonnel> value = db.GetPersonnel(managerLogin);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool AddUserToRestaurant(int userId, int restaurantId)
+        {
+            if (!(restaurantId == null || restaurantId < 1 || userId == null || userId < 1))
+            {
+                Database db = new Database();
+                bool value = db.AddUserToRestaurant(userId, restaurantId);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region ogólne

@@ -3742,6 +3742,113 @@ namespace Contract
             return false;
         }
 
+        public List<Presonnel> GetPersonnel(string managerLogin)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<Presonnel> rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantsByManagerLogin);
+                command.Parameters.AddWithValue("@managerLogin", managerLogin);
+                command.Connection = conn;
+                rest = new List<Presonnel>();
+                conn.Open();
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Restaurant r = GetRestaurantsFromReader(reader);
+                    Presonnel per = new Presonnel();
+                    per.RestaurantId = r.ID;
+                    per.RestaurantName = r.Name;
+                    per.RestaurantAddress = r.Address;
+                    per.RestaurantTown = r.Town;
+                    rest.Add(per);
+                }
+                conn.Close();
+                reader.Close();
+
+                if (rest.Count > 0)
+                {
+                    MySqlCommand command2 = new MySqlCommand(Queries.GetPersonnel);
+                    command2.Connection = conn;
+                    foreach (Presonnel item in rest)
+                    {
+                        command2.Parameters.Clear();
+                        command2.Parameters.AddWithValue("@restaurantId", item.RestaurantId);
+                        conn.Open();
+                        reader = command2.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            User u = GetUserFromReader(reader);
+                            item.Employees.Add(u);
+                        }
+                        conn.Close();
+                        reader.Close();
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetPersonnel" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetPersonnel" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        public bool AddUserToRestaurant(int userId, int restaurantId)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.AddUserToRestaurant);
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@restaurantId", restaurantId);
+
+            int rowsaffected = ExecuteNonQuery(command, "AddUserToRestaurant");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+
+            else
+                return false;
+        }
+
         #endregion
 
         #region ogólne

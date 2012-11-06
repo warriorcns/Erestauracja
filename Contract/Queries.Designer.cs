@@ -106,6 +106,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `employees_in_restaurants`(`userId`, `restaurantId`) VALUES (@userId, @restaurantId).
+        /// </summary>
+        internal static string AddUserToRestaurant {
+            get {
+                return ResourceManager.GetString("AddUserToRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT Count(*) FROM `users`.
         /// </summary>
         internal static string AllUsersCount {
@@ -489,6 +498,15 @@ namespace Contract {
         internal static string GetPasswordAnswer {
             get {
                 return ResourceManager.GetString("GetPasswordAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`id` IN (SELECT e.`userId` FROM `employees_in_restaurants` e WHERE e.`rest [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetPersonnel {
+            get {
+                return ResourceManager.GetString("GetPersonnel", resourceCulture);
             }
         }
         

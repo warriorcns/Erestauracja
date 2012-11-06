@@ -323,6 +323,10 @@ namespace Erestauracja.Controllers
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
                         return RedirectToAction("Index", "POS");
                     }
+                    else if (role.IsUserInRole(model.Login, "Pracownik"))
+                    {
+                        ModelState.AddModelError("", "Zaloguj się najpierw na konto restauracji.");
+                    }
                     else
                     {
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);

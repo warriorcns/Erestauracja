@@ -132,6 +132,9 @@
   <data name="AddUsersToRoles" xml:space="preserve">
     <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
   </data>
+  <data name="AddUserToRestaurant" xml:space="preserve">
+    <value>INSERT INTO `employees_in_restaurants`(`userId`, `restaurantId`) VALUES (@userId, @restaurantId)</value>
+  </data>
   <data name="AllUsersCount" xml:space="preserve">
     <value>SELECT Count(*) FROM `users`</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="GetPasswordAnswer" xml:space="preserve">
     <value>SELECT `passwordAnswer`, `isLockedOut` FROM `users` WHERE `login` = @login</value>
+  </data>
+  <data name="GetPersonnel" xml:space="preserve">
+    <value>SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`id` IN (SELECT e.`userId` FROM `employees_in_restaurants` e WHERE e.`restaurantId` = @restaurantId)</value>
   </data>
   <data name="GetProduct" xml:space="preserve">
     <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `id` = @id AND `restaurantId` = @restaurantId</value>
