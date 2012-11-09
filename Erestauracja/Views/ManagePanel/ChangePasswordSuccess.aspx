@@ -10,7 +10,7 @@
     <p>
         Zmiana hasła została przeprowadzona pomyślnie.
         <p>
-            <%: Html.ActionLink("Powrót do strony głównej.", "Restaurant", "ManagePanel")%>
+            <%: Html.ActionLink("Powrót do strony głównej.", "Index", "ManagePanel")%>
         </p>
     </p>
 

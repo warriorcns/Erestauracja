@@ -1094,11 +1094,13 @@
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\Errors.aspx" />
     <Content Include="Views\Home\Info.aspx" />
+    <Content Include="Views\ManagePanel\Account.aspx" />
     <Content Include="Views\ManagePanel\AddCategory.aspx" />
     <Content Include="Views\ManagePanel\AddEmployee.aspx" />
     <Content Include="Views\ManagePanel\AddProduct.aspx" />
     <Content Include="Views\ManagePanel\AddRestaurant.aspx" />
     <Content Include="Views\ManagePanel\ChangePassword.aspx" />
+    <Content Include="Views\ManagePanel\ChangePasswordMenager.aspx" />
     <Content Include="Views\ManagePanel\ChangePasswordSuccess.aspx" />
     <Content Include="Views\ManagePanel\Contact.aspx" />
     <Content Include="Views\ManagePanel\Delivery.aspx" />
@@ -1108,6 +1110,7 @@
     <Content Include="Views\ManagePanel\EditDeliveryPage.aspx" />
     <Content Include="Views\ManagePanel\EditEventsPage.aspx" />
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
+    <Content Include="Views\ManagePanel\EditMenager.aspx" />
     <Content Include="Views\ManagePanel\EditMenuPage.aspx" />
     <Content Include="Views\ManagePanel\EditPassword.aspx" />
     <Content Include="Views\ManagePanel\EditProduct.aspx" />

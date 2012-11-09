@@ -6,23 +6,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Index</h2>
-asdfjk
-sdfsdf
-sdffgvc
-vxc
-cxc
-xc
-xc
-xc
-xc
-xc
-cx
-
-dorobić edycje danych menadzera !!
-
-xc
-
+<div>
+    <p>asdfghjkl;</p>
+    <p>sdsdsdsfsaf</p>
+</div>
 
 </asp:Content>
 

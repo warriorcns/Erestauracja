@@ -1,8 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Account/Account.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.UserDataModel>" %>
- 
+﻿<%@ Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.UserDataModel>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="AccountPlaceHolder" runat="server">
-
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
@@ -17,20 +15,23 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         jQuery(function ($) {
             $("#Birthdate").mask("99/99/9999");
         });
     </script>
+
     <script type="text/javascript">
         $(function () {
             //window.location.href = window.location.href.split('?', 1)[0];
         });
     </script>
+
     <div class="polaRejestracji">
         <div id="Form1" class="formaRejestracji" runat="server">
-            <% using (Html.BeginForm())
-               { %>
+            <% using (Html.BeginForm()) %>
+            <% { %>
             <%: Html.ValidationSummary(true, "Edycja danych nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
             <div>
                 <fieldset>
@@ -38,6 +39,10 @@
                     <p>
                         Wprowadz nowe dane, a następnie kliknij 'Zapisz'.
                     </p>
+                    <div>
+                        <%: Html.HiddenFor(m=>m.Login) %>
+                    </div>
+                    <!-- nie edytuje emaila -->
                     <div class="editor-label">
                         <%: Html.LabelFor(m => m.Email) %>
                         <%: Html.TextBoxFor(m => m.Email)%>
@@ -135,5 +140,6 @@
             PostalCode.value = postalcode;
         }
     </script>
+
 </asp:Content>
 

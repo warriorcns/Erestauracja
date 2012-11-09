@@ -1972,5 +1972,282 @@ namespace Erestauracja.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        //
+        // GET: /ManagePanel/Account
+        [CustomAuthorizeAttribute(Roles = "Menadżer")]
+        public ActionResult Account()
+        {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
+            if (Request.IsAuthenticated)
+            {
+                //  MembershipCreateStatus createStatus;
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                // CustomMembershipUser user = customMemebership.GetUser(User.Identity.Name, true);
+                //  MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                UserDataModel model = new UserDataModel();
+                model.Login = user.Login;
+                model.Email = user.Email;
+                model.Name = user.Name;
+                model.Surname = user.Surname;
+                model.Address = user.Address;
+                model.Town = user.Town;
+                model.PostalCode = user.PostalCode;
+                model.Country = user.Country;
+                model.Birthdate = user.Birthdate;
+                model.Sex = user.Sex;
+                model.Telephone = user.Telephone;
+
+             //   ViewData["model"] = model;
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // GET: /ManagePanel/EditMenager
+        //[Authorize]
+        [CustomAuthorizeAttribute(Roles = "Menadżer")]
+        public ActionResult EditMenager()
+        {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
+            if (Request.IsAuthenticated)
+            {
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                UserDataModel model = new UserDataModel();
+                model.Login = user.Login;
+                model.Email = user.Email;
+                model.Name = user.Name;
+                model.Surname = user.Surname;
+                model.Address = user.Address;
+                model.Town = user.Town;
+                model.PostalCode = user.PostalCode;
+                model.Country = user.Country;
+                model.Birthdate = user.Birthdate;
+                model.Sex = user.Sex;
+                model.Telephone = user.Telephone;
+
+                //ustawienie danych o płci
+                List<SelectListItem> sex = new List<SelectListItem>();
+                if (model.Sex.Equals("Mężczyzna"))
+                {
+                    sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+                    sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+                }
+                else
+                {
+                    sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+                    sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+                }
+                ViewData["sex"] = sex;
+
+                //pobranie listy państw
+                try
+                {
+                    List<SelectListItem> countryList = new List<SelectListItem>();
+                    List<string> listaPanstw = null;
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        listaPanstw = new List<string>(client.GetCountriesList());
+                    }
+                    client.Close();
+
+                    foreach (string item in listaPanstw)
+                    {
+                        countryList.Add(new SelectListItem { Text = item, Value = item });
+                    }
+                    ViewData["countryList"] = countryList;
+                }
+                catch (Exception e)
+                {
+                    ViewData["countryList"] = new List<SelectListItem>();
+                    ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+                }
+
+                //ustawienie pustych danych do mapki
+                ViewData["Map"] = (IEnumerable<Town>)(new List<Town>());
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
+        // POST: /ManagePanel/EditMenager
+        //[Authorize]
+        [HttpPost]
+        [CustomAuthorizeAttribute(Roles = "Menadżer")]
+        public ActionResult EditMenager(UserDataModel model)
+        {
+            System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("fr-FR");
+            List<Town> value = null;
+            if (ModelState.IsValid)
+            {
+                string status = String.Empty;
+
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                }
+                else
+                {
+                    if (value.Count == 1)//edytuj usera
+                    {
+                        CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                        CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                        if (user != null)
+                        {
+                            user.Email = model.Email;
+                            user.Name = model.Name;
+                            user.Surname = model.Surname;
+                            user.Address = model.Address;
+                            user.Town = model.Town;
+                            user.PostalCode = model.PostalCode;
+                            user.Country = model.Country;
+                            user.Birthdate = model.Birthdate;
+                            user.Sex = model.Sex;
+                            user.Telephone = model.Telephone;
+
+                            customMemebership.UpdateUser(user);
+
+                            return RedirectToAction("Account", "ManagePanel");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Edycja danych nie powiodła się");
+                        }
+                    }
+                    else if (value.Count > 1)//wczytaj miasta do mapki
+                    {
+                        foreach (Town item in value)
+                        {
+                            string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+                            item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", status);
+                    }
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+
+            //ustawienie danych o płci
+            List<SelectListItem> sex = new List<SelectListItem>();
+            sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
+            sex.Add(new SelectListItem { Text = "Kobieta", Value = "Kobieta" });
+            ViewData["sex"] = sex;
+
+            //pobranie listy państw
+            try
+            {
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                List<string> listaPanstw = null;
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    listaPanstw = new List<string>(client.GetCountriesList());
+                }
+                client.Close();
+
+                foreach (string item in listaPanstw)
+                {
+                    countryList.Add(new SelectListItem { Text = item, Value = item });
+                }
+                ViewData["countryList"] = countryList;
+            }
+            catch (Exception e)
+            {
+                ViewData["countryList"] = new List<SelectListItem>();
+                ModelState.AddModelError("", "Pobranie listy panstw nie powiodło się.");
+            }
+
+            //ustawienie pustych danych do mapki
+            if (value == null)
+            {
+                ViewData["Map"] = (IEnumerable<Town>)(new List<Town>());
+            }
+            else
+            {
+                ViewData["Map"] = value;
+            }
+
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/ChangePasswordMenager
+        [Authorize]
+        public ActionResult ChangePasswordMenager()
+        {
+            return View();
+        }
+
+        //
+        // POST: /ManagePanel/ChangePasswordMenager
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePasswordMenager(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                    CustomMembershipUser currentUser = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                    // MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                    // changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    changePasswordSucceeded = customMemebership.ChangePassword(currentUser.Login, model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
     }
 }
