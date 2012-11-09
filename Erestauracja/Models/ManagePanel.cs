@@ -340,4 +340,21 @@ namespace Erestauracja.Models
         [Display(Name = "Dostępny")]
         public bool isAvailable { get; set; }
     }
+
+    public class EmployeePasswordModel
+    {
+        [HiddenInput]
+        public string EmployeeLogin { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Hasło")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
+        public string ConfirmPassword { get; set; }
+    }
 }

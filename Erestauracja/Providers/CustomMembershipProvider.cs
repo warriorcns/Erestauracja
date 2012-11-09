@@ -302,6 +302,51 @@ namespace Erestauracja.Providers
         }
 
         /// <summary>
+        /// Zamienia stare hasło na nowe u pracownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login pracownika</param>
+        /// <param name="newPwd">Nowe hasło</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool ChangeEmployeePassword(string login, string newPwd)
+        {
+            ValidatePasswordEventArgs args =
+              new ValidatePasswordEventArgs(login, newPwd, true);
+
+            OnValidatingPassword(args);
+
+            if (args.Cancel)
+                if (args.FailureInformation != null)
+                    throw args.FailureInformation;
+                else
+                    throw new MembershipPasswordException("Change password canceled due to new password validation failure.");
+
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.ChangePassword(login, EncodePassword(newPwd));
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "ChangePassword");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Zamienia pytanie oraz odpowiedź do odzyskiwania hasła u użytkownika o danym loginie.
         /// </summary>
         /// <param name="login">Login użytkownika</param>

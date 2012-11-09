@@ -1104,10 +1104,12 @@
     <Content Include="Views\ManagePanel\Delivery.aspx" />
     <Content Include="Views\ManagePanel\EditCategoryPage.aspx" />
     <Content Include="Views\ManagePanel\EditContactPage.aspx" />
+    <Content Include="Views\ManagePanel\EditData.aspx" />
     <Content Include="Views\ManagePanel\EditDeliveryPage.aspx" />
     <Content Include="Views\ManagePanel\EditEventsPage.aspx" />
     <Content Include="Views\ManagePanel\EditMainPage.aspx" />
     <Content Include="Views\ManagePanel\EditMenuPage.aspx" />
+    <Content Include="Views\ManagePanel\EditPassword.aspx" />
     <Content Include="Views\ManagePanel\EditProduct.aspx" />
     <Content Include="Views\ManagePanel\EditRestaurant.aspx" />
     <Content Include="Views\ManagePanel\Events.aspx" />

@@ -18,7 +18,9 @@ xc
 xc
 xc
 cx
-cx
+
+dorobić edycje danych menadzera !!
+
 xc
 
 

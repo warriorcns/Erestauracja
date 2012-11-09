@@ -73,6 +73,9 @@
                                 <div class="editor-labelE">
                                     Numer telefonu:  <%: user.Telephone%>
                                 </div>
+
+                                 <%: Html.ActionLink("Edytuj dane", "EditData", "ManagePanel", new { login = user.Login }, null)%>
+                                 <%: Html.ActionLink("Zmień hasło", "EditPassword", "ManagePanel", new { login = user.Login }, null)%>
                             </div>
                         <% } %>
                     </div>
