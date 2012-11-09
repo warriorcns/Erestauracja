@@ -1093,6 +1093,7 @@
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Content\CSS\home.css" />
     <Content Include="Views\Home\Errors.aspx" />
+    <Content Include="Views\Home\ErrorSuccess.aspx" />
     <Content Include="Views\Home\Info.aspx" />
     <Content Include="Views\ManagePanel\Account.aspx" />
     <Content Include="Views\ManagePanel\AddCategory.aspx" />

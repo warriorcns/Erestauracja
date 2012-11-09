@@ -92,11 +92,54 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //
+        // GET: /Home/Errors
         public ActionResult Errors()
         {
             return View();
         }
-        
 
+        //
+        // POST: /Home/Errors
+        [HttpPost]
+        public ActionResult Errors(ErrorModels model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.SendError(model.Email, model.Text);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Wysyłanie zgłoszenia nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSuccess", "Home");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Home/ErrorSuccess
+        public ActionResult ErrorSuccess()
+        {
+            return View();
+        }
     }
 }

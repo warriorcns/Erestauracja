@@ -201,6 +201,9 @@ namespace Contract
         [OperationContract]
         ContactPageContent GetContactPageUser(int id);
 
+        [OperationContract]
+        bool SendError(string email, string text);
+
         #endregion
     }
 

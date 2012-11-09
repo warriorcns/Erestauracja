@@ -301,33 +301,17 @@ namespace Contract
                     {
                         if (!String.IsNullOrEmpty(email))
                         {
-                            SmtpClient klient = new SmtpClient("smtp.gmail.com");
-                            MailMessage wiadomosc = new MailMessage();
-                            try
+                            bool ok = false;
+                            Email em = new Email();
+                            ok = em.SendPassword(email, password);
+
+                            if (ok == true)
                             {
-                                wiadomosc.From = new MailAddress("erestauracja@gmail.com");
-                                wiadomosc.To.Add(email);
-                                wiadomosc.Subject = "Erestauracja - restet hasła.";
-                                wiadomosc.Body = "Nowe hasło: " + password;
-
-                                klient.Port = 587;
-                                klient.Credentials = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
-                                klient.EnableSsl = true;
-                                klient.Send(wiadomosc);
-
                                 trans.Commit();
                                 return true;
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                EventLog log = new EventLog();
-                                log.Source = eventSource;
-                                log.Log = eventLog;
-
-                                string info = "Błąd podczas wysyłania wiadomości email";
-                                info += "Action: " + "Email sending" + "\n\n";
-                                info += "Exception: " + ex.ToString();
-
                                 trans.Rollback();
                                 return false;
                             }

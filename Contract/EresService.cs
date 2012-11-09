@@ -843,6 +843,20 @@ namespace Contract
             }
         }
 
+        public bool SendError(string email, string text)
+        {
+            if (!(String.IsNullOrEmpty(email) || String.IsNullOrEmpty(text)))
+            {
+                Email em = new Email();
+                bool value = em.SendError(email, text);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }
