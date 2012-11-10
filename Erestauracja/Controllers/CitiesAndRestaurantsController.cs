@@ -29,6 +29,8 @@ namespace Erestauracja.Controllers
 
         public ActionResult ListRestaurantsFromCity(string id)
         {
+            //pobrać z serwisu RestaurantsFromCity RestaurantsFromCity(string cityName);
+            ViewData["id"] = id;
             ViewData["height"] = 300;
             ViewData["width"] = 500;
 

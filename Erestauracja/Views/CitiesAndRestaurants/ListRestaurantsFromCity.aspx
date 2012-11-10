@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <%@ Import Namespace="Jmelosegui.Mvc.Controls" %>
 <%@ Import Namespace="Telerik.Web.Mvc.UI"%>
@@ -10,9 +10,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
    
-    <asp:Label class="LabelNazwaMiasta" runat="server" 
-        Text="Nazwa wybranego miasta" CssClass="LabelNazwaMiasta"></asp:Label>
-
+    <div class="LabelNazwaMiasta" runat="server"> <%: ViewData["id"] %>   </div>
+    
     <div class="RestauracjeMapa">
     <asp:Panel class="PanelListaRestauracji" runat="server" ScrollBars="Auto">
 

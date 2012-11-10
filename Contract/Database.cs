@@ -4571,6 +4571,111 @@ namespace Contract
             return rest;
         }
 
+        public RestaurantsFromCity RestaurantsFromCity(string cityName)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            RestaurantsFromCity rest = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.RestaurantsFromCity);
+                command.Parameters.AddWithValue("@cityName", cityName+"%");
+                command.Parameters.AddWithValue("@isEnabled", true);
+                command.Connection = conn;
+                rest = new RestaurantsFromCity();
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    rest.CityName = cityName.ToUpper();
+                    while (reader.Read())
+                    {
+                        RestaurantInCity r = GetRestaurantsFromCity(reader);
+                        rest.Restaurants.Add(r);
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "RestaurantsFromCity" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "RestaurantsFromCity" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
+        private RestaurantInCity GetRestaurantsFromCity(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string displayName = reader.GetString(1);
+            string address = reader.GetString(2);
+            string town = reader.GetString(3);
+            string postalCode = reader.GetString(4);
+            string country = reader.GetString(5);
+            string telephone = reader.GetString(6);
+            int inputsCount = reader.GetInt32(7);
+            int averageRating = reader.GetInt32(8);
+            string deliveryTime = reader.GetString(9);
+            DateTime creationDate = reader.GetDateTime(10);
+            double latitude = reader.GetDouble(11);
+            double longtitude = reader.GetDouble(12);
+
+            RestaurantInCity u = new RestaurantInCity();
+            u.ID = id;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.PostalCode = postalCode;
+            u.Country = country;
+            u.Telephone = telephone;
+            u.InputsCount = inputsCount;
+            u.AverageRating = averageRating;
+            u.DeliveryTime = deliveryTime;
+            u.CreationDate = creationDate;
+            u.Latitude = latitude;
+            u.Longtitude = longtitude;
+
+            return u;
+        }
+
         #endregion
 
         #region Geocoding

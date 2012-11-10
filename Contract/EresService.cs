@@ -857,6 +857,20 @@ namespace Contract
             }
         }
 
+        public RestaurantsFromCity RestaurantsFromCity(string cityName)
+        {
+            if (!(String.IsNullOrEmpty(cityName)))
+            {
+                Database db = new Database();
+                RestaurantsFromCity value = db.RestaurantsFromCity(cityName);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

@@ -684,6 +684,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, x.`averageRating`, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIKE @cityName).
+        /// </summary>
+        internal static string RestaurantsFromCity {
+            get {
+                return ResourceManager.GetString("RestaurantsFromCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT COUNT(*) FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string RoleExists {

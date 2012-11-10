@@ -204,6 +204,9 @@ namespace Contract
         [OperationContract]
         bool SendError(string email, string text);
 
+        [OperationContract]
+        RestaurantsFromCity RestaurantsFromCity(string cityName);
+
         #endregion
     }
 
@@ -1198,6 +1201,145 @@ namespace Contract
         {
             get { return townId; }
             set { townId = value; }
+        }
+    }
+
+    [DataContract]
+    public class RestaurantsFromCity
+    {
+        private string cityName = null;
+        private List<RestaurantInCity> restaurants = new List<RestaurantInCity>();
+
+        [DataMember]
+        public string CityName
+        {
+            get { return cityName; }
+            set { cityName = value; }
+        }
+
+        [DataMember]
+        public List<RestaurantInCity> Restaurants
+        {
+            get { return restaurants; }
+            set { restaurants = value; }
+        }
+    }
+
+    [DataContract]
+    public class RestaurantInCity
+    {
+        private int id = -1;
+        private string displayName = null;
+        private string address = null;
+        private string town = null;
+        private string postalCode = null;
+        private string country = null;
+        private string telephone = null;
+        private int inputsCount = -1;
+        private int averageRating = -1;
+        private string deliveryTime = null;
+        private DateTime creationDate = new DateTime();
+        private double latitude = 0;
+        private double longtitude = 0;
+        private string infoWindowContent = String.Empty;
+       
+
+        [DataMember]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string Town
+        {
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
+        }
+
+        [DataMember]
+        public string Country
+        {
+            get { return country; }
+            set { country = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        [DataMember]
+        public int InputsCount
+        {
+            get { return inputsCount; }
+            set { inputsCount = value; }
+        }
+
+        [DataMember]
+        public int AverageRating
+        {
+            get { return averageRating; }
+            set { averageRating = value; }
+        }
+
+        [DataMember]
+        public string DeliveryTime
+        {
+            get { return deliveryTime; }
+            set { deliveryTime = value; }
+        }
+
+        [DataMember]
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
+            set { creationDate = value; }
+        }
+
+        [DataMember]
+        public double Latitude
+        {
+            get { return latitude; }
+            set { latitude = value; }
+        }
+
+        [DataMember]
+        public double Longtitude
+        {
+            get { return longtitude; }
+            set { longtitude = value; }
+        }
+
+        [DataMember]
+        public string InfoWindowContent
+        {
+            get { return infoWindowContent; }
+            set { infoWindowContent = value; }
         }
     }
 }
