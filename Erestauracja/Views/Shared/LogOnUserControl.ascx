@@ -4,13 +4,13 @@
     {
 %>
 <ul class="topka">
-    <div class="ikonka">
-    </div>
+    <a class="ikonka" href="/Home">
+    </a>
     
 
-    <div id="label"> Witaj <strong> <%: Page.User.Identity.Name %></strong>!</div>
+    <div id="label" style="z-index:-1;"> Witaj <strong> <%: Page.User.Identity.Name %></strong>!</div>
 
-    <div id="label"><%: Html.ActionLink("Wyloguj", "LogOff", "Account") %></div>
+    <div id="label" style="z-index:-1;"><%: Html.ActionLink("Wyloguj", "LogOff", "Account") %></div>
 
 </ul>
 <%
@@ -19,9 +19,9 @@
     {
 %>
     <ul class="topka">
-    <div class="ikonka">
-    </div>
-    <div id="label"><%: Html.ActionLink("Zaloguj", "LogOn", "Account") %></div>
+    <a class="ikonka" href="/Home">
+    </a>
+    <div id="label" style="z-index:-1;"><%: Html.ActionLink("Zaloguj", "LogOn", "Account") %></div>
 
 </ul>
         

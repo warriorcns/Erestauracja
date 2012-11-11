@@ -57,8 +57,8 @@
             $(".yoxview").yoxview({ lang: 'pl', linkToOriginalContext: false,  });
         });
     </script>
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         Galleria.loadTheme('../../Scripts/themes/classic/galleria.classic.min.js');
         Galleria.run('#galleria');
-    </script>
+    </script>--%>
 </asp:Content>

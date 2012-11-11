@@ -3,22 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="buttons-container">
-        <div class="button wood">
-            <div>
-                <%: Html.ActionLink("Aktywne zamówienia", "ActiveOrders", "POS")%></div>
-        </div>
-        <div class="button wood">
-            <div>
-                <%: Html.ActionLink("Wszystkie zamówienia", "AllOrders", "POS")%></div>
-        </div>
-        <div class="button wood">
-            <div>
-                <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS")%></div>
-        </div>
-        <div class="button wood">
-            <div>
-                <%: Html.ActionLink("Koniec", "End", "POS")%></div>
-        </div>
+        <div>
+            <%: Html.ActionLink("Aktywne zamówienia", "ActiveOrders", "POS", new{ @class="button wood"})%></div>
+        <div>
+            <%: Html.ActionLink("Wszystkie zamówienia", "AllOrders", "POS", new { @class = "button wood" })%></div>
+        <div>
+            <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS", new { @class = "button wood" })%></div>
+        <div>
+            <%: Html.ActionLink("Koniec", "End", "POS", new { @class = "button wood" })%></div>
     </div>
 </asp:Content>
 

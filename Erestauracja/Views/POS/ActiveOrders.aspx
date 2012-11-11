@@ -16,10 +16,8 @@
 </script>
     <div class="main">
         <div class="buttons-container">
-            <div class="button wood">
-                <div>
-                    <%: Html.ActionLink("Pokaż zamawiane produkty", "ActiveOrders", "POS")%></div>
-            </div>
+            <div>
+                <%: Html.ActionLink("Pokaż zamawiane produkty", "ActiveOrders", "POS", new{ @class="button wood"})%></div>
         </div>
         <div class="orders-container">
             <span class="orders-header orders-header-phone">Telefon</span>
