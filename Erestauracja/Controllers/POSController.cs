@@ -74,25 +74,31 @@ namespace Erestauracja.Controllers
             return View(); 
         }
 
-        //
-        // GET: /POS/End
-        /// <summary>
-        /// Blokowanie posu - wylogowanie pracownika
-        /// </summary>
-        /// <returns></returns>
-        //[CustomAuthorizeAttribute(Roles = "Pracownik")]
-        public ActionResult End()
-        {
-            return View();
-        }
-
-
+        
         /// <summary>
         /// Pokazuje zamawiane produkty w ramach jednego zamowienia
         /// </summary>
         /// <returns></returns>
         //[CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult OrderedProducts()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Blokuje terminal.
+        /// </summary>
+        /// <returns>Redirecttoaction Locked</returns>
+        public void End() 
+        {
+
+        }
+
+        /// <summary>
+        /// Panel logowania dla pracownikow.
+        /// </summary>
+        /// <returns>Nowy widok</returns>
+        public ActionResult Locked()
         {
             return View();
         }

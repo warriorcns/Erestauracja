@@ -27,136 +27,21 @@
             <%--pojedyncze zamowienie--%>
             <div class="order-container">
                 <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
+                    <a class="order orders-header-phone">Telefon</a> 
+                    <a class="order orders-header-name">Nazwisko</a>
+                    <a class="order orders-header-adress">Adres</a>
+                    <a class="order orders-header-status">Status zamówienia</a>
+                </h3>
+                <div>
+                    <p>
+                        <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
                         kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona 222 - dane statyczne 1231231 231231 2312312 3123123</a>
-                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
+                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a></p>
                     <br />
                     <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
-                </div>
-            </div>
-
-            <div class="order-container">
-                <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123123</a> <a class="order orders-header-name">
-                        kowalski</a> <a class="order orders-header-adress">zielona 222 - dane statyczne</a>
-                    <a class="order orders-header-status">Aktywne</a>
-                </h3>
-                <div>
-                    <p>
-                        Opis zamowienia</p>
-                    <br />
-                    <p>
-                        zawartosc</p>
+                        <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
+                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona 222 - dane statyczne 1231231 231231 2312312 3123123</a>
+                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a></p>
                 </div>
             </div>
 
