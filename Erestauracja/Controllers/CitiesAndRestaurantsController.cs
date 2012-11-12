@@ -30,11 +30,55 @@ namespace Erestauracja.Controllers
         public ActionResult ListRestaurantsFromCity(string id)
         {
             //pobrać z serwisu RestaurantsFromCity RestaurantsFromCity(string cityName);
-            ViewData["id"] = id;
-            ViewData["height"] = 300;
-            ViewData["width"] = 500;
+     //       ViewData["id"] = id;
+     //       ViewData["height"] = 300;
+    //        ViewData["width"] = 500;
 
-            return View();
+            RestaurantsFromCity value = null;
+            if(!(String.IsNullOrWhiteSpace(id)))
+            {
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.RestaurantsFromCity(id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
+                    value = new RestaurantsFromCity();
+                    value.Restaurants[0].DisplayName = "Brak";
+                    //ustawienie pustych danych do mapki
+              //      ViewData["Map"] = (IEnumerable<RestaurantsFromCity>)(new RestaurantsFromCity());
+                }
+                else
+                {
+                    //foreach(RestaurantInCity item in value.Restaurants)
+                    //{
+                    //    //tu powinno być przekierowanie do strony restauracji
+                    //    //!!
+                    //   //     !!
+                    //    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.Town, item.DisplayName);
+                    //    item.InfoWindowContent = item.DisplayName + " " + item.Town + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    //}
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nieprawidłowa nazwa miasta.");
+                value = new RestaurantsFromCity();
+                value.Restaurants[0].DisplayName = "Brak";
+                value.CityName = "Brak";
+            }
+
+            return View(value);
         }
 
         public ActionResult Przykladmapy()
