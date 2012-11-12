@@ -4,10 +4,12 @@
 
 <% using (Html.BeginForm())
    { %>
-    <%:Html.PasswordFor(m => m.Password, new { style="", @class="" })%>
-
+    <div class="locked-login">
+        <%--<%: Html.DropDownListFor(m=>m.Login, ViewData["logins"] as /IEnum /erable<>) %>--%>
+        <%:Html.PasswordFor(m => m.Password)%>
     
-    
+        <input type="submit" value="Zaloguj"/>
+    </div>
 <% } %>
 
 

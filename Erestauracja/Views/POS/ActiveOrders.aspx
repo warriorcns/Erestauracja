@@ -24,25 +24,19 @@
             <span class="orders-header orders-header-name">Nazwisko</span>
             <span class="orders-header orders-header-adress">Adres</span>
             <span class="orders-header orders-header-status">Status zamówienia</span>
-            <%--pojedyncze zamowienie--%>
+            <%--pojedyncze zamowienie -accordion--%>
             <div class="order-container">
+                <%--tutaj petla wypelniajaca zamowienia odswiezana przez jquery chyba--%>
                 <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">Telefon</a> 
-                    <a class="order orders-header-name">Nazwisko</a>
-                    <a class="order orders-header-adress">Adres</a>
-                    <a class="order orders-header-status">Status zamówienia</a>
+                    <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
+                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona 222 - dane statyczne 1231231 231231 2312312 3123123</a>
+                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a>
                 </h3>
                 <div>
                     <p>
-                        <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
-                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona 222 - dane statyczne 1231231 231231 2312312 3123123</a>
-                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a></p>
-                    <br />
-                    <p>
-                        <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name"> 
-                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona 222 - dane statyczne 1231231 231231 2312312 3123123</a>
-                    <a class="order orders-header-status">Aktywne 1231231 23123 12312312 3123123</a></p>
+                        INFO O ZAMOWIENIU</p>
                 </div>
+
             </div>
 
         </div>
