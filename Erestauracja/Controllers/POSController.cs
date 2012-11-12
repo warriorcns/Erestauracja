@@ -103,5 +103,10 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        public ActionResult scrollexample()
+        {
+            return View();
+        }
+
     }
 }

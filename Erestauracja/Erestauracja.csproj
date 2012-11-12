@@ -775,6 +775,8 @@
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
     <Content Include="Content\CSS\POS.css" />
     <Content Include="Content\CSS\Restaurants.css" />
+    <Content Include="Content\images\arrow-down.jpg" />
+    <Content Include="Content\images\arrow-up.jpg" />
     <Content Include="Content\images\disk.png" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\logo-test.png" />
@@ -1113,6 +1115,7 @@
     <Content Include="Views\POS\Locked.aspx" />
     <Content Include="Views\POS\OrderedProducts.aspx" />
     <Content Include="Views\POS\SalesDocuments.aspx" />
+    <Content Include="Views\POS\scrollexample.aspx" />
     <Content Include="Views\Restaurant\Contact.aspx" />
     <Content Include="Views\Restaurant\Delivery.aspx" />
     <Content Include="Views\Restaurant\Gallery.aspx" />
@@ -1121,6 +1124,7 @@
     <Content Include="Views\Restaurant\Events.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Map.ascx" />
+    <Content Include="Views\Shared\RestaurantsMaps.ascx" />
     <Content Include="Views\Shared\Unauthorized.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

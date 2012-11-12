@@ -25,6 +25,11 @@
             <% } %>
         </span>
         <span class="PanelMapa">
+            <div class="mapTowns" id="mapka" style="display: block">
+                <% Html.RenderPartial("RestaurantsMaps", Model.Restaurants as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
+                <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
+                <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+            </div>
         </span>
     </div>
     <!-- /////////////////////// 
@@ -34,4 +39,18 @@
     <asp:Panel class="PanelMapa" runat="server">
     </asp:Panel>
     </div>-->
+    <script type="text/javascript">        
+    function Redirect(RestaurantID) {
+        var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
+        var data = { id: RestaurantID };
+        //alert(RestaurantID);
+        if (RestaurantID.length != 0) {
+            $.post(url, data, function (data) {
+                // TODO: do something with the response from the controller action
+                //alert('the value was successfully sent to the server' + str);
+                window.location.href = data.redirectToUrl;
+            });
+
+        }
+        }     </script>
 </asp:Content>

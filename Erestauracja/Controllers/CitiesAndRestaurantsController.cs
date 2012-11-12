@@ -35,6 +35,7 @@ namespace Erestauracja.Controllers
     //        ViewData["width"] = 500;
 
             RestaurantsFromCity value = null;
+            ViewData["Map"] = (IEnumerable<RestaurantsFromCity>)( new List<RestaurantsFromCity>() ); 
             if(!(String.IsNullOrWhiteSpace(id)))
             {
                 try
@@ -60,14 +61,14 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    //foreach(RestaurantInCity item in value.Restaurants)
-                    //{
+                    foreach(RestaurantInCity item in value.Restaurants)
+                    {
                     //    //tu powinno być przekierowanie do strony restauracji
                     //    //!!
                     //   //     !!
-                    //    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.Town, item.DisplayName);
-                    //    item.InfoWindowContent = item.DisplayName + " " + item.Town + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
-                    //}
+                        string onClick = String.Format(" \"Redirect('{0}')\" ", item.ID);
+                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    }
                 }
             }
             else
