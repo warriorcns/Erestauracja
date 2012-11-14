@@ -12,6 +12,9 @@ using Erestauracja.ServiceReference;
 using System.Web.Security;
 using System.Threading;
 using System.Globalization;
+using AppLimit.CloudComputing.SharpBox;
+using System.IO;
+using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
 
 namespace Erestauracja.Controllers
 {
@@ -1380,7 +1383,70 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/Gallery
         public ActionResult Gallery(int id)
         {
+            #region DropBox Connection
+            try
+            {
+                // Creating the cloudstorage object 
+                CloudStorage dropBoxStorage = new CloudStorage();
+
+                // get the configuration for dropbox 
+                var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                // declare an access token
+                ICloudStorageAccessToken accessToken = null;
+
+                // load a valid security token from file
+                string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                }
+
+                // open the connection 
+                var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                // get a specific directory in the cloud storage eg. "/images/1"
+                var publicFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+
+                ICloudFileSystemEntry fse;
+
+                // lista linkow uri
+                List<Uri> uris = new List<Uri>();
+
+                // enumerate all child (folder and files) 
+                foreach (var fof in publicFolder)
+                {
+                    // check if we have a directory 
+                    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                    fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
+                    if (!bIsDirectory)
+                    {
+                        //pobiera liste linkow do plikow w katalogu rodzica
+                        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                    }
+                }
+
+                dropBoxStorage.Close();
+
+                ViewData["imagesuris"] = uris;
+                string test, test1;
+                foreach (Uri link in uris)
+                {
+
+                    test = link.ToString();
+                    test1 = link.AbsoluteUri;
+                }
+            }
+            catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+            {
+                ;
+            }
+            #endregion
             ViewData["id"] = id;
+
             return View();
             //if (id > 0)
             //{
