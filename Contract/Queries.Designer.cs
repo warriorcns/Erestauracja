@@ -565,6 +565,24 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT (SELECT COUNT(q.`id`) FROM `products` q WHERE q.`isAvailable` = 1 AND q.`restaurantId` IN (SELECT e.`id` FROM `restaurants` e WHERE e.`isEnabled`=1)) AS produkty, (SELECT COUNT(w.`id`) FROM `restaurants` w WHERE w.`isEnabled` = 1) AS restauracje, (SELECT COUNT(t.`id`) FROM `users` t WHERE t.`isLockedOut` = 0 AND t.`comment` != &apos;R&apos;) AS osoby, (SELECT COUNT(r.`id`) FROM `users_in_roles` r JOIN `users` u ON r.`userID` = u.`id` WHERE r.`roleID` = 5 AND u.`isLockedOut`=0 AND (u.`lastActivityDate` &gt; @compa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetStatistics {
+            get {
+                return ResourceManager.GetString("GetStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, x.`telephone` FROM `restaurants` x JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled` = 1 AND u.`isLockedOut` = 0 ORDER BY u.`creationDate` DESC LIMIT 0,10.
+        /// </summary>
+        internal static string GetTopRestaurant {
+            get {
+                return ResourceManager.GetString("GetTopRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `id`, `postal_code`, `town_name`, `province`, `district`, `community`, `latitude`, `longitude` FROM `towns` WHERE `town_name` LIKE @townName AND `postal_code` = @postalCode.
         /// </summary>
         internal static string GetTowns {

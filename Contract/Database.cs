@@ -170,6 +170,7 @@ namespace Contract
         }
 
         #region membership
+
         public bool ChangePassword(string login, string password)
         {
             MySqlCommand command = new MySqlCommand(Queries.ChangePassword);
@@ -970,6 +971,7 @@ namespace Contract
             }
             return true;
         }
+        
         #endregion
 
         #region role
@@ -3836,6 +3838,7 @@ namespace Contract
         #endregion
 
         #region ogólne
+
         public List<string> GetCountriesList()
         {
             MySqlCommand command = new MySqlCommand(Queries.GetCountriesList);
@@ -4674,6 +4677,62 @@ namespace Contract
             u.Longtitude = longtitude;
 
             return u;
+        }
+
+        public List<RestaurantTop> GetTopRestaurant()
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetTopRestaurant);
+
+            List<RestaurantTop> value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetTopRestaurant");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new List<RestaurantTop>();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    RestaurantTop rest = new RestaurantTop();
+                    if (row["id"] != DBNull.Value) rest.ID = Convert.ToInt32(row["id"]);
+                    if (row["displayName"] != DBNull.Value) rest.DisplayName = row["displayName"].ToString();
+                    if (row["address"] != DBNull.Value) rest.Address = row["address"].ToString();
+                    if (row["town_name"] != DBNull.Value) rest.Town = row["town_name"].ToString();
+                    if (row["postal_code"] != DBNull.Value) rest.PostalCode = row["postal_code"].ToString();
+                    if (row["telephone"] != DBNull.Value) rest.Telephone = row["telephone"].ToString();
+                    value.Add(rest);
+                }
+            }
+            return value;
+        }
+
+        public Statistics GetStatistics()
+        {
+            DateTime compareUser = DateTime.Now.Subtract(new TimeSpan(0,15,0));
+            DateTime compareRestaurant = DateTime.Now.Subtract(new TimeSpan(0,5,0));
+
+            MySqlCommand command = new MySqlCommand(Queries.GetStatistics);
+            command.Parameters.AddWithValue("@compareUser",compareUser);
+            command.Parameters.AddWithValue("@compareRestaurant",compareRestaurant);
+            Statistics value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetStatistics");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new Statistics();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["produkty"] != DBNull.Value) value.ProductsCount = Convert.ToInt32(row["produkty"]);
+                    if (row["restauracje"] != DBNull.Value) value.RestaurantsCount = Convert.ToInt32(row["restauracje"]);
+                    if (row["osoby"] != DBNull.Value) value.UsersCount = Convert.ToInt32(row["osoby"]);
+                    if (row["klienciAkt"] != DBNull.Value) value.ActiveUsers = Convert.ToInt32(row["klienciAkt"]);
+                    if (row["restauAkt"] != DBNull.Value) value.ActiveRestaurants = Convert.ToInt32(row["restauAkt"]);
+                }
+            }
+            return value;
         }
 
         #endregion

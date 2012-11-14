@@ -207,6 +207,12 @@ namespace Contract
         [OperationContract]
         RestaurantsFromCity RestaurantsFromCity(string cityName);
 
+        [OperationContract]
+        List<RestaurantTop> GetTopRestaurant();
+
+        [OperationContract]
+        Statistics GetStatistics();
+
         #endregion
     }
 
@@ -1342,4 +1348,104 @@ namespace Contract
             set { infoWindowContent = value; }
         }
     }
+
+    [DataContract]
+    public class RestaurantTop
+    {
+        private int id = -1;
+        private string displayName = null;
+        private string address = null;
+        private string town = null;
+        private string postalCode = null;
+        private string telephone = null;
+
+        [DataMember]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string Town
+        {
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string PostalCode
+        {
+            get { return postalCode; }
+            set { postalCode = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+    }
+
+    [DataContract]
+    public class Statistics
+    {
+        private int productsCount = -1;
+        private int restaurantsCount = -1;
+        private int usersCount = -1;
+        private int activeUsers = -1;
+        private int activeRestaurants = -1;
+
+        [DataMember]
+        public int ProductsCount
+        {
+            get { return productsCount; }
+            set { productsCount = value; }
+        }
+
+        [DataMember]
+        public int RestaurantsCount
+        {
+            get { return restaurantsCount; }
+            set { restaurantsCount = value; }
+        }
+
+        [DataMember]
+        public int UsersCount
+        {
+            get { return usersCount; }
+            set { usersCount = value; }
+        }
+
+        [DataMember]
+        public int ActiveUsers
+        {
+            get { return activeUsers; }
+            set { activeUsers = value; }
+        }
+
+        [DataMember]
+        public int ActiveRestaurants
+        {
+            get { return activeRestaurants; }
+            set { activeRestaurants = value; }
+        }
+    }
+
+
 }

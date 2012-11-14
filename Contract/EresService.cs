@@ -871,6 +871,20 @@ namespace Contract
             }
         }
 
+        public List<RestaurantTop> GetTopRestaurant()
+        {
+            Database db = new Database();
+            List<RestaurantTop> value = db.GetTopRestaurant();
+            return value;
+        }
+
+        public Statistics GetStatistics()
+        {
+            Database db = new Database();
+            Statistics value = db.GetStatistics();
+            return value;
+        }
+
         #endregion
     }
 }

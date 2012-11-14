@@ -27,15 +27,11 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //
+        // GET: /CitiesAndRestaurants/ListRestaurantsFromCity
         public ActionResult ListRestaurantsFromCity(string id)
         {
-            //pobrać z serwisu RestaurantsFromCity RestaurantsFromCity(string cityName);
-     //       ViewData["id"] = id;
-     //       ViewData["height"] = 300;
-    //        ViewData["width"] = 500;
-
             RestaurantsFromCity value = null;
-            ViewData["Map"] = (IEnumerable<RestaurantsFromCity>)( new List<RestaurantsFromCity>() ); 
             if(!(String.IsNullOrWhiteSpace(id)))
             {
                 try
@@ -55,30 +51,25 @@ namespace Erestauracja.Controllers
                 {
                     ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
                     value = new RestaurantsFromCity();
+                    value.CityName = id;
+                    value.Restaurants = new RestaurantInCity[1];
+                    value.Restaurants[0] = new RestaurantInCity();
                     value.Restaurants[0].DisplayName = "Brak";
-                    //ustawienie pustych danych do mapki
-              //      ViewData["Map"] = (IEnumerable<RestaurantsFromCity>)(new RestaurantsFromCity());
                 }
                 else
                 {
                     foreach(RestaurantInCity item in value.Restaurants)
                     {
-                    //    //tu powinno być przekierowanie do strony restauracji
-                    //    //!!
-                    //   //     !!
                         string onClick = String.Format(" \"Redirect('{0}')\" ", item.ID);
-                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + item.Address + " " + item.Town + " " + item.PostalCode + "</br>" + "Telefon " + item.Telephone + "</br>" + "Średnia ocena " + item.AverageRating + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                     }
                 }
             }
             else
             {
                 ModelState.AddModelError("", "Nieprawidłowa nazwa miasta.");
-                value = new RestaurantsFromCity();
-                value.Restaurants[0].DisplayName = "Brak";
-                value.CityName = "Brak";
+                return RedirectToAction("Index", "Home");
             }
-
             return View(value);
         }
 

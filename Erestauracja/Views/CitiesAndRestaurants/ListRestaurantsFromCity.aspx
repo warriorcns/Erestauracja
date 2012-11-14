@@ -11,17 +11,18 @@
         <span class="PanelListaRestauracji">
             <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model.Restaurants) %>
             <% { %>
-                    <div>
-                        <div> <%: item.DisplayName %></div>
-                        <% if(item.CreationDate == DateTime.Now ) //powinno być 2 tygodnie wcześniej %>
+                    <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
+                        <div> <%: item.DisplayName %> 
+                        <% if( (DateTime.Compare(item.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0 )%>
                         <% { %>
-                            <div>NOWOŚC</div>
+                            NOWOŚĆ
                         <% } %>
+                        </div>
                         <div><%: item.Address %> <%: item.Town %> <%: item.PostalCode %></div>
                         <div><%: item.Telephone %></div>
                         <div>Srednia ocena <%: item.AverageRating %></div>
                     </div>
-                    </br>
+                    <hr />
             <% } %>
         </span>
         <span class="PanelMapa">
@@ -32,6 +33,7 @@
             </div>
         </span>
     </div>
+
     <!-- /////////////////////// 
     <div class="RestauracjeMapa">
     <asp:Panel class="PanelListaRestauracji" runat="server" ScrollBars="Auto">
@@ -39,6 +41,7 @@
     <asp:Panel class="PanelMapa" runat="server">
     </asp:Panel>
     </div>-->
+
     <script type="text/javascript">        
     function Redirect(RestaurantID) {
         var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
@@ -50,7 +53,8 @@
                 //alert('the value was successfully sent to the server' + str);
                 window.location.href = data.redirectToUrl;
             });
+       }
+    } 
+    </script>
 
-        }
-        }     </script>
 </asp:Content>

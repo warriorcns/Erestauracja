@@ -10,6 +10,7 @@ using System.Web.Security;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
 using Erestauracja.Helpers;
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
@@ -18,18 +19,56 @@ namespace Erestauracja.Controllers
     {
         public ActionResult Index()
         {
+            List<RestaurantTop> value = null;
+            Statistics stats = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = new List<RestaurantTop>(client.GetTopRestaurant());
+                    stats = client.GetStatistics();
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = null;
+                stats = null;
+            }
 
-            ViewBag.Message = "Witaj na stronie głównej!";
-    
-            var Miasta = new SelectList(new []{
-                                              new {ID="1",Name="Tczew"},
-                                              new{ID="2",Name="Gdansk"},
-                                              new{ID="3",Name="Gdynia"},
-                                              new{ID="4",Name="Sopot"},
-                                          },
-                            "ID","Name",1);
-            ViewData["Miasta"]=Miasta;
+            if (value == null)
+            {
+                ModelState.AddModelError("", "Pobieranie restauracji nie powiodło się.");
+                ViewData["top"] = new List<RestaurantTop>();
+            }
+            else
+            {
+                ViewData["top"] = value;
+            }
+
+            if (stats == null)
+            {
+                ModelState.AddModelError("", "Pobieranie statystyk nie powiodło się.");
+                ViewData["stat"] = new Statistics();
+            }
+            else
+            {
+                ViewData["stat"] = stats;
+            }
+
+            #region śmieci
+            //    ViewBag.Message = "Witaj na stronie głównej!";
+            //var Miasta = new SelectList(new []{
+            //                                  new {ID="1",Name="Tczew"},
+            //                                  new{ID="2",Name="Gdansk"},
+            //                                  new{ID="3",Name="Gdynia"},
+            //                                  new{ID="4",Name="Sopot"},
+            //                              },
+            //                "ID","Name",1);
+            //ViewData["Miasta"]=Miasta;
             //IEnumerable<SelectListItem> selectList = null;
+            #endregion
             var selectList = new SelectList(new[]{
                                               new {ID=String.Empty,Name=String.Empty},
                                           },
@@ -40,7 +79,6 @@ namespace Erestauracja.Controllers
                 Text = String.Empty,
                 Value = String.Empty
             });
-            //ViewData["rest"] = selectList;
             ViewData["rest"] = items;
             return View();
         }
