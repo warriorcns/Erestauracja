@@ -73,6 +73,13 @@
                         <img id="logo" alt="Strona główna">
                     </a><span class="copyright" dir="ltr">© 2012 Erestauracja</span> <span id="footer-divider">
                     </span>
+                    <div class="licznik"> <script
+                type="text/javascript" src="http://gostats.pl/js/counter.js"></script> <script type="text/javascript">
+                                                                                           _gos = 'c3.gostats.pl'; _goa = 366701; _got = 2; _goi = 58; _gol = 'licznik blog';
+                                                                                           _GoStatsRun();</script> <noscript> <a target="_blank" title="licznik blog" href="http://gostats.pl">
+                <img alt="licznik blog" src="http://c3.gostats.pl/bin/count/a_366701/t_2/i_58/counter.png"
+                style="border-width: 0" /></a></noscript> <br /> <%--End GoStats JavaScript Based Code--%>
+                </div>
                 </div>
                 <div id="footer-main">
                     <ul id="footer-links-primary">
