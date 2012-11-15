@@ -2,8 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script src="../../Scripts/jquery.tools.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -27,14 +26,7 @@
       <!-- first element. contains three rows -->
       <div>
  
-        <!-- first row -->
-        <div class="item">
- 
-          <!-- image -->
-          <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" />
-        </div>
- 
-        <!-- 2:nd and 3:rd rows -->
+        <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
  
@@ -42,27 +34,17 @@
  
       <!-- second element with another three rows (and so on) -->
       <div>
-        <div class="item">
- 
-          <!-- image -->
-          <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" />
-        </div>
- 
-        <!-- 2:nd and 3:rd rows -->
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
+        <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
+ 
       </div>
 
       <div>
-        <div class="item">
- 
-          <!-- image -->
-          <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" />
-        </div>
- 
-        <!-- 2:nd and 3:rd rows -->
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
         <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
+        <div class="item"> <img src="http://pierre.chachatelier.fr/programmation/images/mozodojo-original-image.jpg" /> </div>
+ 
       </div>
  
     </div>

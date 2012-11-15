@@ -28,8 +28,8 @@
                                 20.03.2011</a>
                 </h3>
                 <div>
-                    <p>
-                        INFO O ZAMOWIENIU</p>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
                 </div>
 
                 <h3 class="orders-header-main">

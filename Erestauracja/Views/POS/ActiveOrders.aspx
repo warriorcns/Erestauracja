@@ -9,60 +9,191 @@
             $(".order-container").accordion({
                 collapsible: true,
                 active: false,
-                autoHeight: false,
+                autoHeight: true,
                 event: "click"
             });
         });
     </script>
+
 
     <div class="main">
         <div class="buttons-container">
             <div>
                 <%: Html.ActionLink("Pokaż zamawiane produkty", "ActiveOrders", "POS", new{ @class="button wood"})%></div>
         </div>
-
-        <div class="orders-container">
+        
+            <div class="orders-container" id="orders">
             <span class="orders-header orders-header-phone">Telefon</span> <span class="orders-header orders-header-name">
                 Nazwisko</span> <span class="orders-header orders-header-adress">Adres</span>
             <span class="orders-header orders-header-status">Status zamówienia</span>
             <%--accordion--%>
             <div class="order-container">
                 <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name">
-                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona
-                            222 - dane statyczne 1231231 231231 2312312 3123123</a> <a class="order orders-header-status">
-                                Aktywne 1231231 23123 12312312 3123123</a>
+                    <a class="order orders-header-phone">1231231231</a> <a class="order orders-header-name">
+                        Kowalski Jan</a> <a class="order orders-header-adress">ul. Zielona 222/B </a> <a class="order orders-header-status">
+                                Aktywne</a>
                 </h3>
                 <div>
-                    <p>
-                        INFO O ZAMOWIENIU</p>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="order-list">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="print-order">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                 </div>
+
+                 
+                <h3 class="orders-header-main">
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
+                </h3>
+                <div>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul1">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div1">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
+                </div>
+
 
                 <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name">
-                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona
-                            222 - dane statyczne 1231231 231231 2312312 3123123</a> <a class="order orders-header-status">
-                                Aktywne 1231231 23123 12312312 3123123</a>
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
                 </h3>
                 <div>
-                    <p>
-                        INFO O ZAMOWIENIU</p>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul2">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div2">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                 </div>
+
 
                 <h3 class="orders-header-main">
-                    <a class="order orders-header-phone">123123 123123 1231231 23123123</a> <a class="order orders-header-name">
-                        kowalski 1231231 23123123 123123 123123</a> <a class="order orders-header-adress">zielona
-                            222 - dane statyczne 1231231 231231 2312312 3123123</a> <a class="order orders-header-status">
-                                Aktywne 1231231 23123 12312312 3123123</a>
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
                 </h3>
                 <div>
-                    <p>
-                        INFO O ZAMOWIENIU</p>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul3">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div3">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                 </div>
 
+
+                <h3 class="orders-header-main">
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
+                </h3>
+                <div>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul4">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div4">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
+                </div>
+
+
+                <h3 class="orders-header-main">
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
+                </h3>
+                <div>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul5">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div5">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
+                </div>
+
+
+                <h3 class="orders-header-main">
+                    <a class="order orders-header-phone">56546456</a> <a class="order orders-header-name">
+                        Nowak Anna</a> <a class="order orders-header-adress">ul. Morska 23 </a> <a class="order orders-header-status">
+                                W realizacji</a>
+                </h3>
+                <div>
+                    <p style="border-top: 2px black solid;">
+                        Informacje o zamówieniu</p>
+                        <div>Lista zamówionych produktów:</div>
+                        <ul id="Ul6">
+                            
+                            <li>1.Pizza Margerita (1 szt.) - 20zl</li>
+                            <li>2. Kebab z frytkami (2 szt.) - 20zl</li>
+                            
+                        </ul>
+                        <div>Podsumowanie: (3 szt.) - 30zl</div>
+                        <div id="Div6">
+                            <button>Drukuj rachunek.</button>
+                        </div>
+                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
+                </div>
+
+
+               
             </div>
 
         </div>
+        
     </div>
 
     <div>

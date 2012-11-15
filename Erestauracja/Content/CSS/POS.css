@@ -155,7 +155,7 @@ a
     height: 100%;
     left: 20px;
     border-bottom: 20px black solid;
-        
+    overflow: auto;    
  }
 
 .order-container
