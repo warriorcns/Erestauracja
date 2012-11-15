@@ -61,7 +61,13 @@ namespace Contract
         ValidateUser ValidateUser(string login);
 
         [OperationContract]
+        ValidateUser ValidateEmployee(string login, string rest);
+
+        [OperationContract]
         bool UpdateUserLoginDate(string login);
+
+        [OperationContract]
+        bool UpdateEmployeeLoginDate(string login, string rest);
 
         [OperationContract]
         bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts);

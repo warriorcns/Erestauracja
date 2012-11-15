@@ -20,17 +20,13 @@
     <script src="../../Scripts/jquery.mousewheel.js" type="text/javascript"></script>
 
 
-
 <!-- initialize keyboard (required) -->
     <script type="text/javascript">
         $(function () {
-            $('#keyboard').keyboard();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#keyboard').keyboard({ layout: 'qwerty' });
+            $('#keyboard').keyboard({
+            layout: 'international',
+            autoAccept: 'true'
+            });
         });
     </script>
     
@@ -52,13 +48,9 @@
                     <%: Html.LabelFor(m => m.Password) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.Password) %>
+                    <%: Html.PasswordFor(m => m.Password, new { id = "keyboard" })%>
                     <%: Html.ValidationMessageFor(m => m.Password) %>
                 </div>
-                <%--<%: Html.DropDownListFor(m=>m.Login, ViewData["logins"] as /IEnum /erable<>) %>--%>
-                <%--:Html.PasswordFor(m => m.Password)--%>
-    
-                <%: Html.TextBoxFor(m => m.Password, new { id = "keyboard" })%>
 
                 <input type="submit" value="Zaloguj"/>
     </div>

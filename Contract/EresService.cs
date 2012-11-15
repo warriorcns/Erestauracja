@@ -234,12 +234,40 @@ namespace Contract
             }
         }
 
+        public ValidateUser ValidateEmployee(string login, string rest)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || String.IsNullOrWhiteSpace(rest)))
+            {
+                Database db = new Database();
+                ValidateUser value = db.ValidateEmployee(login, rest);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool UpdateUserLoginDate(string login)
         {
             if (!(String.IsNullOrEmpty(login)))
             {
                 Database db = new Database();
                 bool value = db.UpdateUserLoginDate(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateEmployeeLoginDate(string login, string rest)
+        {
+            if (!(String.IsNullOrEmpty(login) || String.IsNullOrEmpty(rest)))
+            {
+                Database db = new Database();
+                bool value = db.UpdateEmployeeLoginDate(login, rest);
                 return value;
             }
             else

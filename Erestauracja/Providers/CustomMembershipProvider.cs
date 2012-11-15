@@ -1512,6 +1512,94 @@ namespace Erestauracja.Providers
         }
 
         /// <summary>
+        /// Sprawdza czy dany pracownik posiada konto.
+        /// </summary>
+        /// <param name="login">Login pracownika</param>
+        /// <param name="password">Hasło pracownika</param>
+        /// /// <param name="rest">Login restauracji</param>
+        /// <returns>True - jeśli pracownik posiada konto.</returns>
+        public bool ValidateEmployee(string login, string password, string rest)
+        {
+            bool isValid = false;
+
+            ValidateUser value = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.ValidateEmployee(login, rest);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "ValidateEmployee");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+
+            if (value == null) return false;
+            else
+            {
+                if (CheckPassword(password, value.Password))
+                {
+                    if (value.IsApproved)
+                    {
+                        isValid = true;
+
+                        bool update = false;
+                        try
+                        {
+                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                            using (client)
+                            {
+                                update = client.UpdateEmployeeLoginDate(login, rest);
+                            }
+                            client.Close();
+                        }
+                        catch (Exception e)
+                        {
+                            if (WriteExceptionsToEventLog)
+                            {
+                                WriteToEventLog(e, "UpdateEmployeeLoginDate");
+                                throw new ProviderException(exceptionMessage);
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
+                        if (update == false)
+                        {
+                            if (WriteExceptionsToEventLog)
+                            {
+                                WriteToEventLog(new Exception("Aktualizacja daty logowania nie powiodła się!"), "UpdateEmployeeLoginDate");
+                                throw new ProviderException(exceptionMessage);
+                            }
+                            else
+                            {
+                                throw new ProviderException(exceptionMessage);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    UpdateFailureCount(login, "password");
+                }
+            }
+
+            return isValid;
+        }
+
+        /// <summary>
         /// Nie używać ze względu na niepowtarzalność loginów!
         /// </summary>
         /// <param name="loginToMatch"></param>

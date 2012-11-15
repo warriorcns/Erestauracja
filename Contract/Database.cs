@@ -852,6 +852,33 @@ namespace Contract
             return value;
         }
 
+        public ValidateUser ValidateEmployee(string login, string rest)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.ValidateEmployee);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+            command.Parameters.AddWithValue("@rest", rest);
+
+            ValidateUser value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "ValidateEmployee");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new ValidateUser();
+                value.Password = null;
+                value.IsApproved = false;
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["password"] != DBNull.Value) value.Password = row["password"].ToString();
+                    if (row["isApproved"] != DBNull.Value) value.IsApproved = Convert.ToBoolean(row["isApproved"]);
+                }
+            }
+            return value;
+        }
+
         public bool UpdateUserLoginDate(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.UpdateUserLoginDate);
@@ -861,6 +888,29 @@ namespace Contract
             int rowsaffected = ExecuteNonQuery(command, "UpdateUserLoginDate");
 
             if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateEmployeeLoginDate(string login, string rest)
+        {
+            DateTime czas = DateTime.Now;
+
+            MySqlCommand command = new MySqlCommand(Queries.UpdateUserLoginDate);
+            command.Parameters.AddWithValue("@lastLoginDate", czas);
+            command.Parameters.AddWithValue("@login", login);
+
+            MySqlCommand command2 = new MySqlCommand(Queries.UpdateEmployeeLoginDate);
+            command2.Parameters.AddWithValue("@lastLoginDate", czas);
+            command2.Parameters.AddWithValue("@login", login);
+            command2.Parameters.AddWithValue("@rest", rest);
+
+            int rowsaffected = ExecuteNonQuery(command, "UpdateUserLoginDate");
+            int rowsaffected2 = ExecuteNonQuery(command2, "UpdateEmployeeLoginDate");
+
+            if (rowsaffected > 0 && rowsaffected2 > 0)
             {
                 return true;
             }

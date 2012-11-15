@@ -371,4 +371,10 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetEmployeesInRestaurant" xml:space="preserve">
     <value>SELECT u.`login` FROM `employees_in_restaurants` e JOIN `users` u ON e.`userId` = u.`id` JOIN `restaurants` r ON e.`restaurantId` = r.`id` WHERE u.`isLockedOut` = @isLockedOut AND r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` =@login)</value>
   </data>
+  <data name="UpdateEmployeeLoginDate" xml:space="preserve">
+    <value>INSERT INTO `employees_login`(`employeeId`, `restaurantId`, `date`) VALUES ((SELECT u.`id` FROM `users` u WHERE u.`login` = @login), (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT s.`id` FROM `users` s WHERE s.`login` = @rest)),@lastLoginDate)</value>
+  </data>
+  <data name="ValidateEmployee" xml:space="preserve">
+    <value>SELECT u.`password`, u.`isApproved` FROM `employees_in_restaurants` e JOIN `users` u ON e.`userId` = u.`id` JOIN `restaurants` r ON e.`restaurantId` = r.`id` WHERE u.`login` = @login AND u.`isLockedOut` = @isLockedOut AND r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @rest)</value>
+  </data>
 </root>

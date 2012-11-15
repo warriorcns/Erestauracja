@@ -7,6 +7,7 @@ using Erestauracja;
 using System.Web.Security;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
+using Erestauracja.Providers;
 
 namespace Erestauracja.Controllers
 {
@@ -103,7 +104,6 @@ namespace Erestauracja.Controllers
         public ActionResult Locked()
         {
             //pobieram pracowników
-            //pobranie listy państw
             try
             {
                 List<SelectListItem> pracownicy = new List<SelectListItem>();
@@ -135,6 +135,68 @@ namespace Erestauracja.Controllers
                 ModelState.AddModelError("", "Pobranie listy loginów nie powiodło się.");
             }
             return View();
+        }
+
+        //
+        // POST: /POS/Locked
+        [HttpPost]
+        public ActionResult Locked(LogOnModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                if (customMemebership.ValidateEmployee(model.Login, model.Password, User.Identity.Name))
+                {
+                   // CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                    //if (role.IsUserInRole(model.Login, "Menadżer"))
+                    //{
+                    //    return RedirectToAction("Index", "POS");
+                    //}
+                    //else 
+                 //   if (role.IsUserInRole(model.Login, "Pracownik"))
+                 //   {
+                        return RedirectToAction("Index", "POS");
+                 //   }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            //pobieramy pracowników
+            try
+            {
+                List<SelectListItem> pracownicy = new List<SelectListItem>();
+                List<string> listaLoginow = null;
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    listaLoginow = new List<string>(client.GetEmployeesInRestaurant(User.Identity.Name));
+                }
+                client.Close();
+
+                if (listaLoginow == null)
+                {
+                    ViewData["logins"] = new List<SelectListItem>();
+                    ModelState.AddModelError("", "Pobranie listy loginów nie powiodło się.");
+                }
+                else
+                {
+                    foreach (string item in listaLoginow)
+                    {
+                        pracownicy.Add(new SelectListItem { Text = item, Value = item });
+                    }
+                    ViewData["logins"] = pracownicy;
+                }
+            }
+            catch (Exception e)
+            {
+                ViewData["logins"] = new List<SelectListItem>();
+                ModelState.AddModelError("", "Pobranie listy loginów nie powiodło się.");
+            }
+            return View(model);
         }
 
         public ActionResult scrollexample()
