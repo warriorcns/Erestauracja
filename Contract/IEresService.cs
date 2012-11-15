@@ -213,6 +213,9 @@ namespace Contract
         [OperationContract]
         Statistics GetStatistics();
 
+        [OperationContract]
+        List<string> GetEmployeesInRestaurant(string login);
+
         #endregion
     }
 
@@ -1446,6 +1449,5 @@ namespace Contract
             set { activeRestaurants = value; }
         }
     }
-
 
 }

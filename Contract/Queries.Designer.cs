@@ -412,6 +412,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT u.`login` FROM `employees_in_restaurants` e JOIN `users` u ON e.`userId` = u.`id` JOIN `restaurants` r ON e.`restaurantId` = r.`id` WHERE u.`isLockedOut` = @isLockedOut AND r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` =@login).
+        /// </summary>
+        internal static string GetEmployeesInRestaurant {
+            get {
+                return ResourceManager.GetString("GetEmployeesInRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `events` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
         /// </summary>
         internal static string GetEventsPage {
@@ -538,7 +547,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName AND x.`isEnabled` = @isEnabled.
         /// </summary>
         internal static string GetRestaurantByTown {
             get {

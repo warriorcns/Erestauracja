@@ -4109,6 +4109,7 @@ namespace Contract
             {
                 MySqlCommand command = new MySqlCommand(Queries.GetRestaurantByTown);
                 command.Parameters.AddWithValue("@townName", townName+"%");
+                command.Parameters.AddWithValue("@isEnabled", true);
                 command.Connection = conn;
                 rest = new List<RestaurantInTown>();
                 conn.Open();
@@ -4730,6 +4731,34 @@ namespace Contract
                     if (row["osoby"] != DBNull.Value) value.UsersCount = Convert.ToInt32(row["osoby"]);
                     if (row["klienciAkt"] != DBNull.Value) value.ActiveUsers = Convert.ToInt32(row["klienciAkt"]);
                     if (row["restauAkt"] != DBNull.Value) value.ActiveRestaurants = Convert.ToInt32(row["restauAkt"]);
+                }
+            }
+            return value;
+        }
+
+        public List<string> GetEmployeesInRestaurant(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetEmployeesInRestaurant);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+
+            List<string> value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetEmployeesInRestaurant");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new List<string>();
+                
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    String log = String.Empty;
+                    if (row["login"] != DBNull.Value)
+                    {
+                        log = row["login"].ToString();
+                        value.Add(log);
+                    }
                 }
             }
             return value;

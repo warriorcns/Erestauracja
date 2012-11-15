@@ -885,6 +885,20 @@ namespace Contract
             return value;
         }
 
+        public List<string> GetEmployeesInRestaurant(string login)
+        {
+            if (!(String.IsNullOrEmpty(login)))
+            {
+                Database db = new Database();
+                List<string> value = db.GetEmployeesInRestaurant(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

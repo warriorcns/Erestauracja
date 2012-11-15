@@ -321,7 +321,7 @@ namespace Erestauracja.Controllers
                     else if (role.IsUserInRole(model.Login, "Restauracja"))
                     {
                         FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
-                        return RedirectToAction("Index", "POS");
+                        return RedirectToAction("Locked", "POS");
                     }
                     else if (role.IsUserInRole(model.Login, "Pracownik"))
                     {
