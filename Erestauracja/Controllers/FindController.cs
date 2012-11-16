@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Erestauracja.Controllers
 {
-    //[Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+    
     public class FindController : Controller
     {
         //

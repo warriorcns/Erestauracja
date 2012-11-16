@@ -16,7 +16,7 @@ using Jmelosegui.Mvc.Controls;
 
 namespace Erestauracja.Controllers
 {
-    //[Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+    
     public class CitiesAndRestaurantsController : Controller
     {
         //

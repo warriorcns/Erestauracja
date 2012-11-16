@@ -15,7 +15,7 @@ using Erestauracja.Providers;
 
 namespace Erestauracja.Controllers
 {
-    //[CustomAuthorizeAttribute(Roles = "Admin")]
+    
     public class HomeController : Controller
     {
         public ActionResult Index()

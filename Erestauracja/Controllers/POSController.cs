@@ -102,6 +102,7 @@ namespace Erestauracja.Controllers
         /// Panel logowania dla pracownikow.
         /// </summary>
         /// <returns>Nowy widok</returns>
+        [CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked()
         {
             //pobieram pracowników

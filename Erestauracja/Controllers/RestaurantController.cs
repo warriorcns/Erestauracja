@@ -12,8 +12,6 @@ using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
-    //[Authorize(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
-    //[AllowAnonymous] - zastosowac ten atrybut
     public class RestaurantController : Controller
     {
         //public int Restaurantid ; 

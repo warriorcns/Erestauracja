@@ -19,8 +19,7 @@
     <script src="../../Scripts/jquery.keyboard.extension-typing.js" type="text/javascript"></script> 
     <script src="../../Scripts/jquery.mousewheel.js" type="text/javascript"></script>
 
-
-<!-- initialize keyboard (required) -->
+    <!-- initialize keyboard (required) -->
     <script type="text/javascript">
         $(function () {
             $('#keyboard').keyboard({
