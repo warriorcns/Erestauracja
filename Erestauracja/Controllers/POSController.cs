@@ -102,7 +102,7 @@ namespace Erestauracja.Controllers
         /// Panel logowania dla pracownikow.
         /// </summary>
         /// <returns>Nowy widok</returns>
-        [CustomAuthorizeAttribute(Roles = "Restauracja")]
+        //[CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked()
         {
             //pobieram pracowników
@@ -142,6 +142,7 @@ namespace Erestauracja.Controllers
         //
         // POST: /POS/Locked
         [HttpPost]
+        //[CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked(LogOnModel model)
         {
             if (ModelState.IsValid)
