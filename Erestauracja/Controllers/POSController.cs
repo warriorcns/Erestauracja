@@ -19,7 +19,7 @@ namespace Erestauracja.Controllers
         /// Glowny page z buttonami
         /// </summary>
         /// <returns></returns>
-        //[CustomAuthorizeAttribute(Roles = "Pracownik")]
+        [CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult Index()
         {
             ViewData["loggg"] = User.Identity.Name;
@@ -156,7 +156,7 @@ namespace Erestauracja.Controllers
                     //else 
                  //   if (role.IsUserInRole(model.Login, "Pracownik"))
                  //   {
-                        FormsAuthentication.SetAuthCookie(User.Identity.Name+"|"+model.Login, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(User.Identity.Name + "|" + model.Login, true);//model.RememberMe);
                         return RedirectToAction("Index", "POS");
                  //   }
                 }

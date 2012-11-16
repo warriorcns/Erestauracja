@@ -122,6 +122,10 @@ namespace Erestauracja.Providers
                 {
                     throw new ArgumentException("User names cannot contain commas.");
                 }
+                if (login.Contains("|"))
+                {
+                    throw new ArgumentException("User names cannot contain this |.");
+                }
                 foreach (string rolename in rolenames)
                 {
                     if (IsUserInRole(login, rolename))
@@ -338,6 +342,11 @@ namespace Erestauracja.Providers
         {
             string tmpRoleNames = "";
 
+            if (login.Contains("|"))
+            {
+                string[] logs = login.Split('|');
+                login = logs[1];
+            }
             try
             {
                 ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
