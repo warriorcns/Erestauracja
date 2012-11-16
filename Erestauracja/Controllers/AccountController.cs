@@ -512,6 +512,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/ChangePassword
         [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult ChangePassword()
         {
             return View();
@@ -519,8 +520,9 @@ namespace Erestauracja.Controllers
 
         //
         // POST: /Account/ChangePassword
-        [Authorize]
+        
         [HttpPost]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
@@ -558,6 +560,7 @@ namespace Erestauracja.Controllers
 
         //
         // GET: /Account/ChangePasswordSuccess
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult ChangePasswordSuccess()
         {
             return View();
