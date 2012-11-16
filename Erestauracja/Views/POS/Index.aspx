@@ -11,7 +11,11 @@
             <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS", new { @class = "button wood" })%></div>
         <div>
             <%: Html.ActionLink("Koniec", "End", "POS", new { @class = "button wood" })%></div>
+            
+            <div> login:  <%: ViewData["loggg"]%> </div>
     </div>
+
+    
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">

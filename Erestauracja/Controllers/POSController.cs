@@ -22,6 +22,7 @@ namespace Erestauracja.Controllers
         //[CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult Index()
         {
+            ViewData["loggg"] = User.Identity.Name;
             return View();
         }
 
@@ -155,6 +156,7 @@ namespace Erestauracja.Controllers
                     //else 
                  //   if (role.IsUserInRole(model.Login, "Pracownik"))
                  //   {
+                        FormsAuthentication.SetAuthCookie(User.Identity.Name+"|"+model.Login, model.RememberMe);
                         return RedirectToAction("Index", "POS");
                  //   }
                 }
@@ -196,6 +198,7 @@ namespace Erestauracja.Controllers
                 ViewData["logins"] = new List<SelectListItem>();
                 ModelState.AddModelError("", "Pobranie listy loginów nie powiodło się.");
             }
+
             return View(model);
         }
 
