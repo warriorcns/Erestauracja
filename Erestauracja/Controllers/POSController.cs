@@ -156,7 +156,7 @@ namespace Erestauracja.Controllers
                     //else 
                  //   if (role.IsUserInRole(model.Login, "Pracownik"))
                  //   {
-                    FormsAuthentication.SetAuthCookie(User.Identity.Name + "|" + model.Login, true);//model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(User.Identity.Name + "|" + model.Login, model.RememberMe);
                         return RedirectToAction("Index", "POS");
                  //   }
                 }
