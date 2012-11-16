@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<>" %>
 
 <!DOCTYPE html>
 

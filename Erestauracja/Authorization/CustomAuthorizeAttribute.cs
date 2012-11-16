@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Security;
 using System.Web.Routing;
 using Erestauracja.Helpers;
+using Erestauracja.Providers;
 
 namespace Erestauracja.Authorization
 {

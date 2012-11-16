@@ -11,6 +11,7 @@ using Erestauracja.Authorization;
 using Erestauracja.Models;
 using Erestauracja.Helpers;
 using Erestauracja.ServiceReference;
+using Erestauracja.Providers;
 
 namespace Erestauracja.Controllers
 {
@@ -82,10 +83,19 @@ namespace Erestauracja.Controllers
             ViewData["rest"] = items;
             return View();
         }
-  
+
         public ActionResult Unauthorized()
         {
-            return View();
+            CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+            if (role.IsUserInRole(User.Identity.Name, "Restauracja"))
+            {
+                //FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
+                return RedirectToAction("locked", "POS");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult SearchRestaurants(String value)
