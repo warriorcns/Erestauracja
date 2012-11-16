@@ -87,10 +87,35 @@ namespace Erestauracja.Controllers
         public ActionResult Unauthorized()
         {
             CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-            if (role.IsUserInRole(User.Identity.Name, "Restauracja"))
+            if (User.Identity.Name.Contains("|"))
             {
-                //FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
-                return RedirectToAction("locked", "POS");
+                string[] logs = User.Identity.Name.Split('|');
+                if (role.IsUserInRole(logs[0], "Restauracja") && role.IsUserInRole(logs[1], "Pracownik"))
+                {
+                    return RedirectToAction("Index", "POS");
+                }
+                else if (role.IsUserInRole(logs[0], "Restauracja") && !role.IsUserInRole(logs[1], "Pracownik"))
+                {
+                    return RedirectToAction("locked", "POS");
+                }
+                else if (!role.IsUserInRole(logs[0], "Restauracja"))
+                {
+                    FormsAuthentication.SignOut();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View(); 
+                }
+
+            }
+            else if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
+            {
+                return RedirectToAction("Index", "ManagePanel");
+            }
+            else if (role.IsUserInRole(User.Identity.Name, "Admin"))
+            {
+                return RedirectToAction("Index", "Admin");
             }
             else
             {
