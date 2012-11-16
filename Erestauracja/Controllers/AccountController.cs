@@ -25,7 +25,7 @@ namespace Erestauracja.Controllers
         // GET: /Account/Account
         //role ktore maja dostep do danego zasobu - inaczej przekierowuje na strone logowania - do zmiany.
         //[Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult Account()
         {
             System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
@@ -69,7 +69,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/EditData
         //[Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult EditData()
         {
             System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
@@ -144,7 +144,7 @@ namespace Erestauracja.Controllers
         // POST: /Account/EditData
         //[Authorize]
         [HttpPost]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult EditData(UserDataModel model)
         {
             System.Globalization.CultureInfo cultureinfo = new System.Globalization.CultureInfo("fr-FR");
@@ -262,7 +262,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/OrderHistory
         [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult OrderHistory()
         {
             if (Request.IsAuthenticated)
@@ -278,7 +278,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Account/Comments
         [Authorize]
-        [CustomAuthorizeAttribute(Roles = "Klient, Menadżer, PracownikFull, PracownikLow")]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult Comments()
         {
             if (Request.IsAuthenticated)
