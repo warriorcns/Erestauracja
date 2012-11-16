@@ -109,6 +109,10 @@ namespace Erestauracja.Controllers
                 }
 
             }
+            else if (role.IsUserInRole(User.Identity.Name, "Restauracja"))
+            {
+                return RedirectToAction("locked", "POS");
+            }
             else if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
             {
                 return RedirectToAction("Index", "ManagePanel");
