@@ -22,22 +22,8 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult Index()
         {
-            ViewData["loggg"] = User.Identity.Name;
             return View();
         }
-
-
-        //// GET: /POS/logon
-        ///// <summary>
-        ///// Drugie logowanie dla pracownika danej restauracji
-        ///// </summary>
-        ///// <returns></returns>
-        ////[CustomAuthorizeAttribute(Roles = "Restauracja")]
-        //public ActionResult Logon()
-        //{
-        //    //zaloguj i przekieruj
-        //    return RedirectToAction("Index");
-        //}
 
 
         //
@@ -91,9 +77,16 @@ namespace Erestauracja.Controllers
         /// Blokuje terminal.
         /// </summary>
         /// <returns>Redirecttoaction Locked</returns>
-        public void End() 
+        public ActionResult End() 
         {
+            string[] logs = null;
+            if (User.Identity.Name.Contains("|"))
+            {
+                logs = User.Identity.Name.Split('|');
+                FormsAuthentication.SetAuthCookie(logs[0], false);
+            }
 
+            return RedirectToAction("Locked");
         }
 
         //
@@ -102,9 +95,16 @@ namespace Erestauracja.Controllers
         /// Panel logowania dla pracownikow.
         /// </summary>
         /// <returns>Nowy widok</returns>
-        //[CustomAuthorizeAttribute(Roles = "Restauracja")]
+        [CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked()
         {
+            if (User.Identity.Name.Contains("|"))
+            {
+                string[] logs = null;
+                logs = User.Identity.Name.Split('|');
+                FormsAuthentication.SetAuthCookie(logs[0], false);
+                return RedirectToAction("Locked");
+            }
             //pobieram pracowników
             try
             {
@@ -113,7 +113,7 @@ namespace Erestauracja.Controllers
                 ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                 using (client)
                 {
-                    listaLoginow = new List<string>(client.GetEmployeesInRestaurant(User.Identity.Name));
+                        listaLoginow = new List<string>(client.GetEmployeesInRestaurant(User.Identity.Name));
                 }
                 client.Close();
 
@@ -142,25 +142,26 @@ namespace Erestauracja.Controllers
         //
         // POST: /POS/Locked
         [HttpPost]
-        //[CustomAuthorizeAttribute(Roles = "Restauracja")]
+        [CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked(LogOnModel model)
         {
+            //jak bedzie przeładowanie to ot nie bedzie potzrebne
+            string[] logs = null;
+            if (User.Identity.Name.Contains("|"))
+            {
+                logs = User.Identity.Name.Split('|');
+                FormsAuthentication.SetAuthCookie(logs[0], false);
+            }
             if (ModelState.IsValid)
             {
                 CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
                 if (customMemebership.ValidateEmployee(model.Login, model.Password, User.Identity.Name))
                 {
-                   // CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                    //if (role.IsUserInRole(model.Login, "Menadżer"))
-                    //{
-                    //    return RedirectToAction("Index", "POS");
-                    //}
-                    //else 
-                 //   if (role.IsUserInRole(model.Login, "Pracownik"))
-                 //   {
-                    FormsAuthentication.SetAuthCookie(User.Identity.Name + "|" + model.Login, model.RememberMe);
-                        return RedirectToAction("Index", "POS");
-                 //   }
+                    if(logs==null)
+                        FormsAuthentication.SetAuthCookie(User.Identity.Name + "|" + model.Login, model.RememberMe);
+                    else
+                        FormsAuthentication.SetAuthCookie(logs[0] + "|" + model.Login, model.RememberMe);   
+                    return RedirectToAction("Index", "POS");
                 }
                 else
                 {
