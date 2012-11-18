@@ -16,7 +16,7 @@
         $(function () {
             $(".accordion2").accordion({
                 active: false,
-                autoHeight: false,
+                autoHeight: true,
                 event: "click",
                 collapsible: true
             });
@@ -24,18 +24,50 @@
     </script>
 
     <script type="text/javascript">
-       $(function () {
-            $(".selector").spinner({
+        $(document).ready(function () {
+           $(".spinner").spinner({
                 min: 0,
                 max: 100,
-                icons: { down: "custom-down-icon", up: "custom-up-icon" },
                 disabled: false
             });
        });
 	</script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#tobasket")
+            .button()
+            .click(function (event) {
+                event.preventDefault();
+                //alert("klik");
+                //dodaj produkt do koszyka
+                //id restauracji, id kategorii, id produktu, wybrana opcja cenowa, 
+                //cena w decimal 0.00 , wybrane obie opcje nie wpływające na cene, ilość z selektor i komentarz 
 
-    <%--<input id="selector">--%>
+                var str1 = $("#ddl1").val();
+                var str2 = $("#ddl2").val();
+                var str3 = $("#ddl3").val();
+                //alert(str);
 
+                var url = '<%: Url.Action("ToBasket", "Restaurant") %>';
+                var data = { id: str };
+
+                if (str.length != 0) {
+                    $.post(url, data, function (data) {
+                        // TODO: do something with the response from the controller action
+                        //alert('the value was successfully sent to the server' + str);
+                        window.location.href = data.redirectToUrl;
+                    });
+                }
+
+            });
+        });
+    </script>
+    
+
+    
+    
+    
     <fieldset class="produkty-fieldset">
     <legend>Menu - kliknij <%: Html.ActionLink("tutaj", "EditMenuPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby edytować</legend>
     <div id="tabs-left">
@@ -101,7 +133,7 @@
                                         <% { %>
                                                 <% lista0.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList0", (IEnumerable<SelectListItem>)lista0 )%>
+                                        <%: Html.DropDownList("DropDownList0", (IEnumerable<SelectListItem>)lista0)%>
                                     </div>
                                     <% } %>
                                     <% if(menu.NonPriceOption != null) %>
@@ -112,7 +144,7 @@
                                         <% { %>
                                                 <% lista.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList", (IEnumerable<SelectListItem>)lista )%>
+                                        <%: Html.DropDownList("DropDownList", (IEnumerable<SelectListItem>)lista)%>
                                     </div>
                                     <% } %>
                                     <% if(menu.NonPriceOption2 != null) %>
@@ -123,17 +155,21 @@
                                         <% { %>
                                                 <% lista2.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2 )%>
+                                        <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2)%>
                                     </div>
                                     <% } %>
                                     <div>
                                         Ilość
-                                        <input class="selector">
+                                        <input class="spinner">
                                         <%--<span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
                                         <input class="spinner" class="ui-spinner-input" autocomplete="off" role="spinbutton"/>
                                             <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
                                             <a class="ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
                                         </span>--%>
+                                    </div>
+                                    <div>
+                                        <button id="tobasket">Do koszyka</button>
+                                        <input type="submit" value="dodaj"/>
                                     </div>
                             </div>
                     <% } %>
@@ -145,4 +181,10 @@
 
     </fieldset>
 
+</asp:Content>
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
+    
+    
 </asp:Content>

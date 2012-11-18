@@ -2,16 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
     
-    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js" type="text/javascript"></script>
-    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.js" type="text/javascript"></script>
-    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
-    <link href="../../Content/DataTables-1.9.4/media/css/demo_page.css" rel="stylesheet"
-        type="text/css" />
-    <link href="../../Content/DataTables-1.9.4/media/css/demo_table.css" rel="stylesheet"
-        type="text/css" />
-    <link href="../../Content/DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet"
-        type="text/css" />
+    
     <script type="text/javascript" charset="utf-8">
         /* Formating function for row details */
         function fnFormatDetails(oTable, nTr) {
@@ -19,7 +10,7 @@
             var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
             sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
             sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
-            sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+            sOut += '<tr><td><button>Drukuj</button></td></tr>';
             sOut += '</table>';
 
             return sOut;
@@ -136,5 +127,14 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
-    
+    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.js" type="text/javascript"></script>
+    <script src="../../Scripts/DataTables-1.9.4/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+    <link href="../../Content/DataTables-1.9.4/media/css/demo_page.css" rel="stylesheet"
+        type="text/css" />
+    <link href="../../Content/DataTables-1.9.4/media/css/demo_table.css" rel="stylesheet"
+        type="text/css" />
+    <link href="../../Content/DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet"
+        type="text/css" />
 </asp:Content>

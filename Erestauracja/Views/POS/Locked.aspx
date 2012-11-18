@@ -2,22 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <meta charset="utf-8"/>
-
-    <!-- jQuery & jQueryUI + theme -->
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-    <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
-    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
-    <link href="../../Content/style/keyboard.css" rel="stylesheet" type="text/css" />
-    <script src="../../Scripts/jquery.keyboard.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-autocomplete.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-mobile.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-navigation.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-typing.js" type="text/javascript"></script> 
-    <script src="../../Scripts/jquery.mousewheel.js" type="text/javascript"></script>
+    
 
     <!-- initialize keyboard (required) -->
     <script type="text/javascript">
@@ -28,14 +13,43 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var name = '<%:User.Identity.Name  %>';
+
+            //if ($("#user:contains('|')")) {
+            if (name.indexOf("|") >= 0){
+                //redirect to pos/locked
+                var url = '<%: Url.Action("locked", "POS") %>';
+                var data = { };
+
+                //alert("Zawiera |");
+                $.post(url, data, function (data) {
+                    // TODO: do something with the response from the controller action
+                    //alert('the value was successfully sent to the server' + str);
+                    //alert("Przekierowuje");
+                    //window.location.href = "/POS/locked";
+                });
+
+            }
+            else {
+                //nothing
+            }
+        });
+
+    </script>
+
     
     <% using (Html.BeginForm()) %>
     <% { %>
     <%: Html.ValidationSummary(true, "Logowanie nie powiodło się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
     <div class="locked-login">
 
+                <%: Html.Hidden(User.Identity.Name, null, new { id = "user" })%>
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Login) %>
+                   
                 </div>
                 <div class="editor-field">
                     <%--: Html.TextBoxFor(m => m.Login)--%>
@@ -58,4 +72,20 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
+    <meta charset="utf-8"/>
+
+    <!-- jQuery & jQueryUI + theme -->
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    <link href="../../Content/style/keyboard.css" rel="stylesheet" type="text/css" />
+    <script src="../../Scripts/jquery.keyboard.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-autocomplete.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-mobile.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-navigation.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-typing.js" type="text/javascript"></script> 
+    <script src="../../Scripts/jquery.mousewheel.js" type="text/javascript"></script>
 </asp:Content>
