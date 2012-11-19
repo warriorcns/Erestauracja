@@ -78,13 +78,15 @@
             var url = '<%: Url.Action("ToBasket", "Restaurant") %>';
             var data = { resid: resid, catid: catid, prodid: prodid, prodname: prodname, opcjacenowa: opcjacenowa, dodatki: dodatki, opcje: opcje, count: count, comm: comm };
 
-            
+            if (count.length != 0) {
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + str);
                     window.location.href = data.redirectToUrl;
                 });
-            
+            } else {
+                alert("Wybierz ilość.");
+            }
         }
     </script>
     
