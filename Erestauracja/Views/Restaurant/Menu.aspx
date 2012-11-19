@@ -34,40 +34,65 @@
 	</script>
     
     <script type="text/javascript">
-        $(function () {
-            $("#tobasket")
+        $(document).ready(function () {
+            $(".tobasket")
             .button()
             .click(function (event) {
                 event.preventDefault();
-                //alert("klik");
-                //dodaj produkt do koszyka
-                //id restauracji, id kategorii, id produktu, wybrana opcja cenowa, 
-                //cena w decimal 0.00 , wybrane obie opcje nie wpływające na cene, ilość z selektor i komentarz 
-
-                var str1 = $("#ddl1").val();
-                var str2 = $("#ddl2").val();
-                var str3 = $("#ddl3").val();
-                //alert(str);
-
-                var url = '<%: Url.Action("ToBasket", "Restaurant") %>';
-                var data = { id: str };
-
-                if (str.length != 0) {
-                    $.post(url, data, function (data) {
-                        // TODO: do something with the response from the controller action
-                        //alert('the value was successfully sent to the server' + str);
-                        window.location.href = data.redirectToUrl;
-                    });
-                }
-
             });
         });
+            
+        
+    </script>
+
+    <script type="text/javascript">
+
+        function go(resid, catid, prodid, prodname) {
+
+            //dodaj produkt do koszyka
+            //id restauracji, id kategorii, id produktu, wybrana opcja cenowa, 
+            //cena w decimal 0.00 , wybrane obie opcje nie wpływające na cene, ilość z selektor i komentarz 
+
+            //alert("go()" + resid + catid + prodid);
+
+            //1 DDL - wybrana opcja cenowa
+            //alert($("#Cena" + prodid).val());
+            var opcjacenowa = $("#Cena" + prodid).val();
+
+            //2 DDL
+            //alert($("#Dod" + prodid).val());
+            var dodatki = $("#Dod" + prodid).val();
+
+            //3 DDL
+            //alert($("#Opcja" + prodid).val());
+            var opcje = $("#Opcja" + prodid).val();
+
+            //selector
+            //alert($("#selector" + prodid).val());
+            var count = $("#selector" + prodid).val();
+
+            //textarea - komentarz
+            //alert($("#textarea" + prodid).val());
+            var comm = $("#textarea" + prodid).val();
+            
+            var url = '<%: Url.Action("ToBasket", "Restaurant") %>';
+            var data = { resid: resid, catid: catid, prodid: prodid, prodname: prodname, opcjacenowa: opcjacenowa, dodatki: dodatki, opcje: opcje, count: count, comm: comm };
+
+            
+                $.post(url, data, function (data) {
+                    // TODO: do something with the response from the controller action
+                    //alert('the value was successfully sent to the server' + str);
+                    window.location.href = data.redirectToUrl;
+                });
+            
+        }
     </script>
     
 
     
     
-    
+    <% using (Html.BeginForm()) %>
+        <% { %>
     <fieldset class="produkty-fieldset">
     <legend>Menu - kliknij <%: Html.ActionLink("tutaj", "EditMenuPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby edytować</legend>
     <div id="tabs-left">
@@ -89,7 +114,7 @@
                     <% { %>
                         <h3><a href="#"><%: product.ProductName %> </a></h3>
                             <div>
-                                    <p>Opis: <%: product.ProductDescription %></p>
+                                    <p>Opis: <%: product.ProductDescription  %></p>
                                     </br>
                                     <p>Cena:</p>
                                     <% if(product.Price != null) %>
@@ -133,7 +158,7 @@
                                         <% { %>
                                                 <% lista0.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList0", (IEnumerable<SelectListItem>)lista0)%>
+                                        <%: Html.DropDownList("DropDownList0", (IEnumerable<SelectListItem>)lista0, new { id = "Cena" + product.ProductId })%>
                                     </div>
                                     <% } %>
                                     <% if(menu.NonPriceOption != null) %>
@@ -144,7 +169,7 @@
                                         <% { %>
                                                 <% lista.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList", (IEnumerable<SelectListItem>)lista)%>
+                                        <%: Html.DropDownList("DropDownList", (IEnumerable<SelectListItem>)lista, new { id = "Dod" + product.ProductId })%>
                                     </div>
                                     <% } %>
                                     <% if(menu.NonPriceOption2 != null) %>
@@ -155,12 +180,12 @@
                                         <% { %>
                                                 <% lista2.Add(new SelectListItem{Text = item, Value = item}); %>
                                         <% } %>
-                                        <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2)%>
+                                        <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2, new { id = "Opcja" + product.ProductId })%>
                                     </div>
                                     <% } %>
                                     <div>
                                         Ilość
-                                        <input class="spinner">
+                                        <input class="spinner" id="selector<%:product.ProductId %>">
                                         <%--<span class="ui-spinner ui-widget ui-widget-content ui-corner-all">
                                         <input class="spinner" class="ui-spinner-input" autocomplete="off" role="spinbutton"/>
                                             <a class="ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only" tabindex="-1" role="button" aria-disabled="false">
@@ -168,8 +193,14 @@
                                         </span>--%>
                                     </div>
                                     <div>
-                                        <button id="tobasket">Do koszyka</button>
-                                        <input type="submit" value="dodaj"/>
+                                        Komentarz do produktu:
+                                    </div>
+                                    <div>
+                                        <textarea id="textarea<%: product.ProductId %>"></textarea>
+                                    </div>
+                                    <div>
+                                        <button class="tobasket" onclick="go('<%: Model.RestaurantID %>','<%: menu.CategoryID %>','<%: product.ProductId %>','<%: product.ProductName %>')">Do koszyka</button>
+                                        
                                     </div>
                             </div>
                     <% } %>
@@ -180,7 +211,7 @@
     </div>
 
     </fieldset>
-
+    <% }%>
 </asp:Content>
 
 

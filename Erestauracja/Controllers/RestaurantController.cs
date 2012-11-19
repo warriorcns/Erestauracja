@@ -166,43 +166,11 @@ namespace Erestauracja.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Menu(ClientMenuModel model, int id)
+        //wychwytuje dane z guzika - do koszyka
+        public ActionResult ToBasket(string resid, string catid, string prodid, string prodname, string opcjacenowa, string dodatki, string opcje, string count, string comm)
         {
-            if (id > 0)
-            {
-                ViewData["id"] = id;
 
-                List<Menu> value2 = null;
-                try
-                {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
-                    {
-                        value2 = new List<Menu>(client.GetMenu(id));
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    value2 = null;
-                }
-
-                if (value2 == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
-                }
-                else
-                {
-                    //ClientMenuModel model = new ClientMenuModel();
-                    model.RestaurantID = id;
-                    model.Menu = value2;
-
-                    return View(model);
-                }
-            }
-            return RedirectToAction("Restaurant");
-            return View(); 
+            return Json(new { redirectToUrl = Url.Action("Menu", "Restaurant", new { id = int.Parse(resid) }) });
         }
 
         public ActionResult Delivery(int id)
