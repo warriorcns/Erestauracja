@@ -165,14 +165,6 @@ namespace Erestauracja.Controllers
             //return View();
         }
 
-
-        //wychwytuje dane z guzika - do koszyka
-        public ActionResult ToBasket(string resid, string catid, string prodid, string prodname, string opcjacenowa, string dodatki, string opcje, string count, string comm)
-        {
-
-            return Json(new { redirectToUrl = Url.Action("Menu", "Restaurant", new { id = int.Parse(resid) }) });
-        }
-
         public ActionResult Delivery(int id)
         {
             ViewData["id"] = id;

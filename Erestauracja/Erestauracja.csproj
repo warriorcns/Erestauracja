@@ -300,6 +300,7 @@
     <Compile Include="Helpers\AllowAnonymous.cs" />
     <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BasketModel.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />

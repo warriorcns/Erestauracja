@@ -26,13 +26,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
            $(".spinner").spinner({
-                min: 0,
+                min: 1,
                 max: 100,
                 disabled: false
             });
        });
 	</script>
-    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".spinner").val('1');
+        });
+   </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $(".tobasket")
@@ -47,7 +53,7 @@
 
     <script type="text/javascript">
 
-        function go(resid, catid, prodid, prodname) {
+        function go(resid, catid, prodid) {
 
             //dodaj produkt do koszyka
             //id restauracji, id kategorii, id produktu, wybrana opcja cenowa, 
@@ -75,8 +81,8 @@
             //alert($("#textarea" + prodid).val());
             var comm = $("#textarea" + prodid).val();
             
-            var url = '<%: Url.Action("ToBasket", "Restaurant") %>';
-            var data = { resid: resid, catid: catid, prodid: prodid, prodname: prodname, opcjacenowa: opcjacenowa, dodatki: dodatki, opcje: opcje, count: count, comm: comm };
+            var url = '<%: Url.Action("ToBasket", "Basket") %>';
+            var data = { resid: resid, catid: catid, prodid: prodid, opcjacenowa: opcjacenowa, dodatki: dodatki, opcje: opcje, count: count, comm: comm };
 
             if (count.length != 0) {
                 $.post(url, data, function (data) {
@@ -201,7 +207,7 @@
                                         <textarea id="textarea<%: product.ProductId %>"></textarea>
                                     </div>
                                     <div>
-                                        <button class="tobasket" onclick="go('<%: Model.RestaurantID %>','<%: menu.CategoryID %>','<%: product.ProductId %>','<%: product.ProductName %>')">Do koszyka</button>
+                                        <button class="tobasket" onclick="go('<%: Model.RestaurantID %>','<%: menu.CategoryID %>','<%: product.ProductId %>')">Do koszyka</button>
                                         
                                     </div>
                             </div>
