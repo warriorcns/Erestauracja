@@ -127,7 +127,7 @@
     <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled)</value>
   </data>
   <data name="AddRestaurant" xml:space="preserve">
-    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @longitude)</value>
+    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @longitude, @price)</value>
   </data>
   <data name="AddUsersToRoles" xml:space="preserve">
     <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
@@ -184,7 +184,7 @@
     <value>UPDATE `products` SET `categoryId` = @categoryId,`name` = @name,`description` = @description,`price` = @price,`priceOption` = @priceOption,`isAvailable` = @isAvailable,`isEnabled` = @isEnabled WHERE `restaurantId` = @restaurantId AND `id` = @id</value>
   </data>
   <data name="EditRestaurant" xml:space="preserve">
-    <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id</value>
+    <value>UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude, `deliveryPrice`=@price WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id</value>
   </data>
   <data name="FindUsersByEmail" xml:space="preserve">
     <value>SELECT `login`, `email`, `passwordQuestion`, `comment`, `isApproved`, `isLockedOut`, `creationDate`, `lastLoginDate`,`lastActivityDate`, `lastPasswordChangedDate`, `llastLockedOutDate` FROM `users` WHERE `email` LIKE @email ORDER BY `login` Asc</value>
@@ -274,13 +274,13 @@
     <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId</value>
   </data>
   <data name="GetRestaurant" xml:space="preserve">
-    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>
   </data>
   <data name="GetRestaurantByTown" xml:space="preserve">
     <value>SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName AND x.`isEnabled` = @isEnabled</value>
   </data>
   <data name="GetRestaurantsByManagerLogin" xml:space="preserve">
-    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
   </data>
   <data name="GetRolesForUser" xml:space="preserve">
     <value>SELECT `rolename` FROM `roles` WHERE `id` IN (SELECT `roleID` FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login` = @login))</value>
@@ -376,5 +376,11 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   </data>
   <data name="ValidateEmployee" xml:space="preserve">
     <value>SELECT u.`password`, u.`isApproved` FROM `employees_in_restaurants` e JOIN `users` u ON e.`userId` = u.`id` JOIN `restaurants` r ON e.`restaurantId` = r.`id` WHERE u.`login` = @login AND u.`isLockedOut` = @isLockedOut AND r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @rest)</value>
+  </data>
+  <data name="GetBasketProduct" xml:space="preserve">
+    <value>SELECT `id`, `name`, `price`, `priceOption` FROM `products` WHERE `id` = @id</value>
+  </data>
+  <data name="GetBasketRestaurant" xml:space="preserve">
+    <value>SELECT `id`, `displayName`, `telephone`, `deliveryTime`, `deliveryPrice` FROM `restaurants` WHERE `id` = @id</value>
   </data>
 </root>

@@ -599,9 +599,14 @@ namespace Erestauracja.Controllers
                         CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
                         if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
                         {
+                            //musi być to parsowanie bo mvc to gówno
+                            decimal price;
+                            NumberStyles style = NumberStyles.AllowDecimalPoint;
+                            price = Decimal.Parse(model.DeliveryPrice, style);
+
                             MembershipCreateStatus createStatus;
                             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                            bool user = customMemebership.CreateRestaurant(model.Login, model.Email, model.Password, model.Question, model.Answer, model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, out createStatus);
+                            bool user = customMemebership.CreateRestaurant(model.Login, model.Email, model.Password, model.Question, model.Answer, model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, User.Identity.Name, out createStatus, price);
 
                             if (createStatus == MembershipCreateStatus.Success && user == true)
                             {
@@ -703,6 +708,7 @@ namespace Erestauracja.Controllers
                 model.Nip = rest.Nip;
                 model.Regon = rest.Regon;
                 model.DeliveryTime = rest.DeliveryTime;
+                model.DeliveryPrice = rest.DeliveryPrice;
                 model.IsEnabled = rest.IsEnabled;
                 ModelState.Clear();
 
@@ -778,7 +784,7 @@ namespace Erestauracja.Controllers
                             ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                             using (client)
                             {
-                                value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id);
+                                value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id, model.DeliveryPrice);
                             }
                             client.Close();
                         }

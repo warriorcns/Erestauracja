@@ -66,6 +66,9 @@
                 Czas dostawy:  <%: x.DeliveryTime%>
                 </div>
                 <div class="editor-labelE">
+                Czas dostawy:  <%: x.DeliveryPrice%>
+                </div>
+                <div class="editor-labelE">
                 Ilość odwiedzin:  <%: x.InputsCount%>
                 </div>
                 <div class="editor-labelE">

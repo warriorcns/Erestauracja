@@ -21,8 +21,8 @@ namespace Contract
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
        //private string ConnectionString = "SERVER=" + "5.153.38.77" + ";DATABASE=" + "eres" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
-        private string ConnectionString = "SERVER=5.153.38.77;DATABASE=eres;UID=erestauracja;PASSWORD=Erestauracja123;charset=utf8;Encrypt=true;Connection Timeout=60";
-       // private string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60";
+       // private string ConnectionString = "SERVER=5.153.38.77;DATABASE=eres;UID=erestauracja;PASSWORD=Erestauracja123;charset=utf8;Encrypt=true;Connection Timeout=60";
+        private string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60";
       
         //zabezpieczyć connectionString
         public Database()
@@ -1533,7 +1533,7 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin)
+        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, decimal deliveryPrice)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             MySqlTransaction tran = null;
@@ -1664,6 +1664,7 @@ namespace Contract
             command3.Parameters.AddWithValue("@isEnabled", false);
             command3.Parameters.AddWithValue("@latitude", wspol.Latitude);
             command3.Parameters.AddWithValue("@longitude", wspol.Longitude);
+            command3.Parameters.AddWithValue("@price", deliveryPrice);
             command3.Connection = conn;
 
             //dodawanie pustej zawartości strony restauracji
@@ -1744,7 +1745,7 @@ namespace Contract
             return false;
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             Coordinate wspol = new Coordinate(0.0, 0.0);
@@ -1833,6 +1834,7 @@ namespace Contract
             command.Parameters.AddWithValue("@id", id);
             command.Parameters.AddWithValue("@latitude", wspol.Latitude);
             command.Parameters.AddWithValue("@longitude", wspol.Longitude);
+            command.Parameters.AddWithValue("@price", deliveryPrice);
 
             int rowsaffected = ExecuteNonQuery(command, "EditRestaurant");
 
@@ -1937,6 +1939,7 @@ namespace Contract
                         rest.Regon = reader.GetString(9);
                         rest.DeliveryTime = reader.GetString(10);
                         rest.IsEnabled = reader.GetBoolean(11);
+                        rest.DeliveryPrice = reader.GetDecimal(12);
                     }
                 }
                 else
@@ -2011,6 +2014,7 @@ namespace Contract
             DateTime lastLockedOutDate = new DateTime();
             if (reader.GetValue(22) != DBNull.Value)
                 lastLockedOutDate = Convert.ToDateTime(reader.GetString(22));
+            decimal deliveryPrice = reader.GetDecimal(23);
 
             Restaurant u = new Restaurant();
             u.ID = id;
@@ -2027,6 +2031,7 @@ namespace Contract
             u.AverageRating = averageRating;
             u.MenagerId = menagerId;
             u.DeliveryTime = deliveryTime;
+            u.DeliveryPrice = deliveryPrice;
             u.UserId = userId;
             u.IsEnabled = isEnabled;
             u.Login = login;
@@ -3885,6 +3890,157 @@ namespace Contract
                 return false;
         }
 
+        public BasketOut GetBasket(string koszyk)
+        {
+            BasketOut basket = new BasketOut();
+            List<Basket> kosz = new List<Basket>();
+            foreach (string item in koszyk.Split('|'))
+            {
+                bool flaga = false;
+                string[] dane = item.Split('~');
+                if (kosz.Count == 0)
+                {
+                    Basket bas = new Basket();
+                    bas.RestaurantId = Int32.Parse(dane[1]);
+                    bas.Data.Add(item);
+                    kosz.Add(bas);
+                }
+                else
+                {
+                    foreach (Basket xxx in kosz)
+                    {
+                        if (xxx.RestaurantId == Int32.Parse(dane[1]))
+                        {
+                            xxx.Data.Add(item);
+                            flaga = true;
+                            break;
+                        }  
+                    }
+                    if(flaga==false)
+                        {
+                            Basket bas = new Basket();
+                            bas.RestaurantId = Int32.Parse(dane[1]);
+                            bas.Data.Add(item);
+                            kosz.Add(bas);
+                           // break;
+                        }
+                }
+            }
+            foreach (Basket item in kosz)
+            {
+                //info o restauracji
+                MySqlCommand command = new MySqlCommand(Queries.GetBasketRestaurant);
+                command.Parameters.AddWithValue("@id", item.RestaurantId);
+
+                BasketRest value = null;
+
+                DataSet ds = new DataSet();
+                ds = ExecuteQuery(command, "GetBasketRestaurant");
+
+                if (ds.Tables.Count > 0)
+                {
+                    value = new BasketRest();
+                    value.RestaurantId = -1;
+                    value.DisplayName = String.Empty;
+                    value.Telephone = String.Empty;
+                    value.DeliveryTime = String.Empty;
+                    value.DeliveryPrice = 0.00M;
+                    value.TotalPriceRest = 0.00M;
+                    value.Products = new List<BasketProduct>();
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        if (row["id"] != DBNull.Value) value.RestaurantId = Convert.ToInt32(row["id"]);
+                        if (row["displayName"] != DBNull.Value) value.DisplayName = row["displayName"].ToString();
+                        if (row["telephone"] != DBNull.Value) value.Telephone = row["telephone"].ToString();
+                        if (row["deliveryTime"] != DBNull.Value) value.DeliveryTime = row["deliveryTime"].ToString();
+                        if (row["deliveryPrice"] != DBNull.Value) value.DeliveryPrice = Convert.ToDecimal(row["deliveryPrice"]);
+                    }
+                    //
+                    //pobrać dane produktu
+                    foreach (String produkt in item.Data)
+                    {
+                        string[] dane = produkt.Split('~');
+
+                        MySqlCommand command2 = new MySqlCommand(Queries.GetBasketProduct);
+                        command2.Parameters.AddWithValue("@id", dane[2]);
+
+                        BasketProduct value2 = null;
+
+                        DataSet ds2 = new DataSet();
+                        ds2 = ExecuteQuery(command2, "GetBasketProduct");
+
+                        if (ds2.Tables.Count > 0)
+                        {
+                            //pomocnicze
+                            string price = String.Empty;
+                            string priceOption = String.Empty;
+
+                            value2 = new BasketProduct();
+                            value2.BasketId = Convert.ToInt32( dane[0] );
+                            value2.ProductId = -1;
+                            value2.ProductName = String.Empty;
+                            value2.Comment = dane[7];
+                            value2.PriceOption = dane[3];
+                            value2.NonPriceOption = dane[4];
+                            value2.NonPriceOption2 = dane[5];
+                            value2.Price = 0.00M;
+                            value2.Count = Convert.ToInt32( dane[6] );
+                            value2.TotalPriceProd = 0.00M;
+
+                            foreach (DataRow row in ds2.Tables[0].Rows)
+                            {
+                                if (row["id"] != DBNull.Value) value2.ProductId = Convert.ToInt32( row["id"] );
+                                if (row["name"] != DBNull.Value) value2.ProductName = row["name"].ToString();
+                                if (row["price"] != DBNull.Value) price =row["price"].ToString();
+                                if (row["priceOption"] != DBNull.Value) priceOption = row["priceOption"].ToString();
+                            }
+
+                            //pobieranie caeny
+                            string[] priceT = price.Split('|');
+                            string[] priceOptionT = priceOption.Split(',');
+                            if (priceT.Length == priceOptionT.Length)
+                            {
+                                for (int i = 0; i < priceT.Length; i++)
+                                {
+                                    if (priceOptionT[i] == value2.PriceOption)
+                                    {
+                                     //   NumberStyles style = NumberStyles.AllowDecimalPoint;
+                                        //price = Decimal.Parse(model.DeliveryPrice, style);
+                                        //value2.Price = Decimal.Parse(model.DeliveryPrice, style);
+                                        value2.Price = Convert.ToDecimal(priceT[i].Replace('.',','));
+                                        value2.TotalPriceProd = value2.Price * value2.Count;
+                                        value.TotalPriceRest += value2.TotalPriceProd;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //ceny nie są adekwatne do opcji więc zwrócone dane nie będą prawidłowe
+                                return null;
+                            }
+                            value.Products.Add(value2);
+                        }
+                        else
+                        {
+                            //nie pobrało danych więc zwrócone dane nie będą prawidłowe
+                            return null;
+                        }
+                    }
+                    //
+                    basket.Basket.Add(value);
+                }
+                else
+                {
+                    //nie pobrało danych więc zwrócone dane nie będą prawidłowe
+                    return null;
+                }
+            }
+
+            return basket;
+        }
+
         #endregion
 
         #region ogólne
@@ -4858,6 +5014,24 @@ namespace Contract
         }
 
         #endregion
+
+        public class Basket
+        {
+            private int restaurantId = -1;
+            private List<string> data = new List<string>();
+
+            public int RestaurantId
+            {
+                get { return restaurantId; }
+                set { restaurantId = value; }
+            }
+
+            public List<string> Data
+            {
+                get { return data; }
+                set { data = value; }
+            }
+        }
     }
 
 

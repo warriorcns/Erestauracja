@@ -1744,7 +1744,7 @@ namespace Erestauracja.Providers
         /// <param name="deliveryTime">Czas dostawy</param>
         /// <param name="status">out MembershipCreateStatus</param>
         /// <returns>True jeśli restauracja została utworzona pomyslnie</returns>
-        public bool CreateRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, out MembershipCreateStatus status)
+        public bool CreateRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, out MembershipCreateStatus status, decimal deliveryPrice)
         {
             ValidatePasswordEventArgs args =
               new ValidatePasswordEventArgs(login, password, true);
@@ -1773,7 +1773,7 @@ namespace Erestauracja.Providers
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        value = client.AddRestaurant(login, email, EncodePassword(password), passwordQuestion, EncodePassword(passwordAnswer), name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin);
+                        value = client.AddRestaurant(login, email, EncodePassword(password), passwordQuestion, EncodePassword(passwordAnswer), name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin, deliveryPrice);
                     }
                     client.Close();
                 }

@@ -95,6 +95,12 @@ namespace Erestauracja.Models
         [DataType(DataType.Time)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cena dostawy")]
+        public string DeliveryPrice { get; set; }
+
     }
 
     public class EditRestaurantModel
@@ -152,6 +158,11 @@ namespace Erestauracja.Models
         [DataType(DataType.Text)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Cena dostawy")]
+        public decimal DeliveryPrice { get; set; }
 
         [Required]
         [Display(Name = "Widoczna dla klientów")]

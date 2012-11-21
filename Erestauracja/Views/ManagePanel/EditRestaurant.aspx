@@ -130,6 +130,17 @@
                 </ul>
                 <ul class="rej">
                     <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.DeliveryPrice)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.DeliveryPrice)%>
+                    </li>
+                    <li class="validation-labelR">
+                        <%: Html.ValidationMessageFor(m => m.DeliveryPrice)%>
+                    </li>
+                </ul>
+                <ul class="rej">
+                    <li class="display-labelR">
                         <%: Html.LabelFor(m => m.IsEnabled)%>
                     </li>
                     <li class="editor-labelR">

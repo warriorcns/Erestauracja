@@ -430,17 +430,17 @@ namespace Contract
 
         #region Manage restaurant
 
-        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin)
+        public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, decimal deliveryPrice)
         {
             if (!(String.IsNullOrEmpty(login) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password) 
                 || String.IsNullOrEmpty(passwordQuestion) || String.IsNullOrEmpty(passwordAnswer) || String.IsNullOrEmpty(name) 
                 || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
                 || townID==null || townID < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
-                || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
+                || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime) || deliveryPrice == null || deliveryPrice < 0.00M))
             {
                 Database db = new Database();
-                bool value = db.AddRestaurant(login, email, password, passwordQuestion, passwordAnswer, name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin);
+                bool value = db.AddRestaurant(login, email, password, passwordQuestion, passwordAnswer, name, displayName, address, townID, country, telephone, nip, regon, deliveryTime, managerLogin, deliveryPrice);
                 return value;
             }
             else
@@ -449,15 +449,15 @@ namespace Contract
             }
         }
 
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
                 || townId == null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || isEnabled==null || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
-                || id==null || id<0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime)))
+                || id == null || id < 0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime) || deliveryPrice == null || deliveryPrice < 0.00M))
             {
                 Database db = new Database();
-                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, nip, regon, deliveryTime, isEnabled, managerLogin, id);
+                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, nip, regon, deliveryTime, isEnabled, managerLogin, id, deliveryPrice);
                 return value;
             }
             else
@@ -757,6 +757,20 @@ namespace Contract
             else
             {
                 return false;
+            }
+        }
+
+        public BasketOut GetBasket(string basket)
+        {
+            if (!(String.IsNullOrWhiteSpace(basket)))
+            {
+                Database db = new Database();
+                BasketOut value = db.GetBasket(basket);
+                return value;
+            }
+            else
+            {
+                return null;
             }
         }
 

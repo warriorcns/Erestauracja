@@ -111,10 +111,10 @@ namespace Contract
         #region manage restaurant
 
         [OperationContract]
-        bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin);
+        bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, decimal deliveryPrice);
 
         [OperationContract]
-        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id);
+        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice);
 
         [OperationContract]
         List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin);
@@ -178,6 +178,9 @@ namespace Contract
 
         [OperationContract]
         bool AddUserToRestaurant(int userId, int restaurantId);
+
+        [OperationContract]
+        BasketOut GetBasket(string basket);
 
         #endregion
 
@@ -514,6 +517,7 @@ namespace Contract
         private int averageRating = -1;
         private int menagerId = -1;
         private string deliveryTime = null;
+        private decimal deliveryPrice = 0.00M;
         private int userId = -1;
         private bool isEnabled = false;
         private string login = null;
@@ -623,6 +627,13 @@ namespace Contract
         }
 
         [DataMember]
+        public decimal DeliveryPrice
+        {
+            get { return deliveryPrice; }
+            set { deliveryPrice = value; }
+        }
+
+        [DataMember]
         public int UserId
         {
             get { return userId; }
@@ -700,6 +711,7 @@ namespace Contract
         private string nip = null;
         private string regon = null;
         private string deliveryTime = null;
+        private decimal deliveryPrice = 0.00M;
         private bool isEnabled = false;
 
         [DataMember]
@@ -777,6 +789,13 @@ namespace Contract
         {
             get { return deliveryTime; }
             set { deliveryTime = value; }
+        }
+
+        [DataMember]
+        public decimal DeliveryPrice
+        {
+            get { return deliveryPrice; }
+            set { deliveryPrice = value; }
         }
         
         [DataMember]
@@ -1111,7 +1130,187 @@ namespace Contract
         }
     }
 
+    [DataContract]
+    public class BasketOut
+    {
+       // public decimal totalPrice = 0.00M;
+        public List<BasketRest> basket = new List<BasketRest>();
+
+        //[DataMember]
+        //public decimal TotalPrice
+        //{
+        //    get { return totalPrice; }
+        //    set { totalPrice = value; }
+        //}
+
+        [DataMember]
+        public List<BasketRest> Basket
+        {
+            get { return basket; }
+            set { basket = value; }
+        }
+
+    }
+
+    [DataContract]
+    public class BasketRest
+    {
+        public int restaurantId = -1;
+        public string displayName = String.Empty;
+        public string telephone = String.Empty;
+        public string deliveryTime = String.Empty;
+        public decimal deliveryPrice = 0.00M;
+        public decimal totalPriceRest = 0.00M;
+        public List<BasketProduct> products = new List<BasketProduct>();
+
+        [DataMember]
+        public int RestaurantId
+        {
+            get { return restaurantId; }
+            set { restaurantId = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        [DataMember]
+        public string DeliveryTime
+        {
+            get { return deliveryTime; }
+            set { deliveryTime = value; }
+        }
+
+        [DataMember]
+        public decimal DeliveryPrice
+        {
+            get { return deliveryPrice; }
+            set { deliveryPrice = value; }
+        }
+
+        [DataMember]
+        public decimal TotalPriceRest
+        {
+            get { return totalPriceRest; }
+            set { totalPriceRest = value; }
+        }
+
+        [DataMember]
+        public List<BasketProduct> Products
+        {
+            get { return products; }
+            set { products = value; }
+        }
+
+    }
+
+    [DataContract]
+    public class BasketProduct
+    {
+        public int basketId = -1;
+        public int productId = -1;
+        public string productName = String.Empty;
+        public string comment = String.Empty;
+        public string priceOption = String.Empty;
+        public string nonPriceOption = String.Empty;
+        public string nonPriceOption2 = String.Empty;
+        public decimal price = 0.00M;
+        public int count = -1;
+        public decimal totalPriceProd = 0.00M;
+        public bool isSelected = true;
+
+        [DataMember]
+        public int BasketId
+        {
+            get { return basketId; }
+            set { basketId = value; }
+        }
+
+        [DataMember]
+        public int ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
+
+        [DataMember]
+        public string ProductName
+        {
+            get { return productName; }
+            set { productName = value; }
+        }
+
+        [DataMember]
+        public string Comment
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+
+        [DataMember]
+        public string PriceOption
+        {
+            get { return priceOption; }
+            set { priceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption
+        {
+            get { return nonPriceOption; }
+            set { nonPriceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption2
+        {
+            get { return nonPriceOption2; }
+            set { nonPriceOption2 = value; }
+        }
+
+        [DataMember]
+        public decimal Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        [DataMember]
+        public int Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
+
+        [DataMember]
+        public decimal TotalPriceProd
+        {
+            get { return totalPriceProd; }
+            set { totalPriceProd = value; }
+        }
+
+        [DataMember]
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { isSelected = value; }
+        }
+
+    }
+
     #endregion
+
+    #region ogólne
 
     [DataContract]
     public class Town
@@ -1456,4 +1655,5 @@ namespace Contract
         }
     }
 
+    #endregion
 }

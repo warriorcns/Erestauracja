@@ -88,7 +88,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled,  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @log [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddRestaurant {
             get {
@@ -259,7 +259,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id.
+        ///   Looks up a localized string similar to UPDATE `restaurants` SET `name`=@name,`displayName`=@displayName,`address`=@address,`townId`=@townId,`countryId`= (SELECT `id` FROM `countries` WHERE `name` = @country),`telephone`=@telephone,`nip`=@nip,`regon`=@regon,`deliveryTime`=@deliveryTime, `isEnabled`=@isEnabled,`latitude`=@latitude,`longitude`=@longitude, `deliveryPrice`=@price WHERE `menagerId`= (SELECT `id` FROM `users` WHERE `login` = @menager) AND `id`=@id.
         /// </summary>
         internal static string EditRestaurant {
             get {
@@ -318,6 +318,24 @@ namespace Contract {
         internal static string GetAllUsers {
             get {
                 return ResourceManager.GetString("GetAllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `name`, `price`, `priceOption` FROM `products` WHERE `id` = @id.
+        /// </summary>
+        internal static string GetBasketProduct {
+            get {
+                return ResourceManager.GetString("GetBasketProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `id`, `displayName`, `telephone`, `deliveryTime`, `deliveryPrice` FROM `restaurants` WHERE `id` = @id.
+        /// </summary>
+        internal static string GetBasketRestaurant {
+            get {
+                return ResourceManager.GetString("GetBasketRestaurant", resourceCulture);
             }
         }
         
@@ -538,7 +556,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id.
         /// </summary>
         internal static string GetRestaurant {
             get {
@@ -556,7 +574,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELE [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetRestaurantsByManagerLogin {
             get {

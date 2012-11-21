@@ -21,6 +21,22 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#spinner").spinner({
+                min: 1,
+                max: 100,
+                disabled: false
+            });
+        });
+	</script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#spinner").val('0.00');
+        });
+   </script>
+
     <div class="polaRejestracji">
 
         <form class="formaRejestracji" runat="server">
@@ -301,7 +317,20 @@
                     </li>
                 </ul>
 
+                <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.DeliveryPrice)%> 
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.DeliveryPrice)%>
+                    </li>
+                </ul>
 
+                <ul class="rej">
+                    <li class="display-labelR">
+                         <%: Html.ValidationMessageFor(m => m.DeliveryPrice)%>
+                    </li>
+                </ul>
                 <p>
                     <input type="submit" value="Zapisz"/>
                 </p>
