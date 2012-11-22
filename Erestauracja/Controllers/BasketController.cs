@@ -12,7 +12,7 @@ using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
-    //[Authorize(Roles = "Klient")]
+    [Authorize(Roles = "Klient")]
     public class BasketController : Controller
     {
         //
@@ -44,6 +44,38 @@ namespace Erestauracja.Controllers
                 }
             }
             return View(value);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            string lista = String.Empty;
+            lista = Restore();
+            string usun = String.Empty;
+
+            foreach(string product in lista.Split('|'))
+            {
+                string[] dane = product.Split('~');
+                if (id == Int32.Parse(dane[0]))
+                {
+                    usun = product;
+                    break;
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(usun))
+            {
+                int index = lista.IndexOf(usun);
+                string newlista = (index == 0) ? lista.Remove(index, usun.Length + 1) : lista.Remove(index - 1, usun.Length + 1);
+
+                int x = 0;
+                foreach (string item in newlista.Split('|'))
+                {
+                    string[] data = item.Split('~');
+                    data[0] = x.ToString();
+                    x++;
+                }
+                Store(newlista);
+            }
+            return RedirectToAction("Index");
         }
 
         //wychwytuje dane z guzika - do koszyka
@@ -78,7 +110,7 @@ namespace Erestauracja.Controllers
             HttpCookie cookie = new HttpCookie("basket")
                 {
                     // Set the expiry date of the cookie to 1 day
-                    Expires = DateTime.Now.AddHours(6)
+                    Expires = DateTime.Now.AddDays(6)
                 };
             cookie.Value = myClass;
             // Add the cookie to the current http context
