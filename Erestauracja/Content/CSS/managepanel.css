@@ -1,0 +1,26 @@
+﻿body {
+}
+
+.deletephoto
+{
+    background: url(/Content/images/Delete.png);
+    width:15px;
+    height:15px;
+    background-size: auto 100%;    
+}
+.gallery
+{
+    display: inline;
+}
+ 
+.galleryElement
+{
+    list-style: none;
+    display: inline;
+}
+
+.mainLogo
+{
+         
+}
+

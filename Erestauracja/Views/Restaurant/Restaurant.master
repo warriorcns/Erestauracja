@@ -16,7 +16,7 @@
 </asp:Content>
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
-    <form id="form1" runat="server">
+    <%--<form id="form1" runat="server">--%>
 <nav class="menu">
                 <ul id="menu">
                     <li>
@@ -35,6 +35,6 @@
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">
  </asp:ContentPlaceHolder>
-    </form>
+    <%--</form>--%>
    
 </asp:Content>

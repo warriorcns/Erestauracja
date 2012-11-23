@@ -1,13 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePageContent.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.MainPageModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
-
-    <script src="../../Scripts/jHtmlArea-0.7.5.min.js" type="text/javascript"></script>
+ <script src="../../Scripts/jHtmlArea-0.7.5.min.js" type="text/javascript"></script>
     <link href="../../Content/style/jHtmlArea.css" rel="stylesheet" type="text/css" />
     <script src="../../Scripts/jHtmlArea.ColorPickerMenu-0.7.0.js" type="text/javascript"></script>
     <link href="../../Content/style/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" type="text/css" />
 
-<style type="text/css">
+    <style type="text/css">
         /* body { background: #ccc;} */
         div.jHtmlArea .ToolBar ul li a.custom_disk_button 
         {
@@ -21,8 +20,8 @@
     <script type="text/javascript">
         $(function () {
             $("#htmlarea").htmlarea({
-                
-              toolbar: [
+
+                toolbar: [
                 ["bold", "italic", "underline", "strikethrough"],
                 ["justifyleft", "justifycenter", "justifyright"],
                 ["indent", "outdent"],
@@ -32,24 +31,24 @@
                 ["forecolor", "horizontalrule"],
                 ],
 
-              toolbarText: $.extend({}, jHtmlArea.defaultOptions.toolbarText, {
-                "bold": "Pogrubienie",
-                "italic": "Kursywa",
-                "underline": "Podkreślenie",
-                "strikethrough": "Skreślenie",
-                "justifyleft": "Wyrównanie do lewej",
-                "justifycenter": "Wyśrodkowanie",
-                "justifyright": "Wyrównanie do prawej",
-                "indent": "Wcięcie",
-                "outdent": "Cofnij wcięcie",
-                "superscript": "Indeks górny",
-                "subscript": "Indeks dolny",
-                "orderedlist": "Wyliczenie",
-                "unorderedlist": "Wypunktowanie",
-                "increasefontsize": "Zwiększ czcionke",
-                "decreasefontsize": "Zmniejsz czcionke",
-                "forecolor": "Kolor czcionki",
-                "horizontalrule": "Linie pozioma"
+                toolbarText: $.extend({}, jHtmlArea.defaultOptions.toolbarText, {
+                    "bold": "Pogrubienie",
+                    "italic": "Kursywa",
+                    "underline": "Podkreślenie",
+                    "strikethrough": "Skreślenie",
+                    "justifyleft": "Wyrównanie do lewej",
+                    "justifycenter": "Wyśrodkowanie",
+                    "justifyright": "Wyrównanie do prawej",
+                    "indent": "Wcięcie",
+                    "outdent": "Cofnij wcięcie",
+                    "superscript": "Indeks górny",
+                    "subscript": "Indeks dolny",
+                    "orderedlist": "Wyliczenie",
+                    "unorderedlist": "Wypunktowanie",
+                    "increasefontsize": "Zwiększ czcionke",
+                    "decreasefontsize": "Zmniejsz czcionke",
+                    "forecolor": "Kolor czcionki",
+                    "horizontalrule": "Linie pozioma"
                 })
             });
         });
@@ -69,6 +68,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(function () {
             $("#htmlarea3").htmlarea({
@@ -105,6 +105,7 @@
             });
         });
     </script>
+   
     
     
     <% using (Html.BeginForm()) { %>
@@ -120,7 +121,10 @@
         </asp:Panel>
         <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
             <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="Auto">
-                <%: Html.TextAreaFor(m => m.Foto, new { id = "htmlarea2", style = "width: 300px", rows = "10" })%>
+                <%--<%: Html.TextAreaFor(m => m.Foto, new { id = "htmlarea2", style = "width: 300px", rows = "10" })%>--%>
+                
+                <%: Html.ActionLink("Załaduj zdjęcie główne.", "UploadLogo", "ManagePanel", new { id = (int)ViewData["id"] }, null)%>
+                
             </asp:Panel>
             <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="Auto">
                 <%: Html.TextAreaFor(m => m.SpecialOffers, new { id = "htmlarea3", style = "width: 300px", rows = "10" })%>
@@ -133,4 +137,8 @@
    <input type="submit" value="Zapisz"/>
 </p>
 <% } %>
+</asp:Content>
+
+<asp:Content ID="Head" ContentPlaceHolderID="Head" runat="server">
+    
 </asp:Content>

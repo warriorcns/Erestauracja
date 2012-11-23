@@ -510,8 +510,8 @@ namespace Erestauracja.Controllers
             
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult FileUpload(HttpPostedFileBase fileUpload)
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase fileUp)
         {
 
             #region ciasteczka - odczyt
@@ -553,11 +553,11 @@ namespace Erestauracja.Controllers
 
                 //ICloudFileSystemEntry fse;
 
-                if (fileUpload != null)
+                if (fileUp != null)
                 {
-                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    var fileName = Path.GetFileName(fileUp.FileName);
                     var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                    fileUpload.SaveAs(filepath);
+                    fileUp.SaveAs(filepath);
                     String srcFile = Environment.ExpandEnvironmentVariables(filepath);
                     dropBoxStorage.UploadFile(srcFile, publicFolder); 
                     //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
@@ -580,10 +580,21 @@ namespace Erestauracja.Controllers
         public ActionResult FileUpload(int id)
         {
             MainPageModel model = new MainPageModel();
+            ViewData["id"] = id;
             model.RestaurantID = id;
             return View(model);
         }
 
         # endregion
+
+        public ActionResult areaselect() 
+        {
+            return View();
+        }
+
+        public ActionResult area()
+        {
+            return View();
+        }
     }
 }

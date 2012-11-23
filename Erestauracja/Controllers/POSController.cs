@@ -98,6 +98,7 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Restauracja")]
         public ActionResult Locked()
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
             if (User.Identity.Name.Contains("|"))
             {
                 string[] logs = null;

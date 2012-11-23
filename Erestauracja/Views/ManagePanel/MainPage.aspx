@@ -12,7 +12,12 @@
         </asp:Panel>
         <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
             <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="Auto">
-                <%= Html.DisplayFor(m => m.Foto)%>
+                <%--<%= Html.DisplayFor(m => m.Foto)%>--%>
+                <%--jqueryareaselect--%>
+                <%--<img class="reslogo" src="../../Content/images/logo.png" alt="logo"/>--%>
+                <%--wyswietlanie--%>
+                
+                <%: Html.Display((string)ViewData["logo"])  %>
             </asp:Panel>
             <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="Auto">
                 <%= Html.DisplayFor(m => m.SpecialOffers)%>
@@ -22,3 +27,9 @@
 </div>
 </asp:Content>
 
+
+<asp:Content ID="Content2" ContentPlaceHolderID="Head" runat="server">
+    
+    
+
+</asp:Content>

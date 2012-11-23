@@ -12,7 +12,7 @@
 
 <% using (Html.BeginForm("FileUpload", "Restaurant", FormMethod.Post, new {enctype = "multipart/form-data"})){%>
     <%--<%: Html.HiddenFor(m => m.RestaurantID) %>--%>
-    <input type="file" id="fileUpload" name="fileUpload" />
+    <input type="file" name="fileUp" id="fileUpID"/>
     <input type="submit" />
 <%}%>
 

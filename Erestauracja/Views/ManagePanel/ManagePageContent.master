@@ -1,12 +1,16 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePanel.Master" AutoEventWireup="true" CodeBehind="ManagePageContent.master.cs" Inherits="Erestauracja.Views.ManagePanel.ManagePageContent" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="Head" runat="server">
+    </asp:ContentPlaceHolder>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
+    <asp:ContentPlaceHolder ID="Title" runat="server">
+    </asp:ContentPlaceHolder>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
-<form id="form1" runat="server">
+<%--<form id="form1" runat="server">--%>
 <nav class="menu">
                 <ul id="menu">
                     <li>
@@ -25,6 +29,6 @@
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">
  </asp:ContentPlaceHolder>
-    </form>
+    <%--</form>--%>
 
 </asp:Content>

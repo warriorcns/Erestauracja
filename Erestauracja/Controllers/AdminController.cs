@@ -19,7 +19,11 @@ namespace Erestauracja.Controllers
         //
         // GET: /Admin/
 
-        
+        public ActionResult area()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             if (!User.IsInRole("Admin"))

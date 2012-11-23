@@ -57,6 +57,9 @@
     <Reference Include="DropBoxTokenIssuer">
       <HintPath>..\packages\AppLimit.CloudComputing.SharpBox.1.2.0.542\lib\net40-full\DropBoxTokenIssuer.exe</HintPath>
     </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.3.2.4\lib\ImageResizer.dll</HintPath>
+    </Reference>
     <Reference Include="Jmelosegui.Mvc.Controls">
       <HintPath>C:\Users\GAWRON\Dropbox\Inżynierka\biblioteki do googlemaps\Jmelosegui.Mvc.Controls.dll</HintPath>
     </Reference>
@@ -774,6 +777,7 @@
     <Content Include="Content\2012.2.607\Windows7\sprite.png" />
     <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
+    <Content Include="Content\CSS\managepanel.css" />
     <Content Include="Content\CSS\POS.css" />
     <Content Include="Content\CSS\Restaurants.css" />
     <Content Include="Content\DataTables-1.9.4\docs\media\css\doc.css" />
@@ -859,6 +863,7 @@
     <Content Include="Content\DataTables-1.9.4\media\images\sort_desc_disabled.png" />
     <Content Include="Content\images\arrow-down.jpg" />
     <Content Include="Content\images\arrow-up.jpg" />
+    <Content Include="Content\images\Delete.png" />
     <Content Include="Content\images\disk.png" />
     <Content Include="Content\images\empty.gif" />
     <Content Include="Content\images\favicon.ico" />
@@ -870,6 +875,7 @@
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\popup_ajax_loader.gif" />
+    <Content Include="Content\images\resid1\1.jpg" />
     <Content Include="Content\images\right.png" />
     <Content Include="Content\images\right_empty.png" />
     <Content Include="Content\images\right_eng.png" />
@@ -1240,6 +1246,7 @@
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
     <Content Include="Views\Account\RegisterManager.aspx" />
+    <Content Include="Views\Admin\area.aspx" />
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
@@ -1285,6 +1292,7 @@
     <Content Include="Views\ManagePanel\Personnel.aspx" />
     <Content Include="Views\ManagePanel\Reports.aspx" />
     <Content Include="Views\ManagePanel\Restaurant.aspx" />
+    <Content Include="Views\ManagePanel\UploadLogo.aspx" />
     <Content Include="Views\Orders\Index.aspx" />
     <Content Include="Views\POS\ActiveOrders.aspx" />
     <Content Include="Views\POS\AllOrders.aspx" />
@@ -1293,6 +1301,7 @@
     <Content Include="Views\POS\OrderedProducts.aspx" />
     <Content Include="Views\POS\SalesDocuments.aspx" />
     <Content Include="Views\POS\scrollexample.aspx" />
+    <Content Include="Views\Restaurant\areaselect.aspx" />
     <Content Include="Views\Restaurant\Contact.aspx" />
     <Content Include="Views\Restaurant\Delivery.aspx" />
     <Content Include="Views\Restaurant\FileUpload.aspx" />
@@ -1352,7 +1361,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\uploads\" />
     <Folder Include="App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
@@ -1362,42 +1371,52 @@
     <Content Include="App_GlobalResources\UploadLocalization.zh-CN.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.zh-CN.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.ru-RU.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.pt-PT.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.pt-PT.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.pt-BR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.pt-BR.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.pl-PL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.pl-PL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.nl-NL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.fr-FR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.fr-FR.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.en-US.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.en-US.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.da-DK.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.da-DK.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.bg-BG.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UploadLocalization.bg-BG.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\GridLocalization.zh-CN.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -1462,14 +1481,17 @@
     <Content Include="App_GlobalResources\EditorLocalization.uk-UA.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.uk-UA.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EditorLocalization.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.ru-RU.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EditorLocalization.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EditorLocalization.pt-PT.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -1494,10 +1516,12 @@
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.en-US.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EditorLocalization.de-DE.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EditorLocalization.de-DE.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EditorLocalization.da-DK.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>

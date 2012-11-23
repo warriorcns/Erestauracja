@@ -19,14 +19,7 @@
                     </div>
                     <hr />
             <% } %>
-         <!--   <asp:BulletedList class="BulletedListRestauracje" runat="server" BulletStyle="CustomImage"
-                BulletImageUrl="">
-                <asp:ListItem>10</asp:ListItem>
-                <asp:ListItem>najnowszych</asp:ListItem>
-                <asp:ListItem>restauracji</asp:ListItem>
-                <asp:ListItem>...</asp:ListItem>
-                <asp:ListItem>Restauracja 5</asp:ListItem>
-            </asp:BulletedList> -->
+         
         </asp:Panel>
         <asp:Panel class="PanelInfo" runat="server" ScrollBars="Auto" Wrap="true">
             <asp:Label class="LabelWybierzMiasto" runat="server" Font-Size="Large" 
