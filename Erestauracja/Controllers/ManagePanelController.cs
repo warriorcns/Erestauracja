@@ -2406,15 +2406,22 @@ namespace Erestauracja.Controllers
                 else
                 {
                     prices = "Wprowadz cenę kolejno dla: "+value.PriceOption+ " (np. ";
-                    string[] tab = value.PriceOption.Split(',');
-                    int j = 10;
-                    for (int i = 1; i <= tab.Length; i++)
+                    if (value.PriceOption != null)
                     {
-                        if(i==tab.Length)
-                            prices += j.ToString() + ".00";
-                        else
-                            prices += j.ToString() + ".00|";
-                        j += 5;
+                        string[] tab = value.PriceOption.Split(',');
+                        int j = 10;
+                        for (int i = 1; i <= tab.Length; i++)
+                        {
+                            if (i == tab.Length)
+                                prices += j.ToString() + ".00";
+                            else
+                                prices += j.ToString() + ".00|";
+                            j += 5;
+                        }
+                    }
+                    else
+                    {
+                        prices += "10.00";
                     }
                     prices += ")";
                 }

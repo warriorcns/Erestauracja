@@ -122,8 +122,11 @@
                     <% { %>
                         <h3><a href="#"><%: product.ProductName %> </a></h3>
                             <div>
-                                    <p>Opis: <%: product.ProductDescription  %></p>
+                                    <% if (!String.IsNullOrWhiteSpace(product.ProductDescription)) %>
+                                    <% { %>
+                                    <p>Opis: <%: product.ProductDescription%></p>
                                     </br>
+                                    <% } %>
                                     <p>Cena:</p>
                                     <% if(product.Price != null) %>
                                     <% { %>
@@ -160,6 +163,7 @@
 
                                     <% if(menu.PriceOption != null) %>
                                     <% { %>
+                                    </br>
                                     <div>Do wyboru:
                                         <% List<SelectListItem> lista0 = new List<SelectListItem>(); %>
                                         <% foreach(string item in menu.PriceOption.Split(',')) %>
@@ -191,6 +195,9 @@
                                         <%: Html.DropDownList("DropDownList2", (IEnumerable<SelectListItem>)lista2, new { id = "Opcja" + product.ProductId })%>
                                     </div>
                                     <% } %>
+                                    <% if (User.Identity.IsAuthenticated) %>
+                                    <% { %>
+                                    </br>
                                     <div>
                                         Ilość
                                         <input class="spinner" id="selector<%:product.ProductId %>">
@@ -206,10 +213,11 @@
                                     <div>
                                         <textarea id="textarea<%: product.ProductId %>"></textarea>
                                     </div>
+                                    </br>
                                     <div>
                                         <button class="tobasket" onclick="go('<%: Model.RestaurantID %>','<%: menu.CategoryID %>','<%: product.ProductId %>')">Do koszyka</button>
-                                        
                                     </div>
+                                    <% } %>
                             </div>
                     <% } %>
                 </div>
