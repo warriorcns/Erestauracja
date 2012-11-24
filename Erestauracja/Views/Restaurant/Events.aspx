@@ -2,9 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
 
-<fieldset>
-    <legend>Imprezy okolicznościowe - kliknij <%: Html.ActionLink("tutaj", "EditEventsPage", "ManagePanel", new { id = Model.RestaurantID }, null)%> aby edytować</legend>
-        
+<fieldset>      
      <asp:Panel ID="Panel5" class="PanelDowoz" runat="server" ScrollBars="Auto">
                 <%= Html.DisplayFor(m => m.Events)%>
     </asp:Panel>

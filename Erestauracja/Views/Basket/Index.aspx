@@ -37,9 +37,10 @@ String Send(BasketRest data)
 </script>
 
 
-<% using (Html.BeginForm())
-   { %>
+<% using (Html.BeginForm()) %>
+<% { %>
 <h2>Koszyk - wybierz produkty które chcesz zamówić a następnie kliknij 'Realizuj'</h2>
+<h2>Kliknij <%: Html.ActionLink("tutaj", "ClearBasket", "Basket")%>, aby usunąć wszystkie pozycje z koszyka</h2>
 </br>
 <% if (Model != null) %>
 <% { %>
@@ -81,7 +82,6 @@ String Send(BasketRest data)
                 </div>
                 </br>
             <% } %>
-            <!--<input type=button name="Realizuj"/>-->
             <%: Html.ActionLink("Realizuj", "Realize", "Basket", new { data = Send(rest) }, null)%>
         </div>
     <% } %>

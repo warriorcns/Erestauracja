@@ -61,19 +61,26 @@ namespace Erestauracja.Controllers
                     break;
                 }
             }
-            if (!String.IsNullOrWhiteSpace(usun))
+            if (lista.Split('|').Length == 1)
             {
-                int index = lista.IndexOf(usun);
-                string newlista = (index == 0) ? lista.Remove(index, usun.Length + 1) : lista.Remove(index - 1, usun.Length + 1);
-
-                int x = 0;
-                foreach (string item in newlista.Split('|'))
+                DeleteAll();
+            }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(usun))
                 {
-                    string[] data = item.Split('~');
-                    data[0] = x.ToString();
-                    x++;
+                    int index = lista.IndexOf(usun);
+                    string newlista = (index == 0) ? lista.Remove(index, usun.Length + 1) : lista.Remove(index - 1, usun.Length + 1);
+
+                    int x = 0;
+                    foreach (string item in newlista.Split('|'))
+                    {
+                        string[] data = item.Split('~');
+                        data[0] = x.ToString();
+                        x++;
+                    }
+                    Store(newlista);
                 }
-                Store(newlista);
             }
             return RedirectToAction("Index");
         }
@@ -82,32 +89,52 @@ namespace Erestauracja.Controllers
         {
             string lista = String.Empty;
             lista = Restore();
-            string usun = String.Empty;
+            List<string> usun = new List<string>();
 
             foreach (string product in lista.Split('|'))
             {
                 string[] dane = product.Split('~');
-                if (id == Int32.Parse(dane[0]))
+                if (id == Int32.Parse(dane[1]))
                 {
-                    usun = product;
-                    break;
+                    usun.Add(product);
                 }
             }
-            if (!String.IsNullOrWhiteSpace(usun))
-            {
-                int index = lista.IndexOf(usun);
-                string newlista = (index == 0) ? lista.Remove(index, usun.Length + 1) : lista.Remove(index - 1, usun.Length + 1);
 
-                int x = 0;
-                foreach (string item in newlista.Split('|'))
+            string newlista = lista;
+            foreach (String item in usun)
+            {
+                if (!String.IsNullOrWhiteSpace(item))
                 {
-                    string[] data = item.Split('~');
-                    data[0] = x.ToString();
-                    x++;
+                    int index = newlista.IndexOf(item);
+                    newlista = (index == 0) ? newlista.Remove(index, item.Length + 1) : newlista.Remove(index - 1, item.Length + 1);
                 }
-                Store(newlista);
             }
-           // return RedirectToAction("Index");
+
+            int x = 0;
+            foreach(string item in newlista.Split('|'))
+            {
+                string[] data = item.Split('~');
+                data[0] = x.ToString();
+                x++;
+            }
+            Store(newlista);
+        }
+
+        public void DeleteAll()
+        {
+            if (Request.Cookies["basket"] != null)
+            {
+                HttpCookie myCookie = new HttpCookie("basket");
+                myCookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(myCookie);
+            }
+        }
+
+        public ActionResult ClearBasket()
+        {
+            DeleteAll();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Realize(String data)

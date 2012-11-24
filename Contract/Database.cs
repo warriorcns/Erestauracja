@@ -3956,6 +3956,7 @@ namespace Contract
                         if (row["deliveryTime"] != DBNull.Value) value.DeliveryTime = row["deliveryTime"].ToString();
                         if (row["deliveryPrice"] != DBNull.Value) value.DeliveryPrice = Convert.ToDecimal(row["deliveryPrice"]);
                     }
+                    value.TotalPriceRest = value.DeliveryPrice;
                     //
                     //pobrać dane produktu
                     foreach (String produkt in item.Data)

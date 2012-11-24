@@ -102,8 +102,7 @@
     <% using (Html.BeginForm()) %>
         <% { %>
     <fieldset class="produkty-fieldset">
-    <legend>Menu - kliknij <%: Html.ActionLink("tutaj", "EditMenuPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby edytować</legend>
-    <div id="tabs-left">
+   <div id="tabs-left">
 	    <ul>
             <% 
             int i = 1;

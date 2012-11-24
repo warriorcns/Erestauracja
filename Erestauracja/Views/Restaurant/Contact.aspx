@@ -3,9 +3,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Main" runat="server">
 
 
-<fieldset>
-    <legend>Kontakt - kliknij <%: Html.ActionLink("tutaj", "EditContactPage", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby edytować</legend>
-        
+<fieldset>    
      <asp:Panel ID="Panel5" class="PanelDowoz" runat="server" ScrollBars="Auto">
                 <%= Html.DisplayFor(m => m.Contact)%>
     </asp:Panel>
