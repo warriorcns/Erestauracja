@@ -182,6 +182,9 @@ namespace Contract
         [OperationContract]
         BasketOut GetBasket(string basket);
 
+        [OperationContract]
+        bool IsRestaurantOwner(string login, int id);
+
         #endregion
 
         #region ogólne
@@ -1227,7 +1230,7 @@ namespace Contract
         public decimal price = 0.00M;
         public int count = -1;
         public decimal totalPriceProd = 0.00M;
-        public bool isSelected = true;
+      //  public bool isSelected = true;
 
         [DataMember]
         public int BasketId
@@ -1299,12 +1302,12 @@ namespace Contract
             set { totalPriceProd = value; }
         }
 
-        [DataMember]
-        public bool IsSelected
-        {
-            get { return isSelected; }
-            set { isSelected = value; }
-        }
+        //[DataMember]
+        //public bool IsSelected
+        //{
+        //    get { return isSelected; }
+        //    set { isSelected = value; }
+        //}
 
     }
 

@@ -774,6 +774,20 @@ namespace Contract
             }
         }
 
+        public bool IsRestaurantOwner(string login, int id)
+        {
+            if (!(String.IsNullOrEmpty(login) || id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.IsRestaurantOwner(login, id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region ogólne

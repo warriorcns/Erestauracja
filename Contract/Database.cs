@@ -4041,6 +4041,67 @@ namespace Contract
             return basket;
         }
 
+        public bool IsRestaurantOwner(string login, int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            try
+            {
+                MySqlCommand commandTest = new MySqlCommand(Queries.IsRestaurantOwner);
+                commandTest.Parameters.AddWithValue("@managerLogin", login);
+                commandTest.Parameters.AddWithValue("@restaurantID", id);
+                commandTest.Connection = conn;
+                conn.Open();
+
+                reader = commandTest.ExecuteReader(CommandBehavior.SingleRow);
+                if (reader.HasRows)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOwner" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region ogólne
