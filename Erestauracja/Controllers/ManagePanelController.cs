@@ -916,6 +916,182 @@ namespace Erestauracja.Controllers
             if (id > 0)
             {
                 MainPageContent value = null;
+                MainPageModel nowy = new MainPageModel();
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetMainPage(User.Identity.Name, id);
+                    }
+                    client.Close();
+                    #region DropBox Connection
+                    try
+                    {
+                        // Creating the cloudstorage object 
+                        CloudStorage dropBoxStorage = new CloudStorage();
+
+                        // get the configuration for dropbox 
+                        var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                        // declare an access token
+                        ICloudStorageAccessToken accessToken = null;
+
+                        // load a valid security token from file
+                        string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                        //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                        using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                        {
+                            accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                        }
+
+                        // open the connection 
+                        var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+
+                        var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                        //check if folder exists in child collection
+                        #region check childs
+
+
+                        //lista folderow
+                        List<String> folders = new List<String>();
+
+                        // enumerate all child (folder and files) 
+                        foreach (var fof in mainFolder)
+                        {
+                            // check if we have a directory 
+                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                            if (bIsDirectory)
+                            {
+                                //get folder names
+                                folders.Add(fof.Name);
+                            }
+                        }
+                        bool isFolder = false;
+                        foreach (var fof in folders)
+                        {
+                            if (fof.Equals(id.ToString()))
+                            {
+                                isFolder = true;
+                            }
+                        }
+                        #endregion
+
+
+                        if (!isFolder)
+                        {
+                            // get a specific directory in the cloud storage eg. "/images/1"
+                            var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+                            var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
+                        }
+                        else
+                        {
+                            var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
+                        }
+
+                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString() + "/logo");
+
+
+                        ICloudFileSystemEntry fse;
+
+                        Uri logo;
+                        if (resFolder.Count != 0)
+                        {
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in resFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    logo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    nowy.Foto = "<img src=" + logo.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //default logo
+                            var defaultLogoFolder = dropBoxStorage.GetFolder("/Public/images/defaultlogo");
+
+                            ICloudFileSystemEntry fse1;
+
+                            // lista linkow uri
+                            Uri defaultLogo;
+                            String htmlImgLogo = string.Empty;
+
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in defaultLogoFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse1 = dropBoxStorage.GetFileSystemObject(fof.Name, defaultLogoFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    defaultLogo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
+                                    htmlImgLogo = "<img style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%;  \" \\>";
+                                    nowy.Foto = "<img src=" + defaultLogo.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+                                    
+                                }
+                            }
+                            ViewData["logo"] = htmlImgLogo;
+                        }
+
+                        
+
+                        dropBoxStorage.Close();
+
+
+
+                    }
+                    catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                    {
+                        ;
+                    }
+                    #endregion
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
+                }
+                else
+                {
+                    
+                    nowy.Description = value.Description;
+                    //nowy.Foto = value.Foto;
+                    nowy.SpecialOffers = value.SpecialOffers;
+                    nowy.RestaurantID = id;
+                    return View(nowy);
+                }
+            }
+            
+
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/EditMainPage
+        public ActionResult EditMainPage(int id)
+        { 
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+                MainPageContent value = null;
+                MainPageModel nowy = new MainPageModel();
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
@@ -999,46 +1175,63 @@ namespace Erestauracja.Controllers
 
                         // lista linkow uri
                         Uri logo;
-
-                        // enumerate all child (folder and files) 
-                        foreach (var fof in resFolder)
+                        if (resFolder.Count != 0)
                         {
-                            // check if we have a directory 
-                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                            fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
-                            if (!bIsDirectory)
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in resFolder)
                             {
-                                //pobiera liste linkow do plikow w katalogu rodzica
-                                logo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    //logo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    nowy.File = new images();
+                                    nowy.File.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    nowy.File.name = fof.Name;
+                                    nowy.Foto = "<img src=" + nowy.File.link.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+                                }
                             }
                         }
-
-                        //default logo
-                        var defaultLogoFolder = dropBoxStorage.GetFolder("/Public/images/defaultlogo");
-                        ICloudFileSystemEntry fse1;
-
-                        // lista linkow uri
-                        Uri defaultLogo;
-                        String htmlImgLogo = string.Empty;
-
-                        // enumerate all child (folder and files) 
-                        foreach (var fof in defaultLogoFolder)
+                        else
                         {
-                            // check if we have a directory 
-                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+                            //default logo
+                            var defaultLogoFolder = dropBoxStorage.GetFolder("/Public/images/defaultlogo");
 
-                            fse1 = dropBoxStorage.GetFileSystemObject(fof.Name, defaultLogoFolder);
-                            if (!bIsDirectory)
+                            ICloudFileSystemEntry fse1;
+
+                            // lista linkow uri
+                            Uri defaultLogo;
+                            String htmlImgLogo = string.Empty;
+
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in defaultLogoFolder)
                             {
-                                //pobiera liste linkow do plikow w katalogu rodzica
-                                defaultLogo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
-                                htmlImgLogo = "<img style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%;  \" \\>";
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse1 = dropBoxStorage.GetFileSystemObject(fof.Name, defaultLogoFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    defaultLogo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
+                                    htmlImgLogo = "<img style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%;  \" \\>";
+                                    //nowy.Foto = "<img src=" + defaultLogo.AbsoluteUri + " style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%; ><\\span>"; 
+                                    nowy.File = new images();
+                                    nowy.File.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
+                                    nowy.File.name = fof.Name;
+                                    nowy.Foto = "<img src=" + nowy.File.link.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+                                
+                                    //nowy.Foto = "<img src=" + defaultLogo.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+
+                                }
                             }
+                            //ViewData["logo"] = htmlImgLogo;
                         }
 
 
-                        ViewData["logo"] = htmlImgLogo;
 
                         dropBoxStorage.Close();
 
@@ -1047,7 +1240,7 @@ namespace Erestauracja.Controllers
                     }
                     catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
                     {
-                        ;
+                        Response.Write(ex.ToString());
                     }
                     #endregion
                 }
@@ -1062,50 +1255,9 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    MainPageModel nowy = new MainPageModel();
+                    
                     nowy.Description = value.Description;
-                    nowy.Foto = value.Foto;
-                    nowy.SpecialOffers = value.SpecialOffers;
-                    nowy.RestaurantID = id;
-                    return View(nowy);
-                }
-            }
-            
-
-            return RedirectToAction("Restaurant");
-        }
-
-        //
-        // GET: /ManagePanel/EditMainPage
-        public ActionResult EditMainPage(int id)
-        { 
-            if (id > 0)
-            {
-                ViewData["id"] = id;
-                MainPageContent value = null;
-                try
-                {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
-                    {
-                        value = client.GetMainPage(User.Identity.Name, id);
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    value = null;
-                }
-
-                if (value == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie danych o restauracji nie powiodło się.");
-                }
-                else
-                {
-                    MainPageModel nowy = new MainPageModel();
-                    nowy.Description = value.Description;
-                    nowy.Foto = value.Foto;
+                    //nowy.Foto = value.Foto;
                     nowy.SpecialOffers = value.SpecialOffers;
                     nowy.RestaurantID = id;
                     return View(nowy);
@@ -1120,9 +1272,11 @@ namespace Erestauracja.Controllers
         public ActionResult EditMainPage(MainPageModel model)
         {
             ViewData["id"] = model.RestaurantID;
+            //MainPageModel nowy = new MainPageModel();
             if (ModelState.IsValid)
             {
                 bool value = false;
+                model.Foto = string.Empty;
                 try
                 {
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
@@ -1131,6 +1285,149 @@ namespace Erestauracja.Controllers
                         value = client.EditMainPage(model.Description, model.Foto, model.SpecialOffers, model.RestaurantID, User.Identity.Name);
                     }
                     client.Close();
+                    #region DropBox Connection
+                    try
+                    {
+                        // Creating the cloudstorage object 
+                        CloudStorage dropBoxStorage = new CloudStorage();
+
+                        // get the configuration for dropbox 
+                        var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                        // declare an access token
+                        ICloudStorageAccessToken accessToken = null;
+
+                        // load a valid security token from file
+                        string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                        //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                        using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                        {
+                            accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                        }
+
+                        // open the connection 
+                        var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+
+                        var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                        //check if folder exists in child collection
+                        #region check childs
+
+
+                        //lista folderow
+                        List<String> folders = new List<String>();
+
+                        // enumerate all child (folder and files) 
+                        foreach (var fof in mainFolder)
+                        {
+                            // check if we have a directory 
+                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                            if (bIsDirectory)
+                            {
+                                //get folder names
+                                folders.Add(fof.Name);
+                            }
+                        }
+                        bool isFolder = false;
+                        foreach (var fof in folders)
+                        {
+                            if (fof.Equals(model.RestaurantID.ToString()))
+                            {
+                                isFolder = true;
+                            }
+                        }
+                        #endregion
+
+
+                        if (!isFolder)
+                        {
+                            // get a specific directory in the cloud storage eg. "/images/1"
+                            var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + model.RestaurantID.ToString());
+                            var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + model.RestaurantID.ToString() + "/logo");
+                        }
+                        else
+                        {
+                            var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + model.RestaurantID.ToString() + "/logo");
+                        }
+
+                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + model.RestaurantID.ToString() + "/logo");
+
+
+                        ICloudFileSystemEntry fse;
+
+                        // lista linkow uri
+                        Uri logo;
+                        if (resFolder.Count != 0)
+                        {
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in resFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    //logo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    model.File = new images();
+                                    model.File.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    model.File.name = fof.Name;
+                                    model.Foto = "<img src=" + model.File.link.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //default logo
+                            var defaultLogoFolder = dropBoxStorage.GetFolder("/Public/images/defaultlogo");
+
+                            ICloudFileSystemEntry fse1;
+
+                            // lista linkow uri
+                            Uri defaultLogo;
+                            String htmlImgLogo = string.Empty;
+
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in defaultLogoFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse1 = dropBoxStorage.GetFileSystemObject(fof.Name, defaultLogoFolder);
+                                if (!bIsDirectory)
+                                {
+                                    //pobiera liste linkow do plikow w katalogu rodzica
+                                    defaultLogo = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
+                                    htmlImgLogo = "<img style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%;  \" \\>";
+                                    //nowy.Foto = "<img src=" + defaultLogo.AbsoluteUri + " style=\"backgroud: url(" + defaultLogo.AbsoluteUri + "); background-size: auto 100%; ><\\span>"; 
+                                    model.File = new images();
+                                    model.File.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse1);
+                                    model.File.name = fof.Name;
+                                    model.Foto = "<img src=" + model.File.link.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+
+                                    //nowy.Foto = "<img src=" + defaultLogo.AbsoluteUri + " style=\"height:200px;display: block;margin-left: auto; margin-right: auto;\" \\>";
+
+                                }
+                            }
+                            //ViewData["logo"] = htmlImgLogo;
+                        }
+
+
+
+                        dropBoxStorage.Close();
+
+
+
+                    }
+                    catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                    {
+                        Response.Write(ex.ToString());
+                    }
+                    #endregion
                 }
                 catch (Exception e)
                 {
@@ -1517,105 +1814,123 @@ namespace Erestauracja.Controllers
         // GET: /ManagePanel/Gallery
         public ActionResult Gallery(int id)
         {
-            #region DropBox Connection
-            try
+            MainPageModel model = new MainPageModel();
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && (client.IsRestaurantOwner(User.Identity.Name, id)))
             {
-                // Creating the cloudstorage object 
-                CloudStorage dropBoxStorage = new CloudStorage();
-
-                // get the configuration for dropbox 
-                var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
-
-                // declare an access token
-                ICloudStorageAccessToken accessToken = null;
-
-                // load a valid security token from file
-                string path = Server.MapPath(Url.Content("~/Content/token.txt"));
-
-                //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
-                using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                #region DropBox Connection
+                try
                 {
-                    accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
-                }
+                    // Creating the cloudstorage object 
+                    CloudStorage dropBoxStorage = new CloudStorage();
 
-                // open the connection 
-                var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+                    // get the configuration for dropbox 
+                    var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
 
+                    // declare an access token
+                    ICloudStorageAccessToken accessToken = null;
 
-                var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+                    // load a valid security token from file
+                    string path = Server.MapPath(Url.Content("~/Content/token.txt"));
 
-                //check if folder exists in child collection
-                #region check childs
-
-                
-                //lista folderow
-                List<String> folders = new List<String>();
-
-                // enumerate all child (folder and files) 
-                foreach (var fof in mainFolder)
-                {
-                    // check if we have a directory 
-                    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                    if (bIsDirectory)
+                    //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
-                        //get folder names
-                        folders.Add(fof.Name);
+                        accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
                     }
-                }
-                bool isFolder = false;
-                foreach (var fof in folders)
-                {
-                    if (fof.Equals(id.ToString()))
+
+                    // open the connection 
+                    var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+
+                    var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                    //check if folder exists in child collection
+                    #region check childs
+
+
+                    //lista folderow
+                    List<String> folders = new List<String>();
+
+                    // enumerate all child (folder and files) 
+                    foreach (var fof in mainFolder)
                     {
-                        isFolder = true;
+                        // check if we have a directory 
+                        Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                        if (bIsDirectory)
+                        {
+                            //get folder names
+                            folders.Add(fof.Name);
+                        }
                     }
+                    bool isFolder = false;
+                    foreach (var fof in folders)
+                    {
+                        if (fof.Equals(id.ToString()))
+                        {
+                            isFolder = true;
+                        }
+                    }
+                    #endregion
+
+
+                    if (!isFolder)
+                    {
+                        // get a specific directory in the cloud storage eg. "/images/1"
+                        var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+                    }
+
+                    var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+
+
+                    ICloudFileSystemEntry fse;
+
+                    // lista linkow uri
+                    List<Uri> uris = new List<Uri>();
+
+
+                    //model.FileName = new List<string>();
+                    //model.links = new List<Uri>();
+                    model.Files = new List<images>();
+                    images img = null;
+                    // enumerate all child (folder and files) 
+                    foreach (var fof in resFolder)
+                    {
+                        // check if we have a directory 
+                        Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                        fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
+                        if (!bIsDirectory)
+                        {
+                            img = new images();
+                            img.name = fof.Name;
+                            img.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                            model.Files.Add(img);
+                        }
+                    }
+
+
+                    dropBoxStorage.Close();
+
+                    //ViewData["imagesuris"] = uris;
+
+                }
+                catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                {
+                    ;
                 }
                 #endregion
-
-
-                if (!isFolder)
-                {
-                    // get a specific directory in the cloud storage eg. "/images/1"
-                    var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
-                }
-                
-                var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
-                
-
-                ICloudFileSystemEntry fse;
-
-                // lista linkow uri
-                List<Uri> uris = new List<Uri>();
-
-                // enumerate all child (folder and files) 
-                foreach (var fof in resFolder)
-                {
-                    // check if we have a directory 
-                    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                    fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
-                    if (!bIsDirectory)
-                    {
-                        //pobiera liste linkow do plikow w katalogu rodzica
-                        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                    }
-                }
-
-                dropBoxStorage.Close();
-
-                ViewData["imagesuris"] = uris;
-                
+                ViewData["id"] = id;
+                //MainPageModel model = new MainPageModel();
+                model.RestaurantID = id;
+                return View(model);
             }
-            catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+            else 
             {
-                ;
+                return RedirectToAction("Restaurant");
             }
-            #endregion
-            ViewData["id"] = id;
-            MainPageModel model = new MainPageModel();
-            model.RestaurantID = id;
-            return View(model);
+            
         }
 
 
@@ -1627,164 +1942,296 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult Gallery(HttpPostedFileBase fileUpload, int id)
         {
-            if (fileUpload.ContentType.Equals("image/jpeg") || fileUpload.ContentType.Equals("image/png"))
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, id) ))
             {
-                #region DropBox Connection
-
-                try
+                if (fileUpload != null)
                 {
-                    // Creating the cloudstorage object 
-                    CloudStorage dropBoxStorage = new CloudStorage();
-
-                    // get the configuration for dropbox 
-                    var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
-
-                    // declare an access token
-                    ICloudStorageAccessToken accessToken = null;
-
-                    // load a valid security token from file
-                    string path = Server.MapPath(Url.Content("~/Content/token.txt"));
-
-                    //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
-                    using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                    if (( fileUpload.ContentType.Equals("image/jpeg") || fileUpload.ContentType.Equals("image/png") ))
                     {
-                        accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
-                    }
+                        MainPageModel model = new MainPageModel();
 
-                    // open the connection 
-                    var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+                        #region DropBox Connection
 
-                    // get a specific directory in the cloud storage eg. "/images/1"
-                    var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
-
-                    //check if folder exists in child collection
-                    #region check childs
-
-                    ICloudFileSystemEntry fse;
-
-                    // lista linkow uri
-                    //List<Uri> uris = new List<Uri>();
-
-                    //lista folderow
-                    List<String> folders = new List<String>();
-
-                    // enumerate all child (folder and files) 
-                    foreach (var fof in mainFolder)
-                    {
-                        // check if we have a directory 
-                        Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-
-                        //fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
-                        //if (!bIsDirectory)
-                        //{
-                        //    //pobiera liste linkow do plikow w katalogu rodzica
-                        //    uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                        //}
-
-                        if (bIsDirectory)
+                        try
                         {
-                            //get folder names
-                            folders.Add(fof.Name);
+                            // Creating the cloudstorage object 
+                            CloudStorage dropBoxStorage = new CloudStorage();
+
+                            // get the configuration for dropbox 
+                            var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                            // declare an access token
+                            ICloudStorageAccessToken accessToken = null;
+
+                            // load a valid security token from file
+                            string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                            //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                            using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                            {
+                                accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                            }
+
+                            // open the connection 
+                            var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                            // get a specific directory in the cloud storage eg. "/images/1"
+                            var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                            //check if folder exists in child collection
+                            #region check childs
+
+                            ICloudFileSystemEntry fse;
+
+                            // lista linkow uri
+                            //List<Uri> uris = new List<Uri>();
+
+                            //lista folderow
+                            List<String> folders = new List<String>();
+
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in mainFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+
+                                //fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
+                                //if (!bIsDirectory)
+                                //{
+                                //    //pobiera liste linkow do plikow w katalogu rodzica
+                                //    uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                                //}
+
+                                if (bIsDirectory)
+                                {
+                                    //get folder names
+                                    folders.Add(fof.Name);
+                                }
+                            }
+                            bool isFolder = false;
+                            foreach (var fof in folders)
+                            {
+                                if (fof.Equals(id.ToString()))
+                                {
+                                    isFolder = true;
+                                }
+                            }
+                            #endregion
+
+
+                            if (isFolder)
+                            {
+                                //var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+                                var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+
+                                if (fileUpload != null)
+                                {
+                                    var fileName = Path.GetFileName(fileUpload.FileName);
+                                    var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                                    fileUpload.SaveAs(filepath);
+                                    String srcFile = Environment.ExpandEnvironmentVariables(filepath);
+                                    dropBoxStorage.UploadFile(srcFile, resFolder);
+                                    //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
+                                    System.IO.File.Delete(filepath);
+                                }
+                            }
+                            else
+                            {
+                                // Create a directory 
+                                var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+
+                                var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+                                if (fileUpload != null)
+                                {
+                                    var fileName = Path.GetFileName(fileUpload.FileName);
+                                    var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                                    fileUpload.SaveAs(filepath);
+                                    String srcFile = Environment.ExpandEnvironmentVariables(filepath);
+                                    dropBoxStorage.UploadFile(srcFile, resFolder);
+                                    //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
+                                    System.IO.File.Delete(filepath);
+                                }
+                            }
+
+
+
+
+
+
+                            #region get pictures
+
+                            //ICloudFileSystemEntry fse;
+                            var resFolderPub = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+                            // lista linkow uri
+                            //List<Uri> uris = new List<Uri>();
+
+
+                            model.Files = new List<images>();
+                            images img = null;
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in resFolderPub)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                                fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolderPub);
+                                if (!bIsDirectory)
+                                {
+                                    img = new images();
+                                    img.name = fof.Name;
+                                    img.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                    model.Files.Add(img);
+                                }
+                            }
+
+
+                            #endregion
+
+
+                            dropBoxStorage.Close();
+                            //ViewData["imagesuris"] = uris;
+
                         }
-                    }
-                    bool isFolder = false;
-                    foreach (var fof in folders)
-                    {
-                        if (fof.Equals(id.ToString()))
+                        catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
                         {
-                            isFolder = true;
+                            Response.Write(ex.ToString());
                         }
+
+
+                        #endregion
+                        //return RedirectToAction("EditMainPage", new { id = id });
+                        
+                        model.RestaurantID = id;
+                        ViewData["id"] = id;
+                        return View(model);
                     }
-                    #endregion
 
-
-                    if (isFolder)
-                    {
-                        //var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
-                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
-
-                        if (fileUpload != null)
-                        {
-                            var fileName = Path.GetFileName(fileUpload.FileName);
-                            var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                            fileUpload.SaveAs(filepath);
-                            String srcFile = Environment.ExpandEnvironmentVariables(filepath);
-                            dropBoxStorage.UploadFile(srcFile, resFolder);
-                            //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
-                            System.IO.File.Delete(filepath);
-                        }
-                    }
                     else
                     {
-                        // Create a directory 
-                        var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
-                        
-                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
-                        if (fileUpload != null)
-                        {
-                            var fileName = Path.GetFileName(fileUpload.FileName);
-                            var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                            fileUpload.SaveAs(filepath);
-                            String srcFile = Environment.ExpandEnvironmentVariables(filepath);
-                            dropBoxStorage.UploadFile(srcFile, resFolder);
-                            //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
-                            System.IO.File.Delete(filepath);
-                        }
+                        //zly format zdjecia
+                        ViewData["alert"] = "Akceptowalne formaty zdjęcia to jpeg i png.";
+                        ViewData["id"] = id;
+                        return View();
                     }
-
-
-                    
-
-                    
-
-                    #region get pictures
-
-                    //ICloudFileSystemEntry fse;
-                    var resFolderPub = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
-                    // lista linkow uri
-                    List<Uri> uris = new List<Uri>();
-
-                    // enumerate all child (folder and files) 
-                    foreach (var fof in resFolderPub)
-                    {
-                        // check if we have a directory 
-                        Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                        fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolderPub);
-                        if (!bIsDirectory)
-                        {
-                            //pobiera liste linkow do plikow w katalogu rodzica
-                            uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                        }
-                    }
-
-                    #endregion
-
-
-                    dropBoxStorage.Close();
-                    ViewData["imagesuris"] = uris;
-
                 }
-                catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                else
                 {
-                    Response.Write(ex.ToString());
+                    MainPageModel model = new MainPageModel();
+                    ViewData["alert"] = "Wybierz plik i wciśnij \"Prześlij\"";
+                    #region DropBox Connection
+                    try
+                    {
+                        // Creating the cloudstorage object 
+                        CloudStorage dropBoxStorage = new CloudStorage();
+
+                        // get the configuration for dropbox 
+                        var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                        // declare an access token
+                        ICloudStorageAccessToken accessToken = null;
+
+                        // load a valid security token from file
+                        string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                        //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                        using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                        {
+                            accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                        }
+
+                        // open the connection 
+                        var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+
+                        var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                        //check if folder exists in child collection
+                        #region check childs
+
+
+                        //lista folderow
+                        List<String> folders = new List<String>();
+
+                        // enumerate all child (folder and files) 
+                        foreach (var fof in mainFolder)
+                        {
+                            // check if we have a directory 
+                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                            if (bIsDirectory)
+                            {
+                                //get folder names
+                                folders.Add(fof.Name);
+                            }
+                        }
+                        bool isFolder = false;
+                        foreach (var fof in folders)
+                        {
+                            if (fof.Equals(id.ToString()))
+                            {
+                                isFolder = true;
+                            }
+                        }
+                        #endregion
+
+
+                        if (!isFolder)
+                        {
+                            // get a specific directory in the cloud storage eg. "/images/1"
+                            var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+                        }
+
+                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString());
+
+
+                        ICloudFileSystemEntry fse;
+
+                        // lista linkow uri
+                        List<Uri> uris = new List<Uri>();
+
+
+                        //model.FileName = new List<string>();
+                        //model.links = new List<Uri>();
+                        model.Files = new List<images>();
+                        images img = null;
+                        // enumerate all child (folder and files) 
+                        foreach (var fof in resFolder)
+                        {
+                            // check if we have a directory 
+                            Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                            fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
+                            if (!bIsDirectory)
+                            {
+                                img = new images();
+                                img.name = fof.Name;
+                                img.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
+                                model.Files.Add(img);
+                            }
+                        }
+
+
+                        dropBoxStorage.Close();
+
+                        //ViewData["imagesuris"] = uris;
+
+                    }
+                    catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                    {
+                        ;
+                    }
+                    #endregion
+                    ViewData["id"] = id;
+                    
+                    model.RestaurantID = id;
+                    return View(model);
                 }
-
-
-                #endregion
-                //return RedirectToAction("EditMainPage", new { id = id });
-                MainPageModel model = new MainPageModel();
-                model.RestaurantID = id;
-                ViewData["id"] = id;
-                return View(model);
             }
             else
             {
-                //zly format zdjecia
-                ViewData["alert"] = "Akceptowalne formaty zdjęcia to jpeg i png.";
-                ViewData["id"] = id;
-                return View();
+                return RedirectToAction("Restaurant");
             }
             //ViewData["id"] = id;
 
@@ -1792,93 +2239,17 @@ namespace Erestauracja.Controllers
         }
 
         /// <summary>
-        /// File delete - get request from javascript - do skonczenia
+        /// File delete - get request from javascript function
         /// </summary>
         /// <param name="plik"></param>
         /// <param name="resid"></param>
         /// <returns>Redirect to Gallery</returns>
         public ActionResult FileDelete(string plik, int resid)
         {
-
-            #region DropBox Connection
-            try
-            {
-                // Creating the cloudstorage object 
-                CloudStorage dropBoxStorage = new CloudStorage();
-
-                // get the configuration for dropbox 
-                var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
-
-                // declare an access token
-                ICloudStorageAccessToken accessToken = null;
-
-                // load a valid security token from file
-                string path = Server.MapPath(Url.Content("~/Content/token.txt"));
-
-                //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
-                using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
-                    accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
-                }
-
-                // open the connection 
-                var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
-
-                // get a specific directory in the cloud storage eg. "/images/1"
-                var publicFolder = dropBoxStorage.GetFolder("/Public/images/" + resid.ToString());
-
-                ICloudFileSystemEntry fse;
-
-                // lista linkow uri
-                List<Uri> uris = new List<Uri>();
-
-                // enumerate all child (folder and files) 
-                foreach (var fof in publicFolder)
-                {
-                    // check if we have a directory 
-                    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                    fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
-                    if (!bIsDirectory)
-                    {
-                        //pobiera liste linkow do plikow w katalogu rodzica
-                        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                    }
-                }
-
-                dropBoxStorage.Close();
-
-                ViewData["imagesuris"] = uris;
-                string test, test1;
-                foreach (Uri link in uris)
-                {
-
-                    test = link.ToString();
-                    test1 = link.AbsoluteUri;
-                }
-            }
-            catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
-            {
-                ;
-            }
-            #endregion
-            return Json(new { redirectToUrl = Url.Action("Gallery", "ManagePanel", new { id = resid }) });
-        }
-
-
-        public ActionResult UploadLogo(int id)
-        {
-            ViewData["id"] = id;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult UploadLogo(HttpPostedFileBase logofile, int id)
-        {
-            if (logofile.ContentType.Equals("image/jpeg") || logofile.ContentType.Equals("image/png"))
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, resid) ))
             {
                 #region DropBox Connection
-
                 try
                 {
                     // Creating the cloudstorage object 
@@ -1902,19 +2273,273 @@ namespace Erestauracja.Controllers
                     // open the connection 
                     var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
 
-                    // get a specific directory in the cloud storage eg. "/images/1"
-                    var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+                    // Delete a file 
+                    dropBoxStorage.DeleteFileSystemEntry("/Public/images/" + resid.ToString() + "/" + plik);
+                    dropBoxStorage.Close();
+                }
+                catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                {
+                    ;
+                }
+                #endregion
+                //return Json(new { redirectToUrl = Url.Action("Gallery", "ManagePanel", new { id = (int)resid }) });
+                return RedirectToAction("Gallery", new { id = (int)resid });
+            }
+            else
+            {
+                return RedirectToAction("Restaurant");
+            }
+        }
+
+        /// <summary>
+        /// GET - upload logo View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
+        public ActionResult UploadLogo(int id)
+        {
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, id) ))
+            {
+                ViewData["id"] = id;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Restaurant");
+            }
+        }
+
+        /// <summary>
+        /// POST - Obsluguje upload logo dla restauracji
+        /// </summary>
+        /// <param name="logofile"></param>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
+        [HttpPost]
+        public ActionResult UploadLogo(HttpPostedFileBase logofile, int id)
+        {
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, id) ))
+            {
+                if (logofile != null)
+                {
+                    if (logofile.ContentType.Equals("image/jpeg") || logofile.ContentType.Equals("image/png"))
+                    {
+                        #region DropBox Connection
+
+                        try
+                        {
+                            // Creating the cloudstorage object 
+                            CloudStorage dropBoxStorage = new CloudStorage();
+
+                            // get the configuration for dropbox 
+                            var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                            // declare an access token
+                            ICloudStorageAccessToken accessToken = null;
+
+                            // load a valid security token from file
+                            string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                            //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                            using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                            {
+                                accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                            }
+
+                            // open the connection 
+                            var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                            // get a specific directory in the cloud storage eg. "/images/1"
+                            var mainFolder = dropBoxStorage.GetFolder("/Public/images/");
+
+                            //check if folder exists in child collection
+                            #region check childs
+
+                            //ICloudFileSystemEntry fse;
+
+                            // lista linkow uri
+                            List<Uri> uris = new List<Uri>();
+
+                            //lista folderow
+                            List<String> folders = new List<String>();
+
+                            // enumerate all child (folder and files) 
+                            foreach (var fof in mainFolder)
+                            {
+                                // check if we have a directory 
+                                Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+
+                                //fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
+                                //if (!bIsDirectory)
+                                //{
+                                //    //pobiera liste linkow do plikow w katalogu rodzica
+                                //    uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                                //}
+                                if (bIsDirectory)
+                                {
+                                    //get folder names
+                                    folders.Add(fof.Name);
+                                }
+                            }
+                            bool isFolder = false;
+                            foreach (var fof in folders)
+                            {
+                                if (fof.Equals(id.ToString()))
+                                {
+                                    isFolder = true;
+                                }
+                            }
+
+                            if (isFolder)
+                            {
+                                var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
+                                var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString() + "/logo");
+
+                                if (logofile != null)
+                                {
+                                    var fileName = Path.GetFileName(logofile.FileName);
+                                    var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                                    logofile.SaveAs(filepath);
+                                    String srcFile = Environment.ExpandEnvironmentVariables(filepath);
+                                    dropBoxStorage.UploadFile(srcFile, resFolder);
+                                    //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
+                                    System.IO.File.Delete(filepath);
+                                }
+                            }
+                            else
+                            {
+                                // Create a directory 
+                                var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
+                                var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
+                                var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString() + "/logo");
+                                if (logofile != null)
+                                {
+                                    var fileName = Path.GetFileName(logofile.FileName);
+                                    var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                                    logofile.SaveAs(filepath);
+                                    String srcFile = Environment.ExpandEnvironmentVariables(filepath);
+                                    dropBoxStorage.UploadFile(srcFile, resFolder);
+                                    //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
+                                    System.IO.File.Delete(filepath);
+                                }
+                            }
+
+
+                            #endregion
+
+                            //ICloudFileSystemEntry fse;
+
+
+
+
+                            //#region get pictures
+
+                            //ICloudFileSystemEntry fse;
+
+                            //// lista linkow uri
+                            //List<Uri> uris = new List<Uri>();
+
+                            //// enumerate all child (folder and files) 
+                            //foreach (var fof in publicFolder)
+                            //{
+                            //    // check if we have a directory 
+                            //    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
+
+                            //    fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
+                            //    if (!bIsDirectory)
+                            //    {
+                            //        //pobiera liste linkow do plikow w katalogu rodzica
+                            //        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                            //    }
+                            //}
+
+                            //#endregion
+
+
+                            dropBoxStorage.Close();
+                            //ViewData["imagesuris"] = uris;
+
+                        }
+                        catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                        {
+                            Response.Write(ex.ToString());
+                        }
+
+
+                        #endregion
+                        return RedirectToAction("EditMainPage", new { id = id });
+                    }
+                    else
+                    {
+                        //zly format zdjecia
+                        ViewData["alert"] = "Akceptowalne formaty zdjęcia to jpeg i png.";
+                        ViewData["id"] = id;
+                        return View();
+                    }
+                }
+                else 
+                { 
+                    //pusty plik
+                    ViewData["alert"] = "Wybierz plik i wciśnij \"Prześlij\"";
+                    ViewData["id"] = id;
+                    return View();
+                }
+            }
+            else
+            {
+                return RedirectToAction("Restaurant");
+            }
+            
+        }
+
+        /// <summary>
+        /// Logo delete - get request from javascript function
+        /// </summary>
+        /// <param name="plik"></param>
+        /// <param name="resid"></param>
+        /// <returns></returns>
+        public ActionResult LogoDelete(string plik, int resid)
+        {
+            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, resid) ))
+            {
+                #region DropBox Connection
+                try
+                {
+                    // Creating the cloudstorage object 
+                    CloudStorage dropBoxStorage = new CloudStorage();
+
+                    // get the configuration for dropbox 
+                    var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                    // declare an access token
+                    ICloudStorageAccessToken accessToken = null;
+
+                    // load a valid security token from file
+                    string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                    //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                    {
+                        accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                    }
+
+                    // open the connection 
+                    var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                    var mainFolder = dropBoxStorage.GetFolder("/Public/images/" + resid.ToString() + "/logo/");
 
                     //check if folder exists in child collection
                     #region check childs
 
-                    //ICloudFileSystemEntry fse;
-
-                    // lista linkow uri
-                    List<Uri> uris = new List<Uri>();
 
                     //lista folderow
                     List<String> folders = new List<String>();
+
+                    bool ifExists = false;
 
                     // enumerate all child (folder and files) 
                     foreach (var fof in mainFolder)
@@ -1922,115 +2547,38 @@ namespace Erestauracja.Controllers
                         // check if we have a directory 
                         Boolean bIsDirectory = fof is ICloudDirectoryEntry;
 
-
-                        //fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
-                        //if (!bIsDirectory)
-                        //{
-                        //    //pobiera liste linkow do plikow w katalogu rodzica
-                        //    uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                        //}
-                        if (bIsDirectory)
+                        if (!bIsDirectory)
                         {
-                            //get folder names
+                            //get files names
                             folders.Add(fof.Name);
+                            ifExists = true;
                         }
                     }
-                    bool isFolder = false;
-                    foreach (var fof in folders)
-                    {
-                        if (fof.Equals(id.ToString()))
-                        {
-                            isFolder = true;
-                        }
-                    }
-
-                    if (isFolder)
-                    {
-                        var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
-                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString() + "/logo");
-
-                        if (logofile != null)
-                        {
-                            var fileName = Path.GetFileName(logofile.FileName);
-                            var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                            logofile.SaveAs(filepath);
-                            String srcFile = Environment.ExpandEnvironmentVariables(filepath);
-                            dropBoxStorage.UploadFile(srcFile, resFolder);
-                            //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
-                            System.IO.File.Delete(filepath);
-                        }
-                    }
-                    else
-                    {
-                        // Create a directory 
-                        var newdirFolder = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString());
-                        var newdirFolder2 = dropBoxStorage.CreateFolder("/Public/images/" + id.ToString() + "/logo");
-                        var resFolder = dropBoxStorage.GetFolder("/Public/images/" + id.ToString() + "/logo");
-                        if (logofile != null)
-                        {
-                            var fileName = Path.GetFileName(logofile.FileName);
-                            var filepath = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                            logofile.SaveAs(filepath);
-                            String srcFile = Environment.ExpandEnvironmentVariables(filepath);
-                            dropBoxStorage.UploadFile(srcFile, resFolder);
-                            //trzeba ten plik wyjebac odrazu po zapisaniu go na dropa
-                            System.IO.File.Delete(filepath);
-                        }
-                    }
-
 
                     #endregion
 
-                    //ICloudFileSystemEntry fse;
-
-
-
-
-                    //#region get pictures
-
-                    //ICloudFileSystemEntry fse;
-
-                    //// lista linkow uri
-                    //List<Uri> uris = new List<Uri>();
-
-                    //// enumerate all child (folder and files) 
-                    //foreach (var fof in publicFolder)
-                    //{
-                    //    // check if we have a directory 
-                    //    Boolean bIsDirectory = fof is ICloudDirectoryEntry;
-
-                    //    fse = dropBoxStorage.GetFileSystemObject(fof.Name, publicFolder);
-                    //    if (!bIsDirectory)
-                    //    {
-                    //        //pobiera liste linkow do plikow w katalogu rodzica
-                    //        uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
-                    //    }
-                    //}
-
-                    //#endregion
-
-
+                    if (ifExists)
+                    {
+                        //jezeli jakies pliki sa w tym katalogu - usun zadany plik
+                        dropBoxStorage.DeleteFileSystemEntry("/Public/images/" + resid.ToString() + "/logo/" + plik);
+                    }
+                                        
                     dropBoxStorage.Close();
-                    //ViewData["imagesuris"] = uris;
-
                 }
                 catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
                 {
-                    Response.Write(ex.ToString());
+                    ;
                 }
-
-
                 #endregion
-                return RedirectToAction("EditMainPage", new { id = id });
+                //return Json(new { redirectToUrl = Url.Action("EditMainPage", "ManagePanel", new { id = resid }) });
+                ViewData["id"] = resid;
+                return RedirectToAction("EditMainPage", new { id = resid });
             }
+
             else
-            { 
-                //zly format zdjecia
-                ViewData["alert"] = "Akceptowalne formaty zdjęcia to jpeg i png.";
-                ViewData["id"] = id;
-                return View();
+            {
+                return RedirectToAction("Restaurant");
             }
-            
         }
             
         //

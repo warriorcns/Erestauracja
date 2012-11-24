@@ -26,7 +26,7 @@
         }
     </style>
 
-    
+    <div style="color: Red;"><%: ViewData["alert"] %></div>
     <div>Dodaj zdjęcia(akceptowalne formaty: jpg, png):
         <% using (Html.BeginForm("Gallery", "ManagePanel", FormMethod.Post, new { enctype = "multipart/form-data", id=Model.RestaurantID }))
            {%>
@@ -37,17 +37,18 @@
         <%}%>
     </div>
     <ul class="yoxview">
-        <% foreach (Uri link in (IEnumerable)ViewData["imagesuris"])
+        <%--<% foreach (Uri link in (IEnumerable)ViewData["imagesuris"])
+           { %>--%>
+           <% foreach (Erestauracja.Models.images foo in Model.Files)
            { %>
-        <li class="galleryElement"><a href="<%:link.AbsoluteUri%>">
-            <img class="thumbnail" src="<%:link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" />
+        <li class="galleryElement"><a href="<%:foo.link.AbsoluteUri %>">
+            <img class="thumbnail" src="<%:foo.link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" />
         </a></li>
-        <%--<button class="delphoto" onclick="deleteFile('<%:link.AbsoluteUri %>','<%: ViewData["id"] %>')">send</button>--%>
+        <button class="delphoto" onclick="deleteFile('<%:foo.name %>','<%: ViewData["id"] %>')">Usuń zdjęcie</button>
         <%} %>
     </ul>
    
-    
-
+   
     <script type="text/javascript">
 
     jQuery('.thumbnail').nailthumb({ width: 150, height: 150, method: 'resize', fitDirection: 'center center' });
@@ -65,8 +66,9 @@
             var data = { plik: plik, resid: resid };
             $.get(url, data, function (data) {
                 // TODO: do something with the response from the controller action
-                alert('the value was successfully sent to the server');
-                //window.location.href = data.redirectToUrl;
+                //alert('the value was successfully sent to the server');
+                //window.location.href = '<%: Url.Action("Gallery", "ManagePanel", new { id = (int)ViewData["id"] } ) %>';
+                location.reload();
             });
 
 
@@ -75,16 +77,11 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".delphoto")
-            .button()
-            .click(function (event) {
-                event.preventDefault();
-            });
+            $(".delphoto").button()
         });
             
         
     </script>
-
 
 </asp:Content>
 

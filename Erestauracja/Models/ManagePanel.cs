@@ -211,9 +211,18 @@ namespace Erestauracja.Models
 
         //[AllowHtml]
         //[DataType(DataType.Html)]
-        public HttpPostedFileBase File { get; set; }
-    }
+        public images File { get; set; }
 
+        public List<images> Files { get; set; }
+        
+        
+    }
+    public class images
+    {
+        public String name { get; set; }
+        public Uri link { get; set; }
+
+    }
     public class DeliveryPageModel
     {
         [HiddenInput]

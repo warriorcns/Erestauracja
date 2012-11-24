@@ -122,8 +122,11 @@
         <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
             <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="Auto">
                 <%--<%: Html.TextAreaFor(m => m.Foto, new { id = "htmlarea2", style = "width: 300px", rows = "10" })%>--%>
-                
+                <%: ViewData["alert"] %>
                 <%: Html.ActionLink("Załaduj zdjęcie główne.", "UploadLogo", "ManagePanel", new { id = (int)ViewData["id"] }, null)%>
+                <%: Html.ActionLink("Usuń zdjęcie główne.", "LogoDelete", "ManagePanel", new { plik = Model.File.name, resid = (int)ViewData["id"] }, null)%>
+                
+                <%: Html.DisplayFor(m => m.Foto)%>
                 
             </asp:Panel>
             <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="Auto">
@@ -140,5 +143,5 @@
 </asp:Content>
 
 <asp:Content ID="Head" ContentPlaceHolderID="Head" runat="server">
-    
+
 </asp:Content>
