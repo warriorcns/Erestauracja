@@ -1894,6 +1894,7 @@ namespace Erestauracja.Controllers
                     //model.links = new List<Uri>();
                     model.Files = new List<images>();
                     images img = null;
+                    bool ifFolderHasFiles = false;
                     // enumerate all child (folder and files) 
                     foreach (var fof in resFolder)
                     {
@@ -1903,13 +1904,17 @@ namespace Erestauracja.Controllers
                         fse = dropBoxStorage.GetFileSystemObject(fof.Name, resFolder);
                         if (!bIsDirectory)
                         {
+                            ifFolderHasFiles = true;
                             img = new images();
                             img.name = fof.Name;
                             img.link = DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse);
                             model.Files.Add(img);
                         }
                     }
-
+                    if (!ifFolderHasFiles)
+                    {
+                        ViewData["alert"] = "Galeria nie zawiera żadnych zdjęć.";
+                    }
 
                     dropBoxStorage.Close();
 
