@@ -39,12 +39,14 @@
     <ul class="yoxview">
         <%--<% foreach (Uri link in (IEnumerable)ViewData["imagesuris"])
            { %>--%>
-           <% foreach (Erestauracja.Models.images foo in Model.Files)
-           { %>
+           <% int imgID = 0;
+               foreach (Erestauracja.Models.images foo in Model.Files)
+               {
+                   imgID++;%>
         <li class="galleryElement"><a href="<%:foo.link.AbsoluteUri %>">
-            <img class="thumbnail" src="<%:foo.link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" />
+            <img id="<%:ViewData["id"] + "_" + imgID %>" class="thumbnail" src="<%:foo.link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" />
         </a></li>
-        <button class="delphoto" onclick="deleteFile('<%:foo.name %>','<%: ViewData["id"] %>')">Usuń zdjęcie</button>
+        <button class="delphoto" onclick="deleteFile('<%:foo.name %>','<%: ViewData["id"] %>','<%: imgID %>')">Usuń zdjęcie</button>
         <%} %>
     </ul>
    
@@ -59,7 +61,7 @@
     </script>
 
     <script type="text/javascript">
-        function deleteFile(plik, resid) {
+        function deleteFile(plik, resid, imgId) {
             //alert(link);
             //alert(resid);
             var url = '<%: Url.Action("FileDelete", "ManagePanel") %>';
@@ -68,7 +70,8 @@
                 // TODO: do something with the response from the controller action
                 //alert('the value was successfully sent to the server');
                 //window.location.href = '<%: Url.Action("Gallery", "ManagePanel", new { id = (int)ViewData["id"] } ) %>';
-                location.reload();
+                //location.reload();
+                $("#" + resid + "_" + imgId).attr('src', '../../Content/images/deleted.jpg');
             });
 
 
@@ -82,6 +85,7 @@
             
         
     </script>
+
 
 </asp:Content>
 

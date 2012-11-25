@@ -864,6 +864,7 @@
     <Content Include="Content\images\arrow-down.jpg" />
     <Content Include="Content\images\arrow-up.jpg" />
     <Content Include="Content\images\Delete.png" />
+    <Content Include="Content\images\deleted.jpg" />
     <Content Include="Content\images\disk.png" />
     <Content Include="Content\images\empty.gif" />
     <Content Include="Content\images\favicon.ico" />

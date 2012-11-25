@@ -2249,7 +2249,7 @@ namespace Erestauracja.Controllers
         /// <param name="plik"></param>
         /// <param name="resid"></param>
         /// <returns>Redirect to Gallery</returns>
-        public ActionResult FileDelete(string plik, int resid)
+        public void FileDelete(string plik, int resid)
         {
             ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
             if (client.IsUserInRole(User.Identity.Name, "Menadżer") && ( client.IsRestaurantOwner(User.Identity.Name, resid) ))
@@ -2288,18 +2288,18 @@ namespace Erestauracja.Controllers
                 }
                 #endregion
                 //return Json(new { redirectToUrl = Url.Action("Gallery", "ManagePanel", new { id = (int)resid }) });
-                return RedirectToAction("RedirectToGallery", new { id = (int)resid });
+                //return RedirectToAction("RedirectToGallery", new { id = (int)resid });
             }
             else
             {
-                return RedirectToAction("Restaurant");
+                RedirectToAction("Restaurant");
             }
         }
 
 
         public ActionResult RedirectToGallery(int id)
         {
-            return RedirectToAction("MainPage", new { id = (int)id });
+            return RedirectToAction("Gallery", new { id = (int)id });
         }
 
 
