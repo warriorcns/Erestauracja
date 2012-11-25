@@ -32,7 +32,7 @@
            {%>
         <%--<%: Html.HiddenFor(m => m.RestaurantID) %>--%>
         <%: Html.HiddenFor(m => m.RestaurantID) %>
-        <input type="file" id="fileUploadID" name="fileUpload" />
+        <input type="file" id="fileUploadID" name="fileUpload" accept="image/jpeg, image/png "/>
         <input type="submit" />
         <%}%>
     </div>
@@ -54,7 +54,7 @@
     jQuery('.thumbnail').nailthumb({ width: 150, height: 150, method: 'resize', fitDirection: 'center center' });
         jQuery(document).ready(function ($) { 
             jQuery.noConflict();
-            $(".yoxview").yoxview({ lang: 'pl', linkToOriginalContext: false,  });
+            $(".yoxview").yoxview({ lang: 'pl', linkToOriginalContext: false, renderButtons:true, imagesFolder: "../../Content/yoxview/images/", dataFolder: "../../Content/yoxview/data/" });
         });
     </script>
 

@@ -2288,13 +2288,20 @@ namespace Erestauracja.Controllers
                 }
                 #endregion
                 //return Json(new { redirectToUrl = Url.Action("Gallery", "ManagePanel", new { id = (int)resid }) });
-                return RedirectToAction("Gallery", new { id = (int)resid });
+                return RedirectToAction("RedirectToGallery", new { id = (int)resid });
             }
             else
             {
                 return RedirectToAction("Restaurant");
             }
         }
+
+
+        public ActionResult RedirectToGallery(int id)
+        {
+            return RedirectToAction("MainPage", new { id = (int)id });
+        }
+
 
         /// <summary>
         /// GET - upload logo View
