@@ -7,7 +7,7 @@
         Zdjęcie główne:
         <% using (Html.BeginForm("UploadLogo", "ManagePanel", FormMethod.Post, new { enctype = "multipart/form-data", id = (int)ViewData["id"] }))
            {%>
-        <input type="file" id="logofile" name="logofile" />
+        <input type="file" id="logofile" name="logofile" accept="image/jpeg, image/png"/>
         <input type="submit" />
         <%}%>
     </div>

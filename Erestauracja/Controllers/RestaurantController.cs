@@ -438,7 +438,7 @@ namespace Erestauracja.Controllers
 
                 // lista linkow uri
                 List<Uri> uris = new List<Uri>();
-
+                bool ifFolderHasFiles = false;
                 // enumerate all child (folder and files) 
                 foreach (var fof in publicFolder)
                 {
@@ -450,9 +450,10 @@ namespace Erestauracja.Controllers
                     {
                         //pobiera liste linkow do plikow w katalogu rodzica
                         uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
+                        ifFolderHasFiles = true;
                     }
                 }
-                if (publicFolder.Count == 0)
+                if (!ifFolderHasFiles)
                 {
                     ViewData["alert"] = "Galeria nie zawiera żadnych zdjęć.";
                 }
