@@ -38,7 +38,7 @@
             <img class="thumbnail" src="/Content/images/resid1/2.jpg" alt="Zdjecie" style="display: inline;" />
         </a>
     </div>--%>
-
+    <div style="color: Red"><%: ViewData["alert"] %></div>
    <div class="yoxview" >
         <% foreach (Uri link in (IEnumerable)ViewData["imagesuris"])
            { %>

@@ -452,21 +452,20 @@ namespace Erestauracja.Controllers
                         uris.Add(DropBoxStorageProviderTools.GetPublicObjectUrl(accessToken, fse));
                     }
                 }
+                if (publicFolder.Count == 0)
+                {
+                    ViewData["alert"] = "Galeria nie zawiera żadnych zdjęć.";
+                }
 
                 dropBoxStorage.Close();
 
                 ViewData["imagesuris"] = uris;
-                string test, test1;
-                foreach (Uri link in uris)
-                {
-
-                    test = link.ToString();
-                    test1 = link.AbsoluteUri;
-                }
+                
             }
             catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
             {
-                ;
+                ViewData["imagesuris"] = string.Empty;
+                ViewData["alert"] = "Podana restauracja nie istnieje.";
             }
             #endregion
 
