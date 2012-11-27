@@ -229,6 +229,9 @@ namespace Contract
         List<string> GetEmployeesInRestaurant(string login);
 
         #endregion
+
+        [OperationContract]
+        int SaveOrder(string login, BasketRest basket);
     }
 
 
@@ -1164,6 +1167,7 @@ namespace Contract
         public string deliveryTime = String.Empty;
         public decimal deliveryPrice = 0.00M;
         public decimal totalPriceRest = 0.00M;
+        public string comment = String.Empty;
         public List<BasketProduct> products = new List<BasketProduct>();
 
         [DataMember]
@@ -1206,6 +1210,13 @@ namespace Contract
         {
             get { return totalPriceRest; }
             set { totalPriceRest = value; }
+        }
+
+        [DataMember]
+        public string Comment
+        {
+            get { return comment; }
+            set { comment = value; }
         }
 
         [DataMember]

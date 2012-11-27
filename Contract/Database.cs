@@ -5034,6 +5034,112 @@ namespace Contract
 
         #endregion
 
+        public int SaveOrder(string login, BasketRest basket)
+        {
+            int id = -1;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlCommand command = new MySqlCommand(Queries.SaveOrder);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@restaurantId", basket.RestaurantId);
+            command.Parameters.AddWithValue("@price", basket.TotalPriceRest);
+            command.Parameters.AddWithValue("@comment", basket.Comment);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+
+            MySqlCommand command2 = new MySqlCommand(Queries.AddProductToOrder);
+
+            command.Connection = conn;
+            command2.Connection = conn;
+
+            MySqlTransaction tran = null;
+
+            try
+            {
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+                command2.Transaction = tran;
+
+                id =  Convert.ToInt32(command.ExecuteScalar());
+
+                if (id > 0)
+                {
+                    foreach (BasketProduct item in basket.Products)
+                    {
+                        command2.Parameters.Clear();
+                        command2.Parameters.AddWithValue("@orderId", id);
+                        command2.Parameters.AddWithValue("@productId", item.ProductId);
+                        command2.Parameters.AddWithValue("@priceOption", item.PriceOption);
+                        command2.Parameters.AddWithValue("@count", item.Count);
+                        command2.Parameters.AddWithValue("@priceXcount", item.TotalPriceProd);
+                        command2.Parameters.AddWithValue("@nonPriceOption", item.NonPriceOption);
+                        command2.Parameters.AddWithValue("@nonPriceOption2", item.NonPriceOption2);
+                        command2.Parameters.AddWithValue("@comment", item.Comment);
+
+                        int rowsaffected = 0;
+                        rowsaffected = command2.ExecuteNonQuery();
+                        if (rowsaffected < 1)
+                        {
+                            tran.Rollback();
+                            return -1;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    tran.Rollback();
+                    return -1;
+                }
+
+                tran.Commit();
+            }
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "SaveOrder" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "SaveOrder" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return -1;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return id;
+        }
+
         #region Geocoding
 
         public class Coordinate

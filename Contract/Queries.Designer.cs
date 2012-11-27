@@ -88,6 +88,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `products_in_order`(`orderId`, `productId`, `priceOption`, `count`, `priceXcount`, `nonPriceOption1`, `nonPriceOption2`, `comment`) VALUES(@orderId, @productId, @priceOption, @count, @priceXcount, @nonPriceOption, @nonPriceOption2, @comment).
+        /// </summary>
+        internal static string AddProductToOrder {
+            get {
+                return ResourceManager.GetString("AddProductToOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @log [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddRestaurant {
@@ -743,6 +752,15 @@ namespace Contract {
         internal static string RoleExists {
             get {
                 return ResourceManager.GetString("RoleExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `orders`(`userId`, `restaurantId`, `status`, `totalPrice`, `comment`, `orderDate`, `payment`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @login), @restaurantId, NULL, @price, @comment, @date, NULL); SELECT LAST_INSERT_ID().
+        /// </summary>
+        internal static string SaveOrder {
+            get {
+                return ResourceManager.GetString("SaveOrder", resourceCulture);
             }
         }
         

@@ -383,4 +383,10 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetBasketRestaurant" xml:space="preserve">
     <value>SELECT `id`, `displayName`, `telephone`, `deliveryTime`, `deliveryPrice` FROM `restaurants` WHERE `id` = @id</value>
   </data>
+  <data name="AddProductToOrder" xml:space="preserve">
+    <value>INSERT INTO `products_in_order`(`orderId`, `productId`, `priceOption`, `count`, `priceXcount`, `nonPriceOption1`, `nonPriceOption2`, `comment`) VALUES(@orderId, @productId, @priceOption, @count, @priceXcount, @nonPriceOption, @nonPriceOption2, @comment)</value>
+  </data>
+  <data name="SaveOrder" xml:space="preserve">
+    <value>INSERT INTO `orders`(`userId`, `restaurantId`, `status`, `totalPrice`, `comment`, `orderDate`, `payment`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @login), @restaurantId, NULL, @price, @comment, @date, NULL); SELECT LAST_INSERT_ID()</value>
+  </data>
 </root>

@@ -139,6 +139,7 @@ namespace Erestauracja.Controllers
 
         public ActionResult Realize(String data)
         {
+            //destrializacja obiektu zawierającego dane z koszyka
             BasketRest rest = null;
             if (data != null)
             {
@@ -155,11 +156,44 @@ namespace Erestauracja.Controllers
                 }
             }
 
-            DeleteRest(rest.RestaurantId);
-           
+            //wysyłanie zamówienia
+            int value = -1;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.SaveOrder(User.Identity.Name, rest);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Zapisywanie zamówienia nie powiodło się.");
+            }
+            if (value == -1)
+            {
+                ModelState.AddModelError("", "Zapisywanie zamówienia nie powiodło się.");
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewData["id"] = value;
+            }
+
+            return View(rest);
+        }
+
+        public ActionResult Cash(string com, int id, int res)
+        {
+
+            //usuwanie zamówionych dań z koszyka
+            // DeleteRest(res);
+
             return RedirectToAction("Index");
         }
-        
+
         //wychwytuje dane z guzika - do koszyka
         public ActionResult ToBasket(string resId, string catId, string prodId, string opcjaCenowa, string dodatki, string opcje, string count, string comm)
         {

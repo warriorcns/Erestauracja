@@ -956,5 +956,19 @@ namespace Contract
         }
 
         #endregion
+
+        public int SaveOrder(string login, BasketRest basket)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || basket == null) )
+            {
+                Database db = new Database();
+                int value = db.SaveOrder(login, basket);
+                return value;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }
