@@ -720,6 +720,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `orders` SET `status`=@status,`comment`=@comment,`orderDate`=@orderDate,`payment`=@payment WHERE `id`=@id AND `userId` = (SELECT `id` FROM `users` WHERE `login` = @login).
+        /// </summary>
+        internal static string Pay {
+            get {
+                return ResourceManager.GetString("Pay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login`=@login) AND `roleID` = (SELECT `id` FROM `roles` WHERE `rolename` = @rolename).
         /// </summary>
         internal static string RemoveUsersFromRoles {

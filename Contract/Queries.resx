@@ -389,4 +389,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="SaveOrder" xml:space="preserve">
     <value>INSERT INTO `orders`(`userId`, `restaurantId`, `status`, `totalPrice`, `comment`, `orderDate`, `payment`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @login), @restaurantId, NULL, @price, @comment, @date, NULL); SELECT LAST_INSERT_ID()</value>
   </data>
+  <data name="Pay" xml:space="preserve">
+    <value>UPDATE `orders` SET `status`=@status,`comment`=@comment,`orderDate`=@orderDate,`payment`=@payment WHERE `id`=@id AND `userId` = (SELECT `id` FROM `users` WHERE `login` = @login)</value>
+  </data>
 </root>

@@ -5140,6 +5140,25 @@ namespace Contract
             return id;
         }
 
+        public bool Pay(string login, int id, string comment, string payment)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.Pay);
+            command.Parameters.AddWithValue("@status", "Oczekujące");
+            command.Parameters.AddWithValue("@comment", comment);
+            command.Parameters.AddWithValue("@orderDate", DateTime.Now);
+            command.Parameters.AddWithValue("@payment", payment);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "Pay");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;  
+        }
+
         #region Geocoding
 
         public class Coordinate

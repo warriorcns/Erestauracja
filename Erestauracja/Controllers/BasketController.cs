@@ -106,7 +106,14 @@ namespace Erestauracja.Controllers
                 if (!String.IsNullOrWhiteSpace(item))
                 {
                     int index = newlista.IndexOf(item);
-                    newlista = (index == 0) ? newlista.Remove(index, item.Length + 1) : newlista.Remove(index - 1, item.Length + 1);
+                    if(newlista.Length == item.Length)
+                    {
+                        newlista = newlista.Remove(index, item.Length);
+                    }
+                    else
+                    {
+                        newlista = (index == 0) ? newlista.Remove(index, item.Length + 1) : newlista.Remove(index - 1, item.Length + 1);
+                    }
                 }
             }
 
@@ -187,11 +194,52 @@ namespace Erestauracja.Controllers
 
         public ActionResult Cash(string com, int id, int res)
         {
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.Pay(User.Identity.Name, id, com, "cash");
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+            if (value == false)
+            {
+                ModelState.AddModelError("", "Wysyłanie zamówienia nie powiodło się.");
 
-            //usuwanie zamówionych dań z koszyka
-            // DeleteRest(res);
+                //wyświetl info że nie powiodło sie 
+                //i jakeś info co zrobić w takiej sytuacji
+                return RedirectToAction("PayError");
+            }
+            else
+            {
+                //usuwanie zamówionych dań z koszyka
+                DeleteRest(res);
 
-            return RedirectToAction("Index");
+                //wyświetl potwierdzenie
+                //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
+                //zapisz id zamówienia że zostało zapłacone
+                return RedirectToAction("PaySuccess");
+            }
+
+            return RedirectToAction("PayError");
+        }
+
+        public ActionResult PayError()
+        {
+            return View();
+
+        }
+
+        public ActionResult PaySuccess()
+        {
+            return View();
+
         }
 
         //wychwytuje dane z guzika - do koszyka

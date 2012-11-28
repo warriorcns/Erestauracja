@@ -43,19 +43,16 @@
             <div>Komentarz do zamówienia
                 <%: Html.TextAreaFor(m=>m.Comment, new { id="comment"}) %>
             </div>
-            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "xxx", id = (int)ViewData["id"], res = Model.RestaurantId },new{@id = "acash"})%>
+            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new{@id = "acash"})%>
         </div>
 <% } %>
 
-
-    
     <script type="text/javascript">
-        
             $("#acash").click(function () {
                 var comm = $("#comment").val();
-                this.href = this.href.replace("xxx", comm);
+                this.href = this.href.replace("koment", comm);
             });
-        
     </script>
+
 </asp:Content>
 

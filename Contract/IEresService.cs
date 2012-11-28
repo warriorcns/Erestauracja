@@ -232,6 +232,9 @@ namespace Contract
 
         [OperationContract]
         int SaveOrder(string login, BasketRest basket);
+
+        [OperationContract]
+        bool Pay(string login, int id, string comment, string payment);
     }
 
 

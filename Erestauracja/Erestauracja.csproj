@@ -1311,6 +1311,8 @@
     <Content Include="Views\Admin\ManageUsers.aspx" />
     <Content Include="Views\Admin\phpmyadmin.aspx" />
     <Content Include="Views\Basket\Index.aspx" />
+    <Content Include="Views\Basket\PayError.aspx" />
+    <Content Include="Views\Basket\PaySuccess.aspx" />
     <Content Include="Views\Basket\Realize.aspx" />
     <Content Include="Views\CitiesAndRestaurants\Index.aspx" />
     <Content Include="Views\CitiesAndRestaurants\ListRestaurantsFromCity.aspx" />

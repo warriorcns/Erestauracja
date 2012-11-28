@@ -970,5 +970,19 @@ namespace Contract
                 return -1;
             }
         }
+
+        public bool Pay(string login, int id, string comment, string payment)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || id == null || id<1 || payment == null))
+            {
+                Database db = new Database();
+                bool value = db.Pay(login, id, comment, payment);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
