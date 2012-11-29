@@ -13,6 +13,12 @@
             });
         });
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (history.length > 0) history.go(+1);
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
 

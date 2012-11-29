@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Erestauracja.ServiceReference;
+using System.Configuration;
 
 namespace Erestauracja.Controllers
 {
@@ -291,5 +292,7 @@ namespace Erestauracja.Controllers
             }
             return String.Empty;
         }
+
+        
     }
 }

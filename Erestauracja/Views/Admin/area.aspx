@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
 
 <h2>area</h2>
- <img id="photo" class="123" src="../../Content/images/resid1/1.jpg" alt="logo" />
+ <%--<img id="photo" class="123" src="../../Content/images/resid1/1.jpg" alt="logo" />--%>
+ <%: Html.ActionLink("test","index","Admin",null,new{@id = "test"}) %>
 </asp:Content>
 
 
@@ -18,6 +19,5 @@
         });
     });
 </script>
-    
-    
+
 </asp:Content>

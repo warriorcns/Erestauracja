@@ -295,6 +295,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagePanelController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\POSController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Global.asax.cs">
@@ -307,6 +308,7 @@
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />
+    <Compile Include="Models\PaymentsModels.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
@@ -863,6 +865,8 @@
     <Content Include="Content\DataTables-1.9.4\media\images\sort_desc_disabled.png" />
     <Content Include="Content\images\arrow-down.jpg" />
     <Content Include="Content\images\arrow-up.jpg" />
+    <Content Include="Content\images\button1.jpg" />
+    <Content Include="Content\images\button2.jpg" />
     <Content Include="Content\images\Delete.png" />
     <Content Include="Content\images\deleted.jpg" />
     <Content Include="Content\images\disk.png" />
@@ -875,6 +879,7 @@
     <Content Include="Content\images\left_prev.png" />
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\LogoPizza.jpg" />
     <Content Include="Content\images\popup_ajax_loader.gif" />
     <Content Include="Content\images\resid1\1.jpg" />
     <Content Include="Content\images\right.png" />
@@ -1314,6 +1319,9 @@
     <Content Include="Views\Basket\PayError.aspx" />
     <Content Include="Views\Basket\PaySuccess.aspx" />
     <Content Include="Views\Basket\Realize.aspx" />
+    <Content Include="Views\PayPal\IPN.aspx" />
+    <Content Include="Views\PayPal\PostToPayPal.aspx" />
+    <Content Include="Views\PayPal\RedirectFromPaypal.aspx" />
     <Content Include="Views\CitiesAndRestaurants\Index.aspx" />
     <Content Include="Views\CitiesAndRestaurants\ListRestaurantsFromCity.aspx" />
     <Content Include="Views\CitiesAndRestaurants\Przykladmapy.aspx" />

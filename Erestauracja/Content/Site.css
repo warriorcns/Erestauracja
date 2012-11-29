@@ -507,7 +507,8 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #2B2B2B;
+    background: url("/Content/images/button2.jpg") no-repeat left top;
+    /*background-color: #2B2B2B;*/
     color: #FFE4C4;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 10px 10px 0px 0px;
@@ -515,9 +516,11 @@ ul#menu li a {
 }
 
 ul#menu li a:hover {
-    background-color: #FFE4C4;
+   /* background-color: #FFE4C4;*/
     text-decoration: none;
     color: #926641;
+    background: url("/Content/images/button1.jpg") no-repeat left top;
+    
 }
 
 ul#menu li a:active {
@@ -620,7 +623,9 @@ footer,
 
 #footer-logo img#logo
 {
-    background: url(images/logo-test.png);
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 0 0 4px 4px;
     width: 120px;
     height: 70px;  
 }
