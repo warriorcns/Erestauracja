@@ -984,5 +984,19 @@ namespace Contract
                 return false;
             }
         }
+
+        public AllOrders GetOrders(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                AllOrders value = db.GetOrders(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

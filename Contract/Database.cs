@@ -5159,6 +5159,271 @@ namespace Contract
             return false;  
         }
 
+        public AllOrders GetOrders(string login)
+        {
+            AllOrders allOrders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+            MySqlDataReader reader3 = null;
+            MySqlDataReader reader4 = null;
+            MySqlDataReader reader5 = null;
+            MySqlDataReader reader6 = null;
+
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                allOrders = new AllOrders();
+
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetWaitingOrders);
+                    command.Parameters.AddWithValue("@login", logins[0]);
+                    command.Connection = conn;
+
+                    MySqlCommand command2 = new MySqlCommand(Queries.GetActiveOrders);
+                    command2.Parameters.AddWithValue("@login", logins[0]);
+                    command2.Connection = conn;
+
+                    MySqlCommand command3 = new MySqlCommand(Queries.GetFinishOrders);
+                    command3.Parameters.AddWithValue("@login", logins[0]);
+                    command3.Parameters.AddWithValue("@date", DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0)));
+                    command3.Connection = conn;
+
+                    conn.Open();
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Order r = GetOrderFromReader(reader);
+                        allOrders.Waiting.Add(r);
+                    }
+                    reader.Close();
+
+                    reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        Order r = GetOrderFromReader(reader2);
+                        allOrders.Active.Add(r);
+                    }
+                    reader2.Close();
+
+                    reader3 = command3.ExecuteReader();
+                    while (reader3.Read())
+                    {
+                        Order r = GetOrderFromReader(reader3);
+                        allOrders.Finish.Add(r);
+                    }
+                    reader3.Close();
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetOrders" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    if (reader2 != null) { reader2.Close(); }
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetOrders" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    if (reader2 != null) { reader2.Close(); }
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader != null) { reader.Close(); }
+                    if (reader2 != null) { reader2.Close(); }
+                    if (reader3 != null) { reader3.Close(); }
+                    conn.Close();
+                }
+///////////////////////////////////////////////////////////////////////
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                    command.Connection = conn;
+
+                    conn.Open();
+
+                    foreach(Order list in allOrders.Active)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@id", list.OrderId);
+
+                        reader4 = command.ExecuteReader();
+                        while (reader4.Read())
+                        {
+                            OrderedProduct r = GetOrderedProductFromReader(reader4);
+                            list.Products.Add(r);
+                        }
+                        reader4.Close();
+                    }
+
+                    foreach (Order list in allOrders.Finish)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@id", list.OrderId);
+
+                        reader5 = command.ExecuteReader();
+                        while (reader5.Read())
+                        {
+                            OrderedProduct r = GetOrderedProductFromReader(reader5);
+                            list.Products.Add(r);
+                        }
+                        reader5.Close();
+                    }
+
+                    foreach (Order list in allOrders.Waiting)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@id", list.OrderId);
+
+                        reader6 = command.ExecuteReader();
+                        while (reader6.Read())
+                        {
+                            OrderedProduct r = GetOrderedProductFromReader(reader6);
+                            list.Products.Add(r);
+                        }
+                        reader6.Close();
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader4 != null) { reader4.Close(); }
+                    if (reader5 != null) { reader5.Close(); }
+                    if (reader6 != null) { reader6.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader4 != null) { reader4.Close(); }
+                    if (reader5 != null) { reader5.Close(); }
+                    if (reader6 != null) { reader6.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader4 != null) { reader4.Close(); }
+                    if (reader5 != null) { reader5.Close(); }
+                    if (reader6 != null) { reader6.Close(); }
+                    conn.Close();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return allOrders;
+        }
+
+        private Order GetOrderFromReader(MySqlDataReader reader)
+        {
+            int orderId = reader.GetInt32(0);
+            string userName = reader.GetString(1);
+            string userSurname = reader.GetString(2);
+            string userAdderss = reader.GetString(3);
+            string userTown = reader.GetString(4);
+            string userPostal = reader.GetString(5);
+            string userTelephone = reader.GetString(6);
+            string status = reader.GetString(7);
+            decimal price = reader.GetDecimal(8);
+            string comment = reader.GetString(9);
+            DateTime orderDate = reader.GetDateTime(10);
+            string payment = reader.GetString(11);
+            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
+            if (!reader.IsDBNull(12))
+                finishDate = reader.GetDateTime(12);
+
+            Order u = new Order();
+            u.OrderId = orderId;
+            u.UserName = userName;
+            u.UserSurname = userSurname;
+            u.UserAdderss = userAdderss;
+            u.UserTown = userTown;
+            u.UserPostal = userPostal;
+            u.UserTelephone = userTelephone;
+            u.Status = status;
+            u.Price = price;
+            u.Comment = comment;
+            u.OrderDate = orderDate;
+            u.Payment = payment;
+            u.FinishDate = finishDate;
+
+            return u;
+        }
+
+        private OrderedProduct GetOrderedProductFromReader(MySqlDataReader reader)
+        {
+            int productId = reader.GetInt32(0);
+            string productName = reader.GetString(1);
+            string priceOption = reader.GetString(2);
+            int count = reader.GetInt32(3);
+            string nonPriceOption = reader.GetString(4);
+            string nonPriceOption2 = reader.GetString(5);
+            string comment = reader.GetString(6);
+
+            OrderedProduct u = new OrderedProduct();
+            u.ProductId = productId;
+            u.ProductName = productName;
+            u.PriceOption = priceOption;
+            u.Count = count;
+            u.NonPriceOption = nonPriceOption;
+            u.NonPriceOption2 = nonPriceOption2;
+            u.Comment = comment;
+
+            return u;
+        }
+
+        #region dodatkowe klasy pomocnicze
+
         #region Geocoding
 
         public class Coordinate
@@ -5219,6 +5484,8 @@ namespace Contract
                 set { data = value; }
             }
         }
+
+        #endregion
     }
 
 

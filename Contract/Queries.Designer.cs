@@ -304,6 +304,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;przyjęte&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
+        /// </summary>
+        internal static string GetActiveOrders {
+            get {
+                return ResourceManager.GetString("GetActiveOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`,`price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId.
         /// </summary>
         internal static string GetAllProducts {
@@ -475,6 +484,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;zakończone&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) AND `finishDate` &gt; @date  ORDER BY o.`orderDate` ASC.
+        /// </summary>
+        internal static string GetFinishOrders {
+            get {
+                return ResourceManager.GetString("GetFinishOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `description`, `foto`, `specialOffers` FROM `rest_page_content` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND `restaurantId`=@id.
         /// </summary>
         internal static string GetMainPage {
@@ -516,6 +534,15 @@ namespace Contract {
         internal static string GetNumberOfUsersOnline {
             get {
                 return ResourceManager.GetString("GetNumberOfUsersOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`productId`, p.`name`, o.`priceOption`, o.`count`, o.`nonPriceOption1`, o.`nonPriceOption2`, o.`comment` FROM `products_in_order` o JOIN `products` p ON o.`productId` = p.`id` WHERE o.`orderId` = @id.
+        /// </summary>
+        internal static string GetOrderedProducts {
+            get {
+                return ResourceManager.GetString("GetOrderedProducts", resourceCulture);
             }
         }
         
@@ -689,6 +716,15 @@ namespace Contract {
         internal static string GetUsersInRole {
             get {
                 return ResourceManager.GetString("GetUsersInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;oczekujące&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
+        /// </summary>
+        internal static string GetWaitingOrders {
+            get {
+                return ResourceManager.GetString("GetWaitingOrders", resourceCulture);
             }
         }
         

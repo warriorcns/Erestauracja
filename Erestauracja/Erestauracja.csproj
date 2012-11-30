@@ -1220,6 +1220,9 @@
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
     <None Include="Service References\ServiceReference\EresService1.wsdl" />
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.AllOrders.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.BasketOut.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

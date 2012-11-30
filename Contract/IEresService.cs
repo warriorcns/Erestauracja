@@ -235,6 +235,9 @@ namespace Contract
 
         [OperationContract]
         bool Pay(string login, int id, string comment, string payment);
+
+        [OperationContract]
+        AllOrders GetOrders(string login);
     }
 
 
@@ -1673,4 +1676,211 @@ namespace Contract
     }
 
     #endregion
+
+    [DataContract]
+    public class AllOrders
+    {
+        private List<Order> waiting = new List<Order>();
+        private List<Order> active = new List<Order>();
+        private List<Order> finish = new List<Order>();
+
+        [DataMember]
+        public List<Order> Waiting
+        {
+            get { return waiting; }
+            set { waiting = value; }
+        }
+
+        [DataMember]
+        public List<Order> Active
+        {
+            get { return active; }
+            set { active = value; }
+        }
+
+        [DataMember]
+        public List<Order> Finish
+        {
+            get { return finish; }
+            set { finish = value; }
+        }
+    }
+
+    [DataContract]
+    public class Order
+    {
+        private int orderId = -1;
+        private string userName = null;
+        private string userSurname = null;
+        private string userAdderss = null;
+        private string userTown = null;
+        private string userPostal = null;
+        private string userTelephone = null;
+        private string status = null;
+        private decimal price = 0.00M;
+        private string comment = null;
+        private DateTime orderDate = new DateTime(1,1,1);
+        private string payment = null;
+        private DateTime finishDate = new DateTime(1, 1, 1);
+        private List<OrderedProduct> products = new List<OrderedProduct>();
+
+        [DataMember]
+        public int OrderId
+        {
+            get { return orderId; }
+            set { orderId = value; }
+        }
+
+        [DataMember]
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; }
+        }
+
+        [DataMember]
+        public string UserSurname
+        {
+            get { return userSurname; }
+            set { userSurname = value; }
+        }
+
+        [DataMember]
+        public string UserAdderss
+        {
+            get { return userAdderss; }
+            set { userAdderss = value; }
+        }
+
+        [DataMember]
+        public string UserTown
+        {
+            get { return userTown; }
+            set { userTown = value; }
+        }
+
+        [DataMember]
+        public string UserPostal
+        {
+            get { return userPostal; }
+            set { userPostal = value; }
+        }
+
+        [DataMember]
+        public string UserTelephone
+        {
+            get { return userTelephone; }
+            set { userTelephone = value; }
+        }
+
+        [DataMember]
+        public string Status
+        {
+            get { return status; }
+            set { status = value; }
+        }
+
+        [DataMember]
+        public decimal Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        [DataMember]
+        public string Comment
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+
+        [DataMember]
+        public DateTime OrderDate
+        {
+            get { return orderDate; }
+            set { orderDate = value; }
+        }
+
+        [DataMember]
+        public string Payment
+        {
+            get { return payment; }
+            set { payment = value; }
+        }
+
+        [DataMember]
+        public DateTime FinishDate
+        {
+            get { return finishDate; }
+            set { finishDate = value; }
+        }
+
+        [DataMember]
+        public List<OrderedProduct> Products
+        {
+            get { return products; }
+            set { products = value; }
+        }
+    }
+
+    [DataContract]
+    public class OrderedProduct
+    {
+        public int productId = -1;
+        public string productName = null;
+        public string priceOption = null;
+        public int count = -1;
+        public string nonPriceOption = null;
+        public string nonPriceOption2 = null;
+        public string comment = null;
+       
+        [DataMember]
+        public int ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
+
+        [DataMember]
+        public string ProductName
+        {
+            get { return productName; }
+            set { productName = value; }
+        }
+
+        [DataMember]
+        public string PriceOption
+        {
+            get { return priceOption; }
+            set { priceOption = value; }
+        }
+
+        [DataMember]
+        public int Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption
+        {
+            get { return nonPriceOption; }
+            set { nonPriceOption = value; }
+        }
+
+        [DataMember]
+        public string NonPriceOption2
+        {
+            get { return nonPriceOption2; }
+            set { nonPriceOption2 = value; }
+        }
+
+        [DataMember]
+        public string Comment
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+    }
 }

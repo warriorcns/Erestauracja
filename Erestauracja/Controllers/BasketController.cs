@@ -292,7 +292,5 @@ namespace Erestauracja.Controllers
             }
             return String.Empty;
         }
-
-        
     }
 }
