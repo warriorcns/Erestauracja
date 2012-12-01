@@ -36,25 +36,57 @@ String Send(BasketRest data)
 }
 </script>
 
+<script runat="server" type="text/C#">
+
+    delegate bool Uchwyt(int arg);
+
+    string IsOnline(int id)
+    {        
+        bool value = false;
+        try
+        {
+            Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+            using(client)
+            {
+                Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
+                value = IsOnline(id);
+            }
+            client.Close();
+        }
+        catch(Exception e)
+        {
+            value = false;
+        }
+        
+        if (value == false)
+        {
+            return "Offline";
+        }
+        else
+        {
+            return "Online";
+        }
+    }
+</script>
 
 <% using (Html.BeginForm()) %>
 <% { %>
-<h2>Koszyk - wybierz produkty które chcesz zamówić a następnie kliknij 'Realizuj'</h2>
-<h2>Kliknij <%: Html.ActionLink("tutaj", "ClearBasket", "Basket")%>, aby usunąć wszystkie pozycje z koszyka</h2>
-</br>
-<% if (Model != null) %>
-<% { %>
-    <div id="accordion">
-    <% foreach (BasketRest rest in Model.Basket) %>
+    <h2>Koszyk - wybierz produkty które chcesz zamówić a następnie kliknij 'Realizuj'</h2>
+    <h2>Kliknij <%: Html.ActionLink("tutaj", "ClearBasket", "Basket")%>, aby usunąć wszystkie pozycje z koszyka</h2>
+    </br>
+    <% if (Model != null) %>
     <% { %>
-    <h3><a href="#"><%: rest.DisplayName%> (czyOnline?) Razem: <%: rest.TotalPriceRest%> zł</a></h3>
-        <div>
-            <div>Kontakt: <%: rest.Telephone%></div>
-            <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
-            <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>
-            </br>
-            <% foreach (BasketProduct product in rest.Products) %>
-            <% { %>
+        <div id="accordion">
+        <% foreach (BasketRest rest in Model.Basket) %>
+        <% { %>
+            <h3><a href="#"><span><%: rest.DisplayName%></span> <span><%: IsOnline(rest.RestaurantId) %></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
+            <div>
+                <div>Kontakt: <%: rest.Telephone%></div>
+                <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
+                <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>
+                </br>
+                <% foreach (BasketProduct product in rest.Products) %>
+                <% { %>
                 <div>
                     <span>
                          <%: product.ProductName%> 
@@ -84,9 +116,9 @@ String Send(BasketRest data)
             <% } %>
             <%: Html.ActionLink("Realizuj", "Realize", "Basket", new { data = Send(rest) }, null)%>
         </div>
-    <% } %>
+        <% } %>
     </div>
+    <% } %>
 <% } %>
 
-<% } %>
 </asp:Content>

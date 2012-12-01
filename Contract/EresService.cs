@@ -998,5 +998,19 @@ namespace Contract
                 return null;
             }
         }
+
+        public bool IsRestaurantOnline(int id)
+        {
+            if (!(id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.IsRestaurantOnline(id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

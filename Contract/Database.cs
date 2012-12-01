@@ -5422,6 +5422,68 @@ namespace Contract
             return u;
         }
 
+        public bool IsRestaurantOnline(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.IsRestaurantOnline);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@activity", DateTime.Now.Subtract(new TimeSpan(0, 0, 10, 0)));
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                    return true;
+                else
+                    return false;
+
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

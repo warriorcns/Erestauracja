@@ -238,6 +238,9 @@ namespace Contract
 
         [OperationContract]
         AllOrders GetOrders(string login);
+
+        [OperationContract]
+        bool IsRestaurantOnline(int id);
     }
 
 

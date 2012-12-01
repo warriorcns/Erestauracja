@@ -729,6 +729,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT 1 FROM `restaurants` r JOIN `users` u ON u.`id` = r.`userId` WHERE u.`lastActivityDate` &gt; @activity AND r.`id` = @id.
+        /// </summary>
+        internal static string IsRestaurantOnline {
+            get {
+                return ResourceManager.GetString("IsRestaurantOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT 0 FROM `restaurants` WHERE `id` = @restaurantID AND `menagerId` = (SELECT `id` FROM `users` WHERE `login` LIKE @managerLogin).
         /// </summary>
         internal static string IsRestaurantOwner {

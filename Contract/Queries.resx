@@ -404,4 +404,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetWaitingOrders" xml:space="preserve">
     <value>SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = 'oczekujące' AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC</value>
   </data>
+  <data name="IsRestaurantOnline" xml:space="preserve">
+    <value>SELECT 1 FROM `restaurants` r JOIN `users` u ON u.`id` = r.`userId` WHERE u.`lastActivityDate` &gt; @activity AND r.`id` = @id</value>
+  </data>
 </root>
