@@ -5,69 +5,87 @@
 <%@ Import Namespace="System.Runtime.Serialization.Formatters.Binary" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-<script type="text/javascript">
-    $(function () {
-        $("#accordion").accordion({
-            collapsible: true,
-            active: false
+    <script type="text/javascript">
+        $(function () {
+            $("#accordion").accordion({
+                collapsible: true,
+                active: false
+            });
         });
-    });
-</script>
-
-<script runat="server" type="text/C#">
-String Send(BasketRest data)
-{
-    Stream myStream = new MemoryStream();
-    try
-    {
-        IFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(myStream, data);
-        myStream.Seek(0, SeekOrigin.Begin);
-        byte[] buffer = new byte[myStream.Length];
-        myStream.Read(buffer, 0, (int)myStream.Length);
-
-        return Convert.ToBase64String(buffer);
-    }
-    finally
-    {
-        myStream.Close();
-    }
-}
-</script>
-
-<script runat="server" type="text/C#">
-
-    delegate bool Uchwyt(int arg);
-
-    string IsOnline(int id)
-    {        
-        bool value = false;
-        try
+    </script>
+    <script runat="server" type="text/C#">
+        String Send(BasketRest data)
         {
-            Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
-            using(client)
+            Stream myStream = new MemoryStream();
+            try
             {
-                Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
-                value = IsOnline(id);
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(myStream, data);
+                myStream.Seek(0, SeekOrigin.Begin);
+                byte[] buffer = new byte[myStream.Length];
+                myStream.Read(buffer, 0, (int)myStream.Length);
+
+                return Convert.ToBase64String(buffer);
             }
-            client.Close();
+            finally
+            {
+                myStream.Close();
+            }
         }
-        catch(Exception e)
+    </script>
+
+    <script runat="server" type="text/C#">
+
+        delegate bool Uchwyt(int arg);
+
+        string IsOnline(int id)
         {
-            value = false;
+            bool value = false;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
+                    value = IsOnline(id);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+
+            if (value == false)
+            {
+                return "Offline";
+            }
+            else
+            {
+                return "Online";
+            }
         }
-        
-        if (value == false)
-        {
-            return "Offline";
+    </script>
+
+    <script type="text/javascript">
+        function callMethod() {
+
+            //IsOnline
+            var Resid = $('#ResID').val();
+            var url = '<%: Url.Action("IsOnline", "Basket") %>';
+            var data = { id: Resid };
+
+            $.post(url, data, function (data) {
+                $("#resIsOnline").text(data);
+            });
         }
-        else
-        {
-            return "Online";
-        }
-    }
-</script>
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setInterval("callMethod()", 600000); //600000ms = 10min
+        });
+    </script>
 
 <% using (Html.BeginForm()) %>
 <% { %>
@@ -79,8 +97,9 @@ String Send(BasketRest data)
         <div id="accordion">
         <% foreach (BasketRest rest in Model.Basket) %>
         <% { %>
-            <h3><a href="#"><span><%: rest.DisplayName%></span> <span><%: IsOnline(rest.RestaurantId) %></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
+            <h3><a href="#"><span><%: rest.DisplayName%></span> <span id="resIsOnline"><%: IsOnline(rest.RestaurantId) %></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
             <div>
+            <input id="ResID" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
                 <div>Kontakt: <%: rest.Telephone%></div>
                 <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
                 <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>
