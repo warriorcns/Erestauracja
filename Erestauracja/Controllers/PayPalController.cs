@@ -77,6 +77,12 @@ namespace Erestauracja.Controllers
                 Decimal amountPaid = 0;
                 Decimal.TryParse(sAmountPaid, out amountPaid);
 
+                //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+
+                PayPal pp = new PayPal();
+                pp.txn_id = Request["txn_id"];
+                pp.mc_gross = Request["mc_gross"];
+
                 //zrob z danymi co Ci sie podoba.. 
                 if (sAmountPaid == "2.95")
                 {
@@ -91,9 +97,15 @@ namespace Erestauracja.Controllers
                     // let fail - this is the IPN so there is no viewer
                     // you may want to log something here
                 }
-            }
+                return View(pp);
 
-            return View();
+            }
+            else
+            { 
+                //invalid
+                ViewData["alert"] = "Transakcja nie została zweryfikowana.";
+                return View();
+            }
         }
 
         string GetPayPalResponse(Dictionary<string, string> formVals, bool useSandbox)

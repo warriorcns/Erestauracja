@@ -47,7 +47,7 @@ a
 { 
     z-index: 0;
     clear: both;
-    min-height: 600px;
+    min-height: 650px;
     overflow: hidden;    
     width: 100%;
 }
@@ -142,36 +142,39 @@ a
 
 .orders-header-main
 {
-    display: -webkit-box;
+    
 }
 
 /* naglowek tabelki z zamowieniami*/
  .orders-container
  {
     position: relative;
-    width: 70%;
-    float: left;
-    top: 20px;
-    height: 100%;
-    left: 20px;
+    height: 584px;
     border-bottom: 20px black solid;
-    overflow: auto;    
+    overflow: auto;
+    top: -30px;
+  
  }
+
+.header
+{
+    position: relative;
+    top: 20px;
+}
 
 .order-container
 {
     position: relative;
     top: 50px;
-    width: 100%;
+    width: 90%;
 }
 
 .order {
     border-right: 2px black solid;
-    
     position: relative;
-    margin: 0;
+
     text-align: center;
-    float: left;
+    float: auto;
     left: 30px;
     display: inline-block;
     margin : 0px auto;
@@ -232,75 +235,34 @@ a
     margin-left: 200px;
     width: 200px;
     height: 50px;
+    margin-top: 50px;
 }
 
- /* root element for scrollable */
-.vertical {
-
-    /* required settings */
-    position:relative;
-    overflow:hidden;
-
-    /* vertical scrollers have typically larger height than width */
-    height: 665px;
-    width: 650px;
-    border-top:1px solid #ddd;
+#tabs-nohdr {
+	padding: 0px;
+	background: none;
+	border-width: 0px;
+	position: relative;
+	min-height: 600px;
+	left: 10px;
+	top: 20px;
+	width: 80%;
+    float: left;
 }
 
-/* root element for scrollable items */
-.items {
-    position:absolute;
-
-    /* this time we have very large space for height */
-    height:20000em;
-    margin: 0px;
+#tabs-nohdr .ui-tabs-nav {
+	padding-left: 0px;
+	background: white;
+	border-width: 0px 0px 1px 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	position: relative;
+	z-index: 1;  
 }
+#tabs-nohdr .ui-tabs-panel {
+	background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;
+	border-width: 0px 1px 1px 1px;
+	min-height: 495px;
 
-/* single scrollable item */
-.item {
-    border-bottom:1px solid #ddd;
-    margin:10px 0;
-    padding:15px;
-    font-size:12px;
-    height:180px;
-}
-
-/* elements inside single item */
-.item img {
-    float:left;
-    margin-right:20px;
-    height:180px;
-    width:240px;
-}
-
-.item h3 {
-    margin:0 0 5px 0;
-    font-size:16px;
-    color:#456;
-    font-weight:normal;
-}
-
-/* the action buttons above the scrollable */
-#actions {
-    width:650px;
-    margin:30px 0 10px 0;
-}
-
-#actions a {
-    font-size:11px;
-    cursor:pointer;
-    color:#666;
-}
-
-#actions a:hover {
-    text-decoration:underline;
-    color:#000;
-}
-
-.disabled {
-    visibility:hidden;
-}
-
-.next {
-    float:right;
 }

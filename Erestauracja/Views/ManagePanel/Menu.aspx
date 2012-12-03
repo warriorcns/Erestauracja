@@ -4,7 +4,7 @@
 
     <meta charset="utf-8">
 
-	<script>
+	<script type="text/javascript">
 	    $(function () {
 	        $("#tabs-left").tabs({
 	            heightStyle: 'auto'
@@ -12,7 +12,7 @@
 	    });
 	</script>
 
-    <script>
+    <script type="text/javascript">
         $(function () {
             $(".accordion2").accordion({
                 active: false,

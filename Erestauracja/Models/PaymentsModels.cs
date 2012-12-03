@@ -21,6 +21,9 @@ namespace Erestauracja.Models
         public string item_number { get; set; }
         public string shipping { get; set; }
         public string amount { get; set; }
+        public string mc_gross { get; set; }
+        public string txn_id { get; set; }
+        
     }
 
 }

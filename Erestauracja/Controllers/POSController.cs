@@ -8,6 +8,7 @@ using System.Web.Security;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
 using Erestauracja.Providers;
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
@@ -35,7 +36,31 @@ namespace Erestauracja.Controllers
         //[CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult ActiveOrders()
         {
-            return View();
+            ServiceReference.AllOrders value = null;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    //  Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline); 
+                    //  value = IsOnline(id); 
+                    value = client.GetOrders(User.Identity.Name);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = null;
+            }
+
+            if (value == null)
+            {
+                return View();
+            }
+            else
+            {
+                return View(value);
+            }
         }
 
         //
@@ -47,7 +72,35 @@ namespace Erestauracja.Controllers
         //[CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult AllOrders()
         {
-            return View();
+            //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+            //ServiceReference.AllOrders orders = client.
+            //ViewData["orders"] = orders;
+
+            ServiceReference.AllOrders value = null;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    //  Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline); 
+                    //  value = IsOnline(id); 
+                    value = client.GetOrders(User.Identity.Name);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = null;
+            }
+
+            if (value == null)
+            {
+                return View();
+            }
+            else
+            {
+                return View(value);
+            }
         }
 
         //
