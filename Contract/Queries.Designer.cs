@@ -655,6 +655,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, r.`telephone`, r.`deliveryTime`, r.`deliveryPrice`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o  JOIN `restaurants` r ON o.`restaurantId` = r.`id`  JOIN `towns` t ON r.`townId` = t.`id` WHERE o.`userId` = (SELECT u.`id` FROM `users` u WHERE u.`login` = @login) AND (o.`status`=&apos;przyjęte&apos; OR o.`status`=&apos;oczekujące&apos; OR (o.`status`=&apos;zakończone&apos; AND o.`finishDate` &gt; @date) ) ORDER  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetUserActiveOrders {
+            get {
+                return ResourceManager.GetString("GetUserActiveOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c
         ///ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`id` = @id.
         /// </summary>

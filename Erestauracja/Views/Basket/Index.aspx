@@ -132,11 +132,11 @@
                     <span><%: Html.ActionLink("usuń z koszyka", "Delete", "Basket", new { id = product.BasketId }, null)%> </span>
                 </div>
                 </br>
-            <% } %>
+                <% } %>
             <%: Html.ActionLink("Realizuj", "Realize", "Basket", new { data = Send(rest) }, null)%>
         </div>
         <% } %>
-    </div>
+        </div>
     <% } %>
 <% } %>
 

@@ -293,7 +293,7 @@ namespace Erestauracja.Controllers
             return String.Empty;
         }
 
-        private delegate bool Uchwyt(int arg);
+      //  private delegate bool Uchwyt(int arg);
 
         public string IsOnline(int id)
         {
@@ -303,8 +303,9 @@ namespace Erestauracja.Controllers
                 Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
                 using (client)
                 {
-                    Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
-                    value = IsOnline(id);
+                  //  Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
+                  //  value = IsOnline(id);
+                    value = client.IsRestaurantOnline(id);
                 }
                 client.Close();
             }

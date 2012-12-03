@@ -1012,5 +1012,20 @@ namespace Contract
                 return false;
             }
         }
+
+        public List<UserOrder> GetUserActiveOrder(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                List<UserOrder> value = db.GetUserActiveOrder(login);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
     }
 }

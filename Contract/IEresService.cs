@@ -241,6 +241,10 @@ namespace Contract
 
         [OperationContract]
         bool IsRestaurantOnline(int id);
+
+        [OperationContract]
+        List<UserOrder> GetUserActiveOrder(string login);
+
     }
 
 
@@ -1884,6 +1888,132 @@ namespace Contract
         {
             get { return comment; }
             set { comment = value; }
+        }
+    }
+
+    //zamówienia widziane przez klienta
+    [DataContract]
+    public class UserOrder
+    {
+        private int orderId = -1;
+        public string displayName = String.Empty;
+        private string address = null;
+        private string town = null;
+        private string postal = null;
+        public string telephone = String.Empty;
+        public string deliveryTime = String.Empty;
+        public decimal deliveryPrice = 0.00M;
+        private string status = null;
+        private decimal price = 0.00M;
+        private string comment = null;
+        private DateTime orderDate = new DateTime(1, 1, 1);
+        private string payment = null;
+        private DateTime finishDate = new DateTime(1, 1, 1);
+        private List<OrderedProduct> products = new List<OrderedProduct>();
+
+        [DataMember]
+        public int OrderId
+        {
+            get { return orderId; }
+            set { orderId = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string Town
+        {
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string Postal
+        {
+            get { return postal; }
+            set { postal = value; }
+        }
+
+        [DataMember]
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        [DataMember]
+        public string DeliveryTime
+        {
+            get { return deliveryTime; }
+            set { deliveryTime = value; }
+        }
+
+        [DataMember]
+        public decimal DeliveryPrice
+        {
+            get { return deliveryPrice; }
+            set { deliveryPrice = value; }
+        }
+
+        [DataMember]
+        public string Status
+        {
+            get { return status; }
+            set { status = value; }
+        }
+
+        [DataMember]
+        public decimal Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        [DataMember]
+        public string Comment
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+
+        [DataMember]
+        public DateTime OrderDate
+        {
+            get { return orderDate; }
+            set { orderDate = value; }
+        }
+
+        [DataMember]
+        public string Payment
+        {
+            get { return payment; }
+            set { payment = value; }
+        }
+
+        [DataMember]
+        public DateTime FinishDate
+        {
+            get { return finishDate; }
+            set { finishDate = value; }
+        }
+
+        [DataMember]
+        public List<OrderedProduct> Products
+        {
+            get { return products; }
+            set { products = value; }
         }
     }
 }

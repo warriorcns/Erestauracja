@@ -5484,6 +5484,172 @@ namespace Contract
             }
         }
 
+        public List<UserOrder> GetUserActiveOrder(string login)
+        {
+            List<UserOrder> orders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+            //pobiera zamówienia
+            try
+            {
+                orders = new List<UserOrder>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserActiveOrders);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@date", DateTime.Now.Subtract(new TimeSpan(0, 4, 0, 0)));
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    UserOrder r = GetUserOrderFromReader(reader);
+                    orders.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            //pobieranie produktów w zamówieniach
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                command.Connection = conn;
+
+                conn.Open();
+
+                foreach (UserOrder list in orders)
+                {
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@id", list.OrderId);
+
+                    reader2 = command.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        OrderedProduct r = GetOrderedProductFromReader(reader2);
+                        list.Products.Add(r);
+                    }
+                    reader2.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+            }
+
+            return orders;
+        }
+
+        private UserOrder GetUserOrderFromReader(MySqlDataReader reader)
+        {
+            int orderId = reader.GetInt32(0);
+            string displayName = reader.GetString(1);
+            string address = reader.GetString(2);
+            string town = reader.GetString(3);
+            string postal = reader.GetString(4);
+            string telephone = reader.GetString(5);
+            string deliveryTime = reader.GetString(6);
+            decimal deliveryPrice = reader.GetDecimal(7);
+            string status = reader.GetString(8);
+            decimal price = reader.GetDecimal(9);
+            string comment = reader.GetString(10);
+            DateTime orderDate = reader.GetDateTime(11);
+            string payment = reader.GetString(12);
+            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
+            if (!reader.IsDBNull(13))
+                finishDate = reader.GetDateTime(13);
+
+            UserOrder u = new UserOrder();
+            u.OrderId = orderId;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.Postal = postal;
+            u.Telephone = telephone;
+            u.DeliveryTime = deliveryTime;
+            u.DeliveryPrice = deliveryPrice;
+            u.Status = status;
+            u.Price = price;
+            u.Comment = comment;
+            u.OrderDate = orderDate;
+            u.Payment = payment;
+            u.FinishDate = finishDate;
+
+            return u;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding
