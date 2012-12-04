@@ -508,16 +508,38 @@ namespace Erestauracja.Controllers
                 }
             }
             return RedirectToAction("Restaurant");
-            //#region ciasteczka - odczyt
-            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            //myCookie = Request.Cookies["MyTestCookie"];
-            //int id;
-            //if (myCookie != null)
-            //{
-            //    id = int.Parse(myCookie.Value);
-            //}
-            //#endregion
-            //return View();
+        }
+
+        public ActionResult Comments(int id)
+        {
+            ViewData["id"] = id;
+
+            if (id > 0)
+            {
+                List<Comment> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Comment>(client.GetRestaurantComments(id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie komentarzy nie powiodło się.");
+                }
+
+                return View(value);
+                
+            }
+            return RedirectToAction("Restaurant");
         }
 
         # region dropBox

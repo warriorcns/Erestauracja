@@ -413,4 +413,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetUserOrderHistory" xml:space="preserve">
     <value>SELECT o.`id`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, r.`telephone`, r.`deliveryTime`, r.`deliveryPrice`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o  JOIN `restaurants` r ON o.`restaurantId` = r.`id`  JOIN `towns` t ON r.`townId` = t.`id` WHERE o.`userId` = (SELECT u.`id` FROM `users` u WHERE u.`login` = @login) AND o.`status` IS NOT NULL AND o.`orderDate` &gt; @from AND o.`orderDate`&lt;@to ORDER BY o.`orderDate` ASC</value>
   </data>
+  <data name="GetRestaurantComments" xml:space="preserve">
+    <value>SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE c.`restaurantId` =@id</value>
+  </data>
 </root>

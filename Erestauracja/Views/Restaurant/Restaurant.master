@@ -31,6 +31,8 @@
                         <%: Html.ActionLink("Galeria", "Gallery", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
                         <%: Html.ActionLink("Kontakt", "Contact", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
+                    <li>
+                        <%: Html.ActionLink("Komentarze", "Comments", "Restaurant", new { id = (int)ViewData["id"] }, null)%></li>
                 </ul>
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">

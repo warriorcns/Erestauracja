@@ -248,6 +248,8 @@ namespace Contract
         [OperationContract]
         List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to);
 
+        [OperationContract]
+        List<Comment> GetRestaurantComments(int id);
     }
 
 
@@ -2017,6 +2019,83 @@ namespace Contract
         {
             get { return products; }
             set { products = value; }
+        }
+    }
+
+    [DataContract]
+    public class Comment
+    {
+        private int id = -1;
+        private string userLogin = null;
+        public string displayName = String.Empty;
+        private string address = null;
+        private string town = null;
+        private string postal = null;
+        private double rating = -1;
+        private string comment = null;
+        private DateTime date = new DateTime(1,1,1);
+
+        [DataMember]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        [DataMember]
+        public string UserLogin
+        {
+            get { return userLogin; }
+            set { userLogin = value; }
+        }
+
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        [DataMember]
+        public string Town
+        {
+            get { return town; }
+            set { town = value; }
+        }
+
+        [DataMember]
+        public string Postal
+        {
+            get { return postal; }
+            set { postal = value; }
+        }
+
+        [DataMember]
+        public double Rating
+        {
+            get { return rating; }
+            set { rating = value; }
+        }
+
+        [DataMember]
+        public string CommentText
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+
+        [DataMember]
+        public DateTime Date
+        {
+            get { return date; }
+            set { date = value; }
         }
     }
 }

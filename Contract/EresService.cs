@@ -1040,6 +1040,20 @@ namespace Contract
                 return null;
             }
         }
+
+        public List<Comment> GetRestaurantComments(int id)
+        {
+            if (!(id == null || id < 1))
+            {
+                Database db = new Database();
+                List<Comment> value = db.GetRestaurantComments(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
         
     }
 }

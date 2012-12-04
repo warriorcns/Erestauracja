@@ -5779,6 +5779,98 @@ namespace Contract
             return orders;
         }
 
+        public List<Comment> GetRestaurantComments(int id)
+        {
+            List<Comment> comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new List<Comment>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantComments);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Comment r = GetCommentFromReader(reader);
+                    comments.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
+        }
+
+        private Comment GetCommentFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string login = reader.GetString(1);
+            string displayName = reader.GetString(2);
+            string address = reader.GetString(3);
+            string town = reader.GetString(4);
+            string postal = reader.GetString(5);
+            double rating = reader.GetDouble(6);
+            string comment = reader.GetString(7);
+            DateTime date = reader.GetDateTime(8);
+
+            Comment u = new Comment();
+            u.Id = id;
+            u.UserLogin = login;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.Postal = postal;
+            u.Rating = rating;
+            u.CommentText = comment;
+            u.Date = date;
+
+            return u;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding
