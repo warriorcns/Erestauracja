@@ -245,6 +245,9 @@ namespace Contract
         [OperationContract]
         List<UserOrder> GetUserActiveOrder(string login);
 
+        [OperationContract]
+        List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to);
+
     }
 
 

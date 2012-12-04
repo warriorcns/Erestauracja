@@ -1026,6 +1026,20 @@ namespace Contract
                 return null;
             }
         }
+
+        public List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || from == null || to == null))
+            {
+                Database db = new Database();
+                List<UserOrder> value = db.GetOrderHistory(login, from, to);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
         
     }
 }

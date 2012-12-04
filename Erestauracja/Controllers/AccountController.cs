@@ -267,7 +267,34 @@ namespace Erestauracja.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return View();
+                DateTime from = DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0));
+                DateTime to = DateTime.Now;
+
+                ViewData["from"] = from;
+                ViewData["to"] = to;
+
+                List<UserOrder> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<UserOrder>(client.GetOrderHistory(User.Identity.Name, from, to));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie zamówienia nie powiodło się.");
+
+                    return View(value);
+                }
+
+                return View(value);
             }
             else
             {

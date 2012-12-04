@@ -711,6 +711,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, r.`telephone`, r.`deliveryTime`, r.`deliveryPrice`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o  JOIN `restaurants` r ON o.`restaurantId` = r.`id`  JOIN `towns` t ON r.`townId` = t.`id` WHERE o.`userId` = (SELECT u.`id` FROM `users` u WHERE u.`login` = @login) AND o.`status` IS NOT NULL AND o.`orderDate` &gt; @from AND o.`orderDate`&lt;@to ORDER BY o.`orderDate` ASC.
+        /// </summary>
+        internal static string GetUserOrderHistory {
+            get {
+                return ResourceManager.GetString("GetUserOrderHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT `passwordQuestion`, `isLockedOut` FROM `users` WHERE `login` = @login.
         /// </summary>
         internal static string GetUserQuestion {

@@ -5650,6 +5650,135 @@ namespace Contract
             return u;
         }
 
+        public List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to)
+        {
+            List<UserOrder> orders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+            //pobiera zamówienia
+            try
+            {
+                orders = new List<UserOrder>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserOrderHistory);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@from", from);
+                command.Parameters.AddWithValue("@to", to);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserOrder r = GetUserOrderFromReader(reader);
+                    orders.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            //pobieranie produktów w zamówieniach
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                command.Connection = conn;
+
+                conn.Open();
+
+                foreach (UserOrder list in orders)
+                {
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@id", list.OrderId);
+
+                    reader2 = command.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        OrderedProduct r = GetOrderedProductFromReader(reader2);
+                        list.Products.Add(r);
+                    }
+                    reader2.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+            }
+
+            return orders;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

@@ -12,6 +12,7 @@
     });
 </script>
 
+<%: Html.ValidationSummary(true, "Błąd.")%>
 <% if (Model == null) %>
 <% { %>
     <h2>Pobieranie aktywnych zamówień nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
