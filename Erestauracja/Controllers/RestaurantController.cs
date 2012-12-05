@@ -745,14 +745,9 @@ namespace Erestauracja.Controllers
 
         # endregion
 
-        public ActionResult areaselect() 
-        {
-            return View();
-        }
-
-        public ActionResult area()
-        {
-            return View();
+        public void Comment(int id, string stars, string comm)
+        { 
+            
         }
     }
 }

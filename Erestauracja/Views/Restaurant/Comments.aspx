@@ -3,18 +3,57 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Main" runat="server">
 
+    
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="../../Scripts/jquery-ui.js" type="text/javascript"></script>
+
     <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>
 
 <%: Html.ValidationSummary(true, "Błąd.")%>
 
-<script type="text/javascript">
-    $(function () {
-        $('#star').raty({
-            half: true,
-            path: "../../Content/images/"
+    <script type="text/javascript">
+        $(function () {
+            $('#star').raty({
+                half: true,
+                path: "../../Content/images/",
+                click : function(score, evt) {
+                    var target = $('#starRating');
+
+                    if (score === null) {
+                      target.html('');
+                    } else if (score === undefined) {
+                      target.empty();
+                    } else {
+                      target.html(score);
+                    }
+                  }
+            });
         });
-    });
-</script>
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#send")
+            .button()
+            .click(function (event) {
+
+                var comm = $("#commentText").val();
+                var stars = $("#starRating").text();
+                var ResID = $("#ResID").val();
+                var url = '<%: Url.Action("Comment", "Restaurant") %>';
+                var data = { id: ResID, stars:stars, comm:comm };
+
+                $.post(url, data, function (data) {
+                    $("#resIsOnline").text(data);
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        });
+    </script>
+
 
 <%if (User.Identity.IsAuthenticated) %>
 <% { %>
@@ -23,9 +62,11 @@
     <legend>Dodaj komentarz</legend>
     <div>Ocena:</div>
     <div id="star"></div>
+    <input type="hidden" id="starRating" />
+    <input type="hidden" id="ResID" value="<%: ViewData["id"] %>"/>
     <div>Treść komentarza:</div>
-    <div><textarea></textarea></div>
-    <div><button>Przycisk :D</button></div>
+    <div><textarea id="commentText"></textarea></div>
+    <div><button id="send">Wyślij</button></div>
     </fieldset>
 </div>
 <% } %>
