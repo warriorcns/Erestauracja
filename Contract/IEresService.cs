@@ -250,6 +250,9 @@ namespace Contract
 
         [OperationContract]
         List<Comment> GetRestaurantComments(int id);
+
+        [OperationContract]
+        bool AddComment(string login, int id, double stars, string comment);
     }
 
 

@@ -39,11 +39,12 @@
                 var comm = $("#commentText").val();
                 var stars = $("#starRating").text();
                 var ResID = $("#ResID").val();
-                var url = '<%: Url.Action("Comment", "Restaurant") %>';
+                var url = '<%: Url.Action("AddComment", "Restaurant") %>';
                 var data = { id: ResID, stars:stars, comm:comm };
 
                 $.post(url, data, function (data) {
-                    $("#resIsOnline").text(data);
+                    window.location.href = data.redirectToUrl;
+                   // location.reload();
                 });
             });
         });
@@ -95,10 +96,13 @@
                     <span>Ocena:</span>
                     <span><%: comm.Rating %></span>
                 </div>
+                <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>
+                <% { %>
                 <div>
                     <div>Treść komentarza:</div>
-                    <div><%: comm.CommentText %></div>
+                    <div><%: comm.CommentText%></div>
                 </div>
+                <% } %>
             </div>
         <% } %>
         <br />

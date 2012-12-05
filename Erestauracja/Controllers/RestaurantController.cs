@@ -745,9 +745,37 @@ namespace Erestauracja.Controllers
 
         # endregion
 
-        public void Comment(int id, string stars, string comm)
-        { 
-            
+        public ActionResult AddComment(int id, string stars, string comm)
+        {
+            ViewData["id"] = id;
+
+            if (id > 0)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.AddComment(User.Identity.Name, id, Double.Parse(stars), comm);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    //przekierować do strony z błędem - dodawanie komentarza nie powiodło sie
+                    //i po czasie przekierować do Comments
+                    return Json( (new { redirectToUrl = Url.Action("Comments", "Restaurant", new { id = id }) }));
+                
+                }
+            }
+            return Json(new { redirectToUrl = Url.Action("Comments", "Restaurant", new { id = id }) });
+                
         }
     }
 }

@@ -416,4 +416,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetRestaurantComments" xml:space="preserve">
     <value>SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE c.`restaurantId` =@id</value>
   </data>
+  <data name="AddComment" xml:space="preserve">
+    <value>INSERT INTO `comments`(`userId`, `restaurantId`, `rating`, `comment`, `date`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login),@id,@rating, @comment, @date)</value>
+  </data>
 </root>

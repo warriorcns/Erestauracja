@@ -70,6 +70,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO `comments`(`userId`, `restaurantId`, `rating`, `comment`, `date`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login),@id,@rating, @comment, @date).
+        /// </summary>
+        internal static string AddComment {
+            get {
+                return ResourceManager.GetString("AddComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO `rest_page_content`(`menagerId`, `restaurantId`) VALUES ((SELECT `id` FROM `users` WHERE `login` = @menager),(SELECT `id` FROM `restaurants` WHERE `userId`=(SELECT `id` FROM `users` WHERE `login` = @login))).
         /// </summary>
         internal static string AddEmptyContent {

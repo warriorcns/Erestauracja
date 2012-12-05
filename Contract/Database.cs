@@ -5871,6 +5871,24 @@ namespace Contract
             return u;
         }
 
+        public bool AddComment(string login, int id, double stars, string comment)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.AddComment);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+            command.Parameters.AddWithValue("@comment", comment);
+            command.Parameters.AddWithValue("@rating", stars);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "AddComment");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

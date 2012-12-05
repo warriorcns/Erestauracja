@@ -1054,6 +1054,20 @@ namespace Contract
                 return null;
             }
         }
+
+        public bool AddComment(string login, int id, double stars, string comment)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || id == null || id < 1 || stars == null || stars < 0))
+            {
+                Database db = new Database();
+                bool value = db.AddComment(login, id, stars, comment);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
     }
 }
