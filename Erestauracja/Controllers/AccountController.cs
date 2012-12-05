@@ -302,6 +302,47 @@ namespace Erestauracja.Controllers
             }
         }
 
+        [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
+        public ActionResult OrderHistory2(string from, string to)
+        {
+            if (Request.IsAuthenticated)
+            {
+                DateTime fromm = DateTime.Parse(from);
+                DateTime too = DateTime.Parse(to);
+
+                ViewData["from"] = from;
+                ViewData["to"] = to;
+
+                List<UserOrder> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<UserOrder>(client.GetOrderHistory(User.Identity.Name, fromm, too));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie zamówienia nie powiodło się.");
+
+                    return View(value);
+                }
+
+                return View(value);
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
         //
         // GET: /Account/Comments
         [Authorize]

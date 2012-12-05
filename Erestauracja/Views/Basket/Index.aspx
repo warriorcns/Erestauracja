@@ -5,6 +5,7 @@
 <%@ Import Namespace="System.Runtime.Serialization.Formatters.Binary" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
     <script type="text/javascript">
         $(function () {
             $("#accordion").accordion({
@@ -13,6 +14,7 @@
             });
         });
     </script>
+
     <script runat="server" type="text/C#">
         String Send(BasketRest data)
         {
@@ -34,39 +36,6 @@
         }
     </script>
 
-    <script runat="server" type="text/C#">
-
-        delegate bool Uchwyt(int arg);
-
-        string IsOnline(int id)
-        {
-            bool value = false;
-            try
-            {
-                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
-                using (client)
-                {
-                    Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
-                    value = IsOnline(id);
-                }
-                client.Close();
-            }
-            catch (Exception e)
-            {
-                value = false;
-            }
-
-            if (value == false)
-            {
-                return "Offline";
-            }
-            else
-            {
-                return "Online";
-            }
-        }
-    </script>
-
     <script type="text/javascript">
         function callMethod() {
 
@@ -83,7 +52,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            setInterval("callMethod()", 600000); //600000ms = 10min
+            callMethod();
+            setInterval("callMethod()", 60000); //600000ms = 10min
         });
     </script>
 
@@ -97,9 +67,9 @@
         <div id="accordion">
         <% foreach (BasketRest rest in Model.Basket) %>
         <% { %>
-            <h3><a href="#"><span><%: rest.DisplayName%></span> <span id="resIsOnline"><%: IsOnline(rest.RestaurantId) %></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
+            <h3><a href="#"><span><%: rest.DisplayName%></span> <span id="resIsOnline"></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
             <div>
-            <input id="ResID" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
+                <input id="ResID" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
                 <div>Kontakt: <%: rest.Telephone%></div>
                 <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
                 <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>

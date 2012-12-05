@@ -1225,30 +1225,30 @@ $.keyboard = function(el, options){
 			'default' : [
 		        "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
 		        "q w e r t y u i o p [ ] \u005c",
-		        "a s d f g h j k l ; '",
+		        "a s d f g h j k l ; ' {accept}",
 		        "{shift} z x c v b n m , . / {shift}",
-		        "{accept} {alt} {space} {alt} {cancel}"
+		        "{alt} {space} {alt} {cancel}"
 	        ],
 			'shift' : [
 		        '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
 		        "Q W E R T Y U I O P { } |",
-		        'A S D F G H J K L : "',
+		        'A S D F G H J K L : " {accept}',
 		        "{shift} Z X C V B N M < > ? {shift}",
-		        "{accept} {alt} {space} {alt} {cancel}"
+		        "{alt} {space} {alt} {cancel}"
 	        ],
 			'alt' : [
 		        "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
 		        "q w \u0119 \u00ae \u2122 y \u20ac i \u00f3 p [ ] \u005c",
-		        "\u0105 \u015b d f g h j k \u0142 ; '",
+		        "\u0105 \u015b d f g h j k \u0142 ; ' {accept}",
 		        "{shift} \u017c \u017a \u0107 v \u00a9 \u0144 m , . / {shift}",
-		        "{accept} {alt} {space} {alt} {cancel}"
+		        "{alt} {space} {alt} {cancel}"
 	        ],
 			'alt-shift': [
 				'~ \u00a1 @ # $ % ^ & * ( ) _ + {bksp}',
 		        "Q W \u0118 R T Y U I \u00d3 P { } |",
-		        '\u0104 \u015a D F G H J K \u0141 : "',
+		        '\u0104 \u015a D F G H J K \u0141 : " {accept}',
 		        "{shift} \u017b \u0179 \u0106 V B \u0143 M < > \u00bf {shift}",
-		        "{accept} {alt} {space} {alt} {cancel}"
+		        "{alt} {space} {alt} {cancel}"
 			]
 		},
 		'dvorak' : {
@@ -1303,8 +1303,8 @@ $.keyboard = function(el, options){
 
 		// *** change keyboard language & look ***
 		display : {
-		'a'      : '\u2714:Akceptuj (Shift-Enter)', // check mark - same action as accept
-		'accept' : 'Akceptuj:Akceptuj (Shift-Enter)',
+		'a'      : 'Enter:Enter (Shift-Enter)', // check mark - same action as accept  \u2714
+		'accept' : 'Enter:Enter (Shift-Enter)',
 		'alt'    : 'Alt Gr:Polskie znaki',
 		'b'      : '\u2190:Cofnij',    // Left arrow (same as &larr;)
 		'bksp'   : 'Bksp:Cofnij',

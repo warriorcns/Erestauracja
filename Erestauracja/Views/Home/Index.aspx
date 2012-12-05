@@ -1,9 +1,31 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.HomeModels>" ErrorPage="~/Views/Shared/Unauthorized.aspx"%>
 
-<asp:Content ID="head" ContentPlaceHolderID="head" runat="server"></asp:Content>
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
 <asp:Content ID="title" ContentPlaceHolderID="TitleContent" runat="server">Home Page</asp:Content>
 
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
+
+    <script type="text/javascript">
+        function callMethod() {
+
+            //IsOnline
+            var Resid = $('#ResID').val();
+            var url = '<%: Url.Action("IsOnline", "Basket") %>';
+            var data = { id: Resid };
+
+            $.post(url, data, function (data) {
+                $(".resIsOnline" + Resid).text(data);
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            callMethod();
+            setInterval("callMethod()", 60000); //600000ms = 10min
+        });
+    </script>
 
     <form id="form1" runat="server">
     <br />
@@ -12,10 +34,13 @@
             <asp:Label Font-Bold="true" Font-Underline="true" runat="server" style="position: relative; padding-top: 20px; padding-left: 10px;">   10 najnowszych restauracji</asp:Label>
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
+                    <input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />
                     <div class="resInfo" onclick="Redirect('<%: Html.Encode(rest.ID) %>')">
-                        <div> <%: rest.DisplayName %></div>
-                        <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
-                        <div> <%: rest.Telephone %> </div>
+                    <div>
+                        <span> <%: rest.DisplayName %></span> <span class="resIsOnline<%: rest.ID %>"></span>
+                    </div>
+                    <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
+                    <div> <%: rest.Telephone %> </div>
                     </div>
                     <hr />
             <% } %>
