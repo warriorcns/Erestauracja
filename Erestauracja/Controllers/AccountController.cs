@@ -351,7 +351,27 @@ namespace Erestauracja.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return View();
+                List<Comment> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Comment>(client.GetUserComments(User.Identity.Name));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie komentarzy nie powiodło się.");
+                }
+
+                return View(value);
             }
             else
             {

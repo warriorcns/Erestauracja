@@ -1057,7 +1057,7 @@ namespace Contract
 
         public bool AddComment(string login, int id, double stars, string comment)
         {
-            if (!(String.IsNullOrWhiteSpace(login) || id == null || id < 1 || stars == null || stars < 0))
+            if (!(String.IsNullOrWhiteSpace(login) || id == null || id < 1 || stars == null || stars <= 0))
             {
                 Database db = new Database();
                 bool value = db.AddComment(login, id, stars, comment);
@@ -1066,6 +1066,20 @@ namespace Contract
             else
             {
                 return false;
+            }
+        }
+
+        public List<Comment> GetUserComments(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                List<Comment> value = db.GetUserComments(login);
+                return value;
+            }
+            else
+            {
+                return null;
             }
         }
         

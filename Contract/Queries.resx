@@ -127,7 +127,7 @@
     <value>INSERT INTO `products`(`restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled`) VALUES (@restaurantId, @categoryId, @name, @description, @price, @priceOption,@creationDate, @isAvailable, @isEnabled)</value>
   </data>
   <data name="AddRestaurant" xml:space="preserve">
-    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @longitude, @price)</value>
+    <value>INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @longitude, @price)</value>
   </data>
   <data name="AddUsersToRoles" xml:space="preserve">
     <value>INSERT INTO `users_in_roles`(`userID`, `roleID`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login), (SELECT `id` FROM `roles` WHERE `rolename` = @rolename))</value>
@@ -280,7 +280,7 @@
     <value>SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName AND x.`isEnabled` = @isEnabled</value>
   </data>
   <data name="GetRestaurantsByManagerLogin" xml:space="preserve">
-    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating , x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin)</value>
   </data>
   <data name="GetRolesForUser" xml:space="preserve">
     <value>SELECT `rolename` FROM `roles` WHERE `id` IN (SELECT `roleID` FROM `users_in_roles` WHERE `userID` = (SELECT `id` FROM `users` WHERE `login` = @login))</value>
@@ -360,7 +360,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
     <value>SELECT `password`, `isApproved` FROM `users` WHERE `login` = @login AND `isLockedOut` = @isLockedOut</value>
   </data>
   <data name="RestaurantsFromCity" xml:space="preserve">
-    <value>SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, x.`averageRating`, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIKE @cityName)</value>
+    <value>SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIKE @cityName)</value>
   </data>
   <data name="GetTopRestaurant" xml:space="preserve">
     <value>SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, x.`telephone` FROM `restaurants` x JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled` = 1 AND u.`isLockedOut` = 0 ORDER BY u.`creationDate` DESC LIMIT 0,10</value>
@@ -418,5 +418,8 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   </data>
   <data name="AddComment" xml:space="preserve">
     <value>INSERT INTO `comments`(`userId`, `restaurantId`, `rating`, `comment`, `date`) VALUES ((SELECT `id` FROM `users` WHERE `login`=@login),@id,@rating, @comment, @date)</value>
+  </data>
+  <data name="GetUserComments" xml:space="preserve">
+    <value>SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE u.`login` =@login</value>
   </data>
 </root>

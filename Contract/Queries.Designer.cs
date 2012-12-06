@@ -106,7 +106,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `averageRating`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, @averageRating, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @log [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to INSERT INTO `restaurants`(`name`, `displayName`, `address`, `townId`, `countryId`, `telephone`, `nip`, `regon`, `inputsCount`, `menagerId`, `deliveryTime`, `userId`, `isEnabled`, `latitude`, `longitude`, `deliveryPrice`) VALUES (@name, @displayName, @address, @townId, (SELECT `id` FROM `countries` WHERE `name` = @country), @telephone, @nip, @regon, @inputsCount, (SELECT `id` FROM `users` WHERE `login` = @menager), @deliveryTime, (SELECT `id` FROM `users` WHERE `login` = @login), @isEnabled, @latitude, @long [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AddRestaurant {
             get {
@@ -628,7 +628,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, x.`averageRating`, x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating , x.`menagerId`, x.`deliveryTime`, x.`userId`, x.`isEnabled`, u.`login`, u.`email`, u.`isApproved`, u.`lastActivityDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `tow [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetRestaurantsByManagerLogin {
             get {
@@ -698,6 +698,15 @@ namespace Contract {
         internal static string GetUserByLogin {
             get {
                 return ResourceManager.GetString("GetUserByLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE u.`login` =@login.
+        /// </summary>
+        internal static string GetUserComments {
+            get {
+                return ResourceManager.GetString("GetUserComments", resourceCulture);
             }
         }
         
@@ -828,7 +837,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, x.`averageRating`, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIKE @cityName).
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIK [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RestaurantsFromCity {
             get {

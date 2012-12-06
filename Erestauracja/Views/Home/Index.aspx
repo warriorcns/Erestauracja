@@ -6,7 +6,7 @@
 
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         function callMethod() {
 
             //IsOnline
@@ -25,7 +25,7 @@
             callMethod();
             setInterval("callMethod()", 60000); //600000ms = 10min
         });
-    </script>
+    </script>--%>
 
     <form id="form1" runat="server">
     <br />
@@ -34,10 +34,10 @@
             <asp:Label Font-Bold="true" Font-Underline="true" runat="server" style="position: relative; padding-top: 20px; padding-left: 10px;">   10 najnowszych restauracji</asp:Label>
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
-                    <input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />
+                    <%--<input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />--%>
                     <div class="resInfo" onclick="Redirect('<%: Html.Encode(rest.ID) %>')">
                     <div>
-                        <span> <%: rest.DisplayName %></span> <span class="resIsOnline<%: rest.ID %>"></span>
+                        <span> <%: rest.DisplayName %></span> <%--<span class="resIsOnline<%: rest.ID %>"></span>--%>
                     </div>
                     <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
                     <div> <%: rest.Telephone %> </div>
@@ -53,17 +53,21 @@
         </asp:Panel>
         <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">
             <form>
+
             <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wpisz miasto:"></asp:Label>
             <%--<%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>--%>
             <%: Html.TextBoxFor(m => m.TownName, new { id = "target", @class = "ButtonWybierzMiasto" })%>
-            <%--<asp:Button ID="ButtonWybierzMiasto" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
+            <%--<asp:Button ID="search" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
                 Font-Size="Small"/>--%>
 
             <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
             <%: Html.DropDownList("rest", ViewData["rest"] as SelectList, new { id = "Restauracje", @class = "DropDownListWybierzRestauracje" })%>
+            
             <asp:Button ID="ButtonWybierzRestauracje" class="ButtonWybierzRestauracje" runat="server"
                 Text="Szczegółowe wyszukiwanie" Font-Size="Small" />
             </form>
+
+
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto" Wrap="true">
             <!--<asp:Label ID="Label" class="LabelWybierzMiasto" runat="server" Text="Ilość odwiedzin:"></asp:Label>
@@ -99,6 +103,7 @@
     
     <script type="text/javascript">
         $('#target').blur(function () {
+           
             var town = $("#target").val();
             var url = '<%: Url.Action("SearchRestaurants", "Home") %>';
             var data = { value: town };

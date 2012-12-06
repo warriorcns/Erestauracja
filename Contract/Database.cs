@@ -1657,7 +1657,6 @@ namespace Contract
             command3.Parameters.AddWithValue("@nip", nip);
             command3.Parameters.AddWithValue("@regon", regon);
             command3.Parameters.AddWithValue("@inputsCount", 0);
-            command3.Parameters.AddWithValue("@averageRating", 0);
             command3.Parameters.AddWithValue("@menager", managerLogin);
             command3.Parameters.AddWithValue("@deliveryTime", deliveryTime);
             command3.Parameters.AddWithValue("@login", login);
@@ -2000,7 +1999,8 @@ namespace Contract
             string nip = reader.GetString(8);
             string regon = reader.GetString(9);
             int inputsCount = reader.GetInt32(10);
-            int averageRating = reader.GetInt32(11);
+            double averageRating = 0.0;
+            if (reader.GetValue(11) != DBNull.Value) averageRating = reader.GetDouble(11);
             int menagerId = reader.GetInt32(12);
             string deliveryTime = reader.GetString(13);
             int userId = reader.GetInt32(14);
@@ -4924,7 +4924,8 @@ namespace Contract
             string country = reader.GetString(5);
             string telephone = reader.GetString(6);
             int inputsCount = reader.GetInt32(7);
-            int averageRating = reader.GetInt32(8);
+            double averageRating = 0.0;
+            if (reader.GetValue(8) != DBNull.Value) averageRating = reader.GetDouble(8);
             string deliveryTime = reader.GetString(9);
             DateTime creationDate = reader.GetDateTime(10);
             double latitude = reader.GetDouble(11);
@@ -5887,6 +5888,72 @@ namespace Contract
                 return true;
             }
             return false;
+        }
+
+        public List<Comment> GetUserComments(string login)
+        {
+            List<Comment> comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new List<Comment>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserComments);
+                command.Parameters.AddWithValue("@login", login);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Comment r = GetCommentFromReader(reader);
+                    comments.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
         }
 
         #region dodatkowe klasy pomocnicze

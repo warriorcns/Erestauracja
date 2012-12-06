@@ -252,6 +252,9 @@ namespace Contract
         List<Comment> GetRestaurantComments(int id);
 
         [OperationContract]
+        List<Comment> GetUserComments(string login);
+
+        [OperationContract]
         bool AddComment(string login, int id, double stars, string comment);
     }
 
@@ -541,7 +544,7 @@ namespace Contract
         private string nip = null;
         private string regon = null;
         private int inputsCount = -1;
-        private int averageRating = -1;
+        private double averageRating = -1;
         private int menagerId = -1;
         private string deliveryTime = null;
         private decimal deliveryPrice = 0.00M;
@@ -633,7 +636,7 @@ namespace Contract
         }
 
         [DataMember]
-        public int AverageRating
+        public double AverageRating
         {
             get { return averageRating; }
             set { averageRating = value; }
@@ -1485,7 +1488,7 @@ namespace Contract
         private string country = null;
         private string telephone = null;
         private int inputsCount = -1;
-        private int averageRating = -1;
+        private double averageRating = -1;
         private string deliveryTime = null;
         private DateTime creationDate = new DateTime();
         private double latitude = 0;
@@ -1550,7 +1553,7 @@ namespace Contract
         }
 
         [DataMember]
-        public int AverageRating
+        public double AverageRating
         {
             get { return averageRating; }
             set { averageRating = value; }
