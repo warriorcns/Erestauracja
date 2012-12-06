@@ -3430,5 +3430,125 @@ namespace Erestauracja.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        //
+        // GET: /ManagePanel/Comments
+        [Authorize]
+        public ActionResult Comments(int id)
+        {
+            ViewData["id"] = id;
+
+            if (id > 0)
+            {
+                List<Comment> value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = new List<Comment>(client.GetRestaurantComments(id));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie komentarzy nie powiodło się.");
+                }
+
+                return View(value);
+
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        //
+        // GET: /ManagePanel/ReportComment
+        [Authorize]
+        public ActionResult ReportComment(int id, int comm)
+        {
+            ViewData["id"] = id;
+            ReportCommentModel model = new ReportCommentModel();
+
+            if (id > 0)
+            {
+                Comment value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetComments(comm);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie komentarza nie powiodło się.");
+                }
+
+                model.RestaurantId = id;
+                model.Address = value.Address;
+                model.Comment = value.CommentText;
+                model.Date = value.Date;
+                model.DisplayName = value.DisplayName;
+                model.Id = value.Id;
+                model.Postal = value.Postal;
+                model.Rating = value.Rating;
+                model.Town = value.Town;
+                model.UserLogin = value.UserLogin;
+
+                return View(model);
+
+            }
+            return RedirectToAction("Restaurant");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ReportComment(ReportCommentModel model)
+        {
+            ViewData["id"] = model.RestaurantId;
+
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.ReportComment(model.Id, model.RestaurantId, model.UserLogin, model.Comment, model.Report, User.Identity.Name);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Wysyłanie zgłoszenia nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("Comments", new { id = model.RestaurantId });
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
     }
 }

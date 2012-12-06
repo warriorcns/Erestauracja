@@ -422,4 +422,10 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetUserComments" xml:space="preserve">
     <value>SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE u.`login` =@login</value>
   </data>
+  <data name="DeleteComment" xml:space="preserve">
+    <value>DELETE FROM `comments` WHERE `id`=@id AND `userId` = (SELECT `id` FROM `users` WHERE `login`=@login)</value>
+  </data>
+  <data name="GetComments" xml:space="preserve">
+    <value>SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE c.`id` =@id</value>
+  </data>
 </root>

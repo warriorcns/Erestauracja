@@ -40,6 +40,7 @@
                             <div><%: comm.CommentText%></div>
                         </div>
                         <% } %>
+                        <%: Html.ActionLink("Usuń", "DeleteComment", "Account", new { id = comm.Id }, null)%>
                     </div>
                 <% } %>
                 <br />

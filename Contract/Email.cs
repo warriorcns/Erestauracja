@@ -86,5 +86,38 @@ namespace Contract
                 return false;
             }
         }
+
+        public bool SendReportComment(int id, int resId, string userLogin, string comment, string report, string login)
+        {
+            SmtpClient klient = smtp;
+            MailMessage wiadomosc = new MailMessage();
+            try
+            {
+                wiadomosc.From = new MailAddress(eresEmail);
+                wiadomosc.To.Add(eresError);
+                wiadomosc.Subject = "ReportComment - " + login + " (" + resId + ")";
+                wiadomosc.Body = "Treść zgłoszenia: " + System.Environment.NewLine + " " + report + System.Environment.NewLine + "Komentarz: " + id +
+                    System.Environment.NewLine + "  Użytkownik: " + userLogin + System.Environment.NewLine + "  Treść komentarza: " + comment;
+
+                klient.Port = port;
+                klient.Credentials = credential;
+                klient.EnableSsl = true;
+                klient.Send(wiadomosc);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string info = "Błąd podczas wysyłania wiadomości email z zgłoszeniem nadużycia";
+                info += "Action: " + "SendReportComment" + "\n\n";
+                info += "Exception: " + ex.ToString();
+
+                return false;
+            }
+        }
     }
 }

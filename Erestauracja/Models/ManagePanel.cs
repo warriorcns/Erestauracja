@@ -377,4 +377,41 @@ namespace Erestauracja.Models
         [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ReportCommentModel
+    {
+        [HiddenInput]
+        public int RestaurantId { get; set; }
+
+        [HiddenInput]
+        public int Id { get; set; }
+
+        [HiddenInput]
+        public string UserLogin { get; set; }
+
+        [HiddenInput]
+        public string DisplayName { get; set; }
+
+        [HiddenInput]
+        public string Address { get; set; }
+
+        [HiddenInput]
+        public string Town { get; set; }
+
+        [HiddenInput]
+        public string Postal { get; set; }
+
+        [HiddenInput]
+        public double Rating { get; set; }
+
+        [HiddenInput]
+        public string Comment { get; set; }
+
+        [HiddenInput]
+        public DateTime Date { get; set; }
+
+        [Required]
+        [Display(Name = "Powód")]
+        public string Report { get; set; }
+    }
 }

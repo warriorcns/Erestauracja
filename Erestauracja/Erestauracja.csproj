@@ -1333,6 +1333,8 @@
     <Content Include="Views\Basket\PayError.aspx" />
     <Content Include="Views\Basket\PaySuccess.aspx" />
     <Content Include="Views\Basket\Realize.aspx" />
+    <Content Include="Views\ManagePanel\Comments.aspx" />
+    <Content Include="Views\ManagePanel\ReportComment.aspx" />
     <Content Include="Views\PayPal\IPN.aspx" />
     <Content Include="Views\PayPal\PostToPayPal.aspx" />
     <Content Include="Views\PayPal\RedirectFromPaypal.aspx" />

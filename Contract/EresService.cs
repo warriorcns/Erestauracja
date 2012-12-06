@@ -1082,6 +1082,47 @@ namespace Contract
                 return null;
             }
         }
-        
+
+        public bool DeleteComment(string login, int id)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.DeleteComment(login, id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Comment GetComments(int id)
+        {
+            if (!(id == null || id < 1))
+            {
+                Database db = new Database();
+                Comment value = db.GetComments(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool ReportComment(int id, int resId, string userLogin, string comment, string report, string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(userLogin) || String.IsNullOrWhiteSpace(comment) || String.IsNullOrWhiteSpace(report) || id == null || id < 1 || resId == null || resId < 1 || String.IsNullOrWhiteSpace(login)))
+            {
+                Email em = new Email();
+                bool value = em.SendReportComment(id, resId, userLogin, comment, report, login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

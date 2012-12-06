@@ -256,6 +256,15 @@ namespace Contract
 
         [OperationContract]
         bool AddComment(string login, int id, double stars, string comment);
+
+        [OperationContract]
+        bool DeleteComment(string login, int id);
+
+        [OperationContract]
+        Comment GetComments(int id);
+
+        [OperationContract]
+        bool ReportComment(int id, int resId, string userLogin, string comment, string report, string login);
     }
 
 

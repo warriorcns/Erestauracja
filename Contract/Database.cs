@@ -5956,6 +5956,86 @@ namespace Contract
             return comments;
         }
 
+        public bool DeleteComment(string login, int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.DeleteComment);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "DeleteComment");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public Comment GetComments(int id)
+        {
+            Comment comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new Comment();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetComments);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                while (reader.Read())
+                {
+                    comments = GetCommentFromReader(reader);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

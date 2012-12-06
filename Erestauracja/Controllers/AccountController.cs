@@ -380,6 +380,42 @@ namespace Erestauracja.Controllers
         }
 
         //
+        // GET: /Account/DeleteComment
+        [Authorize]
+        [CustomAuthorizeAttribute(Roles = "Klient")]
+        public ActionResult DeleteComment(int id)
+        {
+            if (Request.IsAuthenticated)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.DeleteComment(User.Identity.Name, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Usuwanie komentarza nie powiodło się.");
+                }
+
+                return RedirectToAction("Comments");
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
+        //
         // GET: /Account/LogOn
         public ActionResult LogOn()
         {

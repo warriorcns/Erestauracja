@@ -187,6 +187,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `comments` WHERE `id`=@id AND `userId` = (SELECT `id` FROM `users` WHERE `login`=@login).
+        /// </summary>
+        internal static string DeleteComment {
+            get {
+                return ResourceManager.GetString("DeleteComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteRole {
@@ -390,6 +399,15 @@ namespace Contract {
         internal static string GetClientProducts {
             get {
                 return ResourceManager.GetString("GetClientProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT c.`id`, u.`login`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, c.`rating`, c.`comment`, c.`date` FROM `comments` c JOIN `users` u On c.`userId`=u.`id` JOIN `restaurants` r ON c.`restaurantId` = r.`id` JOIN `towns` t ON r.`townId` = t.`id` WHERE c.`id` =@id.
+        /// </summary>
+        internal static string GetComments {
+            get {
+                return ResourceManager.GetString("GetComments", resourceCulture);
             }
         }
         

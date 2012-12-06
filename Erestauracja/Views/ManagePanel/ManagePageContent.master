@@ -25,6 +25,8 @@
                         <%: Html.ActionLink("Galeria", "Gallery", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                     <li>
                         <%: Html.ActionLink("Kontakt", "Contact", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
+                    <li>
+                        <%: Html.ActionLink("Komentarze", "Comments", "ManagePanel", new { id = (int)ViewData["id"] }, null)%></li>
                 </ul>
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">
