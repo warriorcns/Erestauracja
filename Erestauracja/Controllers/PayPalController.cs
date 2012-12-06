@@ -8,21 +8,30 @@ using System.Configuration;
 using System.Net;
 using System.Text;
 using System.IO;
+using Erestauracja.Authorization;
 
 namespace Erestauracja.Controllers
 {
+    [CustomAuthorizeAttribute(Roles = "Klient")]
     public class PayPalController : Controller
     {
         //
         // GET: /PayPal/
 
         //[HttpPost]
-        public ActionResult PostToPayPal()
+        /// <summary>
+        /// Obsluguje pobrane dane z zamowienia.
+        /// </summary>
+        /// <param name="comm"></param>
+        /// <param name="id"></param>
+        /// <param name="resid"></param>
+        /// <returns></returns>
+        public ActionResult PostToPayPal(string comm, int id, int resid)
         {
             PayPal pp = new PayPal();
             pp.cmd = "_xclick";
 
-            //klucz konta biznesowego
+            //klucz konta biznesowego - do pobierania z bazy w zaleznosci od restauracji - do zmiany
             pp.business = ConfigurationManager.AppSettings["BusinessAccountKey"];
 
             //czy uzywamy sandboxa (testowej wersji paypala)
@@ -44,6 +53,39 @@ namespace Erestauracja.Controllers
             pp.shipping = "2.50";
             pp.amount = "102.34";
 
+            
+            //bool value = false;
+            //try
+            //{
+            //    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+            //    using (client)
+            //    {
+            //        value = client.Pay(User.Identity.Name, id, com, "cash");
+            //    }
+            //    client.Close();
+            //}
+            //catch (Exception e)
+            //{
+            //    value = false;
+            //}
+            //if (value == false)
+            //{
+            //    ModelState.AddModelError("", "Wysyłanie zamówienia nie powiodło się.");
+
+            //    //wyświetl info że nie powiodło sie 
+            //    //i jakeś info co zrobić w takiej sytuacji
+            //    return RedirectToAction("PayError");
+            //}
+            //else
+            //{
+            //    //usuwanie zamówionych dań z koszyka
+            //    //DeleteRest(res);
+
+            //    //wyświetl potwierdzenie
+            //    //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
+            //    //zapisz id zamówienia że zostało zapłacone
+            //    return RedirectToAction("PaySuccess");
+            //}
             return View(pp);
         }
 
@@ -84,19 +126,7 @@ namespace Erestauracja.Controllers
                 pp.mc_gross = Request["mc_gross"];
 
                 //zrob z danymi co Ci sie podoba.. 
-                if (sAmountPaid == "2.95")
-                {
-                    // take the information returned and store this into a subscription table
-                    // this is where you would update your database with the details of the tran
-
-                    return View();
-
-                }
-                else
-                {
-                    // let fail - this is the IPN so there is no viewer
-                    // you may want to log something here
-                }
+                 
                 return View(pp);
 
             }

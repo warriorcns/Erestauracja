@@ -36,17 +36,29 @@
         }
     </script>
 
+    
     <script type="text/javascript">
         function callMethod() {
 
             //IsOnline
-            var Resid = $('#ResID').val();
-            var url = '<%: Url.Action("IsOnline", "Basket") %>';
-            var data = { id: Resid };
 
-            $.post(url, data, function (data) {
-                $("#resIsOnline").text(data);
-            });
+            var length = $("#modelLength").val();
+            var tab = new Array(length);
+            for (var i = 1; i <= length; i++) {
+                var Resid = $('#ResID' + i).val();
+                tab[i]=Resid;
+            }
+            var url = '<%: Url.Action("IsOnline", "Basket") %>';
+            for (var i = 1; i <= length; i++) {
+                
+                var data = { id: tab[i] };
+                alert(tab[i]);
+                $.post(url, data, function (data) {
+                    $("#resIsOnline" + i).text(data);
+                    alert(data + i);
+                });
+            }
+
         }
     </script>
 
@@ -61,19 +73,25 @@
 <% { %>
     <h2>Koszyk - wybierz produkty które chcesz zamówić a następnie kliknij 'Realizuj'</h2>
     <h2>Kliknij <%: Html.ActionLink("tutaj", "ClearBasket", "Basket")%>, aby usunąć wszystkie pozycje z koszyka</h2>
-    </br>
+    <br />
     <% if (Model != null) %>
     <% { %>
+        <input type="hidden" id="modelLength" value="<%: Model.Basket.Length %>" />
         <div id="accordion">
-        <% foreach (BasketRest rest in Model.Basket) %>
-        <% { %>
-            <h3><a href="#"><span><%: rest.DisplayName%></span> <span id="resIsOnline"></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
+        <% 
+           int i = 0;
+            foreach (BasketRest rest in Model.Basket)
+         {
+             i++;
+                %>
+            <h3><a href="#"><span><%: rest.DisplayName%> </span> <span id="resIsOnline<%: i %>"></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
             <div>
-                <input id="ResID" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
+
+            <input id="ResID<%: i %>" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
                 <div>Kontakt: <%: rest.Telephone%></div>
                 <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
                 <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>
-                </br>
+                <br />
                 <% foreach (BasketProduct product in rest.Products) %>
                 <% { %>
                 <div>
@@ -101,7 +119,7 @@
                     <span>Cena: <%: product.Price%>zł x <%: product.Count%> = <%: product.TotalPriceProd%>zł</span>
                     <span><%: Html.ActionLink("usuń z koszyka", "Delete", "Basket", new { id = product.BasketId }, null)%> </span>
                 </div>
-                </br>
+                <br />
                 <% } %>
             <%: Html.ActionLink("Realizuj", "Realize", "Basket", new { data = Send(rest) }, null)%>
         </div>

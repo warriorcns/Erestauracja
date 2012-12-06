@@ -1004,3 +1004,8 @@ sub {
     font-size: smaller;
 }
 
+.paypalbutton
+{
+    background: url(https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif) no-repeat left top;    
+}
+
