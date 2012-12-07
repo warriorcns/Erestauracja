@@ -11,6 +11,7 @@ using System.IO;
 using Erestauracja.Authorization;
 using Erestauracja.Providers;
 using System.Globalization;
+using Erestauracja.Controllers;
 
 namespace Erestauracja.Controllers
 {
@@ -40,6 +41,11 @@ namespace Erestauracja.Controllers
             DateTime now = DateTime.Now;
             myCookie.Expires = now.AddDays(1);
             myCookie.Value = comm;
+            Response.Cookies.Add(myCookie);
+
+            System.Web.HttpCookie res = new System.Web.HttpCookie("ResID");
+            myCookie.Expires = now.AddDays(1);
+            myCookie.Value = resid.ToString();
             Response.Cookies.Add(myCookie);
 
             //klucz konta biznesowego       
@@ -119,6 +125,11 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Weryfikacja danych - do tej metody paypal przekierowuje, gdy klient jest przekierowany do naszej aplikacji
+        /// </summary>
+        /// <param name="pp"></param>
+        /// <returns></returns>
         public ActionResult IPN(PayPal pp)
         {
             // Receive IPN request from PayPal and parse all the variables returned
@@ -154,6 +165,14 @@ namespace Erestauracja.Controllers
                 {
                     comm = myCookie.Value;
                 }
+
+                System.Web.HttpCookie res = new System.Web.HttpCookie("ResID");
+                res = Request.Cookies["ResID"];
+                int resid = -1;
+                if (res != null)
+                {
+                    resid = int.Parse(myCookie.Value);
+                }
                 #endregion
 
                 //zrob z danymi co Ci sie podoba.. 
@@ -177,19 +196,20 @@ namespace Erestauracja.Controllers
 
                     //wyświetl info że nie powiodło sie 
                     //i jakeś info co zrobić w takiej sytuacji
-                    //return RedirectToAction("PayError");
+                    return RedirectToAction("PayError","Basket");
                 }
                 else
                 {
                     //usuwanie zamówionych dań z koszyka
-                    //DeleteRest(res);
+                    DeleteRest(resid);
 
                     //wyświetl potwierdzenie
                     //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                     //zapisz id zamówienia że zostało zapłacone
-                    //return RedirectToAction("PaySuccess");
+                    //return RedirectToAction("PaySuccess","Basket");
+                    return View(pp);
                 }
-                return View(pp);
+                
 
             }
             else
@@ -246,6 +266,72 @@ namespace Erestauracja.Controllers
             return response;
         }
 
-        
+
+        #region usuwanie ciastek z koszyka
+        public void DeleteRest(int id)
+        {
+            string lista = String.Empty;
+            lista = Restore();
+            List<string> usun = new List<string>();
+
+            foreach (string product in lista.Split('|'))
+            {
+                string[] dane = product.Split('~');
+                if (id == Int32.Parse(dane[1]))
+                {
+                    usun.Add(product);
+                }
+            }
+
+            string newlista = lista;
+            foreach (String item in usun)
+            {
+                if (!String.IsNullOrWhiteSpace(item))
+                {
+                    int index = newlista.IndexOf(item);
+                    if (newlista.Length == item.Length)
+                    {
+                        newlista = newlista.Remove(index, item.Length);
+                    }
+                    else
+                    {
+                        newlista = ( index == 0 ) ? newlista.Remove(index, item.Length + 1) : newlista.Remove(index - 1, item.Length + 1);
+                    }
+                }
+            }
+
+            int x = 0;
+            foreach (string item in newlista.Split('|'))
+            {
+                string[] data = item.Split('~');
+                data[0] = x.ToString();
+                x++;
+            }
+            Store(newlista);
+        }
+
+        public void Store(string myClass)
+        {
+            HttpCookie cookie = new HttpCookie("basket")
+            {
+                // Set the expiry date of the cookie to 1 day
+                Expires = DateTime.Now.AddDays(6)
+            };
+            cookie.Value = myClass;
+            // Add the cookie to the current http context
+            Response.Cookies.Add(cookie);
+        }
+
+        public string Restore()
+        {
+            // Always remember to check that the cookie is not empty
+            HttpCookie cookie = Request.Cookies["basket"];
+            if (cookie != null)
+            {
+                return cookie.Value;
+            }
+            return String.Empty;
+        }
+        #endregion
     }
 }
