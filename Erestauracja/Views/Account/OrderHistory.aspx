@@ -12,6 +12,27 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(function () {
+        $("#filterButton").button()
+            .click(function (event) {
+                event.preventDefault();
+                var from = $("#fromTxb").val();
+                var to = $("#toTxb").val();
+
+                var url = '<%: Url.Action("OrderHistory2", "Account") %>';
+                var data = { from: from, to: to };
+
+                if (data.length != 0) {
+                    $.post(url, data, function (data) {
+                    });
+                }
+            });
+    });
+
+</script>
+
+
 <%: Html.ValidationSummary(true, "Błąd:")%>
 <% if (Model == null) %>
 <% { %>
@@ -26,9 +47,9 @@
     <% else %>
     <% { %>
         <div>
-            <span>Od: <%: Html.TextBox("od", (DateTime)ViewData["from"]) %></span>
-            <span>Do: <%: Html.TextBox("do", (DateTime)ViewData["to"]) %></span>
-            <span> TU MA BY PRZYCISK FILTRUJ</span>
+            <span>Od: <%: Html.TextBox("od", (DateTime)ViewData["from"], new { @id = "fromTxb"})%></span>
+            <span>Do: <%: Html.TextBox("do", (DateTime)ViewData["to"], new { @id = "toTxb" })%></span>
+            <span><input type="button" id="filterButton" value="Filtruj" onclick="filtr()"/></span>
         </div>
         <div id="accordion">
         <% foreach (UserOrder order in Model) %>
