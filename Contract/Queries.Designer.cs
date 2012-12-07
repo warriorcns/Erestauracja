@@ -592,6 +592,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`totalPrice`, r.`deliveryPrice` FROM `orders` o JOIN `restaurants` r ON o.`restaurantId` = r.`id` WHERE o.`restaurantId` = @id AND  o.`id`= @order.
+        /// </summary>
+        internal static string GetPayPalData {
+            get {
+                return ResourceManager.GetString("GetPayPalData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT u.`id`, u.`login`, u.`email`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, c.`name`, u.`birthdate`, u.`sex`, u.`telephone`, u.`comment`, u.`passwordQuestion`, u.`isApproved`, u.`lastActivityDate`, u.`lastLoginDate`, u.`lastPasswordChangedDate`, u.`creationDate`, u.`isLockedOut`, u.`lastLockedOutDate` FROM `users` u JOIN `countries` c ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`id` IN (SELECT e.`userId` FROM `employees_in_restaurants` e WHERE e.`rest [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetPersonnel {
@@ -642,6 +651,15 @@ namespace Contract {
         internal static string GetRestaurantComments {
             get {
                 return ResourceManager.GetString("GetRestaurantComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT `email` FROM `users` WHERE `id`=(SELECT `userId` FROM `restaurants` WHERE `id` = @id).
+        /// </summary>
+        internal static string GetRestaurantEmail {
+            get {
+                return ResourceManager.GetString("GetRestaurantEmail", resourceCulture);
             }
         }
         

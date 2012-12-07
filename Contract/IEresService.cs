@@ -265,6 +265,12 @@ namespace Contract
 
         [OperationContract]
         bool ReportComment(int id, int resId, string userLogin, string comment, string report, string login);
+
+        [OperationContract]
+        string GetRestaurantEmail(int id);
+
+        [OperationContract]
+        string GetPayPalData(int id, int order);
     }
 
 

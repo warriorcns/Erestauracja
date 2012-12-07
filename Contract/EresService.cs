@@ -1124,5 +1124,33 @@ namespace Contract
                 return false;
             }
         }
+
+        public string GetRestaurantEmail(int id)
+        {
+            if (!(id == null || id < 1))
+            {
+                Database db = new Database();
+                string value = db.GetRestaurantEmail(id);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string GetPayPalData(int id, int order)
+        {
+            if (!(id == null || id < 1 || order == null || order < 1))
+            {
+                Database db = new Database();
+                string value = db.GetPayPalData(id, order);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

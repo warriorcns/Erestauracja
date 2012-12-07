@@ -6036,6 +6036,67 @@ namespace Contract
             return comments;
         }
 
+        public string GetRestaurantEmail(int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmail);
+            command.Parameters.AddWithValue("@id", id);
+
+            string rowsaffected = null;
+            rowsaffected = Convert.ToString(ExecuteScalar(command, "GetRestaurantEmail"));
+
+            if (!String.IsNullOrWhiteSpace(rowsaffected))
+            {
+                return rowsaffected;
+            }
+            return null;  
+        }
+
+        public string GetPayPalData(int id, int order)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetPayPalData);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@order", order);
+
+            string value = String.Empty;
+            decimal price = 0.0M;
+            decimal delivery = 0.0M;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetPayPalData");
+
+            if (ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["totalPrice"] != DBNull.Value)
+                    {
+                        price = Decimal.Parse(row["totalPrice"].ToString());
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                    if (row["deliveryPrice"] != DBNull.Value)
+                    {
+                        delivery = Decimal.Parse(row["deliveryPrice"].ToString());
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                    value = (price - delivery).ToString() + "|" + delivery.ToString();
+                    break;
+                }
+            }
+            else
+            {
+                value = null;
+            }
+
+            return value;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding
