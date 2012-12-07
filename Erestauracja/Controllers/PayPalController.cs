@@ -9,12 +9,16 @@ using System.Net;
 using System.Text;
 using System.IO;
 using Erestauracja.Authorization;
+using Erestauracja.Providers;
+using System.Globalization;
 
 namespace Erestauracja.Controllers
 {
     [CustomAuthorizeAttribute(Roles = "Klient")]
     public class PayPalController : Controller
     {
+
+
         //
         // GET: /PayPal/
 
@@ -26,15 +30,34 @@ namespace Erestauracja.Controllers
         /// <param name="id"></param>
         /// <param name="resid"></param>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult PostToPayPal(string comm, int id, int resid)
         {
             PayPal pp = new PayPal();
             pp.cmd = "_xclick";
 
-            //klucz konta biznesowego - do pobierania z bazy w zaleznosci od restauracji - do zmiany
-            pp.business = ConfigurationManager.AppSettings["BusinessAccountKey"];
+            System.Web.HttpCookie myCookie = new System.Web.HttpCookie("Comment");
+            DateTime now = DateTime.Now;
+            myCookie.Expires = now.AddDays(1);
+            myCookie.Value = comm;
+            Response.Cookies.Add(myCookie);
 
-            //czy uzywamy sandboxa (testowej wersji paypala)
+            //klucz konta biznesowego       
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    pp.business = client.GetRestaurantEmail(resid);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                ;               
+            }
+
+            //czy uzywamy sandboxa 
             bool useSandbox = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSandbox"]);
 
             //linki do wyslania danych
@@ -48,50 +71,46 @@ namespace Erestauracja.Controllers
             pp.notify_url = ConfigurationManager.AppSettings["NotifyURL"];
             pp.currency_code = ConfigurationManager.AppSettings["CurrencyCode"];
 
-            //do pobrania z bazy
-            pp.item_number = "1";
-            pp.shipping = "2.50";
-            pp.amount = "102.34";
+            String paypalData = string.Empty;
+            string[] data = null;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    //value = client.Pay(User.Identity.Name, id, com, "cash");
+                    //cena zamowienia | cena dostawy
+                    paypalData = client.GetPayPalData(resid, id);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
 
-            
-            //bool value = false;
-            //try
-            //{
-            //    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-            //    using (client)
-            //    {
-            //        value = client.Pay(User.Identity.Name, id, com, "cash");
-            //    }
-            //    client.Close();
-            //}
-            //catch (Exception e)
-            //{
-            //    value = false;
-            //}
-            //if (value == false)
-            //{
-            //    ModelState.AddModelError("", "Wysyłanie zamówienia nie powiodło się.");
+            if (( paypalData != null || paypalData != string.Empty ) && paypalData.Contains("|"))
+            {
+                data = paypalData.Split('|');
+                pp.amount = data[0].Replace(",",".");
+                pp.shipping = data[1].Replace(",", ".");
+                pp.item_number = id.ToString();
+            }
+            else
+            { 
+                //blad
+                ViewData["alert"] = "Dane nie zostały wysłane - błąd.";
+                return RedirectToAction("CancelFromPaypal");
+            }
 
-            //    //wyświetl info że nie powiodło sie 
-            //    //i jakeś info co zrobić w takiej sytuacji
-            //    return RedirectToAction("PayError");
-            //}
-            //else
-            //{
-            //    //usuwanie zamówionych dań z koszyka
-            //    //DeleteRest(res);
-
-            //    //wyświetl potwierdzenie
-            //    //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
-            //    //zapisz id zamówienia że zostało zapłacone
-            //    return RedirectToAction("PaySuccess");
-            //}
             return View(pp);
-        }
+            }
+
+        
 
         public ActionResult RedirectFromPaypal()
         {
-            return RedirectToAction("IPN");
+            return View();
         }
 
         public ActionResult CancelFromPaypal()
@@ -100,7 +119,7 @@ namespace Erestauracja.Controllers
             return View();
         }
 
-        public ActionResult IPN()
+        public ActionResult IPN(PayPal pp)
         {
             // Receive IPN request from PayPal and parse all the variables returned
             var formVals = new Dictionary<string, string>();
@@ -121,12 +140,55 @@ namespace Erestauracja.Controllers
 
                 //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
 
-                PayPal pp = new PayPal();
+                //PayPal pp = new PayPal();
                 pp.txn_id = Request["txn_id"];
                 pp.mc_gross = Request["mc_gross"];
+                pp.txn_type = Request["txn_type"];
+                int id = int.Parse(pp.item_number);
+
+                #region ciasteczka - odczyt
+                System.Web.HttpCookie myCookie = new System.Web.HttpCookie("Comment");
+                myCookie = Request.Cookies["Comment"];
+                string comm = string.Empty;
+                if (myCookie != null)
+                {
+                    comm = myCookie.Value;
+                }
+                #endregion
 
                 //zrob z danymi co Ci sie podoba.. 
-                 
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.Pay(User.Identity.Name, id, comm, "PayPal~" + pp.txn_id + "~" + pp.txn_type);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Wysyłanie zamówienia nie powiodło się.");
+
+                    //wyświetl info że nie powiodło sie 
+                    //i jakeś info co zrobić w takiej sytuacji
+                    //return RedirectToAction("PayError");
+                }
+                else
+                {
+                    //usuwanie zamówionych dań z koszyka
+                    //DeleteRest(res);
+
+                    //wyświetl potwierdzenie
+                    //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
+                    //zapisz id zamówienia że zostało zapłacone
+                    //return RedirectToAction("PaySuccess");
+                }
                 return View(pp);
 
             }

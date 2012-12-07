@@ -23,6 +23,7 @@ namespace Erestauracja.Models
         public string amount { get; set; }
         public string mc_gross { get; set; }
         public string txn_id { get; set; }
+        public string txn_type { get; set; }
         
     }
 

@@ -52,10 +52,10 @@
             for (var i = 1; i <= length; i++) {
                 
                 var data = { id: tab[i] };
-                alert(tab[i]);
+                //alert(tab[i]);
                 $.post(url, data, function (data) {
                     $("#resIsOnline" + i).text(data);
-                    alert(data + i);
+                    //alert(data + i);
                 });
             }
 

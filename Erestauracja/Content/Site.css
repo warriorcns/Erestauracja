@@ -1007,5 +1007,9 @@ sub {
 .paypalbutton
 {
     background: url(https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif) no-repeat left top;    
+    display: block;
+    width: 200px;
+    height: 50px;
+    text-indent: -9999px; /* hides the link text */
 }
 

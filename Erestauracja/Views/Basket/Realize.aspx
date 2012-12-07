@@ -43,19 +43,19 @@
             <div>Komentarz do zamówienia
                 <%: Html.TextAreaFor(m=>m.Comment, new { id="comment"}) %>
             </div>
-            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new{@id = "acash"})%>
-            <%--<%: Html.ActionLink("a         a", "PostToPaypal", "PayPal", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new { @id = "acash", @class = "paypalbutton" })%>--%>
             <br />
-            <div>
-                <input type="image" id="paypalButton" onclick="posttopaypal('<%: ViewData["id"] %>','<%: Model.RestaurantId %>')" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            </div>
+            <div> Wybierz typ płatności: </div>
             
-
+            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new{@id = "acash"})%>
+            <br />
+            <br />
+            <%: Html.ActionLink("Zaplac paypalem", "PostToPaypal", "PayPal", new { com = "koment", id = (int)ViewData["id"], resid = Model.RestaurantId }, new { @id = "paypal", @class = "paypalbutton" })%>
+            <br />
         </div>
 <% } %>
 
     <script type="text/javascript">
-            $("#acash").click(function () {
+            $("#acash , #paypal").click(function () {
                 var comm = $("#comment").val();
                 this.href = this.href.replace("koment", comm);
             });
@@ -67,14 +67,17 @@
 
             //
             var comm = $("#comment").val();
-            
 
-            var url = '<%: Url.Action("PostToPaypal", "PayPal") %>';
+
+            var url = '<%: Url.Action("GetRequest", "PayPal") %>';
             var data = { comm: comm, id: id, resid: resid };
 
             $.post(url, data, function (data) {
-                // window.location.href = data.redirectToUrl;
-
+                //window.location.href = data.
+                //window.location.href = data;
+                //$(document).load(data);
+                //alert(data.redirect);
+                //window.location.href = data.redirectToUrl;
             });
             
         }

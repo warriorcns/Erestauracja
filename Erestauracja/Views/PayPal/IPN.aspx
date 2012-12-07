@@ -5,8 +5,13 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>
-        IPN</h2>
+    
+    <% if (ViewData["alert"] != "")
+       {%>
+    <div style="color: Red">
+        <%: ViewData["alert"] %></div>
+    <%}%>
+
     <% using (Html.BeginForm())
                { %>
     <div>
@@ -18,6 +23,8 @@
         <%: Html.DisplayFor(m => m.txn_id) %>
     </div>
     <% } %>
+
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">

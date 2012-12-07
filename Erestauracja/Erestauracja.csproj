@@ -880,6 +880,7 @@
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\LogoPizza.jpg" />
+    <Content Include="Content\images\paypal_pay-now_button.gif" />
     <Content Include="Content\images\popup_ajax_loader.gif" />
     <Content Include="Content\images\resid1\1.jpg" />
     <Content Include="Content\images\right.png" />
@@ -1335,6 +1336,7 @@
     <Content Include="Views\Basket\Realize.aspx" />
     <Content Include="Views\ManagePanel\Comments.aspx" />
     <Content Include="Views\ManagePanel\ReportComment.aspx" />
+    <Content Include="Views\PayPal\CancelFromPaypal.aspx" />
     <Content Include="Views\PayPal\IPN.aspx" />
     <Content Include="Views\PayPal\PostToPayPal.aspx" />
     <Content Include="Views\PayPal\RedirectFromPaypal.aspx" />
