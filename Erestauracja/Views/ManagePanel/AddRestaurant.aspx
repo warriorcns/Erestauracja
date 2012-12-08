@@ -14,7 +14,8 @@
     
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
-    
+    <script src="../../Scripts/jquery.price_format.1.7.js" type="text/javascript"></script>
+
     <script type="text/javascript">
         jQuery(function ($) {
             $("#DeliveryTimeID").mask("99:99:99");
@@ -32,9 +33,19 @@
 	</script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#spinner").val('0.00');
+    $(document).ready(function () {
+        $('#price').priceFormat({
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: ''
         });
+    });
+   </script>
+
+   <script type="text/javascript">
+       $(document).ready(function () {
+           $("#spinner").val('0.00');
+       });
    </script>
 
     <div class="polaRejestracji">
@@ -322,7 +333,7 @@
                         <%: Html.LabelFor(m => m.DeliveryPrice)%> 
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.DeliveryPrice)%>
+                        <%: Html.TextBoxFor(m => m.DeliveryPrice, new { id = "price" })%>
                     </li>
                 </ul>
 

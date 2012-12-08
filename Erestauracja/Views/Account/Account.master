@@ -12,7 +12,7 @@
                     <li>
                       <%: Html.ActionLink("Dane użytkownika", "Account", "Account")%></li>
                     <li>
-                      <%: Html.ActionLink("Historia zamówień", "OrderHistory", "Account")%></li>
+                      <%: Html.ActionLink("Historia zamówień", "OrderHistory", "Account", new { from = (DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0))).ToShortDateString(), to = DateTime.Now.ToShortDateString() }, null)%></li>
                     <li>
                       <%: Html.ActionLink("Komentarze", "Comments", "Account")%></li>
                 </ul>

@@ -6,6 +6,18 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+<script src="../../Scripts/jquery.price_format.1.7.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#price').priceFormat({
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: ''
+        });
+    });
+   </script>
+
     <div class="polaRejestracji">
 
         <div id="Form1" class="formaRejestracji" runat="server">
@@ -133,7 +145,7 @@
                         <%: Html.LabelFor(m => m.DeliveryPrice)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.DeliveryPrice)%>
+                        <%: Html.TextBoxFor(m => m.DeliveryPrice, new { id = "price" })%>
                     </li>
                     <li class="validation-labelR">
                         <%: Html.ValidationMessageFor(m => m.DeliveryPrice)%>

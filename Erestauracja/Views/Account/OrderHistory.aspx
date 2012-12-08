@@ -20,11 +20,12 @@
                 var from = $("#fromTxb").val();
                 var to = $("#toTxb").val();
 
-                var url = '<%: Url.Action("OrderHistory2", "Account") %>';
+                var url = '<%: Url.Action("FilterOrderHistory", "Account") %>';
                 var data = { from: from, to: to };
 
                 if (data.length != 0) {
                     $.post(url, data, function (data) {
+                        window.location.href = data.redirectToUrl;
                     });
                 }
             });
@@ -32,6 +33,13 @@
 
 </script>
 
+<%--<script type="text/javascript">
+    jQuery(function ($) {
+        $(document).ready(function () {
+            $("#fromTxb").mask("99/99/9999");
+         });
+    });
+    </script>--%>
 
 <%: Html.ValidationSummary(true, "Błąd:")%>
 <% if (Model == null) %>
@@ -47,8 +55,8 @@
     <% else %>
     <% { %>
         <div>
-            <span>Od: <%: Html.TextBox("od", (DateTime)ViewData["from"], new { @id = "fromTxb"})%></span>
-            <span>Do: <%: Html.TextBox("do", (DateTime)ViewData["to"], new { @id = "toTxb" })%></span>
+            <span>Od: <%: Html.TextBox("od", ((DateTime)ViewData["from"]).ToShortDateString(), new { @id = "fromTxb"})%></span>
+            <span>Do: <%: Html.TextBox("do", ((DateTime)ViewData["to"]).ToShortDateString(), new { @id = "toTxb" })%></span>
             <span><input type="button" id="filterButton" value="Filtruj" onclick="filtr()"/></span>
         </div>
         <div id="accordion">

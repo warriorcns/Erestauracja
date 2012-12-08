@@ -263,38 +263,12 @@ namespace Erestauracja.Controllers
         // GET: /Account/OrderHistory
         [Authorize]
         [CustomAuthorizeAttribute(Roles = "Klient")]
-        public ActionResult OrderHistory()
+        public ActionResult FilterOrderHistory(string from, string to)
         {
             if (Request.IsAuthenticated)
             {
-                DateTime from = DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0));
-                DateTime to = DateTime.Now;
-
-                ViewData["from"] = from;
-                ViewData["to"] = to;
-
-                List<UserOrder> value = null;
-                try
-                {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
-                    {
-                        value = new List<UserOrder>(client.GetOrderHistory(User.Identity.Name, from, to));
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    value = null;
-                }
-                if (value == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie zamówienia nie powiodło się.");
-
-                    return View(value);
-                }
-
-                return View(value);
+                //return RedirectToAction("OrderHistory", new { from = from, to = to});
+                return Json(new { redirectToUrl = Url.Action("OrderHistory", "Account", new { from = from, to = to }) });
             }
             else
             {
@@ -304,15 +278,15 @@ namespace Erestauracja.Controllers
 
         [Authorize]
         [CustomAuthorizeAttribute(Roles = "Klient")]
-        public ActionResult OrderHistory2(string from, string to)
+        public ActionResult OrderHistory(string from, string to)
         {
             if (Request.IsAuthenticated)
             {
                 DateTime fromm = DateTime.Parse(from);
                 DateTime too = DateTime.Parse(to);
 
-                ViewData["from"] = from;
-                ViewData["to"] = to;
+                ViewData["from"] = fromm;
+                ViewData["to"] = too;
 
                 List<UserOrder> value = null;
                 try

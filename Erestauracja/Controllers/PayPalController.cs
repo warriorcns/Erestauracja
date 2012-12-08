@@ -135,7 +135,7 @@ namespace Erestauracja.Controllers
             // Receive IPN request from PayPal and parse all the variables returned
             var formVals = new Dictionary<string, string>();
             formVals.Add("cmd", "_notify-validate");
-
+            for (int i = 0; i < 300; i++) { ; }
             // if you want to use the PayPal sandbox change this from false to true
             string response = GetPayPalResponse(formVals, true);
 
@@ -244,7 +244,8 @@ namespace Erestauracja.Controllers
             {
                 sb.AppendFormat("&{0}={1}", key, formVals[key]);
             }
-            strRequest += sb.ToString();
+       //     strRequest += sb.ToString();
+            strRequest = sb.ToString();
             req.ContentLength = strRequest.Length;
 
             //for proxy

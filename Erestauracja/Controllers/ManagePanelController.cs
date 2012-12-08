@@ -599,10 +599,12 @@ namespace Erestauracja.Controllers
                         CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
                         if (role.IsUserInRole(User.Identity.Name, "Menadżer"))
                         {
-                            //musi być to parsowanie bo mvc to gówno
                             decimal price;
                             NumberStyles style = NumberStyles.AllowDecimalPoint;
+                            //if (model.DeliveryPrice.Contains('.'))
+                            //    model.DeliveryPrice.Replace('.', ',');
                             price = Decimal.Parse(model.DeliveryPrice, style);
+                           
 
                             MembershipCreateStatus createStatus;
                             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
@@ -614,7 +616,7 @@ namespace Erestauracja.Controllers
                             }
                             else
                             {
-                                ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się.");
+                                ModelState.AddModelError("", "Dodawanie restauracji nie powiodło się." + createStatus.ToString());
                             }
                         }
                     }
