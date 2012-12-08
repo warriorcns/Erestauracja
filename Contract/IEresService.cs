@@ -240,6 +240,9 @@ namespace Contract
         AllOrders GetOrders(string login);
 
         [OperationContract]
+        List<Order> GetAllOrders(string login, DateTime from, DateTime to);
+
+        [OperationContract]
         bool IsRestaurantOnline(int id);
 
         [OperationContract]

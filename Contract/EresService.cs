@@ -999,6 +999,21 @@ namespace Contract
             }
         }
 
+        public List<Order> GetAllOrders(string login, DateTime from, DateTime to)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || from == null || to == null))
+            {
+                Database db = new Database();
+                List<Order> value = db.GetAllOrders(login, from, to);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
         public bool IsRestaurantOnline(int id)
         {
             if (!(id == null || id < 1))

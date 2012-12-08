@@ -5365,6 +5365,144 @@ namespace Contract
             return allOrders;
         }
 
+        public List<Order> GetAllOrders(string login, DateTime from, DateTime to)
+        {
+            List<Order> allOrders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                allOrders = new List<Order>();
+
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetAllOrders);
+                    command.Parameters.AddWithValue("@login", logins[0]);
+                    command.Parameters.AddWithValue("@from", from);
+                    command.Parameters.AddWithValue("@to", to);
+                    command.Connection = conn;
+
+                    conn.Open();
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Order r = GetOrderFromReader(reader);
+                        allOrders.Add(r);
+                    }
+                    reader.Close();
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetAllOrders" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetAllOrders" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                }
+                ///////////////////////////////////////////////////////////////////////
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                    command.Connection = conn;
+
+                    conn.Open();
+
+                    foreach (Order list in allOrders)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@id", list.OrderId);
+
+                        reader2 = command.ExecuteReader();
+                        while (reader2.Read())
+                        {
+                            OrderedProduct r = GetOrderedProductFromReader(reader2);
+                            list.Products.Add(r);
+                        }
+                        reader2.Close();
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return allOrders;
+        }
+
         private Order GetOrderFromReader(MySqlDataReader reader)
         {
             int orderId = reader.GetInt32(0);
