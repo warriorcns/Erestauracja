@@ -17,7 +17,7 @@
             });
         });
     </script>
-    <script>
+    <script type="text/javascript">
         $(function () {
             $("#tabs-nohdr").tabs({
                 
@@ -25,11 +25,31 @@
         });
 	</script>
 
+  
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setInterval("location.reload(true)", 300000);
+        });
+    </script>
+    <script type="text/javascript">
+        function reload(){
+            location.reload(true);
+        }
+    </script>
+
     <div class="main">
         <div class="buttons-container">
             <div>
-                <%: Html.ActionLink("Jakis przycisk", "ActiveOrders", "POS", new{ @class="button wood"})%></div>
-        </div>        
+                <%: Html.ActionLink("Jakis przycisk", "ActiveOrders", "POS", new{ @class="button wood"})%>
+            </div>
+            <div>
+                <input type="button" onclick="reload()" class="button wood" value="Odswież zamówienia" />
+            </div>
+            <div>
+                <%: Html.ActionLink("Cofnij", "Index", "POS", new{ @class="button wood"})%>
+            </div>
+        </div>
         <div id="tabs-nohdr">
             <ul>
                 <li><a href="#tabs-1"><span>Oczekujące</span></a></li>
