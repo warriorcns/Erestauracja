@@ -63,45 +63,62 @@ namespace Erestauracja.Controllers
             }
         }
 
-        //
-        // GET: /POS/AllOrders
-        /// <summary>
-        /// Wszystkie zamowienia
-        /// </summary>
-        /// <returns></returns>
-        //[CustomAuthorizeAttribute(Roles = "Pracownik")]
-        public ActionResult AllOrders()
+        
+        
+        public ActionResult FilterOrders(string from, string to)
         {
-            //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
-            //ServiceReference.AllOrders orders = client.
-            //ViewData["orders"] = orders;
-
-            ServiceReference.AllOrders value = null;
-            try
+            if (Request.IsAuthenticated)
             {
-                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
-                using (client)
-                {
-                    //  Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline); 
-                    //  value = IsOnline(id); 
-                    value = client.GetOrders(User.Identity.Name);
-                }
-                client.Close();
-            }
-            catch (Exception e)
-            {
-                value = null;
-            }
-
-            if (value == null)
-            {
-                return View();
+                //return RedirectToAction("OrderHistory", new { from = from, to = to});
+                return Json(new { redirectToUrl = Url.Action("AllOrders", "POS", new { from = from, to = to }) });
             }
             else
             {
-                return View(value);
+                return RedirectToAction("LogOn", "Account");
             }
         }
+
+
+        public ActionResult AllOrders(string from, string to)
+        {
+            if (Request.IsAuthenticated)
+            {
+                
+                DateTime fromm = DateTime.Parse(from);
+                DateTime too = DateTime.Parse(to);
+                
+                ViewData["from"] = fromm;
+                ViewData["to"] = too;
+
+                Order[] value = null;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.GetAllOrders(User.Identity.Name, fromm, too);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = null;
+                }
+                if (value == null)
+                {
+                    ModelState.AddModelError("", "Pobieranie danych nie powiodło się.");
+
+                    return View(value);
+                }
+
+                return View(value);
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
+
 
         //
         // GET: /POS/SalesDocuments

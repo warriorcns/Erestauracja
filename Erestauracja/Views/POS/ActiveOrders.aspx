@@ -25,7 +25,18 @@
         });
 	</script>
 
-  
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#searchButton")
+            .button()
+            .click(function (event) {
+                event.preventDefault();
+                var txt = $("#searchtxb").val();
+                $("a:contains("+ txt +")").css('background-color', 'grey');
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -64,8 +75,8 @@
                     <span class="orders-header orders-header-status">Status i data zamówienia: </span>
                 </div>
                 <div id="tabs-1">
-            <%--accordion--%>
-                <div id="waiting" class="order-container">
+                <%--accordion--%>
+                    <div id="waiting" class="order-container">
             
                 <% foreach (Erestauracja.ServiceReference.Order order in Model.Waiting)
                    {%>
@@ -202,8 +213,8 @@
     </div>
     
     <div>
-        <%: Html.TextBox("szukaj", null, new { id = "searchtxb", @class = "search-textbox" })%>
-        <button>Szukaj</button>
+        <%: Html.TextBox("szukaj", null, new { @id = "searchtxb", @class = "search-textbox" })%>
+        <button id="searchButton" onclick="search">Szukaj</button>
     </div>
     
     
