@@ -36,7 +36,10 @@
             .click(function (event) {
                 event.preventDefault();
                 var txt = $("#searchtxb").val();
-                $('h3:not(h3:contains("'+txt+'"))').hide();
+                if (txt.length != 0) {
+                    $('h3').show();
+                    $('h3:not(h3:contains("' + txt + '"))').hide();
+                }
             });
         });
     </script>
@@ -54,9 +57,7 @@
 
     <div class="main">
         <div class="buttons-container">
-            <div>
-                <%: Html.ActionLink("Jakis przycisk", "ActiveOrders", "POS", new{ @class="button wood"})%>
-            </div>
+            
             <div>
                 <input type="button" onclick="reload()" class="button wood" value="Odswież zamówienia" />
             </div>
