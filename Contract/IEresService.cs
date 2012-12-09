@@ -277,6 +277,8 @@ namespace Contract
 
         [OperationContract]
         bool SetOrderStatus(int id, string login, string status);
+
+
     }
 
 

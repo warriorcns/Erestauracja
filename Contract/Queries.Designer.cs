@@ -322,7 +322,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;przyjęte&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;W realizacji&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
         /// </summary>
         internal static string GetActiveOrders {
             get {
@@ -520,7 +520,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;zakończone&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) AND `finishDate` &gt; @date  ORDER BY o.`orderDate` ASC.
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;Zakończone&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) AND `finishDate` &gt; @date  ORDER BY o.`orderDate` ASC.
         /// </summary>
         internal static string GetFinishOrders {
             get {
@@ -718,7 +718,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT o.`id`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, r.`telephone`, r.`deliveryTime`, r.`deliveryPrice`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o  JOIN `restaurants` r ON o.`restaurantId` = r.`id`  JOIN `towns` t ON r.`townId` = t.`id` WHERE o.`userId` = (SELECT u.`id` FROM `users` u WHERE u.`login` = @login) AND (o.`status`=&apos;przyjęte&apos; OR o.`status`=&apos;oczekujące&apos; OR (o.`status`=&apos;zakończone&apos; AND o.`finishDate` &gt; @date) ) ORDER  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT o.`id`, r.`displayName`, r.`address`, t.`town_name`, t.`postal_code`, r.`telephone`, r.`deliveryTime`, r.`deliveryPrice`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o  JOIN `restaurants` r ON o.`restaurantId` = r.`id`  JOIN `towns` t ON r.`townId` = t.`id` WHERE o.`userId` = (SELECT u.`id` FROM `users` u WHERE u.`login` = @login) AND (o.`status`=&apos;W realizacji&apos; OR o.`status`=&apos;Oczekujące&apos; OR (o.`status`=&apos;Zakończone&apos; AND o.`finishDate` &gt; @date) ) OR [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetUserActiveOrders {
             get {
@@ -810,7 +810,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;oczekujące&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, NULL FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE `status` = &apos;Oczekujące&apos; AND `restaurantId` = (SELECT r.`id` FROM `restaurants` r WHERE r.`userId` = (SELECT x.`id` FROM `users` x WHERE x.`login` = @login)) ORDER BY o.`orderDate` ASC.
         /// </summary>
         internal static string GetWaitingOrders {
             get {

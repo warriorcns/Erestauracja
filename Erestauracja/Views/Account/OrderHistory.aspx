@@ -67,7 +67,7 @@
             <% { %>
                 <span>Płatność przy odbiorze</span>
             <% } %>
-            <% else if(order.Payment == "payPal") %>
+            <% else if(order.Payment.Contains("PayPal")) %>
             <% { %>
                 <span>Płatność PayPal</span>
             <% } %>
