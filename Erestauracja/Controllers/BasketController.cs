@@ -202,6 +202,7 @@ namespace Erestauracja.Controllers
                 using (client)
                 {
                     value = client.Pay(User.Identity.Name, id, com, "cash");
+
                 }
                 client.Close();
             }
@@ -225,6 +226,23 @@ namespace Erestauracja.Controllers
                 //wyświetl potwierdzenie
                 //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                 //zapisz id zamówienia że zostało zapłacone
+
+                //aktualizacja statusu zamowienia
+                bool status = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        status = client.SetOrderStatus(id, User.Identity.Name, "Oczekujące");
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
                 return RedirectToAction("PaySuccess");
             }
 

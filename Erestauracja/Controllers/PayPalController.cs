@@ -132,12 +132,17 @@ namespace Erestauracja.Controllers
         /// <returns></returns>
         public ActionResult IPN(PayPal pp)
         {
+            string response = string.Empty;
+                        
+
+           
             // Receive IPN request from PayPal and parse all the variables returned
             var formVals = new Dictionary<string, string>();
             formVals.Add("cmd", "_notify-validate");
             for (int i = 0; i < 300; i++) { ; }
             // if you want to use the PayPal sandbox change this from false to true
-            string response = GetPayPalResponse(formVals, true);
+            response = GetPayPalResponse(formVals, true);
+            
 
             if (response == "VERIFIED")
             {
@@ -196,7 +201,7 @@ namespace Erestauracja.Controllers
 
                     //wyświetl info że nie powiodło sie 
                     //i jakeś info co zrobić w takiej sytuacji
-                    return RedirectToAction("PayError","Basket");
+                    return RedirectToAction("PayError", "Basket");
                 }
                 else
                 {
@@ -207,17 +212,32 @@ namespace Erestauracja.Controllers
                     //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                     //zapisz id zamówienia że zostało zapłacone
                     //return RedirectToAction("PaySuccess","Basket");
+                    bool status = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            status = client.SetOrderStatus(id, User.Identity.Name, "Oczekujące");
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
                     return View(pp);
                 }
-                
+
 
             }
             else
-            { 
+            {
                 //invalid
                 ViewData["alert"] = "Transakcja nie została zweryfikowana.";
                 return View();
             }
+           
         }
 
         string GetPayPalResponse(Dictionary<string, string> formVals, bool useSandbox)
