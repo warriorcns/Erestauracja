@@ -212,20 +212,6 @@ namespace Erestauracja.Controllers
                     //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                     //zapisz id zamówienia że zostało zapłacone
                     //return RedirectToAction("PaySuccess","Basket");
-                    bool status = false;
-                    try
-                    {
-                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                        using (client)
-                        {
-                            status = client.SetOrderStatus(id, User.Identity.Name, "Oczekujące");
-                        }
-                        client.Close();
-                    }
-                    catch (Exception e)
-                    {
-                        value = false;
-                    }
                     return View(pp);
                 }
 
