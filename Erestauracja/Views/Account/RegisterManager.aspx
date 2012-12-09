@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <h1>Uwaga!</h1>
-Aby dodać nową restaurację należy stwożyć konto menadżera, które umożliwia nie tylko dodawanie nowych lokali ale również zarządzanie nimi oraz personelem.
+Aby dodać nową restaurację należy stworzyć konto menadżera, które umożliwia nie tylko dodawanie nowych lokali ale również zarządzanie nimi oraz personelem.
 </br>Wykorzystując w tym celu istniejące konto, stracisz możliwość wykonywania zamówień.</br></br>
 
 <h2>Utwórz nowe konto menadżera wypełniając poniższy formularz lub wykorzystaj <%: Html.ActionLink("istniejące konto", "ExistingManager", "Account")%></p></h2>
