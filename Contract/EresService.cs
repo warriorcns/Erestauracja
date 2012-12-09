@@ -1167,5 +1167,19 @@ namespace Contract
                 return null;
             }
         }
+
+        public bool SetOrderStatus(int id, string login, string status)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) || String.IsNullOrWhiteSpace(status) || id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.SetOrderStatus(id, login, status);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

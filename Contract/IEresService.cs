@@ -274,6 +274,9 @@ namespace Contract
 
         [OperationContract]
         string GetPayPalData(int id, int order);
+
+        [OperationContract]
+        bool SetOrderStatus(int id, string login, string status);
     }
 
 

@@ -6235,6 +6235,40 @@ namespace Contract
             return value;
         }
 
+        public bool SetOrderStatus(int id, string login, string status)
+        {
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                MySqlCommand command = new MySqlCommand(Queries.SetOrderStatus);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@login", logins[0]);
+                command.Parameters.AddWithValue("@status", status);
+                if (status == "Zakończone")
+                {
+                    command.Parameters.AddWithValue("@finish", DateTime.Now);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@finish", null);
+                }
+
+                int rowsaffected = ExecuteNonQuery(command, "SetOrderStatus");
+
+                if (rowsaffected > 0)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+            
+            return false;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

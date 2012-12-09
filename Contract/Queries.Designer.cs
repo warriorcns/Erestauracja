@@ -927,6 +927,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `orders` SET `status`=@status, `finishDate`=@finish WHERE `id`=@id AND `restaurantId` = (SELECT `id` FROM `restaurants` WHERE `userId` = (SELECT `id` FROM `users` WHERE `login` = @login) ).
+        /// </summary>
+        internal static string SetOrderStatus {
+            get {
+                return ResourceManager.GetString("SetOrderStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `users` SET `isLockedOut` = @isLockedOut, `lastLockedOutDate` = @lastLockedOutDate WHERE `login` = @login.
         /// </summary>
         internal static string UnlockUser {
