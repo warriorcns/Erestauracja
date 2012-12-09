@@ -2,6 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
 <script type="text/javascript">
     $(function () {
         $(".order-container").accordion({
@@ -34,8 +38,8 @@
 </script>
 
     <div class="main">
-
-        <div class="orders-container">
+        <div style="position:relative; top:50px;">
+            <div class="orders-container">
             <span class="orders-header orders-header-phone">Telefon</span> <span class="orders-header orders-header-name">
                         Nazwisko</span> <span class="orders-header orders-header-adress">Adres</span>
                     <span class="orders-header orders-header-status">Status i data zamówienia: </span>
@@ -79,14 +83,15 @@
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button><button>Przyjmij zamówienie</button>
+                            <button>Drukuj rachunek.</button>
                         </div>
-                        <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
+                        
                         </div>
                     
                 <% } %>
             </div>
 
+        </div>
         </div>
     </div>
 
