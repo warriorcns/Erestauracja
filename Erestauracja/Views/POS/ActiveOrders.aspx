@@ -54,7 +54,23 @@
             location.reload(true);
         }
     </script>
+    <script type="text/javascript">
+        function setStatus(id, stat) {
+            event.preventDefault();
+            //var from = $("#fromTxb").val();
+            //var to = $("#toTxb").val();
 
+            var url = '<%: Url.Action("setStatus", "POS") %>';
+            var data = { id: id, stat: stat };
+
+            if (data.length != 0) {
+                $.post(url, data, function (data) {
+                    window.location.href = data.redirectToUrl;
+                });
+            }
+        }
+    </script>
+    
     <div class="main">
         <div class="buttons-container">
             
@@ -108,13 +124,15 @@
                         <br />
                         <div>Data zamówienia: <%: order.OrderDate %></div>
                         <div>Sposób zapłaty: <% if (order.Payment == "cash")
-                                                { %>Gotówka<%} %></div>
+                                                { %>Gotówka<%}
+                                                else if (order.Payment.Contains("PayPal")) 
+                                                {%> PayPal<%} %></div>
                         <div><%if (order.Comment.Length > 0)
                                { %> Komentarz do zamówienia: <%: order.Comment%><% } %></div>
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button><button>Przyjmij zamówienie</button>
+                            <button>Drukuj rachunek.</button><button onclick="setStatus('<%: order.OrderId %>', 'W realizacji')">Przyjmij zamówienie</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>
@@ -153,13 +171,15 @@
                         <br />
                         <div>Data zamówienia: <%: order.OrderDate %></div>
                         <div>Sposób zapłaty: <% if (order.Payment == "cash")
-                                                { %>Gotówka<%} %></div>
+                                                { %>Gotówka<%}
+                                                else if (order.Payment.Contains("PayPal")) 
+                                                {%> PayPal<%} %></div>
                         <div><%if (order.Comment.Length > 0)
                                { %> Komentarz do zamówienia: <%: order.Comment%><% } %></div>
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button><button>Przyjmij zamówienie</button>
+                            <button>Drukuj rachunek.</button><button onclick="setStatus('<%: order.OrderId %>', 'Zakończone')">Wysłano</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>
@@ -198,13 +218,15 @@
                         <br />
                         <div>Data zamówienia: <%: order.OrderDate %></div>
                         <div>Sposób zapłaty: <% if (order.Payment == "cash")
-                                                { %>Gotówka<%} %></div>
+                                                { %>Gotówka<%}
+                                                else if (order.Payment.Contains("PayPal")) 
+                                                {%> PayPal<%} %></div>
                         <div><%if (order.Comment.Length > 0)
                                { %> Komentarz do zamówienia: <%: order.Comment%><% } %></div>
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button><button>Przyjmij zamówienie</button>
+                            <button>Drukuj rachunek.</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>

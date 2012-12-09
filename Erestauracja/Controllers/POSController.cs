@@ -120,6 +120,34 @@ namespace Erestauracja.Controllers
         }
 
 
+        public ActionResult setStatus(int id, string stat)
+        {
+
+            bool status = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    status = client.SetOrderStatus(id, User.Identity.Name, stat);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                status = false;
+            }
+            if (status)
+            {
+                //drukowanie bonu - ? 
+                return Json(new { redirectToUrl = Url.Action("ActiveOrders", "POS") });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Zmiana statusu zamówienia nie powiodła się.");
+                return Json(new { redirectToUrl = Url.Action("ActiveOrders", "POS") });
+            }
+        }
         //
         // GET: /POS/SalesDocuments
         /// <summary>

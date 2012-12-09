@@ -77,7 +77,9 @@
                         <br />
                         <div>Data zamówienia: <%: order.OrderDate %></div>
                         <div>Sposób zapłaty: <% if (order.Payment == "cash")
-                                                { %>Gotówka<%} %></div>
+                                                { %>Gotówka<%}
+                                                else if (order.Payment.Contains("PayPal")) 
+                                                {%> PayPal<%} %></div>
                         <div><%if (order.Comment.Length > 0)
                                { %> Komentarz do zamówienia: <%: order.Comment%><% } %></div>
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
