@@ -14,7 +14,9 @@
                 active: false,
                 heightStyle: "content",
                 event: "click hoverintent"
+                
             });
+           
         });
     </script>
     <script type="text/javascript">
@@ -25,6 +27,7 @@
         });
 	</script>
 
+    
    
     <script type="text/javascript">
         $(function () {
@@ -33,7 +36,7 @@
             .click(function (event) {
                 event.preventDefault();
                 var txt = $("#searchtxb").val();
-                $("a:contains("+ txt +")").css('background-color', 'grey');
+                $('h3:not(h3:contains("'+txt+'"))').hide();
             });
         });
     </script>
