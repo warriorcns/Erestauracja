@@ -61,7 +61,7 @@
                 <asp:Button ID="searchRes" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
                     Font-Size="Small"/>
 
-                <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
+                <asp:Label class="LabelWybierzRestauracje" id="chooseRes" runat="server" Text="Wybierz restauracje:"></asp:Label>
                 <%: Html.DropDownList("rest", ViewData["rest"] as SelectList, new { id = "Restauracje", @class = "DropDownListWybierzRestauracje" })%>
             
                 <%--<asp:Button ID="advancedSearch" class="ButtonWybierzRestauracje" runat="server"
@@ -125,6 +125,8 @@
                 }
             });
             document.getElementById("Restauracje").style.display = "block";
+            document.getElementById("MainContent_chooseRes").style.display = "inline";
+
             return false;
         });
     </script>

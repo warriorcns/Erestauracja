@@ -101,6 +101,7 @@
 {
     position: absolute;
     padding: 10px 10px 0 20px;
+    
 }
 
 .DropDownListWybierzMiasto
@@ -116,7 +117,7 @@
 {
     position: relative;
     padding: 10px 0 0 40px; 
-    
+    display: none;
         
 }
 
@@ -124,7 +125,7 @@
 {
     position: absolute;
     left: 230px;  
-    top: 30px;  
+    top: 38px;  
     max-width: 200px;
     min-width: 200px;
     display: none;
