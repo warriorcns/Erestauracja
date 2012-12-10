@@ -31,7 +31,7 @@
     background: no-repeat;
     float: left;
     
-    margin-left: -30px;
+    margin-left: -20px;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
@@ -114,9 +114,9 @@
 
 .LabelWybierzRestauracje
 {
-    position: absolute;
-    padding: 10px 0 0 10px; 
-    right: 90px;
+    position: relative;
+    padding: 10px 0 0 40px; 
+    
         
 }
 
@@ -140,16 +140,22 @@
     min-width: 200px;
     
 }
+.searchTxb
+{
+    position: relative;  
+    top: 40px;  
+}
 
 
 .ButtonWybierzRestauracje
 {
     position: absolute;
     left: 230px;  
-    top: 80px;  
+    top: 82px;  
     max-width: 200px;
     min-width: 200px;
     font-size: small;
+    height: 30px;
     
 }
 

@@ -52,22 +52,24 @@
             </asp:Label>
         </asp:Panel>
         <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">
-            <form>
-
-            <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wpisz miasto:"></asp:Label>
-            <%--<%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>--%>
-            <%: Html.TextBoxFor(m => m.TownName, new { id = "target", @class = "ButtonWybierzMiasto" })%>
-            <%--<asp:Button ID="search" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
-                Font-Size="Small"/>--%>
-
-            <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
-            <%: Html.DropDownList("rest", ViewData["rest"] as SelectList, new { id = "Restauracje", @class = "DropDownListWybierzRestauracje" })%>
+            <div>
             
-            <asp:Button ID="ButtonWybierzRestauracje" class="ButtonWybierzRestauracje" runat="server"
-                Text="Szczegółowe wyszukiwanie" Font-Size="Small" />
-            </form>
 
+                <asp:Label class="LabelWybierzMiasto" runat="server" Text="Wpisz miasto:"></asp:Label>
+                <%--<%=Html.DropDownList("Miasta", ViewData["Miasta"] as SelectList, new { @class = "DropDownListWybierzMiasto" })%>--%>
+                <%: Html.TextBoxFor(m => m.TownName, new { id = "target", @class = "ButtonWybierzMiasto searchTxb" })%>
+                <asp:Button ID="searchRes" class="ButtonWybierzMiasto" runat="server" Text="Szukaj"
+                    Font-Size="Small"/>
 
+                <asp:Label class="LabelWybierzRestauracje" runat="server" Text="Wybierz restauracje:"></asp:Label>
+                <%: Html.DropDownList("rest", ViewData["rest"] as SelectList, new { id = "Restauracje", @class = "DropDownListWybierzRestauracje" })%>
+            
+                <%--<asp:Button ID="advancedSearch" class="ButtonWybierzRestauracje" runat="server"
+                    Text="Szczegółowe wyszukiwanie" Font-Size="Small" />--%>
+                    <input type="button" value="Szczegółowe wyszukiwanie" id="advancedSearch" class="ButtonWybierzRestauracje"/>
+                                
+            </div>
+            
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto" Wrap="true">
             <!--<asp:Label ID="Label" class="LabelWybierzMiasto" runat="server" Text="Ilość odwiedzin:"></asp:Label>
@@ -102,7 +104,7 @@
     </form>
     
     <script type="text/javascript">
-        $('#MainContent_ButtonWybierzRestauracje').click(function () {
+        $('#MainContent_searchRes').click(function () {
 
             var town = $("#target").val();
             var url = '<%: Url.Action("SearchRestaurants", "Home") %>';
@@ -165,5 +167,19 @@
             }
         } 
     </script>
+
+    <script type="text/javascript">
+        $('#advancedSearch').click(function () {
+            var town = "";
+            var res = "";
+            var first = true;
+            var url = '<%: Url.Action("getReq", "Find") %>';
+            var data = { town: town, res: res, first: first };
+            $.post(url, data, function (data) {
+                window.location.href = data.redirectToUrl;
+            });
+        });
+    </script>
+
 
 </asp:Content>
