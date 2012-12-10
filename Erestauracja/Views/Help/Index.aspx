@@ -5,19 +5,15 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <script src="../../Scripts/jquery.gdocsviewer.min.js" type="text/javascript"></script>
-    <script type"text/javascript">
+
+    <script type="text/javascript">
         $(document).ready(function () {
-            $('a.embed').gdocsViewer({ width: 400, height: 500 });
-            $('#embedURL').gdocsViewer();
+            window.onload = function () {
+                document.getElementById("iframepdf").src = "../../Content/Manual-klient.pdf";
+            }
         });
-    
     </script>
-
-
-    <a href="urltofile.pdf" class="embed">Download file</a>
-    <a href="urltofile.pdf" class="embedURL">Download file</a>
-
-
-
+    
+    <iframe id="iframepdf" style="width: 900px; height: 600px;"/>
+    
 </asp:Content>
