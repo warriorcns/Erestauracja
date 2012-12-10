@@ -1176,6 +1176,8 @@
     <Content Include="Scripts\jquery-ui-1.9.0.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jQuery.datepicker-pl.js" />
+    <Content Include="Scripts\jquery.gdocsviewer.js" />
+    <Content Include="Scripts\jquery.gdocsviewer.min.js" />
     <Content Include="Scripts\jquery.keyboard.extension-autocomplete.js" />
     <Content Include="Scripts\jquery.keyboard.extension-mobile.js" />
     <Content Include="Scripts\jquery.keyboard.extension-navigation.js" />
