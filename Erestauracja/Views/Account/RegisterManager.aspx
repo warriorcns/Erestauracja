@@ -19,7 +19,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
             $("#Birthdate").datepicker({
                 changeMonth: true,
                 changeYear: true,
-                yearRange: 'c-100:c+0'
+                yearRange: 'c-100:c+0',
+                dateFormat: 'dd/mm/yy'
             });
         });
     </script>
