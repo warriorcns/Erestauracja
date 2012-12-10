@@ -193,3 +193,10 @@
     margin-left: 10px;    
     
 }
+
+.resInfo:hover
+{
+    cursor: hand; 
+    cursor: pointer;    
+    
+}

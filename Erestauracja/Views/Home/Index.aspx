@@ -36,11 +36,11 @@
             <% { %>
                     <%--<input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />--%>
                     <div class="resInfo" onclick="Redirect('<%: Html.Encode(rest.ID) %>')">
-                    <div>
-                        <span> <%: rest.DisplayName %></span> <%--<span class="resIsOnline<%: rest.ID %>"></span>--%>
-                    </div>
-                    <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
-                    <div> <%: rest.Telephone %> </div>
+                        <div>
+                            <span> <%: rest.DisplayName %></span> <%--<span class="resIsOnline<%: rest.ID %>"></span>--%>
+                        </div>
+                        <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
+                        <div> <%: rest.Telephone %> </div>
                     </div>
                     <hr />
             <% } %>
@@ -102,8 +102,8 @@
     </form>
     
     <script type="text/javascript">
-        $('#target').blur(function () {
-           
+        $('#MainContent_ButtonWybierzRestauracje').click(function () {
+
             var town = $("#target").val();
             var url = '<%: Url.Action("SearchRestaurants", "Home") %>';
             var data = { value: town };
@@ -123,13 +123,10 @@
                 }
             });
             document.getElementById("Restauracje").style.display = "block";
+            return false;
         });
     </script>
     
-    <script type="text/javascript">
-        function test() {alert('test');}
-    </script>
-
     <script type="text/javascript">
         //przekierowanie po wyborze restauracji do strony restauracji z pobraniem id restauracji
         $("#Restauracje").change(function () {

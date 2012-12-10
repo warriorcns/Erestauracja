@@ -6,6 +6,8 @@
 
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    
+    
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script type="text/javascript">
         $(function () {
@@ -26,9 +28,6 @@
             });
         });
 	</script>
-
-    
-   
     <script type="text/javascript">
         $(function () {
             $("#searchButton")
@@ -43,7 +42,6 @@
             });
         });
     </script>
-
     <script type="text/javascript">
         $(document).ready(function () {
             setInterval("location.reload(true)", 300000);
@@ -65,11 +63,24 @@
 
             if (data.length != 0) {
                 $.post(url, data, function (data) {
+                    //druk bonu
+                    if (stat === "W realizacji") {
+                        $("#" + id).printElement();
+                    }
                     window.location.href = data.redirectToUrl;
                 });
             }
         }
     </script>
+
+    <script type="text/javascript">
+        function printdiv(id) {
+            $("#but" + id).print();
+
+        }  
+    </script>
+
+    
     
     <div class="main">
         <div class="buttons-container">
@@ -80,6 +91,7 @@
             <div>
                 <%: Html.ActionLink("Cofnij", "Index", "POS", new{ @class="button wood"})%>
             </div>
+            
         </div>
         <div id="tabs-nohdr">
             <ul>
@@ -106,7 +118,7 @@
                             <%: order.UserName %></a> <a class="order orders-header-adress"><%: order.UserAdderss %> <%: order.UserTown %>  </a> <a class="order orders-header-status">
                             <%: order.Status %>: <%: order.OrderDate %></a>
                         </h3>
-                        <div>
+                        <div id="<%: order.OrderId  %>">
                         <p style="border-top: 2px black solid;">
                         Informacje o zamówieniu</p>
                         <div>Lista zamówionych produktów:</div>
@@ -135,6 +147,7 @@
                             <button>Drukuj rachunek.</button>
                             <button onclick="setStatus('<%: order.OrderId %>', 'W realizacji')">Przyjmij zamówienie</button>
                             <button onclick="setStatus('<%: order.OrderId %>', 'Odrzucone')">Odrzuć zamówienie</button>
+                            <button onclick="printdiv(<%: order.OrderId %>)">print</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>
