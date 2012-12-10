@@ -1276,6 +1276,9 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.Restaurant.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.RestaurantInCity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.RestaurantInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

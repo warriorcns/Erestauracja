@@ -691,6 +691,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIK [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetSearchResult {
+            get {
+                return ResourceManager.GetString("GetSearchResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT (SELECT COUNT(q.`id`) FROM `products` q WHERE q.`isAvailable` = 1 AND q.`restaurantId` IN (SELECT e.`id` FROM `restaurants` e WHERE e.`isEnabled`=1)) AS produkty, (SELECT COUNT(w.`id`) FROM `restaurants` w WHERE w.`isEnabled` = 1) AS restauracje, (SELECT COUNT(t.`id`) FROM `users` t WHERE t.`isLockedOut` = 0 AND t.`comment` != &apos;R&apos;) AS osoby, (SELECT COUNT(r.`id`) FROM `users_in_roles` r JOIN `users` u ON r.`userID` = u.`id` WHERE r.`roleID` = 5 AND u.`isLockedOut`=0 AND (u.`lastActivityDate` &gt; @compa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetStatistics {

@@ -6269,6 +6269,82 @@ namespace Contract
             return false;
         }
 
+        public List<RestaurantInCity> GetSearchResult(string town, string res)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<RestaurantInCity> rest = new List<RestaurantInCity>();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetSearchResult);
+                if(!String.IsNullOrWhiteSpace(town))
+                    command.Parameters.AddWithValue("@town", "%" + town + "%");
+                else
+                    command.Parameters.AddWithValue("@town", "%");
+                if (!String.IsNullOrWhiteSpace(res))
+                    command.Parameters.AddWithValue("@res", "%" + res + "%");
+                else
+                    command.Parameters.AddWithValue("@res", "%");
+                command.Parameters.AddWithValue("@isEnabled", true);
+                command.Connection = conn;
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        RestaurantInCity r = GetRestaurantsFromCity(reader);
+                        rest.Add(r);
+                    }
+                }
+                else
+                {
+                    return rest;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

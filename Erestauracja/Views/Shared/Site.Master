@@ -51,8 +51,8 @@
                 <ul id="menu">
                     <li>
                         <%: Html.ActionLink("Strona główna", "Index", "Home")%></li>
-                    <%--<li>
-                        <%: Html.ActionLink("Szukaj", "Index", "Find")%></li>--%>
+                    <li>
+                        <%: Html.ActionLink("Szukaj", "Index", "Find", new { town = String.Empty, res = String.Empty, first = true }, null)%></li>
                     <li>
                         <%: Html.ActionLink("Konto", "Account", "Account")%></li>
                     <li>

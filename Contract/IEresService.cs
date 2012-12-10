@@ -278,7 +278,8 @@ namespace Contract
         [OperationContract]
         bool SetOrderStatus(int id, string login, string status);
 
-
+        [OperationContract]
+        List<RestaurantInCity> GetSearchResult(string town, string res);
     }
 
 

@@ -440,4 +440,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="SetOrderStatus" xml:space="preserve">
     <value>UPDATE `orders` SET `status`=@status, `finishDate`=@finish WHERE `id`=@id AND `restaurantId` = (SELECT `id` FROM `restaurants` WHERE `userId` = (SELECT `id` FROM `users` WHERE `login` = @login) )</value>
   </data>
+  <data name="GetSearchResult" xml:space="preserve">
+    <value>SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town) AND (x.`name` LIKE @res OR x.`displayName` LIKE @res)</value>
+  </data>
 </root>

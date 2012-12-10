@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Erestauracja.ServiceReference;
 
 namespace Erestauracja.Controllers
 {
@@ -19,7 +20,57 @@ namespace Erestauracja.Controllers
         // GET: /Find/
         public ActionResult Index(string town, string res, bool first)
         {
-            return View();
+            List<RestaurantInCity> list = null;
+            ViewData["town"] = town;
+            ViewData["res"] = res;
+            ViewData["first"] = first;
+
+            if (String.IsNullOrWhiteSpace(town) && String.IsNullOrWhiteSpace(res))
+            {
+                if (first == false)
+                {
+                    ModelState.AddModelError("", "Pole nazwa miasta lub nazwa restauracji, musi być wypełnione");
+                }
+                list = new List<RestaurantInCity>();
+            }
+            else
+            {
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        list = new List<RestaurantInCity>(client.GetSearchResult(town, res));
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    list = null;
+                }
+                if (list == null)
+                {
+                    ModelState.AddModelError("", "Szukanie restauracji nie powiodło się.");
+
+                    return View(list);
+                }
+                else
+                {
+                    foreach (RestaurantInCity item in list)
+                    {
+                        string onClick = String.Format(" \"Redirect('{0}')\" ", item.ID);
+                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + item.Address + " " + item.Town + " " + item.PostalCode + "</br>" + "Telefon " + item.Telephone + "</br>" + "Średnia ocena " + item.AverageRating + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                    }
+                }
+            }
+            return View(list);
+        }
+
+         //
+        // GET: /Find/
+        public ActionResult Search(string town, string res)
+        {
+            return Json(new { redirectToUrl = Url.Action("Index", "Find", new { town = town, res = res, first = false }) });
         }
 
     }

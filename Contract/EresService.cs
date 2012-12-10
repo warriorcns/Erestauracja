@@ -1181,5 +1181,19 @@ namespace Contract
                 return false;
             }
         }
+
+        public List<RestaurantInCity> GetSearchResult(string town, string res)
+        {
+            if (!(String.IsNullOrWhiteSpace(town) && String.IsNullOrWhiteSpace(res)))
+            {
+                Database db = new Database();
+                List<RestaurantInCity> value = db.GetSearchResult(town, res);
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
