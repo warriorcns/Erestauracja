@@ -9,7 +9,7 @@
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    
     <h2>Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
@@ -27,11 +27,24 @@
     </script>
 
     <script type="text/javascript">
-        jQuery(function($){
-            $("#Birthdate").mask("99/99/9999");
+        $(function () {
+            jQuery(function ($) {
+                $("#Birthdate").mask("99/99/9999");
             });
+        }); 
     </script>
     
+    <script type="text/javascript">
+        function ChoseAndSend(town, postalcode) {
+            //wstawia pola ze znacznika do textboxow
+            var TownName = document.getElementById("TownName");
+            var PostalCode = document.getElementById("PostalCode");
+            //tutaj potrzebujemy wklepac te wartosci do textboxow...
+            TownName.value = town;
+            PostalCode.value = postalcode;
+        }
+    </script>
+
     <div class="polaRejestracji">
 
         <form class="formaRejestracji" runat="server">
@@ -321,14 +334,5 @@
                 <%}%> 
     </div>
 
-    <script type="text/javascript">
-        function ChoseAndSend(town, postalcode) {
-            //wstawia pola ze znacznika do textboxow
-            var TownName = document.getElementById("TownName");
-            var PostalCode = document.getElementById("PostalCode");
-            //tutaj potrzebujemy wklepac te wartosci do textboxow...
-            TownName.value = town;
-            PostalCode.value = postalcode;
-        }
-    </script>
+    
 </asp:Content>

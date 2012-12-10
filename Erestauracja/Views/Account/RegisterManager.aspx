@@ -25,8 +25,10 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
         });
     </script>
     <script type="text/javascript">
-        jQuery(function ($) {
-            $("#Birthdate").mask("99/99/9999");
+        $(function () {
+            jQuery(function ($) {
+                $("#Birthdate").mask("99/99/9999");
+            });
         });
     </script>
 
@@ -211,17 +213,17 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
             if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
             //if(true)
             {%>
-        <script type="text/javascript">
-            document.getElementById('mapka').style.display = "block";
-        </script>
-        <%}
-                else
-                {%>
-        <script type="text/javascript">
-            document.getElementById('mapka').style.display = "none";
-        </script>
+                <script type="text/javascript">
+                    document.getElementById('mapka').style.display = "block";
+                </script>
+            <%}
+            else
+            {%>
+                <script type="text/javascript">
+                    document.getElementById('mapka').style.display = "none";
+                </script>
         <%}%>
-        <% //} %>
+        
     </div>
 
     <script type="text/javascript">
