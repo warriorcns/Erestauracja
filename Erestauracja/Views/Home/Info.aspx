@@ -11,7 +11,7 @@
 <div>
 System E-Restauracja umożliwia wyszukiwanie oraz przeglądanie oferty restauracji z całego kraju.
 Zalogowani klienci mają możliwość dodawania produktów oferowanych przez restauracje do koszyka,
-a następnie wybierająć płatność za pomocą serwisu PayPal lub płatność przy odbiorze złożyć zamówienie.
+a następnie wybierająć płatność za pomocą serwisu PayPal, kartą kredytową, kartą debetową lub płatność przy odbiorze złożyć zamówienie.
 </div>
 <br />
 <div>
@@ -22,7 +22,7 @@ Możliwość dodawania kategorii oraz produktów powala odwzorować niemal każd
 <br />
 <div>
 Personel restauracji ma do dyspozycji intuicyjny POS (point-of-sale), przystosowany do obsługi na ekranie dotykowym.
-Daje on możliwość podglądu spływających zamówień oraz zmiane ich statusu, co daje klientowi wiedze o stanie zamówienia.
+Daje on możliwość podglądu spływających zamówień oraz zmianę ich statusu, co daje klientowi wiedzę o stanie zamówienia.
 </div>
 <br />
 <div>
@@ -35,6 +35,7 @@ Kontakt
 Email: erestauracja@gmail.com
 </p>
 </div>
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
