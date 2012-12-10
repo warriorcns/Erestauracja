@@ -9,7 +9,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
         $("#searchButton").button()
             .click(function (event) {
@@ -29,7 +29,7 @@
     });
 </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     function Redirect(RestaurantID) {
         var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
         var data = { id: RestaurantID };
@@ -44,56 +44,56 @@
     } 
     </script>
 
-<%: Html.ValidationSummary(true, "Błąd.")%>
+    <%: Html.ValidationSummary(true, "Błąd.")%>
 
-<div>
-<span>Podaj nazwe miasta </span>
-<span><%: Html.TextBox("town", (string)ViewData["town"], new { @id = "townTB" })%></span>
-<span> lub nazwe restauracji </span>
-<span><%: Html.TextBox("res", (string)ViewData["res"], new { @id = "resTB" })%></span>
-<span><input type="button" id="searchButton" value="Szukaj" onclick="search()"/></span>
-</div>
+    <div>
+    <span>Podaj nazwe miasta </span>
+    <span><%: Html.TextBox("town", (string)ViewData["town"], new { @id = "townTB" })%></span>
+    <span> lub nazwe restauracji </span>
+    <span><%: Html.TextBox("res", (string)ViewData["res"], new { @id = "resTB" })%></span>
+    <span><input type="button" id="searchButton" value="Szukaj" onclick="search()"/></span>
+    </div>
 
-<div>
-<% if (Model == null) %>
-<% { %>
-    <h2>Szukanie restauracji nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
-<% } %>
-<% else %>
-<% { %>
-    <% if (Model.Count == 0 && (bool)ViewData["first"]==false) %>
+    <div style="width: 100%; clear: both; height: 100%; overflow: hidden;">
+    <% if (Model == null) %>
     <% { %>
-        <h2>Brak restauracji spełniającej podane kryteria.</h2>
+        <h2>Szukanie restauracji nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
     <% } %>
     <% else %>
     <% { %>
-    <div class="RestauracjeMapa">
-        <span class="PanelListaRestauracji">
-            <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model) %>
-            <% { %>
-                    <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
-                        <div> <%: item.DisplayName %> 
-                        <% if( (DateTime.Compare(item.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0 )%>
-                        <% { %>
-                            NOWOŚĆ
-                        <% } %>
+        <% if (Model.Count == 0 && (bool)ViewData["first"]==false) %>
+        <% { %>
+            <h2>Brak restauracji spełniającej podane kryteria.</h2>
+        <% } %>
+        <% else %>
+        <% { %>
+        <div class="RestauracjeMapa">
+            <span class="PanelListaRestauracji">
+                <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model) %>
+                <% { %>
+                        <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
+                            <div> <%: item.DisplayName %> 
+                            <% if( (DateTime.Compare(item.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0 )%>
+                            <% { %>
+                                NOWOŚĆ
+                            <% } %>
+                            </div>
+                            <div><%: item.Address %> <%: item.Town %> <%: item.PostalCode %></div>
+                            <div><%: item.Telephone %></div>
+                            <div>Srednia ocena <%: item.AverageRating %></div>
                         </div>
-                        <div><%: item.Address %> <%: item.Town %> <%: item.PostalCode %></div>
-                        <div><%: item.Telephone %></div>
-                        <div>Srednia ocena <%: item.AverageRating %></div>
-                    </div>
-                    <hr />
-            <% } %>
-        </span>
-        <span class="PanelMapa">
-            <div class="mapTowns" id="mapka" style="display: block">
-                <% Html.RenderPartial("RestaurantsMaps", Model as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
-                <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
-                <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
-            </div>
-        </span>
-    </div>
+                        <hr />
+                <% } %>
+            </span>
+            <span class="PanelMapa">
+                <div class="mapTowns" id="mapka" style="display: block">
+                    <% Html.RenderPartial("RestaurantsMaps", Model as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
+                    <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
+                    <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+                </div>
+            </span>
+        </div>
+        <% } %>
     <% } %>
-<% } %>
-</div>
+    </div>
 </asp:Content>
