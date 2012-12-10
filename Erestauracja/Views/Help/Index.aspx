@@ -13,7 +13,7 @@
             }
         });
     </script>
-    
-    <iframe id="iframepdf" style="width: 900px; height: 600px;"/>
-    
+    <div class="main">
+        <iframe id="iframepdf" style="width: 900px; height: 600px;"></iframe>
+    </div>
 </asp:Content>
