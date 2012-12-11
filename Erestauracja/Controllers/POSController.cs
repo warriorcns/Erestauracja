@@ -23,6 +23,7 @@ namespace Erestauracja.Controllers
         [CustomAuthorizeAttribute(Roles = "Pracownik")]
         public ActionResult Index()
         {
+            //pobrać ststus z RestaurantOnlineStatus(string login)
             return View();
         }
 

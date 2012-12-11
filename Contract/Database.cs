@@ -6345,6 +6345,85 @@ namespace Contract
             return rest;
         }
 
+        public bool SetRestaurantOnline(string login, string online)
+        {
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                MySqlCommand command = new MySqlCommand(Queries.SetRestaurantOnline);
+                command.Parameters.AddWithValue("@login", logins[0]);
+                if (online == "Online")
+                {
+                    command.Parameters.AddWithValue("@online", true);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@online", false);
+                }
+
+                int rowsaffected = ExecuteNonQuery(command, "SetRestaurantOnline");
+
+                if (rowsaffected > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool RestaurantOnlineStatus(string login)
+        {
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                MySqlCommand command = new MySqlCommand(Queries.RestaurantOnlineStatus);
+                command.Parameters.AddWithValue("@login", logins[0]);
+
+                DataSet ds = new DataSet();
+                ds = ExecuteQuery(command, "RestaurantOnlineStatus");
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    if (row["isOnLine"] != DBNull.Value)
+                    {
+                        bool value = Convert.ToBoolean((row["isOnLine"]));
+                        if (value == true) return true;
+                    }
+                }
+
+                else
+                {
+                    return false;
+                }
+
+            }
+            return false;
+        }
+
+        public bool SetRestaurantActivity(string login)
+        {
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                MySqlCommand command = new MySqlCommand(Queries.SetRestaurantActivity);
+                command.Parameters.AddWithValue("@login", logins[0]);
+                command.Parameters.AddWithValue("@activity", DateTime.Now);
+
+                int rowsaffected = ExecuteNonQuery(command, "SetRestaurantActivity");
+
+                if (rowsaffected > 0)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
         #region dodatkowe klasy pomocnicze
 
         #region Geocoding

@@ -1195,5 +1195,47 @@ namespace Contract
                 return null;
             }
         }
+
+        public bool SetRestaurantOnline(string login, string online)
+        {
+            if (!(String.IsNullOrWhiteSpace(login) && String.IsNullOrWhiteSpace(online)))
+            {
+                Database db = new Database();
+                bool value = db.SetRestaurantOnline(login, online);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RestaurantOnlineStatus(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                bool value = db.RestaurantOnlineStatus(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SetRestaurantActivity(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                bool value = db.SetRestaurantActivity(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

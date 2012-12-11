@@ -891,6 +891,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT `isOnLine` FROM `users` WHERE `login` = @login.
+        /// </summary>
+        internal static string RestaurantOnlineStatus {
+            get {
+                return ResourceManager.GetString("RestaurantOnlineStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT x.`id`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`inputsCount`, (SELECT AVG(c.`rating`) FROM `comments` c WHERE c.`restaurantId`=x.`id`) as averageRating, x.`deliveryTime`, u.`creationDate`, x.`latitude`, x.`longitude` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE x.`isEnabled`=@isEnabled AND x.`townId` IN (SELECT `id` FROM `towns` WHERE `town_name` LIK [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RestaurantsFromCity {
@@ -941,6 +950,24 @@ namespace Contract {
         internal static string SetOrderStatus {
             get {
                 return ResourceManager.GetString("SetOrderStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `users` SET `lastActivityDate`=@activity WHERE `login`=@login.
+        /// </summary>
+        internal static string SetRestaurantActivity {
+            get {
+                return ResourceManager.GetString("SetRestaurantActivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `users` SET `isOnLine`=@online WHERE `login`=@login.
+        /// </summary>
+        internal static string SetRestaurantOnline {
+            get {
+                return ResourceManager.GetString("SetRestaurantOnline", resourceCulture);
             }
         }
         

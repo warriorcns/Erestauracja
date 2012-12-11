@@ -280,6 +280,15 @@ namespace Contract
 
         [OperationContract]
         List<RestaurantInCity> GetSearchResult(string town, string res);
+
+        [OperationContract]
+        bool SetRestaurantOnline(string login, string online);
+
+        [OperationContract]
+        bool RestaurantOnlineStatus(string login);
+
+        [OperationContract]
+        bool SetRestaurantActivity(string login);
     }
 
 
