@@ -1230,7 +1230,6 @@
     <Content Include="Scripts\themes\classic\galleria.classic.min.js" />
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
-    <None Include="Service References\ServiceReference\EresService1.wsdl" />
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.AllOrders.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1309,23 +1308,10 @@
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.ValidateUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ServiceReference\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference\item6.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ServiceReference\item1.disco" />
     <Content Include="Views\Account\Account.aspx" />
     <Content Include="Views\Account\Comments.aspx" />
     <Content Include="Views\Account\EditData.aspx" />

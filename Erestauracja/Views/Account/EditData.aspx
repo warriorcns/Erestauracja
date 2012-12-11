@@ -18,9 +18,11 @@
         });
     </script>
     <script type="text/javascript">
+    $(function () {
         jQuery(function ($) {
             $("#Birthdate").mask("99/99/9999");
         });
+    });
     </script>
     <script type="text/javascript">
         $(function () {

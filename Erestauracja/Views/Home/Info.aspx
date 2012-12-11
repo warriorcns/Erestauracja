@@ -9,15 +9,14 @@
 <h2>Informacje o E-Restauracja</h2>
 <br />
 <div>
-System E-Restauracja umożliwia wyszukiwanie oraz przeglądanie oferty restauracji z całego kraju.
-Zalogowani klienci mają możliwość dodawania produktów oferowanych przez restauracje do koszyka,
-a następnie wybierająć płatność za pomocą serwisu PayPal, kartą kredytową, kartą debetową lub płatność przy odbiorze złożyć zamówienie.
+ Właściciele oraz menadżerowie restauracji mają możliwość dodawania nowych restauracji oraz ich personelu do serwisu. 
+ Mają także możliwość edytowania zawartości witryny swojej restauracji, dzięki prostemu w użyciu edytorowi. 
+ Możliwość dodawania kategorii oraz produktów powala odwzorować niemal każde menu. 
 </div>
 <br />
 <div>
-Właściciele oraz menadżerowie restauracji mają możliwość dodawania nowych restauracji oraz ich personelu do serwisu .
-Mają także możliwość edytowania zawartości witryny swojej restauracji, dzięki prostemu w użyciu edytorowi.
-Możliwość dodawania kategorii oraz produktów powala odwzorować niemal każde menu.
+Personel restauracji ma do dyspozycji intuicyjny POS (point-of-sale), przystosowany do obsługi na ekranie dotykowym. 
+Daje on możliwość podglądu spływających zamówień oraz zmianę ich statusu, co daje klientowi wiedzę o stanie zamówienia. 
 </div>
 <br />
 <div>
