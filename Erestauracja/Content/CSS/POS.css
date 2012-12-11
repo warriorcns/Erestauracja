@@ -227,6 +227,8 @@ a
 {
     position: relative; 
     top: 20px;
+    left: 45%;
+    width: 200px;
 }
 
 .search-textbox

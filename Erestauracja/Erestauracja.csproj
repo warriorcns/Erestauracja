@@ -314,6 +314,7 @@
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Providers\CustomMembershipUser.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
+    <Compile Include="Queries.Designer.cs" />
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1404,7 +1405,9 @@
     <Content Include="Views\Restaurant\Menu.aspx" />
     <Content Include="Views\Restaurant\Events.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
+    <Content Include="Views\Shared\ManagerLogOnUserControl.ascx" />
     <Content Include="Views\Shared\Map.ascx" />
+    <Content Include="Views\Shared\POSLogOnUserControl.ascx" />
     <Content Include="Views\Shared\RestaurantsMaps.ascx" />
     <Content Include="Views\Shared\Unauthorized.aspx" />
     <Content Include="Web.config">
@@ -1676,6 +1679,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Queries.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

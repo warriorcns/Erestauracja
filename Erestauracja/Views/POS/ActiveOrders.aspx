@@ -156,10 +156,10 @@
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button>
+                            <%--<button>Drukuj rachunek.</button>--%>
                             <button onclick="setStatus('<%: order.OrderId %>', 'W realizacji')">Przyjmij zamówienie</button>
                             <button onclick="setStatus('<%: order.OrderId %>', 'Odrzucone')">Odrzuć zamówienie</button>
-                            <button onclick="printdiv(<%: order.OrderId %>)">print</button>
+                            <%--<button onclick="printdiv(<%: order.OrderId %>)">print</button>--%>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>
@@ -206,7 +206,7 @@
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button><button onclick="setStatus('<%: order.OrderId %>', 'Zakończone')">Wysłano</button>
+                            <%--<button>Drukuj rachunek.</button>--%><button onclick="setStatus('<%: order.OrderId %>', 'Zakończone')">Wysłano</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>
@@ -253,7 +253,7 @@
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <button>Drukuj rachunek.</button>
+                            <%--<button>Drukuj rachunek.</button>--%>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>

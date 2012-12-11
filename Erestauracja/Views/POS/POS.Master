@@ -24,15 +24,29 @@
     <link href="../../Content/CSS/POS.css" rel="stylesheet" type="text/css" />
     <%--<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>--%>
     
+    <script type="text/javascript">
+        function act() {
+            var url = '<%: Url.Action("setAct", "POS") %>';
+            var data = {};
+            $.post(url, data, function (data) {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            act();
+            setInterval("act()", 300000);
+        });
+
+    </script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <%--logo--%>
-    <div class="topka">
-        <a class="ikonka" href="/POS">
-        </a>
+    <div id="logindisplay">
+        <% Html.RenderPartial("POSLogOnUserControl"); %>
     </div>
     
     <form id="form1" runat="server">

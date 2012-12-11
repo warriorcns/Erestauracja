@@ -45,7 +45,7 @@
                 <h1></h1>
             </div>
             <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
+                <% Html.RenderPartial("ManagerLogOnUserControl"); %>
             </div>
             <nav id="menucontainer">
                 <ul id="menu">
@@ -74,7 +74,7 @@
                     <span class="first"></span><span class="second"></span><span class="third"></span>
                 </div>
                 <div id="footer-logo">
-                    <a href="/">
+                    <a href="/ManagePanel">
                         <img id="logo" src="/Content/images/LogoPizza.jpg">
                     </a><span class="copyright" dir="ltr">© 2012 Erestauracja</span> <span id="footer-divider">
                     </span>

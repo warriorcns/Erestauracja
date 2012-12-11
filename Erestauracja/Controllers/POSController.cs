@@ -309,11 +309,59 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-        public ActionResult scrollexample()
-        {
-            return View();
-        }
-    
 
+        public void status(string st)
+        {
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.SetRestaurantOnline(User.Identity.Name, st);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+        }
+
+        public string getStatus()
+        {
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.RestaurantOnlineStatus(User.Identity.Name);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+            return (value) ? "Online" : "Offline"; 
+        }
+
+        public void setAct()
+        { 
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    client.SetRestaurantActivity(User.Identity.Name);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                ;
+            }
+        }
     }
 }

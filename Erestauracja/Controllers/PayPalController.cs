@@ -142,9 +142,9 @@ namespace Erestauracja.Controllers
 
             if (response == "VERIFIED")
             {
-                string transactionID = Request["txn_id"];
-                string sAmountPaid = Request["mc_gross"];
-                string deviceID = Request["custom"];
+                //string transactionID = Request["txn_id"];
+                //string sAmountPaid = Request["mc_gross"];
+                //string deviceID = Request["custom"];
 
                 //validate the order
                 //Decimal amountPaid = 0;
@@ -153,9 +153,9 @@ namespace Erestauracja.Controllers
                 //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
 
                 //PayPal pp = new PayPal();
-                //pp.txn_id = Request["txn_id"];
-                //pp.mc_gross = Request["mc_gross"];
-                //pp.txn_type = Request["txn_type"];
+                pp.txn_id = Request["txn_id"];
+                pp.mc_gross = Request["mc_gross"];
+                pp.txn_type = Request["txn_type"];
                 int id = int.Parse(pp.item_number);
 
                 #region ciasteczka - odczyt

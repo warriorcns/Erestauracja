@@ -15,7 +15,7 @@
     </script>
 
     <div class="main">
-        <iframe id="iframepdf" style="width: 1150px; height: 600px;"></iframe>
+        <iframe id="iframepdf" style="width:100%; height: 600px;"></iframe>
     </div>
 
 </asp:Content>
