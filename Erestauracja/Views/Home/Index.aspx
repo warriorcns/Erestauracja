@@ -31,7 +31,7 @@
     <br />
     <div class="all">
         <asp:Panel class="lewypanel" runat="server" ScrollBars="Auto" Wrap="true">
-            <asp:Label Font-Bold="true" Font-Underline="true" runat="server" style="position: relative; padding-top: 20px; padding-left: 10px;">   10 najnowszych restauracji</asp:Label>
+            <asp:Label Font-Bold="true" Font-Underline="true" runat="server" style="position: relative; margin-top: 20px; margin-left: 20px; font-size:larger;">   10 najnowszych restauracji</asp:Label>
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
                     <%--<input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />--%>

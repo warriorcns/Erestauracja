@@ -1,21 +1,21 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+    Unauthorized
+</asp:Content>
 
-<html>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <script type="text/javascript">
     setTimeout(function () {
         window.location.href = "Index";
-    },
-3000);
+    },3000);
 </script>
-<head runat="server">
-    <title>Unauthorized access.</title>
-</head>
-<body>
     <div>
         <h3>Ups, nie masz uprawnien by obejrzeć tę stronę ;( </h3>
         <h5>Za chwilę nastąpi przekierowanie do strony początkowej...</h5>
     </div>
-</body>
-</html>
+
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
+</asp:Content>

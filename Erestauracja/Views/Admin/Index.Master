@@ -24,8 +24,8 @@
             <ul class="RolesMenu">
                 <li>
                     <%: Html.ActionLink("Enable/Disable Roles", "CreateRoles", "Admin")%></li>
-                <li>
-                    <%: Html.ActionLink("Create or Manage Roles", "ManageRoles", "Admin")%></li>
+                <%--<li>
+                    <%: Html.ActionLink("Create or Manage Roles", "ManageRoles", "Admin")%></li>--%>
             </ul>
         </asp:Panel>
         <div class="AdminPlaceHolder">

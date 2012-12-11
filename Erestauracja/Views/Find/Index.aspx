@@ -43,7 +43,25 @@
         }
     } 
     </script>
-
+    <% if (( ViewData["town"] ) == null)
+       { %>
+        <script type="text/javascript">
+            $(function () {
+                $('.PanelMapa').css("display", "none");
+                $('.PanelListaRestauracji').css("display", "none");
+            });
+        </script>
+    <% }
+       else
+       {%>
+       <script type="text/javascript">
+           $(function () {
+               $('.PanelMapa').css("display", "block");
+               $('.mapTowns').css("display", "block");
+               $('.PanelListaRestauracji').css("display", "block");
+           });
+       </script>
+       <% } %>
     <%: Html.ValidationSummary(true, "Błąd.")%>
 
     <div>
@@ -68,7 +86,7 @@
         <% else %>
         <% { %>
         <div class="RestauracjeMapa">
-            <span class="PanelListaRestauracji">
+            <span class="PanelListaRestauracji" id="resList">
                 <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model) %>
                 <% { %>
                         <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
@@ -86,7 +104,7 @@
                 <% } %>
             </span>
             <span class="PanelMapa">
-                <div class="mapTowns" id="mapka" style="display: block">
+                <div class="FindmapTowns" id="mapka">
                     <% Html.RenderPartial("RestaurantsMaps", Model as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
                     <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
                     <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>

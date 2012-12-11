@@ -109,7 +109,7 @@
                 </div>
                 <div id="footer-logo">
                     <a href="/" title="Strona główna">
-                        <img id="logo" alt="Strona główna">
+                        <img id="logo" alt="Strona główna" src="/Content/images/LogoPizza.jpg">
                     </a><span class="copyright" dir="ltr">© 2012 Erestauracja</span> <span id="footer-divider">
                     </span>
                 </div>

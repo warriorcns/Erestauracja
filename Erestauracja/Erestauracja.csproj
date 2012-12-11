@@ -779,9 +779,12 @@
     <Content Include="Content\2012.2.607\Windows7\sprite.png" />
     <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
+    <Content Include="Content\CSS\jquery.nailthumb.1.1.css" />
+    <Content Include="Content\CSS\jquery.nailthumb.1.1.min.css" />
     <Content Include="Content\CSS\managepanel.css" />
     <Content Include="Content\CSS\POS.css" />
     <Content Include="Content\CSS\Restaurants.css" />
+    <Content Include="Content\CSS\yoxview.css" />
     <Content Include="Content\DataTables-1.9.4\docs\media\css\doc.css" />
     <Content Include="Content\DataTables-1.9.4\docs\media\css\shCore.css" />
     <Content Include="Content\DataTables-1.9.4\docs\media\css\shThemeDataTables.css" />
@@ -1337,6 +1340,7 @@
     <Content Include="Views\ManagePanel\Info.aspx" />
     <Content Include="Views\ManagePanel\ManagerHelp.aspx" />
     <Content Include="Views\ManagePanel\Comments.aspx" />
+    <Content Include="Views\ManagePanel\ManageRestaurant.aspx" />
     <Content Include="Views\ManagePanel\ReportComment.aspx" />
     <Content Include="Views\PayPal\CancelFromPaypal.aspx" />
     <Content Include="Views\PayPal\IPN.aspx" />

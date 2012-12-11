@@ -196,9 +196,10 @@
 .resInfo
 {
     position: relative;
-    margin-bottom: 10px;
-    margin-left: 10px;    
-    
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;    
+    font-size: large;
 }
 
 .resInfo:hover

@@ -39,7 +39,7 @@
                     <li>
                         <%: Html.ActionLink("General", "Index", "Admin")%></li>
                     <li>
-                        <%: Html.ActionLink("phpmyadmin", "phpmyadmin", "Admin")%></li>
+                        <a href="http://25.30.184.53/phpmyadmin/" target = "_blank">phpmyadmin</a></li>
                 </ul>
             </nav>
             <asp:ContentPlaceHolder ID="AdminPlaceHolder" runat="server">
