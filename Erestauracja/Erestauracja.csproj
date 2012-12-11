@@ -1331,6 +1331,10 @@
     <Content Include="Views\Basket\PayError.aspx" />
     <Content Include="Views\Basket\PaySuccess.aspx" />
     <Content Include="Views\Basket\Realize.aspx" />
+    <Content Include="Views\ManagePanel\Errors.aspx" />
+    <Content Include="Views\ManagePanel\ErrorSuccess.aspx" />
+    <Content Include="Views\ManagePanel\Info.aspx" />
+    <Content Include="Views\ManagePanel\ManagerHelp.aspx" />
     <Content Include="Views\ManagePanel\Comments.aspx" />
     <Content Include="Views\ManagePanel\ReportComment.aspx" />
     <Content Include="Views\PayPal\CancelFromPaypal.aspx" />

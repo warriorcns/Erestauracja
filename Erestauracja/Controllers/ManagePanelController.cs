@@ -22,6 +22,70 @@ namespace Erestauracja.Controllers
     public class ManagePanelController : Controller
     {
         //
+        // GET: /ManagePanel/Errors
+        public ActionResult Errors()
+        {
+            return View();
+        }
+
+        //
+        // POST: /ManagePanel/Errors
+        [HttpPost]
+        public ActionResult Errors(ErrorModels model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.SendError(model.Email, model.Text);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Wysyłanie zgłoszenia nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("ErrorSuccess", "ManagePanel");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /ManagePanel/ErrorSuccess
+        public ActionResult ErrorSuccess()
+        {
+            return View();
+        }
+
+        //
+        // GET: /ManagePanel/Info
+        public ActionResult Info()
+        {
+            return View();
+        }
+
+        //
+        // GET: /ManagePanel/ManagerHelp
+        public ActionResult ManagerHelp()
+        {
+            return View();
+        }
+
+        //
         // GET: /ManagePanel/Index
         public ActionResult Index()
         {
