@@ -31,7 +31,8 @@
     <br />
     <div class="all">
         <asp:Panel class="lewypanel" runat="server" ScrollBars="Auto" Wrap="true">
-            <asp:Label Font-Bold="true" Font-Underline="true" runat="server" style="position: relative; margin-top: 20px; margin-left: 20px; font-size:larger;">   10 najnowszych restauracji</asp:Label>
+            <asp:Label Font-Bold="true" runat="server" style="position: relative; margin-top: 20px; margin-left: 20px; font-size:larger;">   10 najnowszych restauracji</asp:Label>
+            <hr />
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
                     <%--<input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />--%>
@@ -48,7 +49,9 @@
         </asp:Panel>
         <asp:Panel class="PanelInfo" runat="server" ScrollBars="Auto" Wrap="true">
             <asp:Label class="LabelWybierzMiasto" runat="server" Font-Size="Large" 
-                Text="Na stronie możesz zamówić posiłki przygotowane przez restauracje wraz z dowozem do domu !">
+                Text="System E-Restauracja umożliwia wyszukiwanie oraz przeglądanie oferty restauracji z całego kraju.
+Zalogowani klienci mają możliwość dodawania produktów oferowanych przez restauracje do koszyka,
+a następnie wybierając płatność, za pomocą serwisu PayPal, kartą kredytową, kartą debetową lub płatność przy odbiorze, złożyć zamówienie.">
             </asp:Label>
         </asp:Panel>
         <asp:Panel class="PanelWybor" runat="server" ScrollBars="Auto" Wrap="true">

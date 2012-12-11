@@ -11,7 +11,7 @@
 <div>
 System E-Restauracja umożliwia wyszukiwanie oraz przeglądanie oferty restauracji z całego kraju.
 Zalogowani klienci mają możliwość dodawania produktów oferowanych przez restauracje do koszyka,
-a następnie wybierając płatność za pomocą serwisu PayPal, kartą kredytową, kartą debetową lub płatność przy odbiorze złożyć zamówienie.
+a następnie wybierając płatność, za pomocą serwisu PayPal, kartą kredytową, kartą debetową lub płatność przy odbiorze, złożyć zamówienie.
 </div>
 <br />
 <div>
