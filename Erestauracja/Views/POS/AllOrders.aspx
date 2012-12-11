@@ -7,19 +7,9 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 
 
-    <link href="../../Content/style/keyboard.css" rel="stylesheet" type="text/css" />
-    <script src="../../Scripts/jquery.keyboard.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-navigation.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.keyboard.extension-typing.js" type="text/javascript"></script> 
+    
 
-<script type="text/javascript">
-    $(function () {
-        $('#fromTxb').keyboard({
-            layout: 'international',
-            autoAccept: 'true'
-        });
-    });
-    </script>
+
 
 <script type="text/javascript">
     $(function () {
@@ -53,7 +43,20 @@
 </script>
 
     <div class="main">
-        <div style="position:relative; top:50px;">
+        <div class="buttons-container">
+            <div>
+                <%: Html.ActionLink("Cofnij", "Index", "POS", new{ @class="button wood"})%>
+            </div>
+            <div>
+                <span>Od:
+                    <%: Html.TextBox("od", ((DateTime)ViewData["from"]).ToShortDateString(), new { @id = "fromTxb"})%></span>
+                <span>Do:
+                    <%: Html.TextBox("do", ((DateTime)ViewData["to"]).ToShortDateString(), new { @id = "toTxb" })%></span>
+                <span>
+                    <input type="button" id="filterButton" value="Filtruj" onclick="filtr()" /></span>
+            </div>
+        </div>
+        <div style="position:relative; top:50px; left: 20px;">
             <div class="orders-container">
             <span class="orders-header orders-header-phone">Telefon</span> <span class="orders-header orders-header-name">
                         Nazwisko</span> <span class="orders-header orders-header-adress">Adres</span>
@@ -112,11 +115,7 @@
         </div>
     </div>
 
-    <div>
-            <span>Od: <%: Html.TextBox("od", ((DateTime)ViewData["from"]).ToShortDateString(), new { id = "fromTxb"})%></span>
-            <span>Do: <%: Html.TextBox("do", ((DateTime)ViewData["to"]).ToShortDateString(), new { @id = "toTxb" })%></span>
-            <span><input type="button" id="filterButton" value="Filtruj" onclick="filtr()"/></span>
-        </div>
+    
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">

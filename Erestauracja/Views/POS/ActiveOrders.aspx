@@ -3,12 +3,25 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <%--<script src="../../Scripts/jquery.tools.min.js" type="text/javascript"></script>--%>
-
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+    <link href="../../Content/style/keyboard.css" rel="stylesheet" type="text/css" />
+    <script src="../../Scripts/jquery.keyboard.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-navigation.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.keyboard.extension-typing.js" type="text/javascript"></script> 
+
+    <script type="text/javascript">
+        $(function () {
+            $('#searchtxb').keyboard({
+                layout: 'international',
+                autoAccept: 'true'
+            });
+        });
+    </script>
     
     
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script type="text/javascript">
         $(function () {
             $(".order-container").accordion({
@@ -72,7 +85,6 @@
             }
         }
     </script>
-
     <script type="text/javascript">
         function printdiv(id) {
             $("#but" + id).print();

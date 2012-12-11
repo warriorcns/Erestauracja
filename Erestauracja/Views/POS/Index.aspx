@@ -7,8 +7,10 @@
             <%: Html.ActionLink("Aktywne zamówienia", "ActiveOrders", "POS", new{ @class="button wood"})%></div>
         <div>
             <%: Html.ActionLink("Wszystkie zamówienia", "AllOrders", "POS", new { from = ( DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0)) ).ToShortDateString(), to = DateTime.Now.ToShortDateString() }, new { @class = "button wood" })%></div>
+        <%--<div>
+            <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS", new { @class = "button wood" })%></div>--%>
         <div>
-            <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS", new { @class = "button wood" })%></div>
+            <button class="button wood">Online/Offline</button></div>
         <div>
             <%: Html.ActionLink("Koniec", "End", "POS", new { @class = "button wood" })%></div>
     </div>

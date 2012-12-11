@@ -58,7 +58,7 @@ a
     position: relative;
     height: 100%;
     float: left;
-
+    z-index: 1;
 }
 
 .scroll-buttons
