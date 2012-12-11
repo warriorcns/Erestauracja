@@ -9,7 +9,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             window.onload = function () {
-                document.getElementById("iframepdf").src = "../../Content/Manual-klient.pdf";
+                document.getElementById("iframepdf").src = "../../Content/Manual-menadżer.pdf";
             }
         });
     </script>
