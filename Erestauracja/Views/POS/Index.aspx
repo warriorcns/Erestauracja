@@ -11,7 +11,6 @@
             <%: Html.ActionLink("Dokumenty sprzedaży", "SalesDocuments", "POS", new { @class = "button wood" })%></div>
         <div>
             <%: Html.ActionLink("Koniec", "End", "POS", new { @class = "button wood" })%></div>
-            <div> <%: User.Identity.Name %></div>
     </div>
 
     

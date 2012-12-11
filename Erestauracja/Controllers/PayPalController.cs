@@ -18,11 +18,8 @@ namespace Erestauracja.Controllers
     [CustomAuthorizeAttribute(Roles = "Klient")]
     public class PayPalController : Controller
     {
-
-
         //
         // GET: /PayPal/
-
         //[HttpPost]
         /// <summary>
         /// Obsluguje pobrane dane z zamowienia.
@@ -32,7 +29,7 @@ namespace Erestauracja.Controllers
         /// <param name="resid"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult PostToPayPal(string comm, int id, int resid)
+        public ActionResult PostToPayPal(string com, int id, int resid)
         {
             PayPal pp = new PayPal();
             pp.cmd = "_xclick";
@@ -40,13 +37,13 @@ namespace Erestauracja.Controllers
             System.Web.HttpCookie myCookie = new System.Web.HttpCookie("Comment");
             DateTime now = DateTime.Now;
             myCookie.Expires = now.AddDays(1);
-            myCookie.Value = comm;
+            myCookie.Value = com;
             Response.Cookies.Add(myCookie);
 
             System.Web.HttpCookie res = new System.Web.HttpCookie("ResID");
-            myCookie.Expires = now.AddDays(1);
-            myCookie.Value = resid.ToString();
-            Response.Cookies.Add(myCookie);
+            res.Expires = now.AddDays(1);
+            res.Value = resid.ToString();
+            Response.Cookies.Add(res);
 
             //klucz konta biznesowego       
             try
@@ -60,7 +57,9 @@ namespace Erestauracja.Controllers
             }
             catch (Exception e)
             {
-                ;               
+                //blad
+                ViewData["alert"] = "Dane nie zostały wysłane - błąd.";
+                return RedirectToAction("CancelFromPaypal", id);               
             }
 
             //czy uzywamy sandboxa 
@@ -73,7 +72,7 @@ namespace Erestauracja.Controllers
                 ViewBag.actionURL = "https://www.paypal.com/cgi-bin/webscr";
 
             pp.@return = ConfigurationManager.AppSettings["ReturnURL"];
-            pp.cancel_return = ConfigurationManager.AppSettings["CancelURL"];
+            pp.cancel_return = ConfigurationManager.AppSettings["CancelURL"] + "/" + id;
             pp.notify_url = ConfigurationManager.AppSettings["NotifyURL"];
             pp.currency_code = ConfigurationManager.AppSettings["CurrencyCode"];
 
@@ -84,7 +83,6 @@ namespace Erestauracja.Controllers
                 ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                 using (client)
                 {
-                    //value = client.Pay(User.Identity.Name, id, com, "cash");
                     //cena zamowienia | cena dostawy
                     paypalData = client.GetPayPalData(resid, id);
                 }
@@ -92,7 +90,7 @@ namespace Erestauracja.Controllers
             }
             catch (Exception e)
             {
-                ;
+                paypalData = null;
             }
 
             if (( paypalData != null || paypalData != string.Empty ) && paypalData.Contains("|"))
@@ -106,22 +104,20 @@ namespace Erestauracja.Controllers
             { 
                 //blad
                 ViewData["alert"] = "Dane nie zostały wysłane - błąd.";
-                return RedirectToAction("CancelFromPaypal");
+                return RedirectToAction("CancelFromPaypal", id);
             }
 
             return View(pp);
             }
-
-        
 
         public ActionResult RedirectFromPaypal()
         {
             return View();
         }
 
-        public ActionResult CancelFromPaypal()
+        public ActionResult CancelFromPaypal(int id)
         {
-            
+            ViewData["id"] = id;
             return View();
         }
 
@@ -139,7 +135,7 @@ namespace Erestauracja.Controllers
             // Receive IPN request from PayPal and parse all the variables returned
             var formVals = new Dictionary<string, string>();
             formVals.Add("cmd", "_notify-validate");
-            for (int i = 0; i < 300; i++) { ; }
+          //  for (int i = 0; i < 300; i++) { ; }
             // if you want to use the PayPal sandbox change this from false to true
             response = GetPayPalResponse(formVals, true);
             
@@ -151,15 +147,15 @@ namespace Erestauracja.Controllers
                 string deviceID = Request["custom"];
 
                 //validate the order
-                Decimal amountPaid = 0;
-                Decimal.TryParse(sAmountPaid, out amountPaid);
+                //Decimal amountPaid = 0;
+                //Decimal.TryParse(sAmountPaid, out amountPaid);
 
                 //Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
 
                 //PayPal pp = new PayPal();
-                pp.txn_id = Request["txn_id"];
-                pp.mc_gross = Request["mc_gross"];
-                pp.txn_type = Request["txn_type"];
+                //pp.txn_id = Request["txn_id"];
+                //pp.mc_gross = Request["mc_gross"];
+                //pp.txn_type = Request["txn_type"];
                 int id = int.Parse(pp.item_number);
 
                 #region ciasteczka - odczyt
@@ -176,7 +172,7 @@ namespace Erestauracja.Controllers
                 int resid = -1;
                 if (res != null)
                 {
-                    resid = int.Parse(myCookie.Value);
+                    resid = int.Parse(res.Value);
                 }
                 #endregion
 
@@ -201,7 +197,7 @@ namespace Erestauracja.Controllers
 
                     //wyświetl info że nie powiodło sie 
                     //i jakeś info co zrobić w takiej sytuacji
-                    return RedirectToAction("PayError", "Basket");
+                    return RedirectToAction("PayError", "Basket", new { id = id });
                 }
                 else
                 {
@@ -211,8 +207,8 @@ namespace Erestauracja.Controllers
                     //wyświetl potwierdzenie
                     //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                     //zapisz id zamówienia że zostało zapłacone
-                    //return RedirectToAction("PaySuccess","Basket");
-                    return View(pp);
+                    return RedirectToAction("PaySuccess", "Basket", new { id = id });
+                    //return View(pp);
                 }
 
 

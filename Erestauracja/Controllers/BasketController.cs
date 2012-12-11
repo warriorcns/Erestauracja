@@ -216,7 +216,7 @@ namespace Erestauracja.Controllers
 
                 //wyświetl info że nie powiodło sie 
                 //i jakeś info co zrobić w takiej sytuacji
-                return RedirectToAction("PayError");
+                return RedirectToAction("PayError", id);
             }
             else
             {
@@ -227,20 +227,36 @@ namespace Erestauracja.Controllers
                 //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                 //zapisz id zamówienia że zostało zapłacone
 
-                return RedirectToAction("PaySuccess");
+                return RedirectToAction("PaySuccess", id);
             }
 
-            return RedirectToAction("PayError");
+            return RedirectToAction("PayError", id);
         }
 
-        public ActionResult PayError()
+        public ActionResult PayError(int id = -1)
         {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+            }
+            else
+            {
+                ViewData["id"] = null;
+            }
             return View();
 
         }
 
-        public ActionResult PaySuccess()
+        public ActionResult PaySuccess(int? id)
         {
+            if (id > 0)
+            {
+                ViewData["id"] = id;
+            }
+            else
+            {
+                ViewData["id"] = null;
+            }
             return View();
 
         }

@@ -54,12 +54,24 @@
         </div>
 <% } %>
 
-    <script type="text/javascript">
-            $("#acash , #paypal").click(function () {
+<script type="text/javascript">
+    $("#acash , #paypal").click(function () {
+        var comm = $("#comment").val();
+        this.href = this.href.replace("koment", comm);
+    });
+    </script>
+<%--    <script type="text/javascript">
+            $("#acash").click(function () {
                 var comm = $("#comment").val();
                 this.href = this.href.replace("koment", comm);
             });
     </script>
+    <script type="text/javascript">
+        $("#paypal").click(function () {
+            var comm = $("#comment").val();
+            this.href = this.href.replace("komentP", comm);
+        });
+    </script>--%>
 
     
     <script type="text/javascript">
