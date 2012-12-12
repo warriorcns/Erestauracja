@@ -4,11 +4,11 @@
 <%@ Import Namespace="Telerik.Web.Mvc.UI"%>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-   
+   <div class="main">
     <div class="LabelNazwaMiasta" runat="server"> <%: Model.CityName %>   </div>
     
     <div class="RestauracjeMapa">
-        <span class="PanelListaRestauracji">
+        <div class="PanelListaRestauracji">
             <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model.Restaurants) %>
             <% { %>
                     <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
@@ -24,16 +24,16 @@
                     </div>
                     <hr />
             <% } %>
-        </span>
-        <span class="PanelMapa">
-            <div class="mapTowns" id="mapka" style="display: block">
+        </div>
+        <div class="PanelMapa">
+            <div class="FindmapTowns" id="mapka" style="display: block">
                 <% Html.RenderPartial("RestaurantsMaps", Model.Restaurants as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
                 <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
                 <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
             </div>
-        </span>
+        </div>
     </div>
-
+    </div>
     <!-- /////////////////////// 
     <div class="RestauracjeMapa">
     <asp:Panel class="PanelListaRestauracji" runat="server" ScrollBars="Auto">
