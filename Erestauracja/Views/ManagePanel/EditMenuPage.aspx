@@ -7,7 +7,7 @@
 	<script>
 	    $(function () {
 	        $("#tabs-left").tabs({
-                heightStyle: 'auto'
+	            heightStyle: 'auto'
             });
 	    });
 	</script>
@@ -17,7 +17,7 @@
             $(".accordion2").accordion({
                 active: false,
                 autoHeight: false,
-                event: "mouseover",
+                event: "click",
                 collapsible: true
             });
         });

@@ -16,7 +16,7 @@
         $(function () {
             $(".accordion2").accordion({
                 active: false,
-                autoHeight: true,
+                autoHeight: false,
                 event: "click",
                 collapsible: true
             });
