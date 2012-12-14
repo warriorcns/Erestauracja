@@ -220,9 +220,10 @@ namespace Erestauracja.Controllers
                 //CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
                 try
                 {
-                    ServiceReference.EresServiceClient u = new ServiceReference.EresServiceClient();
-                    u.CreateRole(model.RoleName);
-                    u.Close();
+                    //ServiceReference.EresServiceClient u = new ServiceReference.EresServiceClient();
+                    r.CreateRole(model.RoleName);
+                    //u.CreateRole(model.RoleName);
+                    //u.Close();
                 }
                 catch (Exception e)
                 {

@@ -3,42 +3,55 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AccountPlaceHolder" runat="server">
 
-<script type="text/javascript">
-    $(function () {
-        $("#accordion").accordion({
-            collapsible: true,
-            active: false
-        });
-    });
-</script>
+    <script src="../../Scripts/jquery.maskedinput-1.3.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-    $(function () {
-        $("#filterButton").button()
-            .click(function (event) {
-                event.preventDefault();
-                var from = $("#fromTxb").val();
-                var to = $("#toTxb").val();
-
-                var url = '<%: Url.Action("FilterOrderHistory", "Account") %>';
-                var data = { from: from, to: to };
-
-                if (data.length != 0) {
-                    $.post(url, data, function (data) {
-                        window.location.href = data.redirectToUrl;
-                    });
-                }
+    <script type="text/javascript">
+        $(function () {
+            $("#accordion").accordion({
+                collapsible: true,
+                active: false
             });
-    });
-</script>
+        });
+    </script>
 
-<%--<script type="text/javascript">
-    jQuery(function ($) {
-        $(document).ready(function () {
-            $("#fromTxb").mask("99/99/9999");
-         });
-    });
-    </script>--%>
+    <script type="text/javascript">
+        $(function () {
+            $("#fromTxb, #toTxb").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 'c-100:c+0',
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#filterButton").button()
+                .click(function (event) {
+                    event.preventDefault();
+                    var from = $("#fromTxb").val();
+                    var to = $("#toTxb").val();
+
+                    var url = '<%: Url.Action("FilterOrderHistory", "Account") %>';
+                    var data = { from: from, to: to };
+
+                    if (data.length != 0) {
+                        $.post(url, data, function (data) {
+                            window.location.href = data.redirectToUrl;
+                        });
+                    }
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function ($) {
+            $(document).ready(function () {
+                $("#fromTxb , #toTxb").mask("99/99/9999");
+             });
+        });
+    </script>
 
 <%: Html.ValidationSummary(true, "Błąd:")%>
 <% if (Model == null) %>
@@ -47,17 +60,18 @@
 <% } %>
 <% else %>
 <% { %>
-    <% if (Model.Count == 0) %>
-    <% { %>
-        <h2>Brak zamóweiń.</h2>
-    <% } %>
-    <% else %>
-    <% { %>
         <div>
             <span>Od: <%: Html.TextBox("od", ((DateTime)ViewData["from"]).ToShortDateString(), new { @id = "fromTxb"})%></span>
             <span>Do: <%: Html.TextBox("do", ((DateTime)ViewData["to"]).ToShortDateString(), new { @id = "toTxb" })%></span>
             <span><input type="button" id="filterButton" value="Filtruj" onclick="filtr()"/></span>
         </div>
+    <% if (Model.Count == 0) %>
+    <% { %>
+        <h2>Brak zamówień.</h2>
+    <% } %>
+    <% else %>
+    <% { %>
+        
         <div id="accordion">
         <% foreach (UserOrder order in Model) %>
         <% { %>

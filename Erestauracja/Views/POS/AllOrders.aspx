@@ -7,20 +7,17 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 
 
-    
-
-
-
-<script type="text/javascript">
-    $(function () {
-        $(".order-container").accordion({
-            collapsible: true,
-            active: false,
-            autoHeight: false,
-            event: "click"
+    <script type="text/javascript">
+        $(function () {
+            $(".order-container").accordion({
+                collapsible: true,
+                active: false,
+                autoHeight: false,
+                event: "click"
+            });
         });
-    });
     </script>
+
     <script type="text/javascript">
         $(function () {
             $("#filterButton").button()
@@ -39,8 +36,18 @@
                 }
             });
         });
+    </script>
 
-</script>
+    <script type="text/javascript">
+        $(function () {
+            $("#fromTxb, #toTxb").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 'c-100:c+0',
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+    </script>
 
     <div class="main">
         <div class="buttons-container">

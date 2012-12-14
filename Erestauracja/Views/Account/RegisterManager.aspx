@@ -13,6 +13,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
     
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.maskedinput-1.3.js" type="text/javascript"></script>
+    
 
     <script type="text/javascript">
         $(function () {
@@ -25,10 +27,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
         });
     </script>
     <script type="text/javascript">
-        $(function () {
-            jQuery(function ($) {
-                $("#Birthdate").mask("99/99/9999");
-            });
+        $(function ($) {
+            $("#Birthdate").mask("99/99/9999");      
         });
     </script>
 
@@ -37,8 +37,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
         <form class="formaRejestracji" id="Form1" runat="server">
         <% using (Html.BeginForm())
            { %>
-        <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
-        <div>
+                <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
+                <div>
             <fieldset>
                 <legend>Dane rejestracji</legend>
                 <p>
@@ -199,19 +199,13 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
         </form>
 
         <div class="mapTowns" id="mapka">
-            <%--<%:
-            Html.Telerik().GoogleMap().Name("map")
-            .Width(400).Height(400)  %>--%>
             <% Html.RenderPartial("Map", ViewData["Map"] as IEnumerable<Erestauracja.ServiceReference.Town>);%>
             <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
             <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
         </div>
 
         <%-- if lista pobranych miast jest > 1 then pokaz mapke - za pomoca js--%>
-        <% //foreach(Erestauracja.ServiceReference.Town x in (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["miasta"])
-            //{
-            if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
-            //if(true)
+        <% if (( (IEnumerable<Erestauracja.ServiceReference.Town>)ViewData["Map"] ).Count() > 1)
             {%>
                 <script type="text/javascript">
                     document.getElementById('mapka').style.display = "block";
@@ -228,10 +222,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
 
     <script type="text/javascript">
         function ChoseAndSend(town, postalcode) {
-            //wstawia pola ze znacznika do textboxow
             var TownName = document.getElementById("TownName");
             var PostalCode = document.getElementById("PostalCode");
-            //tutaj potrzebujemy wklepac te wartosci do textboxow...
             TownName.value = town;
             PostalCode.value = postalcode;
         }
