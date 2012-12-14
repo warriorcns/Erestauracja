@@ -5225,7 +5225,7 @@ namespace Contract
             {
                 MySqlCommand command = new MySqlCommand(Queries.IsRestaurantOnline);
                 command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@activity", DateTime.Now.Subtract(new TimeSpan(0, 0, 10, 0)));
+                command.Parameters.AddWithValue("@activity", DateTime.Now.Subtract(new TimeSpan(0, 0, 5, 0)));
                 command.Connection = conn;
 
                 conn.Open();

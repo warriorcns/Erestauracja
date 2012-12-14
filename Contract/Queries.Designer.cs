@@ -846,7 +846,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT 1 FROM `restaurants` r JOIN `users` u ON u.`id` = r.`userId` WHERE u.`lastActivityDate` &gt; @activity AND r.`id` = @id.
+        ///   Looks up a localized string similar to SELECT 1 FROM `restaurants` r JOIN `users` u ON u.`id` = r.`userId` WHERE r.`isEnabled` = 1 AND u.`lastActivityDate` &gt; @activity AND r.`id` = @id AND u.`isOnline`=1.
         /// </summary>
         internal static string IsRestaurantOnline {
             get {
