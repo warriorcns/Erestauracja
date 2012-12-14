@@ -145,8 +145,14 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Realize(String data)
+        public ActionResult Realize(String data, string error = null)
         {
+            if (error != null)
+            {
+                ViewData["error"] = error;
+                return View();
+            }
+
             //destrializacja obiektu zawierającego dane z koszyka
             BasketRest rest = null;
             if (data != null)
@@ -162,6 +168,17 @@ namespace Erestauracja.Controllers
                 {
                     myStream.Close();
                 }
+            }
+            //sprawdzić czy liczba nie przekracza 20
+            int count = -1;
+            foreach(BasketProduct item in rest.Products)
+            {
+                count += item.Count;
+            }
+            if (count > 20)
+            {
+                ViewData["error"] = "Maksymalna ilość zamówionych produktów w jednym zamówieniu to 20";
+                return View();
             }
 
             //wysyłanie zamówienia
@@ -195,6 +212,26 @@ namespace Erestauracja.Controllers
 
         public ActionResult Cash(string com, int id, int res)
         {
+            bool test = false;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    test = client.IsRestaurantOnline(res);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Realize", new { data = "", error = "Błąd podczas sprawdzania czy restauracja jest dostępna" });
+            }
+
+            if (test == false)
+            {
+                return RedirectToAction("Realize", new { data = "", error = "Restauracja jest offline" });
+            }
+/////////////////////////////////////////////////////////////
             bool value = false;
             try
             {
@@ -230,7 +267,7 @@ namespace Erestauracja.Controllers
                 return RedirectToAction("PaySuccess", new { id = id });
             }
 
-            return RedirectToAction("PayError", id);
+            return RedirectToAction("PayError", new { id = id });
         }
 
         public ActionResult PayError(int id = -1)

@@ -31,6 +31,26 @@ namespace Erestauracja.Controllers
         [HttpGet]
         public ActionResult PostToPayPal(string com, int id, int resid)
         {
+            bool test = false;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    test = client.IsRestaurantOnline(resid);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Realize", "Basket", new { data = "", error = "Błąd podczas sprawdzania czy restauracja jest dostępna" });
+            }
+
+            if (test == false)
+            {
+                return RedirectToAction("Realize", "Basket", new { data = "", error = "Restauracja jest offline" });
+            }
+
             PayPal pp = new PayPal();
             pp.cmd = "_xclick";
 
@@ -59,7 +79,7 @@ namespace Erestauracja.Controllers
             {
                 //blad
                 ViewData["alert"] = "Dane nie zostały wysłane - błąd.";
-                return RedirectToAction("CancelFromPaypal", id);               
+                return RedirectToAction("CancelFromPaypal", new { id = id });               
             }
 
             //czy uzywamy sandboxa 
@@ -104,7 +124,7 @@ namespace Erestauracja.Controllers
             { 
                 //blad
                 ViewData["alert"] = "Dane nie zostały wysłane - błąd.";
-                return RedirectToAction("CancelFromPaypal", id);
+                return RedirectToAction("CancelFromPaypal", new { id = id });
             }
 
             return View(pp);

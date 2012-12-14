@@ -9,7 +9,7 @@
 <h2>Płatność zakończona powodzeniem</h2>
 <br />
 <div>Aktualne zamówienia oraz ich status możesz zobaczyć w zakładce "Aktualne zamówienia".</div>
-<% if ((int)ViewData["id"] != null) %>
+<% if (ViewData["id"] != null) %>
 <% { %>
     <div>Numer zrealizowanego zamówienia: <%: ViewData["id"].ToString() %></div>
 <% } %>

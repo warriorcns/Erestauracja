@@ -2,10 +2,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Twoje zamówienie - wybierz sopsób zapłaty</h2>
-<br />
 <% if (Model != null) %>
 <% { %>
+    <h2>Twoje zamówienie - wybierz sopsób zapłaty</h2>
+    <br />
     <%: Model.DisplayName%> (czyOnline?) Razem: <%: Model.TotalPriceRest%> zł
         <div>
             <div>Kontakt: <%: Model.Telephone%></div>
@@ -41,17 +41,23 @@
                 <br />
             <% } %>
             <div>Komentarz do zamówienia
-                <%: Html.TextAreaFor(m=>m.Comment, new { id="comment"}) %>
+                <%: Html.TextAreaFor(m => m.Comment, new { id = "comment" })%>
             </div>
             <br />
             <div> Wybierz typ płatności: </div>
             
-            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new{@id = "acash"})%>
+            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new { @id = "acash" })%>
             <br />
             <br />
             <%: Html.ActionLink("Zaplac paypalem", "PostToPaypal", "PayPal", new { com = "koment", id = (int)ViewData["id"], resid = Model.RestaurantId }, new { @id = "paypal", @class = "paypalbutton" })%>
             <br />
         </div>
+<% } %>
+<% else %>
+<% { %>
+    <h2>Uwaga! - <%: ViewData["error"] %></h2>
+    <br />
+    <%: Html.ActionLink("Powrót do koszyka", "Index", "Basket")%>       
 <% } %>
 
 <script type="text/javascript">
