@@ -6405,22 +6405,25 @@ namespace Contract
 
         public bool SetRestaurantActivity(string login)
         {
+            MySqlCommand command = new MySqlCommand(Queries.SetRestaurantActivity);
             if (login.Contains('|'))
             {
                 string[] logins = login.Split('|');
-
-                MySqlCommand command = new MySqlCommand(Queries.SetRestaurantActivity);
                 command.Parameters.AddWithValue("@login", logins[0]);
-                command.Parameters.AddWithValue("@activity", DateTime.Now);
-
-                int rowsaffected = ExecuteNonQuery(command, "SetRestaurantActivity");
-
-                if (rowsaffected > 0)
-                {
-                    return true;
-                }
-
             }
+            else
+            {
+                command.Parameters.AddWithValue("@login", login);
+            }
+            command.Parameters.AddWithValue("@activity", DateTime.Now);
+
+            int rowsaffected = ExecuteNonQuery(command, "SetRestaurantActivity");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+
             return false;
         }
 
