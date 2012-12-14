@@ -218,5 +218,34 @@ namespace Erestauracja.Controllers
         {
             return View();
         }
+
+        public string IsOnline(int id)
+        {
+            bool value = false;
+            try
+            {
+                Erestauracja.ServiceReference.EresServiceClient client = new Erestauracja.ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    //  Uchwyt IsOnline = new Uchwyt(client.IsRestaurantOnline);
+                    //  value = IsOnline(id);
+                    value = client.IsRestaurantOnline(id);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+
+            if (value == false)
+            {
+                return "Offline";
+            }
+            else
+            {
+                return "Online";
+            }
+        }
     }
 }

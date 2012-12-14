@@ -2,20 +2,20 @@
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="title" ContentPlaceHolderID="TitleContent" runat="server">Home Page</asp:Content>
+<asp:Content ID="title" ContentPlaceHolderID="TitleContent" runat="server">Strona główna</asp:Content>
 
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
-    <%--<script type="text/javascript">
+    <script type="text/javascript">
         function callMethod() {
-
             //IsOnline
-            var Resid = $('#ResID').val();
-            var url = '<%: Url.Action("IsOnline", "Basket") %>';
-            var data = { id: Resid };
-
-            $.post(url, data, function (data) {
-                $(".resIsOnline" + Resid).text(data);
+            $('.ResID').each(function () {
+                var Resid = $(this).val();
+                var url = '<%: Url.Action("IsOnline", "Home") %>';
+                var data = { id: Resid };
+                $.post(url, data, function (data) {
+                    $(".resIsOnline" + Resid).text(data);
+                });
             });
         }
     </script>
@@ -25,7 +25,7 @@
             callMethod();
             setInterval("callMethod()", 60000); //600000ms = 10min
         });
-    </script>--%>
+    </script>
 
     <form id="form1" runat="server">
     <br />
@@ -35,10 +35,10 @@
             <hr />
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
-                    <%--<input id="ResID" name="id" type="hidden" value="<%: rest.ID %>" />--%>
+                    <input class="ResID" name="id" type="hidden" value="<%: rest.ID %>" />
                     <div class="resInfo" onclick="Redirect('<%: Html.Encode(rest.ID) %>')">
                         <div>
-                            <span> <%: rest.DisplayName %></span> <%--<span class="resIsOnline<%: rest.ID %>"></span>--%>
+                            <span> <%: rest.DisplayName %></span> <span class="resIsOnline<%: rest.ID %>"></span>
                         </div>
                         <div> <%: rest.Address %> <%: rest.Town %> <%: rest.PostalCode %></div>
                         <div> <%: rest.Telephone %> </div>

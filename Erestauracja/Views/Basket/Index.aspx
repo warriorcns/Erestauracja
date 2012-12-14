@@ -39,26 +39,15 @@
     
     <script type="text/javascript">
         function callMethod() {
-
             //IsOnline
-
-            var length = $("#modelLength").val();
-            var tab = new Array(length);
-            for (var i = 1; i <= length; i++) {
-                var Resid = $('#ResID' + i).val();
-                tab[i]=Resid;
-            }
-            var url = '<%: Url.Action("IsOnline", "Basket") %>';
-            for (var i = 1; i <= length; i++) {
-                
-                var data = { id: tab[i] };
-                //alert(tab[i]);
+            $('.ResID').each(function () {
+                var Resid = $(this).val();
+                var url = '<%: Url.Action("IsOnline", "Basket") %>';
+                var data = { id: Resid };
                 $.post(url, data, function (data) {
-                    $("#resIsOnline" + i).text(data);
-                    //alert(data + i);
+                    $(".resIsOnline" + Resid).text(data);
                 });
-            }
-
+            });
         }
     </script>
 
@@ -78,16 +67,18 @@
     <% { %>
         <input type="hidden" id="modelLength" value="<%: Model.Basket.Length %>" />
         <div id="accordion">
-        <% 
-           int i = 0;
-            foreach (BasketRest rest in Model.Basket)
-         {
-             i++;
-                %>
-            <h3><a href="#"><span><%: rest.DisplayName%> </span> <span id="resIsOnline<%: i %>"></span> <span>Razem: <%: rest.TotalPriceRest%> zł</span></a></h3>
+        <% foreach (BasketRest rest in Model.Basket)
+         { %>
+            <h3>
+                <a href="#">
+                    <span><%: rest.DisplayName %> </span> 
+                    <span class="resIsOnline<%: rest.RestaurantId %>"></span> 
+                    <span>Razem: <%: rest.TotalPriceRest %> zł</span>
+                </a>
+            </h3>
             <div>
 
-            <input id="ResID<%: i %>" name="id" type="hidden" value="<%: rest.RestaurantId.ToString() %>" />
+            <input class="ResID" type="hidden" value="<%: rest.RestaurantId %>" />
                 <div>Kontakt: <%: rest.Telephone%></div>
                 <div>Przewidywany czas dostawy: <%: rest.DeliveryTime%></div>
                 <div>Koszt dostawy: <%: rest.DeliveryPrice%> zł</div>
