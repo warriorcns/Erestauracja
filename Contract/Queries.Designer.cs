@@ -574,6 +574,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE o.`id`=@id.
+        /// </summary>
+        internal static string GetOrder {
+            get {
+                return ResourceManager.GetString("GetOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT o.`productId`, p.`name`, o.`priceOption`, o.`count`, o.`nonPriceOption1`, o.`nonPriceOption2`, o.`comment` FROM `products_in_order` o JOIN `products` p ON o.`productId` = p.`id` WHERE o.`orderId` = @id.
         /// </summary>
         internal static string GetOrderedProducts {
@@ -669,6 +678,15 @@ namespace Contract {
         internal static string GetRestaurantEmail {
             get {
                 return ResourceManager.GetString("GetRestaurantEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT u.`email` FROM `orders` o JOIN `restaurants` r  ON o.`restaurantId`=r.`id` JOIN `users` u ON u.`id` = r.`userId` WHERE o.`id`=@id.
+        /// </summary>
+        internal static string GetRestaurantEmailByOrderId {
+            get {
+                return ResourceManager.GetString("GetRestaurantEmailByOrderId", resourceCulture);
             }
         }
         

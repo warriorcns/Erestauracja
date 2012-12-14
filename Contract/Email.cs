@@ -119,5 +119,64 @@ namespace Contract
                 return false;
             }
         }
+
+        public bool SendOrder(string email, Order order)
+        {
+            SmtpClient klient = smtp;
+            MailMessage wiadomosc = new MailMessage();
+            try
+            {
+                wiadomosc.From = new MailAddress(eresEmail);
+                wiadomosc.To.Add(email);
+                wiadomosc.Subject = "Zamówienie - " + order.OrderId + " - Data: " + order.OrderDate.ToShortDateString() + " " + order.OrderDate.ToShortTimeString();
+                string zamowienie = "Zamówienie od " + System.Environment.NewLine;
+                zamowienie += order.UserName + " " + order.UserSurname + System.Environment.NewLine;
+                zamowienie += order.UserAdderss + " " + order.UserTown + " " + order.UserPostal + System.Environment.NewLine;
+                zamowienie += order.UserTelephone + System.Environment.NewLine + System.Environment.NewLine;
+                zamowienie += "Produkty:" + System.Environment.NewLine + System.Environment.NewLine;
+                foreach(OrderedProduct item in order.Products)
+                {
+                    zamowienie += item.ProductName + " x" + item.Count + System.Environment.NewLine;
+                    if (!String.IsNullOrWhiteSpace(item.PriceOption))
+                        zamowienie += item.PriceOption + System.Environment.NewLine;
+                    if (!String.IsNullOrWhiteSpace(item.NonPriceOption))
+                        zamowienie += item.NonPriceOption + System.Environment.NewLine;
+                    if (!String.IsNullOrWhiteSpace(item.NonPriceOption2))
+                        zamowienie += item.NonPriceOption2 + System.Environment.NewLine;
+                    if (!String.IsNullOrWhiteSpace(item.Comment))
+                        zamowienie += "Komentarz do produktu: " + item.Comment + System.Environment.NewLine;
+                    zamowienie += System.Environment.NewLine;
+                }
+                zamowienie += System.Environment.NewLine + "Komentarz do zamówienia:" + order.Comment + System.Environment.NewLine;
+                zamowienie += System.Environment.NewLine + "Razem:" + order.Price + System.Environment.NewLine;
+                zamowienie += "Płatność: ";
+                if(order.Payment=="cash")
+                    zamowienie += "Gotówką przy odbiorze";
+                else if(order.Payment.Contains("PayPal"))
+                    zamowienie += "PayPal";
+                else
+                    zamowienie += "Inna";
+
+                wiadomosc.Body = zamowienie;
+                klient.Port = port;
+                klient.Credentials = credential;
+                klient.EnableSsl = true;
+                klient.Send(wiadomosc);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string info = "Błąd podczas wysyłania wiadomości email z zamówieniem ";
+                info += "Action: " + "SendReportComment" + "\n\n";
+                info += "Exception: " + ex.ToString();
+
+                return false;
+            }
+        }
     }
 }

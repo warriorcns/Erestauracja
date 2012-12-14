@@ -452,4 +452,10 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="SetRestaurantOnline" xml:space="preserve">
     <value>UPDATE `users` SET `isOnLine`=@online WHERE `login`=@login</value>
   </data>
+  <data name="GetOrder" xml:space="preserve">
+    <value>SELECT o.`id`, u.`name`, u.`surname`, u.`address`, t.`town_name`, t.`postal_code`, u.`telephone`, o.`status`, o.`totalPrice`, o.`comment`,o. `orderDate`, o.`payment`, o.`finishDate` FROM `orders` o JOIN `users` u ON o.`userId` = u.`id` JOIN `towns` t ON u.`townId` = t.`id` WHERE o.`id`=@id</value>
+  </data>
+  <data name="GetRestaurantEmailByOrderId" xml:space="preserve">
+    <value>SELECT u.`email` FROM `orders` o JOIN `restaurants` r  ON o.`restaurantId`=r.`id` JOIN `users` u ON u.`id` = r.`userId` WHERE o.`id`=@id</value>
+  </data>
 </root>

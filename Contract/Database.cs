@@ -169,7 +169,431 @@ namespace Contract
             return objekt;
         }
 
-        #region membership
+        #region pomocnicze - wczytywanie danych z MySqlDataReader
+
+        private User GetUserFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string login = reader.GetString(1);
+            string email = reader.GetString(2);
+            string name = reader.GetString(3);
+            string surname = reader.GetString(4);
+            string address = reader.GetString(5);
+            string town = reader.GetString(6);
+            string postalCode = reader.GetString(7);
+            string country = reader.GetString(8);
+            DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
+            string sex = "Mężczyzna";
+           // bool plec = false;
+            if (reader.GetBoolean(10) == true)
+                sex = "Kobieta";
+           // else
+           //     command.Parameters.AddWithValue("@sex", false);
+           //     reader.GetString(9);
+            string telephone = reader.GetString(11);
+            string comment = "";
+            if (reader.GetValue(12) != DBNull.Value)
+                comment = reader.GetString(12);
+            string passwordQuestion = "";
+            if (reader.GetValue(13) != DBNull.Value)
+                passwordQuestion = reader.GetString(13);
+            bool isApproved = reader.GetBoolean(14);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(14);
+            DateTime lastLoginDate = new DateTime();
+            if (reader.GetValue(16) != DBNull.Value)
+                lastLoginDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(15);
+            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(16);
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(18)); //reader.GetDateTime(17);
+            bool isLockedOut = reader.GetBoolean(19);
+            DateTime lastLockedOutDate = new DateTime();
+            if (reader.GetValue(20) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20)); //reader.GetDateTime(19);
+            
+            User u = new User();
+            u.Email = email;
+            u.PasswordQuestion = passwordQuestion;
+            u.Comment = comment;
+            u.IsApproved = isApproved;
+            u.IsLockedOut = isLockedOut;
+            u.CreationDate = creationDate;
+            u.LastLoginDate = lastLoginDate;
+            u.LastActivityDate = lastActivityDate;
+            u.LastPasswordChangedDate = lastPasswordChangedDate;
+            u.LastLockedOutDate = lastLockedOutDate;
+            u.ID = id;
+            u.Login = login;
+            u.Name = name;
+            u.Surname = surname;
+            u.Address = address;
+            u.Town = town;
+            u.PostalCode = postalCode;
+            u.Country = country;
+            u.Birthdate = birthdate;
+            u.Sex = sex;
+            u.Telephone = telephone;
+
+            return u;
+        }
+        private Restaurant GetRestaurantsFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            string displayName = reader.GetString(2);
+            string address = reader.GetString(3);
+            string town = reader.GetString(4);
+            string postalCode = reader.GetString(5);
+            string country = reader.GetString(6);
+            string telephone = reader.GetString(7);
+            string nip = reader.GetString(8);
+            string regon = reader.GetString(9);
+            int inputsCount = reader.GetInt32(10);
+            double averageRating = 0.0;
+            if (reader.GetValue(11) != DBNull.Value) averageRating = reader.GetDouble(11);
+            int menagerId = reader.GetInt32(12);
+            string deliveryTime = reader.GetString(13);
+            int userId = reader.GetInt32(14);
+            bool isEnabled = reader.GetBoolean(15);
+            string login = reader.GetString(16);
+            string email = reader.GetString(17);
+            bool isApproved = reader.GetBoolean(18);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(19));
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(20));
+            bool isLockedOut = reader.GetBoolean(21);
+            DateTime lastLockedOutDate = new DateTime();
+            if (reader.GetValue(22) != DBNull.Value)
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(22));
+            decimal deliveryPrice = reader.GetDecimal(23);
+
+            Restaurant u = new Restaurant();
+            u.ID = id;
+            u.Name = name;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.PostalCode = postalCode;
+            u.Country = country;
+            u.Telephone = telephone;
+            u.Nip = nip;
+            u.Regon = regon;
+            u.InputsCount = inputsCount;
+            u.AverageRating = averageRating;
+            u.MenagerId = menagerId;
+            u.DeliveryTime = deliveryTime;
+            u.DeliveryPrice = deliveryPrice;
+            u.UserId = userId;
+            u.IsEnabled = isEnabled;
+            u.Login = login;
+            u.Email = email;
+            u.IsApproved = isApproved;
+            u.LastActivityDate = lastActivityDate;
+            u.CreationDate = creationDate;
+            u.IsLockedOut = isLockedOut;
+            u.LastLockedOutDate = lastLockedOutDate;
+
+            return u;
+        }
+        private Product GetProductFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            int restaurantID = reader.GetInt32(1);
+            int categoryID = reader.GetInt32(2);
+            string name = reader.GetString(3);
+            string description = null;
+            if (!reader.IsDBNull(4)) description = reader.GetString(4);
+            string price = null;
+            if (!reader.IsDBNull(5)) price = reader.GetString(5);
+            string priceOption = null;
+            if (!reader.IsDBNull(6)) priceOption = reader.GetString(6);
+            DateTime creationDate = reader.GetDateTime(7);
+            bool isAvailable = reader.GetBoolean(8);
+            bool isEnabled = reader.GetBoolean(9);
+           
+
+            Product u = new Product();
+            u.ProductId = id;
+            u.RestaurantId = restaurantID;
+            u.CategoryId = categoryID;
+            u.ProductName = name;
+            u.ProductDescription = description;
+            u.Price = price;
+            u.PriceOption = priceOption;
+            u.CreationDate = creationDate;
+            u.IsAvailable = isAvailable;
+            u.IsEnabled = isEnabled;
+
+            return u;
+        }
+        private Menu GetMenuFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            int restaurantID = reader.GetInt32(1);
+            string categoryName = reader.GetString(2);
+            string categoryDescription = null;
+            if (!reader.IsDBNull(3)) categoryDescription = reader.GetString(3);
+            string priceOption = null;
+            if (!reader.IsDBNull(4)) priceOption = reader.GetString(4);
+            string nonPriceOption = null;
+            if (!reader.IsDBNull(5)) nonPriceOption = reader.GetString(5);
+            string nonPriceOption2 = null;
+            if (!reader.IsDBNull(6)) nonPriceOption2 = reader.GetString(6);
+
+            Menu u = new Menu();
+            u.CategoryID = id;
+            u.RestaurantID = restaurantID;
+            u.CategoryName = categoryName;
+            u.CategoryDescription = categoryDescription;
+            u.PriceOption = priceOption;
+            u.NonPriceOption = nonPriceOption;
+            u.NonPriceOption2 = nonPriceOption2;
+            u.Products = null;
+
+            return u;
+        }
+        private Order GetOrderFromReader(MySqlDataReader reader)
+        {
+            int orderId = reader.GetInt32(0);
+            string userName = reader.GetString(1);
+            string userSurname = reader.GetString(2);
+            string userAdderss = reader.GetString(3);
+            string userTown = reader.GetString(4);
+            string userPostal = reader.GetString(5);
+            string userTelephone = reader.GetString(6);
+            string status = reader.GetString(7);
+            decimal price = reader.GetDecimal(8);
+            string comment = reader.GetString(9);
+            DateTime orderDate = reader.GetDateTime(10);
+            string payment = reader.GetString(11);
+            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
+            if (!reader.IsDBNull(12))
+                finishDate = reader.GetDateTime(12);
+
+            Order u = new Order();
+            u.OrderId = orderId;
+            u.UserName = userName;
+            u.UserSurname = userSurname;
+            u.UserAdderss = userAdderss;
+            u.UserTown = userTown;
+            u.UserPostal = userPostal;
+            u.UserTelephone = userTelephone;
+            u.Status = status;
+            u.Price = price;
+            u.Comment = comment;
+            u.OrderDate = orderDate;
+            u.Payment = payment;
+            u.FinishDate = finishDate;
+
+            return u;
+        }
+        private OrderedProduct GetOrderedProductFromReader(MySqlDataReader reader)
+        {
+            int productId = reader.GetInt32(0);
+            string productName = reader.GetString(1);
+            string priceOption = reader.GetString(2);
+            int count = reader.GetInt32(3);
+            string nonPriceOption = reader.GetString(4);
+            string nonPriceOption2 = reader.GetString(5);
+            string comment = reader.GetString(6);
+
+            OrderedProduct u = new OrderedProduct();
+            u.ProductId = productId;
+            u.ProductName = productName;
+            u.PriceOption = priceOption;
+            u.Count = count;
+            u.NonPriceOption = nonPriceOption;
+            u.NonPriceOption2 = nonPriceOption2;
+            u.Comment = comment;
+
+            return u;
+        }
+        private UserOrder GetUserOrderFromReader(MySqlDataReader reader)
+        {
+            int orderId = reader.GetInt32(0);
+            string displayName = reader.GetString(1);
+            string address = reader.GetString(2);
+            string town = reader.GetString(3);
+            string postal = reader.GetString(4);
+            string telephone = reader.GetString(5);
+            string deliveryTime = reader.GetString(6);
+            decimal deliveryPrice = reader.GetDecimal(7);
+            string status = reader.GetString(8);
+            decimal price = reader.GetDecimal(9);
+            string comment = reader.GetString(10);
+            DateTime orderDate = reader.GetDateTime(11);
+            string payment = reader.GetString(12);
+            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
+            if (!reader.IsDBNull(13))
+                finishDate = reader.GetDateTime(13);
+
+            UserOrder u = new UserOrder();
+            u.OrderId = orderId;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.Postal = postal;
+            u.Telephone = telephone;
+            u.DeliveryTime = deliveryTime;
+            u.DeliveryPrice = deliveryPrice;
+            u.Status = status;
+            u.Price = price;
+            u.Comment = comment;
+            u.OrderDate = orderDate;
+            u.Payment = payment;
+            u.FinishDate = finishDate;
+
+            return u;
+        }
+        private Comment GetCommentFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string login = reader.GetString(1);
+            string displayName = reader.GetString(2);
+            string address = reader.GetString(3);
+            string town = reader.GetString(4);
+            string postal = reader.GetString(5);
+            double rating = reader.GetDouble(6);
+            string comment = reader.GetString(7);
+            DateTime date = reader.GetDateTime(8);
+
+            Comment u = new Comment();
+            u.Id = id;
+            u.UserLogin = login;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.Postal = postal;
+            u.Rating = rating;
+            u.CommentText = comment;
+            u.Date = date;
+
+            return u;
+        }
+        private Town GetTownFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string townName = reader.GetString(2);
+            string postalCode = reader.GetString(1);
+            string province = reader.GetString(3);
+            string district = reader.GetString(4);
+            string community = reader.GetString(5);
+            double latitude = reader.GetDouble(6);
+            double longtitude = reader.GetDouble(7);
+
+            Town u = new Town();
+            u.ID = id;
+            u.TownName = townName;
+            u.PostalCode = postalCode;
+            u.Province = province;
+            u.District = district;
+            u.Community = community;
+            u.Latitude = latitude;
+            u.Longtitude = longtitude;
+
+            return u;
+        }
+        private RestaurantInCity GetRestaurantsFromCity(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            string displayName = reader.GetString(1);
+            string address = reader.GetString(2);
+            string town = reader.GetString(3);
+            string postalCode = reader.GetString(4);
+            string country = reader.GetString(5);
+            string telephone = reader.GetString(6);
+            int inputsCount = reader.GetInt32(7);
+            double averageRating = 0.0;
+            if (reader.GetValue(8) != DBNull.Value) averageRating = reader.GetDouble(8);
+            string deliveryTime = reader.GetString(9);
+            DateTime creationDate = reader.GetDateTime(10);
+            double latitude = reader.GetDouble(11);
+            double longtitude = reader.GetDouble(12);
+
+            RestaurantInCity u = new RestaurantInCity();
+            u.ID = id;
+            u.DisplayName = displayName;
+            u.Address = address;
+            u.Town = town;
+            u.PostalCode = postalCode;
+            u.Country = country;
+            u.Telephone = telephone;
+            u.InputsCount = inputsCount;
+            u.AverageRating = averageRating;
+            u.DeliveryTime = deliveryTime;
+            u.CreationDate = creationDate;
+            u.Latitude = latitude;
+            u.Longtitude = longtitude;
+
+            return u;
+        }
+
+        #endregion
+
+        #region dodatkowe klasy pomocnicze
+
+        #region Geocoding
+
+        public class Coordinate
+        {
+            public double Latitude;
+            public double Longitude;
+
+            public Coordinate(double Latitude, double Longitude)
+            {
+                this.Latitude = Latitude;
+                this.Longitude = Longitude;
+            }
+        }
+
+        public static Coordinate GetCoordinates(string region)
+        {
+            using (var client = new WebClient())
+            {
+
+                string uri = "http://maps.google.com/maps/geo?q='" + region +
+                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
+                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
+
+                string[] geocodeInfo = client.DownloadString(uri).Split(',');
+
+                NumberStyles style;
+                CultureInfo culture;
+
+                style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+                culture = CultureInfo.CreateSpecificCulture("en-CA");
+
+                double lat;
+                double lng;
+
+                double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
+                double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
+                return new Coordinate(lat, lng);
+
+            }
+        }
+
+        #endregion
+
+        public class Basket
+        {
+            private int restaurantId = -1;
+            private List<string> data = new List<string>();
+
+            public int RestaurantId
+            {
+                get { return restaurantId; }
+                set { restaurantId = value; }
+            }
+
+            public List<string> Data
+            {
+                get { return data; }
+                set { data = value; }
+            }
+        }
+
+        #endregion
+
+
+        #region Membership
 
         public bool ChangePassword(string login, string password)
         {
@@ -529,71 +953,7 @@ namespace Contract
             return users;
             
         }
-
-        private User GetUserFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            string login = reader.GetString(1);
-            string email = reader.GetString(2);
-            string name = reader.GetString(3);
-            string surname = reader.GetString(4);
-            string address = reader.GetString(5);
-            string town = reader.GetString(6);
-            string postalCode = reader.GetString(7);
-            string country = reader.GetString(8);
-            DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
-            string sex = "Mężczyzna";
-           // bool plec = false;
-            if (reader.GetBoolean(10) == true)
-                sex = "Kobieta";
-           // else
-           //     command.Parameters.AddWithValue("@sex", false);
-           //     reader.GetString(9);
-            string telephone = reader.GetString(11);
-            string comment = "";
-            if (reader.GetValue(12) != DBNull.Value)
-                comment = reader.GetString(12);
-            string passwordQuestion = "";
-            if (reader.GetValue(13) != DBNull.Value)
-                passwordQuestion = reader.GetString(13);
-            bool isApproved = reader.GetBoolean(14);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(14);
-            DateTime lastLoginDate = new DateTime();
-            if (reader.GetValue(16) != DBNull.Value)
-                lastLoginDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(15);
-            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(16);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(18)); //reader.GetDateTime(17);
-            bool isLockedOut = reader.GetBoolean(19);
-            DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(20) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20)); //reader.GetDateTime(19);
-            
-            User u = new User();
-            u.Email = email;
-            u.PasswordQuestion = passwordQuestion;
-            u.Comment = comment;
-            u.IsApproved = isApproved;
-            u.IsLockedOut = isLockedOut;
-            u.CreationDate = creationDate;
-            u.LastLoginDate = lastLoginDate;
-            u.LastActivityDate = lastActivityDate;
-            u.LastPasswordChangedDate = lastPasswordChangedDate;
-            u.LastLockedOutDate = lastLockedOutDate;
-            u.ID = id;
-            u.Login = login;
-            u.Name = name;
-            u.Surname = surname;
-            u.Address = address;
-            u.Town = town;
-            u.PostalCode = postalCode;
-            u.Country = country;
-            u.Birthdate = birthdate;
-            u.Sex = sex;
-            u.Telephone = telephone;
-
-            return u;
-        }
-
+ 
         public int GetNumberOfUsersOnline(TimeSpan onlineSpan)
         {
             DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
@@ -1024,7 +1384,7 @@ namespace Contract
         
         #endregion
 
-        #region role
+        #region Role
 
         public bool AddUsersToRoles(string[] logins, string[] rolenames)
         {
@@ -1984,65 +2344,6 @@ namespace Contract
             }
 
             return rest;
-        }
-
-        private Restaurant GetRestaurantsFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            string name = reader.GetString(1);
-            string displayName = reader.GetString(2);
-            string address = reader.GetString(3);
-            string town = reader.GetString(4);
-            string postalCode = reader.GetString(5);
-            string country = reader.GetString(6);
-            string telephone = reader.GetString(7);
-            string nip = reader.GetString(8);
-            string regon = reader.GetString(9);
-            int inputsCount = reader.GetInt32(10);
-            double averageRating = 0.0;
-            if (reader.GetValue(11) != DBNull.Value) averageRating = reader.GetDouble(11);
-            int menagerId = reader.GetInt32(12);
-            string deliveryTime = reader.GetString(13);
-            int userId = reader.GetInt32(14);
-            bool isEnabled = reader.GetBoolean(15);
-            string login = reader.GetString(16);
-            string email = reader.GetString(17);
-            bool isApproved = reader.GetBoolean(18);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(19));
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(20));
-            bool isLockedOut = reader.GetBoolean(21);
-            DateTime lastLockedOutDate = new DateTime();
-            if (reader.GetValue(22) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(22));
-            decimal deliveryPrice = reader.GetDecimal(23);
-
-            Restaurant u = new Restaurant();
-            u.ID = id;
-            u.Name = name;
-            u.DisplayName = displayName;
-            u.Address = address;
-            u.Town = town;
-            u.PostalCode = postalCode;
-            u.Country = country;
-            u.Telephone = telephone;
-            u.Nip = nip;
-            u.Regon = regon;
-            u.InputsCount = inputsCount;
-            u.AverageRating = averageRating;
-            u.MenagerId = menagerId;
-            u.DeliveryTime = deliveryTime;
-            u.DeliveryPrice = deliveryPrice;
-            u.UserId = userId;
-            u.IsEnabled = isEnabled;
-            u.Login = login;
-            u.Email = email;
-            u.IsApproved = isApproved;
-            u.LastActivityDate = lastActivityDate;
-            u.CreationDate = creationDate;
-            u.IsLockedOut = isLockedOut;
-            u.LastLockedOutDate = lastLockedOutDate;
-
-            return u;
         }
 
         public MainPageContent GetMainPage(string managerLogin, int id)
@@ -3513,65 +3814,6 @@ namespace Contract
             return null;
         }
 
-        private Product GetProductFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            int restaurantID = reader.GetInt32(1);
-            int categoryID = reader.GetInt32(2);
-            string name = reader.GetString(3);
-            string description = null;
-            if (!reader.IsDBNull(4)) description = reader.GetString(4);
-            string price = null;
-            if (!reader.IsDBNull(5)) price = reader.GetString(5);
-            string priceOption = null;
-            if (!reader.IsDBNull(6)) priceOption = reader.GetString(6);
-            DateTime creationDate = reader.GetDateTime(7);
-            bool isAvailable = reader.GetBoolean(8);
-            bool isEnabled = reader.GetBoolean(9);
-           
-
-            Product u = new Product();
-            u.ProductId = id;
-            u.RestaurantId = restaurantID;
-            u.CategoryId = categoryID;
-            u.ProductName = name;
-            u.ProductDescription = description;
-            u.Price = price;
-            u.PriceOption = priceOption;
-            u.CreationDate = creationDate;
-            u.IsAvailable = isAvailable;
-            u.IsEnabled = isEnabled;
-
-            return u;
-        }
-
-        private Menu GetMenuFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            int restaurantID = reader.GetInt32(1);
-            string categoryName = reader.GetString(2);
-            string categoryDescription = null;
-            if (!reader.IsDBNull(3)) categoryDescription = reader.GetString(3);
-            string priceOption = null;
-            if (!reader.IsDBNull(4)) priceOption = reader.GetString(4);
-            string nonPriceOption = null;
-            if (!reader.IsDBNull(5)) nonPriceOption = reader.GetString(5);
-            string nonPriceOption2 = null;
-            if (!reader.IsDBNull(6)) nonPriceOption2 = reader.GetString(6);
-
-            Menu u = new Menu();
-            u.CategoryID = id;
-            u.RestaurantID = restaurantID;
-            u.CategoryName = categoryName;
-            u.CategoryDescription = categoryDescription;
-            u.PriceOption = priceOption;
-            u.NonPriceOption = nonPriceOption;
-            u.NonPriceOption2 = nonPriceOption2;
-            u.Products = null;
-
-            return u;
-        }
-
         public Product GetProduct(string managerLogin, int restaurantID, int productID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4105,7 +4347,7 @@ namespace Contract
 
         #endregion
 
-        #region ogólne
+        #region Ogólne
 
         public List<string> GetCountriesList()
         {
@@ -4342,30 +4584,6 @@ namespace Contract
                // return null;
                 return towns;
             }
-        }
-
-        private Town GetTownFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            string townName = reader.GetString(2);
-            string postalCode = reader.GetString(1);
-            string province = reader.GetString(3);
-            string district = reader.GetString(4);
-            string community = reader.GetString(5);
-            double latitude = reader.GetDouble(6);
-            double longtitude = reader.GetDouble(7);
-
-            Town u = new Town();
-            u.ID = id;
-            u.TownName = townName;
-            u.PostalCode = postalCode;
-            u.Province = province;
-            u.District = district;
-            u.Community = community;
-            u.Latitude = latitude;
-            u.Longtitude = longtitude;
-
-            return u;
         }
 
         public List<RestaurantInTown> GetRestaurantByTown(string townName)
@@ -4914,41 +5132,6 @@ namespace Contract
             return rest;
         }
 
-        private RestaurantInCity GetRestaurantsFromCity(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            string displayName = reader.GetString(1);
-            string address = reader.GetString(2);
-            string town = reader.GetString(3);
-            string postalCode = reader.GetString(4);
-            string country = reader.GetString(5);
-            string telephone = reader.GetString(6);
-            int inputsCount = reader.GetInt32(7);
-            double averageRating = 0.0;
-            if (reader.GetValue(8) != DBNull.Value) averageRating = reader.GetDouble(8);
-            string deliveryTime = reader.GetString(9);
-            DateTime creationDate = reader.GetDateTime(10);
-            double latitude = reader.GetDouble(11);
-            double longtitude = reader.GetDouble(12);
-
-            RestaurantInCity u = new RestaurantInCity();
-            u.ID = id;
-            u.DisplayName = displayName;
-            u.Address = address;
-            u.Town = town;
-            u.PostalCode = postalCode;
-            u.Country = country;
-            u.Telephone = telephone;
-            u.InputsCount = inputsCount;
-            u.AverageRating = averageRating;
-            u.DeliveryTime = deliveryTime;
-            u.CreationDate = creationDate;
-            u.Latitude = latitude;
-            u.Longtitude = longtitude;
-
-            return u;
-        }
-
         public List<RestaurantTop> GetTopRestaurant()
         {
             MySqlCommand command = new MySqlCommand(Queries.GetTopRestaurant);
@@ -5033,7 +5216,748 @@ namespace Contract
             return value;
         }
 
+        public bool IsRestaurantOnline(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.IsRestaurantOnline);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@activity", DateTime.Now.Subtract(new TimeSpan(0, 0, 10, 0)));
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                    return true;
+                else
+                    return false;
+
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return false;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+        }
+
+        public List<RestaurantInCity> GetSearchResult(string town, string res)
+        {
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            List<RestaurantInCity> rest = new List<RestaurantInCity>();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetSearchResult);
+                if(!String.IsNullOrWhiteSpace(town))
+                    command.Parameters.AddWithValue("@town", "%" + town + "%");
+                else
+                    command.Parameters.AddWithValue("@town", "%");
+                if (!String.IsNullOrWhiteSpace(res))
+                    command.Parameters.AddWithValue("@res", "%" + res + "%");
+                else
+                    command.Parameters.AddWithValue("@res", "%");
+                command.Parameters.AddWithValue("@isEnabled", true);
+                command.Connection = conn;
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        RestaurantInCity r = GetRestaurantsFromCity(reader);
+                        rest.Add(r);
+                    }
+                }
+                else
+                {
+                    return rest;
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return rest;
+        }
+
         #endregion
+
+        #region Komentarze
+
+        public List<Comment> GetRestaurantComments(int id)
+        {
+            List<Comment> comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new List<Comment>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantComments);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Comment r = GetCommentFromReader(reader);
+                    comments.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
+        }
+
+        public bool AddComment(string login, int id, double stars, string comment)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.AddComment);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+            command.Parameters.AddWithValue("@comment", comment);
+            command.Parameters.AddWithValue("@rating", stars);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "AddComment");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public List<Comment> GetUserComments(string login)
+        {
+            List<Comment> comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new List<Comment>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserComments);
+                command.Parameters.AddWithValue("@login", login);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Comment r = GetCommentFromReader(reader);
+                    comments.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
+        }
+
+        public bool DeleteComment(string login, int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.DeleteComment);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@login", login);
+
+            int rowsaffected = ExecuteNonQuery(command, "DeleteComment");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public Comment GetComments(int id)
+        {
+            Comment comments = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+
+            try
+            {
+                comments = new Comment();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetComments);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                while (reader.Read())
+                {
+                    comments = GetCommentFromReader(reader);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetComments" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetComments" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+
+            return comments;
+        }
+
+        #endregion
+        
+        #region Zamówienia
+        
+        public bool SetOrderStatus(int id, string login, string status)
+        {
+            if (login.Contains('|'))
+            {
+                string[] logins = login.Split('|');
+
+                MySqlCommand command = new MySqlCommand(Queries.SetOrderStatus);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@login", logins[0]);
+                command.Parameters.AddWithValue("@status", status);
+                if (status == "Zakończone")
+                {
+                    command.Parameters.AddWithValue("@finish", DateTime.Now);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@finish", null);
+                }
+
+                int rowsaffected = ExecuteNonQuery(command, "SetOrderStatus");
+
+                if (rowsaffected > 0)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+            
+            return false;
+        }
+
+        public string GetPayPalData(int id, int order)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetPayPalData);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@order", order);
+
+            string value = String.Empty;
+            decimal price = 0.0M;
+            decimal delivery = 0.0M;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetPayPalData");
+
+            if (ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (row["totalPrice"] != DBNull.Value)
+                    {
+                        price = Decimal.Parse(row["totalPrice"].ToString());
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                    if (row["deliveryPrice"] != DBNull.Value)
+                    {
+                        delivery = Decimal.Parse(row["deliveryPrice"].ToString());
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                    value = (price - delivery).ToString() + "|" + delivery.ToString();
+                    break;
+                }
+            }
+            else
+            {
+                value = null;
+            }
+
+            return value;
+        }
+
+        public string GetRestaurantEmail(int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmail);
+            command.Parameters.AddWithValue("@id", id);
+
+            string rowsaffected = null;
+            rowsaffected = Convert.ToString(ExecuteScalar(command, "GetRestaurantEmail"));
+
+            if (!String.IsNullOrWhiteSpace(rowsaffected))
+            {
+                return rowsaffected;
+            }
+            return null;  
+        }
+
+        private string GetRestaurantEmailByOrderId(int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmailByOrderId);
+            command.Parameters.AddWithValue("@id", id);
+
+            string rowsaffected = null;
+            rowsaffected = Convert.ToString(ExecuteScalar(command, "GetRestaurantEmailByOrderId"));
+
+            if (!String.IsNullOrWhiteSpace(rowsaffected))
+            {
+                return rowsaffected;
+            }
+            return null;  
+        }
+
+        public List<UserOrder> GetUserActiveOrder(string login)
+        {
+            List<UserOrder> orders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+            //pobiera zamówienia
+            try
+            {
+                orders = new List<UserOrder>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserActiveOrders);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@date", DateTime.Now.Subtract(new TimeSpan(0, 4, 0, 0)));
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    UserOrder r = GetUserOrderFromReader(reader);
+                    orders.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            //pobieranie produktów w zamówieniach
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                command.Connection = conn;
+
+                conn.Open();
+
+                foreach (UserOrder list in orders)
+                {
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@id", list.OrderId);
+
+                    reader2 = command.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        OrderedProduct r = GetOrderedProductFromReader(reader2);
+                        list.Products.Add(r);
+                    }
+                    reader2.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+            }
+
+            return orders;
+        }
+
+        public List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to)
+        {
+            List<UserOrder> orders = null;
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            MySqlDataReader reader = null;
+            MySqlDataReader reader2 = null;
+            //pobiera zamówienia
+            try
+            {
+                orders = new List<UserOrder>();
+
+                MySqlCommand command = new MySqlCommand(Queries.GetUserOrderHistory);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@from", from);
+                command.Parameters.AddWithValue("@to", to);
+                command.Connection = conn;
+
+                conn.Open();
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserOrder r = GetUserOrderFromReader(reader);
+                    orders.Add(r);
+                }
+                reader.Close();
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader != null) { reader.Close(); }
+                conn.Close();
+            }
+            //pobieranie produktów w zamówieniach
+            try
+            {
+                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                command.Connection = conn;
+
+                conn.Open();
+
+                foreach (UserOrder list in orders)
+                {
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@id", list.OrderId);
+
+                    reader2 = command.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        OrderedProduct r = GetOrderedProductFromReader(reader2);
+                        list.Products.Add(r);
+                    }
+                    reader2.Close();
+                }
+            }
+            catch (MySqlException e)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+                return null;
+            }
+            finally
+            {
+                if (reader2 != null) { reader2.Close(); }
+                conn.Close();
+            }
+
+            return orders;
+        }
 
         public int SaveOrder(string login, BasketRest basket)
         {
@@ -5155,6 +6079,13 @@ namespace Contract
 
             if (rowsaffected > 0)
             {
+                //wyślij eamil
+                string email = GetRestaurantEmailByOrderId(id);
+                Order order = GetOrder(id);
+
+                Email em = new Email();
+                bool value = em.SendOrder(email, order);
+
                 return true;
             }
             return false;  
@@ -5503,847 +6434,137 @@ namespace Contract
             return allOrders;
         }
 
-        private Order GetOrderFromReader(MySqlDataReader reader)
+        private Order GetOrder(int id)
         {
-            int orderId = reader.GetInt32(0);
-            string userName = reader.GetString(1);
-            string userSurname = reader.GetString(2);
-            string userAdderss = reader.GetString(3);
-            string userTown = reader.GetString(4);
-            string userPostal = reader.GetString(5);
-            string userTelephone = reader.GetString(6);
-            string status = reader.GetString(7);
-            decimal price = reader.GetDecimal(8);
-            string comment = reader.GetString(9);
-            DateTime orderDate = reader.GetDateTime(10);
-            string payment = reader.GetString(11);
-            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
-            if (!reader.IsDBNull(12))
-                finishDate = reader.GetDateTime(12);
-
-            Order u = new Order();
-            u.OrderId = orderId;
-            u.UserName = userName;
-            u.UserSurname = userSurname;
-            u.UserAdderss = userAdderss;
-            u.UserTown = userTown;
-            u.UserPostal = userPostal;
-            u.UserTelephone = userTelephone;
-            u.Status = status;
-            u.Price = price;
-            u.Comment = comment;
-            u.OrderDate = orderDate;
-            u.Payment = payment;
-            u.FinishDate = finishDate;
-
-            return u;
-        }
-
-        private OrderedProduct GetOrderedProductFromReader(MySqlDataReader reader)
-        {
-            int productId = reader.GetInt32(0);
-            string productName = reader.GetString(1);
-            string priceOption = reader.GetString(2);
-            int count = reader.GetInt32(3);
-            string nonPriceOption = reader.GetString(4);
-            string nonPriceOption2 = reader.GetString(5);
-            string comment = reader.GetString(6);
-
-            OrderedProduct u = new OrderedProduct();
-            u.ProductId = productId;
-            u.ProductName = productName;
-            u.PriceOption = priceOption;
-            u.Count = count;
-            u.NonPriceOption = nonPriceOption;
-            u.NonPriceOption2 = nonPriceOption2;
-            u.Comment = comment;
-
-            return u;
-        }
-
-        public bool IsRestaurantOnline(int id)
-        {
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-
-            try
-            {
-                MySqlCommand command = new MySqlCommand(Queries.IsRestaurantOnline);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@activity", DateTime.Now.Subtract(new TimeSpan(0, 0, 10, 0)));
-                command.Connection = conn;
-
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                if (reader.HasRows)
-                    return true;
-                else
-                    return false;
-
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return false;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "IsRestaurantOnline" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return false;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-        }
-
-        public List<UserOrder> GetUserActiveOrder(string login)
-        {
-            List<UserOrder> orders = null;
+            Order order = null;
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             MySqlDataReader reader = null;
             MySqlDataReader reader2 = null;
-            //pobiera zamówienia
-            try
-            {
-                orders = new List<UserOrder>();
 
-                MySqlCommand command = new MySqlCommand(Queries.GetUserActiveOrders);
-                command.Parameters.AddWithValue("@login", login);
-                command.Parameters.AddWithValue("@date", DateTime.Now.Subtract(new TimeSpan(0, 4, 0, 0)));
-                command.Connection = conn;
+            order = new Order();
 
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                while(reader.Read())
+                try
                 {
-                    UserOrder r = GetUserOrderFromReader(reader);
-                    orders.Add(r);
-                }
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
+                    MySqlCommand command = new MySqlCommand(Queries.GetOrder);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Connection = conn;
 
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
+                    conn.Open();
 
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetUserActiveOrder" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-            //pobieranie produktów w zamówieniach
-            try
-            {
-                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
-                command.Connection = conn;
-
-                conn.Open();
-
-                foreach (UserOrder list in orders)
-                {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@id", list.OrderId);
-
-                    reader2 = command.ExecuteReader();
-                    while (reader2.Read())
-                    {
-                        OrderedProduct r = GetOrderedProductFromReader(reader2);
-                        list.Products.Add(r);
-                    }
-                    reader2.Close();
-                }
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-            }
-
-            return orders;
-        }
-
-        private UserOrder GetUserOrderFromReader(MySqlDataReader reader)
-        {
-            int orderId = reader.GetInt32(0);
-            string displayName = reader.GetString(1);
-            string address = reader.GetString(2);
-            string town = reader.GetString(3);
-            string postal = reader.GetString(4);
-            string telephone = reader.GetString(5);
-            string deliveryTime = reader.GetString(6);
-            decimal deliveryPrice = reader.GetDecimal(7);
-            string status = reader.GetString(8);
-            decimal price = reader.GetDecimal(9);
-            string comment = reader.GetString(10);
-            DateTime orderDate = reader.GetDateTime(11);
-            string payment = reader.GetString(12);
-            DateTime finishDate = new DateTime(9999, 12, DateTime.DaysInMonth(9999, 12));
-            if (!reader.IsDBNull(13))
-                finishDate = reader.GetDateTime(13);
-
-            UserOrder u = new UserOrder();
-            u.OrderId = orderId;
-            u.DisplayName = displayName;
-            u.Address = address;
-            u.Town = town;
-            u.Postal = postal;
-            u.Telephone = telephone;
-            u.DeliveryTime = deliveryTime;
-            u.DeliveryPrice = deliveryPrice;
-            u.Status = status;
-            u.Price = price;
-            u.Comment = comment;
-            u.OrderDate = orderDate;
-            u.Payment = payment;
-            u.FinishDate = finishDate;
-
-            return u;
-        }
-
-        public List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to)
-        {
-            List<UserOrder> orders = null;
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-            MySqlDataReader reader2 = null;
-            //pobiera zamówienia
-            try
-            {
-                orders = new List<UserOrder>();
-
-                MySqlCommand command = new MySqlCommand(Queries.GetUserOrderHistory);
-                command.Parameters.AddWithValue("@login", login);
-                command.Parameters.AddWithValue("@from", from);
-                command.Parameters.AddWithValue("@to", to);
-                command.Connection = conn;
-
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    UserOrder r = GetUserOrderFromReader(reader);
-                    orders.Add(r);
-                }
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetOrderHistory" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-            //pobieranie produktów w zamówieniach
-            try
-            {
-                MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
-                command.Connection = conn;
-
-                conn.Open();
-
-                foreach (UserOrder list in orders)
-                {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@id", list.OrderId);
-
-                    reader2 = command.ExecuteReader();
-                    while (reader2.Read())
-                    {
-                        OrderedProduct r = GetOrderedProductFromReader(reader2);
-                        list.Products.Add(r);
-                    }
-                    reader2.Close();
-                }
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader2 != null) { reader2.Close(); }
-                conn.Close();
-            }
-
-            return orders;
-        }
-
-        public List<Comment> GetRestaurantComments(int id)
-        {
-            List<Comment> comments = null;
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-
-            try
-            {
-                comments = new List<Comment>();
-
-                MySqlCommand command = new MySqlCommand(Queries.GetRestaurantComments);
-                command.Parameters.AddWithValue("@id", id);
-                command.Connection = conn;
-
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Comment r = GetCommentFromReader(reader);
-                    comments.Add(r);
-                }
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetRestaurantComments" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            return comments;
-        }
-
-        private Comment GetCommentFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            string login = reader.GetString(1);
-            string displayName = reader.GetString(2);
-            string address = reader.GetString(3);
-            string town = reader.GetString(4);
-            string postal = reader.GetString(5);
-            double rating = reader.GetDouble(6);
-            string comment = reader.GetString(7);
-            DateTime date = reader.GetDateTime(8);
-
-            Comment u = new Comment();
-            u.Id = id;
-            u.UserLogin = login;
-            u.DisplayName = displayName;
-            u.Address = address;
-            u.Town = town;
-            u.Postal = postal;
-            u.Rating = rating;
-            u.CommentText = comment;
-            u.Date = date;
-
-            return u;
-        }
-
-        public bool AddComment(string login, int id, double stars, string comment)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.AddComment);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
-            command.Parameters.AddWithValue("@comment", comment);
-            command.Parameters.AddWithValue("@rating", stars);
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@login", login);
-
-            int rowsaffected = ExecuteNonQuery(command, "AddComment");
-
-            if (rowsaffected > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public List<Comment> GetUserComments(string login)
-        {
-            List<Comment> comments = null;
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-
-            try
-            {
-                comments = new List<Comment>();
-
-                MySqlCommand command = new MySqlCommand(Queries.GetUserComments);
-                command.Parameters.AddWithValue("@login", login);
-                command.Connection = conn;
-
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Comment r = GetCommentFromReader(reader);
-                    comments.Add(r);
-                }
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetUserComments" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            return comments;
-        }
-
-        public bool DeleteComment(string login, int id)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.DeleteComment);
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@login", login);
-
-            int rowsaffected = ExecuteNonQuery(command, "DeleteComment");
-
-            if (rowsaffected > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public Comment GetComments(int id)
-        {
-            Comment comments = null;
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-
-            try
-            {
-                comments = new Comment();
-
-                MySqlCommand command = new MySqlCommand(Queries.GetComments);
-                command.Parameters.AddWithValue("@id", id);
-                command.Connection = conn;
-
-                conn.Open();
-
-                reader = command.ExecuteReader(CommandBehavior.SingleRow);
-                while (reader.Read())
-                {
-                    comments = GetCommentFromReader(reader);
-                }
-                reader.Close();
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetComments" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
-
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetComments" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
-
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
-
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
-
-            return comments;
-        }
-
-        public string GetRestaurantEmail(int id)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmail);
-            command.Parameters.AddWithValue("@id", id);
-
-            string rowsaffected = null;
-            rowsaffected = Convert.ToString(ExecuteScalar(command, "GetRestaurantEmail"));
-
-            if (!String.IsNullOrWhiteSpace(rowsaffected))
-            {
-                return rowsaffected;
-            }
-            return null;  
-        }
-
-        public string GetPayPalData(int id, int order)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.GetPayPalData);
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@order", order);
-
-            string value = String.Empty;
-            decimal price = 0.0M;
-            decimal delivery = 0.0M;
-
-            DataSet ds = new DataSet();
-            ds = ExecuteQuery(command, "GetPayPalData");
-
-            if (ds.Tables.Count > 0)
-            {
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    if (row["totalPrice"] != DBNull.Value)
-                    {
-                        price = Decimal.Parse(row["totalPrice"].ToString());
-                    }
-                    else
-                    {
-                        return null;
-                    }
-
-                    if (row["deliveryPrice"] != DBNull.Value)
-                    {
-                        delivery = Decimal.Parse(row["deliveryPrice"].ToString());
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                    value = (price - delivery).ToString() + "|" + delivery.ToString();
-                    break;
-                }
-            }
-            else
-            {
-                value = null;
-            }
-
-            return value;
-        }
-
-        public bool SetOrderStatus(int id, string login, string status)
-        {
-            if (login.Contains('|'))
-            {
-                string[] logins = login.Split('|');
-
-                MySqlCommand command = new MySqlCommand(Queries.SetOrderStatus);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@login", logins[0]);
-                command.Parameters.AddWithValue("@status", status);
-                if (status == "Zakończone")
-                {
-                    command.Parameters.AddWithValue("@finish", DateTime.Now);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@finish", null);
-                }
-
-                int rowsaffected = ExecuteNonQuery(command, "SetOrderStatus");
-
-                if (rowsaffected > 0)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-            
-            return false;
-        }
-
-        public List<RestaurantInCity> GetSearchResult(string town, string res)
-        {
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            MySqlDataReader reader = null;
-            List<RestaurantInCity> rest = new List<RestaurantInCity>();
-            try
-            {
-                MySqlCommand command = new MySqlCommand(Queries.GetSearchResult);
-                if(!String.IsNullOrWhiteSpace(town))
-                    command.Parameters.AddWithValue("@town", "%" + town + "%");
-                else
-                    command.Parameters.AddWithValue("@town", "%");
-                if (!String.IsNullOrWhiteSpace(res))
-                    command.Parameters.AddWithValue("@res", "%" + res + "%");
-                else
-                    command.Parameters.AddWithValue("@res", "%");
-                command.Parameters.AddWithValue("@isEnabled", true);
-                command.Connection = conn;
-                conn.Open();
-
-                reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
+                    reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        RestaurantInCity r = GetRestaurantsFromCity(reader);
-                        rest.Add(r);
+                        order = GetOrderFromReader(reader);
+                        //allOrders.Add(r);
                     }
+                    reader.Close();
                 }
-                else
+                catch (MySqlException e)
                 {
-                    return rest;
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetOrder" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    return null;
+
                 }
-            }
-            catch (MySqlException e)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
 
-                string wiadomosc = message;
-                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
-                wiadomosc += "Exception: " + e.ToString();
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetOrder" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
 
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
 
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader != null) { reader.Close(); }
+                    conn.Close();
+                }
+                ///////////////////////////////////////////////////////////////////////
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(Queries.GetOrderedProducts);
+                    command.Connection = conn;
 
-            }
-            catch (Exception ex)
-            {
-                EventLog log = new EventLog();
-                log.Source = eventSource;
-                log.Log = eventLog;
+                    conn.Open();
 
-                string wiadomosc = message2;
-                wiadomosc += "Action: " + "GetSearchResult" + "\n\n";
-                wiadomosc += "Exception: " + ex.ToString();
+                  //  foreach (Order list in allOrders)
+                  //  {
+                //        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@id", id);
 
-                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+                        reader2 = command.ExecuteReader();
+                        while (reader2.Read())
+                        {
+                            OrderedProduct r = GetOrderedProductFromReader(reader2);
+                            order.Products.Add(r);
+                        }
+                        reader2.Close();
+                 //   }
+                }
+                catch (MySqlException e)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
 
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-                return null;
-            }
-            finally
-            {
-                if (reader != null) { reader.Close(); }
-                conn.Close();
-            }
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
 
-            return rest;
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                    return null;
+
+                }
+                catch (Exception ex)
+                {
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "GetOrderedProducts" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                    return null;
+                }
+                finally
+                {
+                    if (reader2 != null) { reader2.Close(); }
+                    conn.Close();
+                }
+        
+
+            return order;
         }
+
+        #endregion
+
+        #region POS
 
         public bool SetRestaurantOnline(string login, string online)
         {
@@ -6425,69 +6646,6 @@ namespace Contract
             }
 
             return false;
-        }
-
-        #region dodatkowe klasy pomocnicze
-
-        #region Geocoding
-
-        public class Coordinate
-        {
-            public double Latitude;
-            public double Longitude;
-
-            public Coordinate(double Latitude, double Longitude)
-            {
-                this.Latitude = Latitude;
-                this.Longitude = Longitude;
-            }
-        }
-
-        public static Coordinate GetCoordinates(string region)
-        {
-            using (var client = new WebClient())
-            {
-
-                string uri = "http://maps.google.com/maps/geo?q='" + region +
-                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
-                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
-
-                string[] geocodeInfo = client.DownloadString(uri).Split(',');
-
-                NumberStyles style;
-                CultureInfo culture;
-
-                style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
-                culture = CultureInfo.CreateSpecificCulture("en-CA");
-
-                double lat;
-                double lng;
-
-                double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
-                double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
-                return new Coordinate(lat, lng);
-
-            }
-        }
-
-        #endregion
-
-        public class Basket
-        {
-            private int restaurantId = -1;
-            private List<string> data = new List<string>();
-
-            public int RestaurantId
-            {
-                get { return restaurantId; }
-                set { restaurantId = value; }
-            }
-
-            public List<string> Data
-            {
-                get { return data; }
-                set { data = value; }
-            }
         }
 
         #endregion
