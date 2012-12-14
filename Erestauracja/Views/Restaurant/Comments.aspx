@@ -102,7 +102,6 @@
                     <span><%: comm.Date %></span>
                     <div>
                         <span>Ocena:</span>
-                        <span><%: comm.Rating %></span>
                         <span class="stars" data-rating="<%: comm.Rating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span>
                     </div>
                     <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>

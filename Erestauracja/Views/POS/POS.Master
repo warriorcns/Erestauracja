@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>POS + nazwa restauracji</title>
+    <title>POS</title>
     <link rel="shortcut icon" href="~/Content/images/favicon.ico" >
 
     
@@ -35,7 +35,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             act();
-            setInterval("act()", 300000);
+            setInterval("act()", 180000);
         });
 
     </script>

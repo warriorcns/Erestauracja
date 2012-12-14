@@ -66,7 +66,7 @@
         }
     </script>
     <script type="text/javascript">
-        function setStatus(id, stat) {
+        function setSt(id, stat) {
             event.preventDefault();
             //var from = $("#fromTxb").val();
             //var to = $("#toTxb").val();
@@ -76,10 +76,6 @@
 
             if (data.length != 0) {
                 $.post(url, data, function (data) {
-                    //druk bonu
-                    if (stat === "W realizacji") {
-                        $("#" + id).printElement();
-                    }
                     window.location.href = data.redirectToUrl;
                 });
             }
@@ -157,8 +153,8 @@
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
                             <%--<button>Drukuj rachunek.</button>--%>
-                            <button onclick="setStatus('<%: order.OrderId %>', 'W realizacji')">Przyjmij zamówienie</button>
-                            <button onclick="setStatus('<%: order.OrderId %>', 'Odrzucone')">Odrzuć zamówienie</button>
+                            <button onclick="setSt('<%: order.OrderId %>', 'W realizacji')">Przyjmij zamówienie</button>
+                            <button onclick="setSt('<%: order.OrderId %>', 'Odrzucone')">Odrzuć zamówienie</button>
                             <%--<button onclick="printdiv(<%: order.OrderId %>)">print</button>--%>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
@@ -206,7 +202,7 @@
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
                         <div id="print-order">
-                            <%--<button>Drukuj rachunek.</button>--%><button onclick="setStatus('<%: order.OrderId %>', 'Zakończone')">Wysłano</button>
+                            <%--<button>Drukuj rachunek.</button>--%><button onclick="setSt('<%: order.OrderId %>', 'Zakończone')">Wysłano</button>
                         </div>
                         <%--<%: Html.DropDownListFor(m = > m.Status, ViewData["status"] as IEnumerable<>) %>--%>
                         </div>

@@ -216,7 +216,7 @@ namespace Erestauracja.Controllers
 
                 //wyświetl info że nie powiodło sie 
                 //i jakeś info co zrobić w takiej sytuacji
-                return RedirectToAction("PayError", id);
+                return RedirectToAction("PayError", new { id = id });
             }
             else
             {
@@ -227,7 +227,7 @@ namespace Erestauracja.Controllers
                 //z info że ok że może zobaczyć w aktualnych zamówieniach i że dostał email
                 //zapisz id zamówienia że zostało zapłacone
 
-                return RedirectToAction("PaySuccess", id);
+                return RedirectToAction("PaySuccess", new { id = id });
             }
 
             return RedirectToAction("PayError", id);
