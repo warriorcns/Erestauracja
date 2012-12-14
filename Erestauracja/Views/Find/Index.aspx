@@ -43,7 +43,7 @@
         }
     } 
     </script>
-    <% if (( ViewData["town"] ) == null)
+    <% if ( (ViewData["town"]) == null && (ViewData["res"]) == null ) 
        { %>
         <script type="text/javascript">
             $(function () {

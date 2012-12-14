@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Restaurant/Restaurant.master" Inherits="System.Web.Mvc.ViewPage<List<Erestauracja.ServiceReference.Comment>>" %>
 <%@ Import Namespace="Erestauracja.ServiceReference" %>
+<%@ Import Namespace="System" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Main" runat="server">
 
@@ -30,6 +31,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(function () {
             $("#send")
@@ -49,66 +51,73 @@
             });
         });
     </script>
+
     <script type="text/javascript">
-        $(document).ready(function () {
-            
-        });
+       $(function () {
+            $('.stars').raty({
+                half: true,
+                path: "../../Content/images/",
+                readOnly: true,
+                score: function () {return $(this).attr('data-rating');}
+            });
+        });      
     </script>
 
 
-<%if (User.Identity.IsAuthenticated) %>
-<% { %>
-<div>
-    <fieldset>
-    <legend>Dodaj komentarz</legend>
-    <div>Ocena:</div>
-    <div id="star"></div>
-    <input type="hidden" id="starRating" />
-    <input type="hidden" id="ResID" value="<%: ViewData["id"] %>"/>
-    <div>Treść komentarza:</div>
-    <div><textarea id="commentText"></textarea></div>
-    <div><button id="send">Wyślij</button></div>
-    </fieldset>
-</div>
-<% } %>
-
-<% if (Model == null) %>
-<% { %>
-    <h2>Pobieranie komentarzy nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
-<% } %>
-<% else %>
-<% { %>
-    <% if (Model.Count == 0) %>
+    <%if (User.Identity.IsAuthenticated) %>
     <% { %>
-        <h2>Brak wystawionych komentarzy.</h2>
+    <div>
+        <fieldset>
+        <legend>Dodaj komentarz</legend>
+        <div>Ocena:</div>
+        <div id="star"></div>
+        <input type="hidden" id="starRating" />
+        <input type="hidden" id="ResID" value="<%: ViewData["id"] %>"/>
+        <div>Treść komentarza:</div>
+        <div><textarea id="commentText"></textarea></div>
+        <div><button id="send">Wyślij</button></div>
+        </fieldset>
+    </div>
+    <% } %>
+
+    <% if (Model == null) %>
+    <% { %>
+        <h2>Pobieranie komentarzy nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
     <% } %>
     <% else %>
     <% { %>
-        <div>
-        <% foreach (Comment comm in Model) %>
+        <% if (Model.Count == 0) %>
         <% { %>
-            <hr />
+            <h2>Brak wystawionych komentarzy.</h2>
+        <% } %>
+        <% else %>
+        <% { %>
             <div>
-                <span>Numer komentarza: <%: comm.Id %>.</span>
-                <span>Wstawiony przez: <%: comm.UserLogin %></span>
-                <span><%: comm.Date %></span>
+            <% foreach (Comment comm in Model) %>
+            <% { %>
+                <hr />
                 <div>
-                    <span>Ocena:</span>
-                    <span><%: comm.Rating %></span>
+                    <span>Numer komentarza: <%: comm.Id %>.</span>
+                    <span>Wstawiony przez: <%: comm.UserLogin %></span>
+                    <span><%: comm.Date %></span>
+                    <div>
+                        <span>Ocena:</span>
+                        <span><%: comm.Rating %></span>
+                        <span class="stars" data-rating="<%: comm.Rating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span>
+                    </div>
+                    <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>
+                    <% { %>
+                    <div>
+                        <div>Treść komentarza:</div>
+                        <div><%: comm.CommentText%></div>
+                    </div>
+                    <% } %>
                 </div>
-                <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>
-                <% { %>
-                <div>
-                    <div>Treść komentarza:</div>
-                    <div><%: comm.CommentText%></div>
-                </div>
-                <% } %>
+            <% } %>
+            <br />
             </div>
         <% } %>
-        <br />
-        </div>
     <% } %>
-<% } %>
 
 </asp:Content>
 

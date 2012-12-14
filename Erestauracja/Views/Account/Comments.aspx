@@ -6,6 +6,17 @@
     <%--<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="../../Scripts/jquery-ui.js" type="text/javascript"></script>
     <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>--%>
+    <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.stars').raty({
+                half: true,
+                path: "../../Content/images/",
+                readOnly: true,
+                score: function () { return $(this).attr('data-rating'); }
+            });
+        });      
+    </script>
 
     <%: Html.ValidationSummary(true, "Błąd.")%>
 
@@ -32,6 +43,7 @@
                         <div>
                             <span>Ocena:</span>
                             <span><%: comm.Rating %></span>
+                            <span class="stars" data-rating="<%: comm.Rating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span>
                         </div>
                         <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>
                         <% { %>

@@ -748,7 +748,7 @@ namespace Erestauracja.Controllers
         public ActionResult AddComment(int id, string stars, string comm)
         {
             ViewData["id"] = id;
-
+            stars = stars.Replace(".",",");
             if (id > 0)
             {
                 bool value = false;
