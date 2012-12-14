@@ -700,7 +700,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT (SELECT COUNT(q.`id`) FROM `products` q WHERE q.`isAvailable` = 1 AND q.`restaurantId` IN (SELECT e.`id` FROM `restaurants` e WHERE e.`isEnabled`=1)) AS produkty, (SELECT COUNT(w.`id`) FROM `restaurants` w WHERE w.`isEnabled` = 1) AS restauracje, (SELECT COUNT(t.`id`) FROM `users` t WHERE t.`isLockedOut` = 0 AND t.`comment` != &apos;R&apos;) AS osoby, (SELECT COUNT(r.`id`) FROM `users_in_roles` r JOIN `users` u ON r.`userID` = u.`id` WHERE r.`roleID` = 5 AND u.`isLockedOut`=0 AND (u.`lastActivityDate` &gt; @compa [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to SELECT (SELECT COUNT(q.`id`) FROM `products` q WHERE q.`isAvailable` = 1 AND q.`isEnabled` = 1 AND q.`restaurantId` IN (SELECT e.`id` FROM `restaurants` e WHERE e.`isEnabled`=1)) AS produkty, (SELECT COUNT(w.`id`) FROM `restaurants` w WHERE w.`isEnabled` = 1) AS restauracje, (SELECT COUNT(t.`id`) FROM `users` t WHERE t.`isLockedOut` = 0 AND t.`comment` != &apos;R&apos;) AS osoby, (SELECT COUNT(r.`id`) FROM `users_in_roles` r JOIN `users` u ON r.`userID` = u.`id` WHERE r.`roleID` = 5 AND u.`isLockedOut`=0 AND (u.`last [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetStatistics {
             get {
