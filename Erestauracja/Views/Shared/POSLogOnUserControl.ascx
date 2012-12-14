@@ -3,27 +3,21 @@
     if (Request.IsAuthenticated)
     {
 %>
-<ul class="topka">
-    <a class="ikonka" href="/POS">
-    </a>
-    
+<div class="topka">
+    <a class="ikonka" href="/POS"></a>
+    <div><%: Html.ActionLink("Wyloguj", "LogOff", "Account", null, new { @class = "loglink" })%></div>
 
-    
-
-    <div id="label" style="z-index:-1;"><%: Html.ActionLink("Wyloguj", "LogOff", "Account") %></div>
-
-</ul>
+</div>
 <%
     }
     else
     {
 %>
-    <ul class="topka">
-    <a class="ikonka" href="/POS">
-    </a>
-    <div id="label" style="z-index:-1;"><%: Html.ActionLink("Zaloguj", "LogOn", "Account") %></div>
+<div class="topka">
+    <a class="ikonka" href="/POS"></a>
+    <div><%: Html.ActionLink("Zaloguj", "LogOn", "Account", null, new { @class = "loglink" })%></div>
 
-</ul>
+</div>
         
 <%
     }

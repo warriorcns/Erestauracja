@@ -32,15 +32,24 @@ a
 {
     
     background: url(/Content/images/logo.png) no-repeat left top;
-     height: 75px;
-     float: left;
-     position: relative;
-     z-index: 1;
+    height: 75px;
+    float: left;
+    position: relative;
+    z-index: 1;
     overflow: visible;
     width: 200px;
     
 }
 
+.loglink
+{
+   position: relative;
+   float: right;
+   right: 20px;
+   top: 20px;     
+   color: white;
+   z-index:-1;
+}
 
 /* MAIN */
 .main
