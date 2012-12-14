@@ -9,6 +9,19 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+
+    <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.stars').raty({
+                half: true,
+                path: "../../Content/images/",
+                readOnly: true,
+                score: function () { return $(this).attr('data-rating'); }
+            });
+        });      
+    </script>
+
     <script type="text/javascript">
     $(function () {
         $("#searchButton").button()
@@ -98,7 +111,7 @@
                             </div>
                             <div><%: item.Address %> <%: item.Town %> <%: item.PostalCode %></div>
                             <div><%: item.Telephone %></div>
-                            <div>Srednia ocena <%: item.AverageRating %></div>
+                            <div>Srednia ocena: <span class="stars" data-rating="<%: item.AverageRating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span></div>
                         </div>
                         <hr />
                 <% } %>

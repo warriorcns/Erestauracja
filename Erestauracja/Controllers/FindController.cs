@@ -59,7 +59,7 @@ namespace Erestauracja.Controllers
                     foreach (RestaurantInCity item in list)
                     {
                         string onClick = String.Format(" \"Redirect('{0}')\" ", item.ID);
-                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + item.Address + " " + item.Town + " " + item.PostalCode + "</br>" + "Telefon " + item.Telephone + "</br>" + "Średnia ocena " + item.AverageRating + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                        item.InfoWindowContent = item.DisplayName + " " + "</br>" + item.Address + " " + item.Town + " " + item.PostalCode + "</br>" + "Telefon " + item.Telephone + "</br>" + "Średnia ocena: " + "<span class=\"stars\" data-rating=" + item.AverageRating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) + "></span>"  + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                     }
                 }
             }

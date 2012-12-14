@@ -4,6 +4,7 @@
     max-width: 1200px;
     min-width: 300px;
     overflow: hidden;
+    clear: both;
 }
 
 .allRestaurant
