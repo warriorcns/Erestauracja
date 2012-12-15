@@ -289,6 +289,12 @@ namespace Contract
 
         [OperationContract]
         bool SetRestaurantActivity(string login);
+
+        [OperationContract]
+        bool IncInputsCount(int id);
+
+        [OperationContract]
+        bool SetUserActivity(string login);
     }
 
 

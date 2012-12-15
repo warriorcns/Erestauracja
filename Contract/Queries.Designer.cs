@@ -846,6 +846,15 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `restaurants` SET `inputsCount`=`inputsCount`+1 WHERE `id`=@id.
+        /// </summary>
+        internal static string IncInputsCount {
+            get {
+                return ResourceManager.GetString("IncInputsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT 1 FROM `restaurants` r JOIN `users` u ON u.`id` = r.`userId` WHERE r.`isEnabled` = 1 AND u.`lastActivityDate` &gt; @activity AND r.`id` = @id AND u.`isOnline`=1.
         /// </summary>
         internal static string IsRestaurantOnline {
@@ -986,6 +995,15 @@ namespace Contract {
         internal static string SetRestaurantOnline {
             get {
                 return ResourceManager.GetString("SetRestaurantOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `users` SET `lastActivityDate`=@activity WHERE `login`=@login.
+        /// </summary>
+        internal static string SetUserActivity {
+            get {
+                return ResourceManager.GetString("SetUserActivity", resourceCulture);
             }
         }
         

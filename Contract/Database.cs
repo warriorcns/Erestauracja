@@ -1,41 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-//using MySql.Data;
-using MySql.Data.MySqlClient;
 using System.Configuration;
+using System.Data;
 using System.Diagnostics;
-using System.Net.Mail;
-using System.Net;
 using System.Globalization;
+using System.Linq;
+using System.Net;
+using MySql.Data.MySqlClient;
 
 namespace Contract
 {
     public class Database
     {
+        //stałe dla informacji wyświetlanych w dzienniku zdarzeń
         private string eventSource = "EresWindowsService";
         private string eventLog = "Erestauracja";
         private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
-
-       //private string ConnectionString = "SERVER=" + "5.153.38.77" + ";DATABASE=" + "eres" + ";UID=" + "erestauracja" + ";PASSWORD=" + "Erestauracja123" + ";charset=utf8";
-       // private string ConnectionString = "SERVER=5.153.38.77;DATABASE=eres;UID=erestauracja;PASSWORD=Erestauracja123;charset=utf8;Encrypt=true;Connection Timeout=60";
-        private string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60";
+        
+        private string ConnectionString = String.Empty;
       
-        //zabezpieczyć connectionString
+        /// <summary>
+        /// Wczytuje wartość connectionString z app.config 
+        /// </summary>
         public Database()
         {
-            //ConnectionStringSettingsCollection settings =
-            //    ConfigurationManager.ConnectionStrings;
-
-            //this.ConnectionString = settings[2].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
         }
 
-        //
-        //dorobić wewnętrzne ternzakcje ??
-        //
+        /// <summary>
+        /// Własny ExecuteQuery
+        /// </summary>
+        /// <param name="command">Komenda MySqlCommand</param>
+        /// <param name="action">Nazwa wykonywanej czynności - info dla dziennika zdarzeń</param>
+        /// <returns>Obiekt typu DataSet</returns>
         private DataSet ExecuteQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
@@ -82,6 +80,12 @@ namespace Contract
             return myDS;
         }
 
+        /// <summary>
+        /// Własny ExecuteNonQuery
+        /// </summary>
+        /// <param name="command">Komenda MySqlCommand</param>
+        /// <param name="action">Nazwa wykonywanej czynności - info dla dziennika zdarzeń</param>
+        /// <returns>int jako liczba wierszy, na których zostało wykonane zapytanie.</returns>
         private  int ExecuteNonQuery(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
@@ -126,6 +130,12 @@ namespace Contract
             return rowsaffected;
         }
 
+        /// <summary>
+        /// Własny ExecuteScalar
+        /// </summary>
+        /// <param name="command">Komenda MySqlCommand</param>
+        /// <param name="action">Nazwa wykonywanej czynności - info dla dziennika zdarzeń</param>
+        /// <returns>object - pierwsza kolumna pierwszego wiersza z wyniku zapytania</returns>
         private object ExecuteScalar(MySqlCommand command, string action)
         {
             MySqlConnection conn = new MySqlConnection();
@@ -169,8 +179,14 @@ namespace Contract
             return objekt;
         }
 
+
         #region pomocnicze - wczytywanie danych z MySqlDataReader
 
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu User
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>User</returns>
         private User GetUserFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -182,14 +198,10 @@ namespace Contract
             string town = reader.GetString(6);
             string postalCode = reader.GetString(7);
             string country = reader.GetString(8);
-            DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());//Convert.ToDateTime(reader.GetDateTime(8) );// GetString(8)); //Convert.ToDateTime(reader["date"].ToString());//reader.GetDateTime(8);
+            DateTime birthdate = Convert.ToDateTime(reader["birthdate"].ToString());
             string sex = "Mężczyzna";
-           // bool plec = false;
             if (reader.GetBoolean(10) == true)
                 sex = "Kobieta";
-           // else
-           //     command.Parameters.AddWithValue("@sex", false);
-           //     reader.GetString(9);
             string telephone = reader.GetString(11);
             string comment = "";
             if (reader.GetValue(12) != DBNull.Value)
@@ -198,16 +210,16 @@ namespace Contract
             if (reader.GetValue(13) != DBNull.Value)
                 passwordQuestion = reader.GetString(13);
             bool isApproved = reader.GetBoolean(14);
-            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(15)); //reader.GetDateTime(14);
+            DateTime lastActivityDate = Convert.ToDateTime(reader.GetString(15));
             DateTime lastLoginDate = new DateTime();
             if (reader.GetValue(16) != DBNull.Value)
-                lastLoginDate = Convert.ToDateTime(reader.GetString(16)); //reader.GetDateTime(15);
-            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(17)); //reader.GetDateTime(16);
-            DateTime creationDate = Convert.ToDateTime(reader.GetString(18)); //reader.GetDateTime(17);
+                lastLoginDate = Convert.ToDateTime(reader.GetString(16));
+            DateTime lastPasswordChangedDate = Convert.ToDateTime(reader.GetString(17));
+            DateTime creationDate = Convert.ToDateTime(reader.GetString(18));
             bool isLockedOut = reader.GetBoolean(19);
             DateTime lastLockedOutDate = new DateTime();
             if (reader.GetValue(20) != DBNull.Value)
-                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20)); //reader.GetDateTime(19);
+                lastLockedOutDate = Convert.ToDateTime(reader.GetString(20));
             
             User u = new User();
             u.Email = email;
@@ -234,6 +246,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Restaurant
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Restaurant</returns>
         private Restaurant GetRestaurantsFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -292,6 +310,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Product
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Product</returns>
         private Product GetProductFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -307,7 +331,6 @@ namespace Contract
             DateTime creationDate = reader.GetDateTime(7);
             bool isAvailable = reader.GetBoolean(8);
             bool isEnabled = reader.GetBoolean(9);
-           
 
             Product u = new Product();
             u.ProductId = id;
@@ -323,6 +346,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Menu
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Menu</returns>
         private Menu GetMenuFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -349,6 +378,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Order
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Order</returns>
         private Order GetOrderFromReader(MySqlDataReader reader)
         {
             int orderId = reader.GetInt32(0);
@@ -384,6 +419,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu OrderedProduct
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>OrderedProduct</returns>
         private OrderedProduct GetOrderedProductFromReader(MySqlDataReader reader)
         {
             int productId = reader.GetInt32(0);
@@ -405,6 +446,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu UserOrder
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>UserOrder</returns>
         private UserOrder GetUserOrderFromReader(MySqlDataReader reader)
         {
             int orderId = reader.GetInt32(0);
@@ -442,6 +489,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Comment
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Comment</returns>
         private Comment GetCommentFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -467,6 +520,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Town
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Town</returns>
         private Town GetTownFromReader(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -490,6 +549,12 @@ namespace Contract
 
             return u;
         }
+
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu RestaurantInCity
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>RestaurantInCity</returns>
         private RestaurantInCity GetRestaurantsFromCity(MySqlDataReader reader)
         {
             int id = reader.GetInt32(0);
@@ -531,6 +596,9 @@ namespace Contract
 
         #region Geocoding
 
+        /// <summary>
+        /// Współrzędne do google maps
+        /// </summary>
         public class Coordinate
         {
             public double Latitude;
@@ -543,14 +611,17 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Pobiera współrzędne określonego miejsca według map google
+        /// </summary>
+        /// <param name="region">Adres z którego zostaną pobrane współrzędne</param>
+        /// <returns>Współrzędne jako Coordinate</returns>
         public static Coordinate GetCoordinates(string region)
         {
             using (var client = new WebClient())
             {
-
                 string uri = "http://maps.google.com/maps/geo?q='" + region +
-                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1" +
-                  "-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
+                  "'&output=csv&key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA";
 
                 string[] geocodeInfo = client.DownloadString(uri).Split(',');
 
@@ -566,16 +637,18 @@ namespace Contract
                 double.TryParse(geocodeInfo[2].ToString(), style, culture, out lat);
                 double.TryParse(geocodeInfo[3].ToString(), style, culture, out lng);
                 return new Coordinate(lat, lng);
-
             }
         }
 
         #endregion
 
+        /// <summary>
+        /// Klasa pomocnicza - zawiera dane o produktach z koszyka
+        /// </summary>
         public class Basket
         {
-            private int restaurantId = -1;
-            private List<string> data = new List<string>();
+            private int restaurantId = -1;// id restauracji
+            private List<string> data = new List<string>();//lista danych w koszyku
 
             public int RestaurantId
             {
@@ -595,13 +668,18 @@ namespace Contract
 
         #region Membership
 
+        /// <summary>
+        /// Zamienia hasło u użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło do ustawienia</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool ChangePassword(string login, string password)
         {
             MySqlCommand command = new MySqlCommand(Queries.ChangePassword);
             command.Parameters.AddWithValue("@password", password);
             command.Parameters.AddWithValue("@lastPasswordChangedDate", DateTime.Now);
             command.Parameters.AddWithValue("@login", login);
-            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
             int rowsaffected = ExecuteNonQuery(command, "ChangePassword");
 
@@ -612,13 +690,19 @@ namespace Contract
             return false;  
         }
 
+        /// <summary>
+        /// Zamienia pytanie oraz odpowiedź do odzyskiwania hasła u użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="newPwdQuestion">Nowe pytanie</param>
+        /// <param name="newPwdAnswer">Nowa odpowiedź</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool ChangePasswordQuestionAndAnswer(string login, string newPwdQuestion, string newPwdAnswer)
         {
             MySqlCommand command = new MySqlCommand(Queries.ChangePasswordQuestionAndAnswer);
             command.Parameters.AddWithValue("@question", newPwdQuestion);
             command.Parameters.AddWithValue("@answer", newPwdAnswer);
             command.Parameters.AddWithValue("@login", login);
-            //command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
             int rowsaffected = ExecuteNonQuery(command, "ChangePasswordQuestionAndAnswer");
 
@@ -629,6 +713,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Zwraca hasło, odpowiedź do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany, użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>obiekt typu PasswordAndAnswer</returns>
         public PasswordAndAnswer GetPassword(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetPassword);
@@ -656,11 +745,15 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Zwraca odpowiedź do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany, użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>obiekt typu PasswordAnswer</returns>
         public PasswordAnswer GetPasswordAnswer(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetPasswordAnswer);
             command.Parameters.AddWithValue("@login", login);
-            ////command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
             PasswordAnswer value = null;
 
@@ -682,6 +775,12 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Ustawia nowe hasło, aktualizuje date zmiany hasła oraz wysyła email z nowym hasłem na adres emali użytkownika
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool ResetPassword(string login, string password)
         {
             string email=null;
@@ -780,11 +879,15 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Zwraca pytanie do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany, użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>obiekt typu PasswordQuestion</returns>
         public PasswordQuestion GetUserQuestion(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetUserQuestion);
             command.Parameters.AddWithValue("@login", login);
-            ////command.Parameters.AddWithValue("@applicationName", pApplicationName);
 
             PasswordQuestion value = null;
 
@@ -806,6 +909,24 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Zapisuje nowego użytkownika w bazie danych.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="password">Hasło użytkownika</param>
+        /// <param name="email">Adres email</param>
+        /// <param name="name">Imię użytkownika</param>
+        /// <param name="surname">Nazwisko użytkownika</param>
+        /// <param name="address">Adres</param>
+        /// <param name="townID">Id miasta</param>
+        /// <param name="country">Kraj</param>
+        /// <param name="birthdate">Data urodzenia</param>
+        /// <param name="sex">Płeć</param>
+        /// <param name="telephone">Numer telefonu</param>
+        /// <param name="passwordQuestion">Pytanie do odzyskiwania hasła</param>
+        /// <param name="passwordAnswer">Odpowiedź do odzyskiwania hasła</param>
+        /// <param name="isApproved">Czy zatwierdzony</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool CreateUser(string login, string password, string email, string name, string surname, string address, int townID, string country, DateTime birthdate, string sex, string telephone, string passwordQuestion, string passwordAnswer, bool isApproved)
         {
             DateTime createDate = DateTime.Now;
@@ -850,6 +971,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Usuwa użytkownika z bazy
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="deleteAllRelatedData">Czy usunąć powiązane dane</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool DeleteUser(string login, bool deleteAllRelatedData)
         {
             if (deleteAllRelatedData)
@@ -872,6 +999,13 @@ namespace Contract
             return false;  
         }
 
+        /// <summary>
+        /// Zwraca wszystkich użytkowników, z podziałem na strony
+        /// </summary>
+        /// <param name="pageIndex">Indeks strony</param>
+        /// <param name="pageSize">Rozmiar strony</param>
+        /// <param name="totalRecords">Out ilość pobranych użytkowników</param>
+        /// <returns>Lista typu User</returns>
         public List<User> GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -954,6 +1088,11 @@ namespace Contract
             
         }
  
+        /// <summary>
+        /// Zwraca ilość użytkowników, których aktywonść jest późniejsza niż onlineSpan
+        /// </summary>
+        /// <param name="onlineSpan">Okres czasu do porównania</param>
+        /// <returns>int jako liczba użytkowników</returns>
         public int GetNumberOfUsersOnline(TimeSpan onlineSpan)
         {
             DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
@@ -970,6 +1109,12 @@ namespace Contract
             return 0;  
     }
 
+        /// <summary>
+        /// Zwraca użytkownika o danym loginie
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="userIsOnline">Czy użytkownik jest online - aktualizacja daty ostatniej aktywności</param>
+        /// <returns>obiekt typu User</returns>
         public User GetUser(string login, bool userIsOnline)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -1040,13 +1185,18 @@ namespace Contract
             finally
             {
                 if (reader != null) { reader.Close(); }
-
                 conn.Close();
             }
 
             return u;
         }
 
+        /// <summary>
+        /// Zwraca użytkownika o danym id
+        /// </summary>
+        /// <param name="id">Id użytkownika</param>
+        /// <param name="userIsOnline">Czy użytkownik jest online - aktualizacja daty ostatniej aktywności</param>
+        /// <returns>obiekt typu User</returns>
         public User GetUser(int id, bool userIsOnline)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -1124,6 +1274,11 @@ namespace Contract
             return u;
         }
 
+        /// <summary>
+        /// Odblokowuje konto użytkownika.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool UnlockUser(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.UnlockUser);
@@ -1140,6 +1295,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera nazwe użytkownika na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca login użytkownika.</returns>
         public string GetUserNameByEmail(string email)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetUserNameByEmail);
@@ -1157,6 +1317,11 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Aktualizuje dane użytkownika
+        /// </summary>
+        /// <param name="user">Dane użytkownika jako obiekt typu User</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool UpdateUser(User user)
         {
             MySqlCommand command = new MySqlCommand(Queries.UpdateUser);
@@ -1171,7 +1336,6 @@ namespace Contract
                 command.Parameters.AddWithValue("@sex", true);
             else
                 command.Parameters.AddWithValue("@sex", false);
-           // command.Parameters.AddWithValue("@sex", user.Sex);
             command.Parameters.AddWithValue("@telephone", user.Telephone);
             command.Parameters.AddWithValue("@comment", user.Comment);
             command.Parameters.AddWithValue("@isApproved", user.IsApproved);
@@ -1186,6 +1350,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Zwraca hasło, oraz informacje czy użytkownik jest zatwierdzony, użytkownika o danym loginie.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>obiekt typu ValidateUser</returns>
         public ValidateUser ValidateUser(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.ValidateUser);
@@ -1212,6 +1381,12 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Zwraca hasło, oraz informacje czy użytkownik jest zatwierdzony, pracownika o danym loginie oraz restauracji.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="rest">Login reatauracji</param>
+        /// <returns>obiekt typu ValidateUser</returns>
         public ValidateUser ValidateEmployee(string login, string rest)
         {
             MySqlCommand command = new MySqlCommand(Queries.ValidateEmployee);
@@ -1239,6 +1414,11 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Atkualizuje date ostatniego logowania użytkownika
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool UpdateUserLoginDate(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.UpdateUserLoginDate);
@@ -1254,6 +1434,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Atkualizuje date ostatniego logowania pracownika  z danej restauracji
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="rest">Login reatauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool UpdateEmployeeLoginDate(string login, string rest)
         {
             DateTime czas = DateTime.Now;
@@ -1277,6 +1463,15 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Aktualizuje licznik błędnie wprowadzonego hasła lub odpowiedzi na pytanie do przywracania hasła.
+        /// Jeśli licznik sie wyczerpie blokuje użytkownika.
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="failureType">Typ błędu - password lub passwordAnswer</param>
+        /// <param name="PasswordAttemptWindow">Ilość minut po jakich użytkownik będzie mógł ponowić próby</param>
+        /// <param name="MaxInvalidPasswordAttempts">Możliwa liczba pomyłek</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool UpdateFailureCount(string login, string failureType, int PasswordAttemptWindow, int MaxInvalidPasswordAttempts)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetFailureCount);
@@ -5354,6 +5549,20 @@ namespace Contract
             return rest;
         }
 
+        public bool IncInputsCount(int id)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.IncInputsCount);
+            command.Parameters.AddWithValue("@id", id);
+
+            int rowsaffected = ExecuteNonQuery(command, "IncInputsCount");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region Komentarze
@@ -6649,6 +6858,22 @@ namespace Contract
         }
 
         #endregion
+
+        public bool SetUserActivity(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.SetUserActivity);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@activity", DateTime.Now);
+
+            int rowsaffected = ExecuteNonQuery(command, "SetUserActivity");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
 

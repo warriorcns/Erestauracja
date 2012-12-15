@@ -2,13 +2,7 @@
 using System.Configuration.Provider;
 using System.Collections.Specialized;
 using System;
-using System.Data;
-//using System.Data.Odbc;
-using MySql.Data.MySqlClient;
-using System.Configuration;
 using System.Diagnostics;
-using System.Web;
-using System.Globalization;
 
 //dać create
 

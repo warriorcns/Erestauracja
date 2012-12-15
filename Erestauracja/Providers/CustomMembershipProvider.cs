@@ -1,22 +1,14 @@
-﻿using System.Web.Security;
-using System.Configuration.Provider;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
-using System;
-using System.Data;
-//using System.Data.Odbc;
-using MySql.Data;
 using System.Configuration;
+using System.Configuration.Provider;
 using System.Diagnostics;
-using System.Web;
-using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
-using MySql.Data.MySqlClient;
-using System.Net.Mail;
-using System.Net;
+using System.Web.Security;
 using Erestauracja.ServiceReference;
-using System.Collections.Generic;
 
 /*
 This provider works with the following schema for the table of user data.

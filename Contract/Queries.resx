@@ -458,4 +458,10 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="GetRestaurantEmailByOrderId" xml:space="preserve">
     <value>SELECT u.`email` FROM `orders` o JOIN `restaurants` r  ON o.`restaurantId`=r.`id` JOIN `users` u ON u.`id` = r.`userId` WHERE o.`id`=@id</value>
   </data>
+  <data name="IncInputsCount" xml:space="preserve">
+    <value>UPDATE `restaurants` SET `inputsCount`=`inputsCount`+1 WHERE `id`=@id</value>
+  </data>
+  <data name="SetUserActivity" xml:space="preserve">
+    <value>UPDATE `users` SET `lastActivityDate`=@activity WHERE `login`=@login</value>
+  </data>
 </root>

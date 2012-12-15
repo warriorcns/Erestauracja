@@ -777,5 +777,23 @@ namespace Erestauracja.Controllers
             return Json(new { redirectToUrl = Url.Action("Comments", "Restaurant", new { id = id }) });
                 
         }
+
+        public void setAct(int id)
+        {
+            bool value = false;
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.IncInputsCount(id);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                value = false;
+            }
+        }
     }
 }

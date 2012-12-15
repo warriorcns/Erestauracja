@@ -1,22 +1,35 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <% 
-    HttpCookie c = new HttpCookie("MyCookie");
-    c.Value = "TEST";
-    Response.Cookies.Add(c); %>
-    
-    
 
-    <asp:ContentPlaceHolder ID="head" runat="server" />
+<asp:ContentPlaceHolder ID="head" runat="server" />
 </asp:Content>
     
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
+
     <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
 </asp:Content>
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
+<script type="text/javascript">
+    function act() {
+        var url = '<%: Url.Action("setAct", "Restaurant") %>';
+        var res = $("#idTxb").val();
+        var data = { id: res};
+        $.post(url, data, function (data) {
+        });
+    }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            act();
+        });
+
+    </script>
+
     <%--<form id="form1" runat="server">--%>
+    <%: Html.Hidden("id", (int)ViewData["id"], new { @id = "idTxb"})%>
+
 <nav class="menu">
                 <ul id="menu">
                     <li>
@@ -36,6 +49,7 @@
                 </ul>
             </nav>
  <asp:ContentPlaceHolder ID="Main" runat="server">
+ 
  </asp:ContentPlaceHolder>
     <%--</form>--%>
    

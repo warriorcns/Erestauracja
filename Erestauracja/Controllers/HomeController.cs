@@ -247,5 +247,26 @@ namespace Erestauracja.Controllers
                 return "Online";
             }
         }
+
+        public void setAct()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.SetUserActivity(User.Identity.Name);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+            }
+        }
     }
 }

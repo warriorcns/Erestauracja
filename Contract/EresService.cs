@@ -1237,5 +1237,33 @@ namespace Contract
                 return false;
             }
         }
+
+        public bool IncInputsCount(int id)
+        {
+            if (!(id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.IncInputsCount(id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SetUserActivity(string login)
+        {
+            if (!(String.IsNullOrWhiteSpace(login)))
+            {
+                Database db = new Database();
+                bool value = db.SetUserActivity(login);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

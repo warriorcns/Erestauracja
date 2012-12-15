@@ -119,7 +119,12 @@
                 <div class="accordion2">
                     <% foreach(Erestauracja.ServiceReference.Product product in menu.Products) %>
                     <% { %>
-                        <h3><a href="#"><%: product.ProductName %> </a></h3>
+                        <h3><a href="#"><%: product.ProductName %> 
+                        <% if ((DateTime.Compare(product.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0)%>
+                        <% { %>
+                                NOWOŚĆ
+                        <% } %>
+                        </a></h3>
                             <div>
                                     <% if (!String.IsNullOrWhiteSpace(product.ProductDescription)) %>
                                     <% { %>
