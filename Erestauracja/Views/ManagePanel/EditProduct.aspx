@@ -64,7 +64,6 @@
     <% } %>
 
     <script type="text/javascript">
-
         $("#kategorie").change(function () {
             var id = "";
             var txt = "";
@@ -74,7 +73,6 @@
                 txt = $(this).text() + " ";
             });
 
-
             var resid = $("#resid").val();
             var resid = $("#resid").val();
             var url = '<%: Url.Action("GetPrices", "ManagePanel") %>';
@@ -82,16 +80,12 @@
 
             if (!$(id).val()) {
                 $.post(url, data, function (data) {
-                    // TODO: do something with the response from the controller action
-                    //alert('the value was successfully sent to the server' + id);
-
                     $('#cenatb').show();
                     $('#cenalabele').show();
                     $('#pricelbl').text(data);
                 });
             }
         }).trigger('change');
-
     </script>
 
 </asp:Content>

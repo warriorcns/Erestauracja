@@ -6,6 +6,11 @@
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.maskedinput-1.3.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jQuery.datepicker-pl.js") %>" type="text/javascript"></script>
+
+    
+    <link rel="Stylesheet" type="text/css" href="~/Content/style/jqueryui/ui-lightness/jquery-ui-1.7.2.custom.css" />
 
     <script type="text/javascript">
         $(function () {
@@ -40,56 +45,177 @@
                     <p>
                         Wprowadz nowe dane, a następnie kliknij 'Zapisz'.
                     </p>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Email) %>
+
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Email)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Email)%>
-                        <%: Html.ValidationMessageFor(m => m.Email)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Name) %>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Email)%>
+                        </li>
+                    </ul>
+
+
+                   
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Name)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Name)%>
-                        <%: Html.ValidationMessageFor(m => m.Name)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Surname) %>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Name)%>
+                        </li>
+                    </ul>
+
+
+                   
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Surname)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Surname)%>
-                        <%: Html.ValidationMessageFor(m => m.Surname)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Address) %>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Surname)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Address)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Address)%>
-                        <%: Html.ValidationMessageFor(m => m.Address)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Town) %>
-                        <%: Html.TextBoxFor(m => m.Town, new { id="TownName" })%>
-                        <%: Html.ValidationMessageFor(m => m.Town)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.PostalCode) %>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Address)%>
+                        </li>
+                    </ul>
+
+
+                   
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Town)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.Town, new { id = "TownName" })%>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Town)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.PostalCode)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.PostalCode, new { id = "PostalCode" })%>
-                        <%: Html.ValidationMessageFor(m => m.PostalCode)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Country) %>
-                        <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"])%>
-                        <%: Html.ValidationMessageFor(m => m.Country)%>
-                    </div>
-                    <div class="editor-label">
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.PostalCode)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Country)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.DropDownListFor(m => m.Country, (IEnumerable<SelectListItem>)ViewData["countryList"], new { @style="width: 206px;" })%>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Country)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Birthdate)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Birthdate, new { id = "Birthdate" })%>
-                        <%: Html.ValidationMessageFor(m => m.Birthdate)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(m => m.Sex) %>
-                        <%: Html.DropDownListFor(m=>m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
-                        <%: Html.ValidationMessageFor(m => m.Sex)%>
-                    </div>
-                    <div class="editor-label">
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Birthdate)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Sex)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Sex)%>
+                        </li>
+                    </ul>
+
+
+                    
+                    <ul class="rej">
+                    <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Telephone)%>
+                    </li>
+                    <li class="editor-labelR">
                         <%: Html.TextBoxFor(m => m.Telephone)%>
-                        <%: Html.ValidationMessageFor(m => m.Telephone)%>
-                    </div>
+                    </li>
+                    </ul>
+                
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Telephone)%>
+                        </li>
+                    </ul>
+
+
                     <p>
                         <input type="submit" value="Zapisz" />
                     </p>

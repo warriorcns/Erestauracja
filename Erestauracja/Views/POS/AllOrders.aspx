@@ -5,6 +5,11 @@
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="<%: Url.Content("~/Scripts/jquery.maskedinput-1.3.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jQuery.datepicker-pl.js") %>" type="text/javascript"></script>
+
+    
+    <link rel="Stylesheet" type="text/css" href="~/Content/style/jqueryui/ui-lightness/jquery-ui-1.7.2.custom.css" />
 
 
     <script type="text/javascript">

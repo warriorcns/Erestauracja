@@ -12,21 +12,29 @@
 <asp:Content class="main" ContentPlaceHolderID="MainContent" runat="server">
 
 <script type="text/javascript">
-    function act() {
+    $(document).ready(function () {
         var url = '<%: Url.Action("setAct", "Restaurant") %>';
         var res = $("#idTxb").val();
         var data = { id: res};
         $.post(url, data, function (data) {
         });
-    }
+    });
+    </script>
+
+    <script type="text/javascript">
+        function act() {
+            var url = '<%: Url.Action("setAct", "Home") %>';
+            var data = {};
+            $.post(url, data, function (data) {
+            });
+        }
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
             act();
+            setInterval("act()", 180000);
         });
-
     </script>
-
     <%--<form id="form1" runat="server">--%>
     <%: Html.Hidden("id", (int)ViewData["id"], new { @id = "idTxb"})%>
 

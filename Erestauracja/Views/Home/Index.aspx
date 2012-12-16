@@ -75,24 +75,6 @@ a następnie wybierając płatność, za pomocą serwisu PayPal, kartą kredytow
             
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto" Wrap="true">
-            <!--<asp:Label ID="Label" class="LabelWybierzMiasto" runat="server" Text="Ilość odwiedzin:"></asp:Label>
-            <div class="licznik">
-                 GoStats JavaScript Based Code 
-                <script type="text/javascript" src="http://gostats.pl/js/counter.js"></script>
-                <script type="text/javascript">                    _gos = 'c3.gostats.pl'; _goa = 366701;
-                    _got = 2; _goi = 58; _gol = 'licznik blog'; _GoStatsRun();</script>
-                <noscript>
-                    <a target="_blank" title="licznik blog" href="http://gostats.pl">
-                        <img alt="licznik blog" src="http://c3.gostats.pl/bin/count/a_366701/t_2/i_58/counter.png"
-                            style="border-width: 0" /></a></noscript>
-                <br />
-                <!-- End GoStats JavaScript Based Code 
-            </div>
-            Ilość zalogowanych użytkowników (na podstawie providera):
-            <% CustomMembershipProvider onlineCount = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"]; %>
-            <% int o = onlineCount.GetNumberOfUsersOnline(); %>
-            <%: Html.Label(o.ToString())%>
-            -->
             <% Erestauracja.ServiceReference.Statistics staty = (Erestauracja.ServiceReference.Statistics)ViewData["stat"]; %>
             </br>
             <div> Na naszej stwonie znajdziesz <strong> <%: staty.ProductsCount %> </strong> produktów,</div>
