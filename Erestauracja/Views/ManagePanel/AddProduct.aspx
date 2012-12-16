@@ -46,7 +46,7 @@
                 <%: Html.HiddenFor(m => m.RestaurantID, new { id = "resid"}) %>
                 </br>
                 <p>
-                    <input type="submit" value="Dodaj"/>
+                    <input type="submit" value="Dodaj" id="subBut" style="display:none;"/>
                 </p>
             </fieldset>
         </div>
@@ -60,10 +60,16 @@
             var txt = "";
 
             $("select option:selected").each(function () {
-                id = $(this).val() + " ";
-                txt = $(this).text() + " ";
+                id = $(this).val();
+                txt = $(this).text();
             });
 
+            if (txt === "") {
+                $('#subBut').hide();
+                $('#cenatb').hide();
+                $('#cenalabele').hide();
+                $('#pricelbl').hide();
+            }
 
             var resid = $("#resid").val();
             var resid = $("#resid").val();
@@ -74,7 +80,8 @@
                 $.post(url, data, function (data) {
                     // TODO: do something with the response from the controller action
                     //alert('the value was successfully sent to the server' + id);
-
+                    
+                    $('#subBut').show();
                     $('#cenatb').show();
                     $('#cenalabele').show();
                     $('#pricelbl').text(data);
