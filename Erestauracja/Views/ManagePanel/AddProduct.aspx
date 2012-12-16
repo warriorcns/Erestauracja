@@ -68,7 +68,6 @@
                 $('#subBut').hide();
                 $('#cenatb').hide();
                 $('#cenalabele').hide();
-                $('#pricelbl').hide();
             }
 
             var resid = $("#resid").val();
