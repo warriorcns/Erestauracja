@@ -13,9 +13,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var url = '<%: Url.Action("setAct", "Restaurant") %>';
+        var url = '<%: Url.Action("ResCounter", "Restaurant") %>';
         var res = $("#idTxb").val();
-        var data = { id: res};
+        var data = { id: res };
         $.post(url, data, function (data) {
         });
     });

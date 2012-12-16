@@ -778,7 +778,7 @@ namespace Erestauracja.Controllers
                 
         }
 
-        public void setAct(int id)
+        public void ResCounter(int id)
         {
             bool value = false;
             try
