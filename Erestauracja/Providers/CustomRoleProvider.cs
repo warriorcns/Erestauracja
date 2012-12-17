@@ -4,7 +4,13 @@ using System.Collections.Specialized;
 using System;
 using System.Diagnostics;
 
-//dać create
+/* This provider works with the following schema for the table of user data.
+
+CREATE  TABLE  `test`.`roles` (  `id` int( 10  )  NOT  NULL  AUTO_INCREMENT ,
+`rolename` varchar( 255  )  COLLATE utf8_polish_ci NOT  NULL ,
+PRIMARY  KEY (  `id`  )  ) ENGINE  = InnoDB  DEFAULT CHARSET  = utf8 COLLATE  = utf8_polish_ci;
+ * 
+*/
 
 namespace Erestauracja.Providers
 {
