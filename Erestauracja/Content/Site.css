@@ -548,7 +548,7 @@ footer,
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 0 0 4px 4px;
     margin: auto;
-    padding-bottom: 11em;
+    padding-bottom: 5em;
     
     
 }
@@ -617,7 +617,7 @@ footer,
     font-size: 11px;
     color: #666;
     margin: 10px 20px 30px 20px;
-    padding: 0px 35px 20px 0;
+    padding: 0px 35px 0px 0;
 
 }
 
@@ -634,9 +634,8 @@ footer,
     position: absolute;
     top: 0;
     right: 0;
-    background: no-repeat url(//s.ytimg.com/yt/imgbin/www-refresh-vflXkUAsM.png) -82px -172px;
     width: 13px;
-    height: 118px;
+    height: 100%;
 }
 
 #footer-logo span {

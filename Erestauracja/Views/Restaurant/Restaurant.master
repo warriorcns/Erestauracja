@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Restaurant.master.cs" Inherits="Erestauracja.Views.Restaurant.Restaurant" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <asp:ContentPlaceHolder ID="head" runat="server" />
 </asp:Content>
     

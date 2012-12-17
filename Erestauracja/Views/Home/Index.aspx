@@ -31,7 +31,7 @@
     <br />
     <div class="all">
         <asp:Panel class="lewypanel" runat="server" ScrollBars="Auto" Wrap="true">
-            <asp:Label Font-Bold="true" runat="server" style="position: relative; margin-top: 20px; margin-left: 20px; font-size:larger;">   10 najnowszych restauracji</asp:Label>
+            <asp:Label Font-Bold="true" runat="server" style="position: relative; padding: 5% 0 0 10%; font-size:larger;">   10 najnowszych restauracji</asp:Label>
             <hr />
             <% foreach(Erestauracja.ServiceReference.RestaurantTop rest in (List<Erestauracja.ServiceReference.RestaurantTop>)ViewData["top"]) %>
             <% { %>
@@ -76,14 +76,16 @@ a następnie wybierając płatność, za pomocą serwisu PayPal, kartą kredytow
         </asp:Panel>
         <asp:Panel class="Panelstatystyki" runat="server" ScrollBars="Auto" Wrap="true">
             <% Erestauracja.ServiceReference.Statistics staty = (Erestauracja.ServiceReference.Statistics)ViewData["stat"]; %>
-            </br>
-            <div> Na naszej stwonie znajdziesz <strong> <%: staty.ProductsCount %> </strong> produktów,</div>
-            <div> dostępnych w <strong> <%: staty.RestaurantsCount %> </strong> restauracjach.</div>
-            </br>
-            <div> Dołączyło do nas już <strong> <%: staty.UsersCount %> </strong> osób.</div>
-            </br>
-            <div> Obecnie na stronie znajduje sie <strong> <%: staty.ActiveUsers %> </strong> aktywnych użytkowników,</div>
-            <div> a także<strong> <%: staty.ActiveRestaurants %> </strong> aktywnych restauracji.</div>
+            
+            <div class="stats">
+                <div> Na naszej stwonie znajdziesz <strong> <%: staty.ProductsCount %> </strong> produktów,</div>
+                <div> dostępnych w <strong> <%: staty.RestaurantsCount %> </strong> restauracjach.</div>
+                <br/>
+                <div> Dołączyło do nas już <strong> <%: staty.UsersCount %> </strong> osób.</div>
+                <br/>
+                <div> Obecnie na stronie znajduje sie <strong> <%: staty.ActiveUsers %> </strong> aktywnych użytkowników,</div>
+                <div> a także<strong> <%: staty.ActiveRestaurants %> </strong> aktywnych restauracji.</div>
+            </div>
         </asp:Panel>
     </div>
     </form>

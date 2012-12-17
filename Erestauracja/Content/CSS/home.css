@@ -24,18 +24,22 @@
     
     text-align: left;
     position: relative;
-    padding: 0 20px 0 0;
-    height: 658px;
+    padding: 0 5px 0 5px;
+    min-height: 488px;
+    height: 100%;
     margin: 0 20px 0 0 ; 
     overflow: scroll;
     background: no-repeat;
     float: left;
-    
     margin-left: -20px;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
      width: 30%;
+    
+}
+.resInfo
+{
     
 }
 
@@ -63,7 +67,7 @@
     width: 60%;
     text-align: left;
     position: relative;
-    height: 200px;
+    height: 150px;
     float: left;
     overflow: scroll;
     margin: 0 0 20px;
@@ -83,13 +87,12 @@
     
     text-align: left;
     position: relative;
-    height: 200px;
     margin: 0 0 20px;
     overflow: scroll;
     width: 60%;
     text-align: left;
     position: relative;
-    height: 200px;
+    height: 130px;
     float: left;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -169,21 +172,21 @@
     margin-top: 10px;
     text-align: left;
     position: relative;
-    height: 200px;
-    
-    overflow: scroll;
-   
-    
+    height: 150px;
+    overflow: scroll;      
     width: 60%;
     text-align: left;
     position: relative;
-   
     float: left;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 4px 0 0 0;
-    
-    
+    -moz-border-radius: 4px 0 0 0; 
+}
+
+.stats
+{      
+    position: relative;
+    padding: 10px 10px 0 10px; 
 }
 
 .licznik

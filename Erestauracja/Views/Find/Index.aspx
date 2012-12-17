@@ -78,9 +78,9 @@
     <%: Html.ValidationSummary(true, "Błąd.")%>
 
     <div>
-    <span>Podaj nazwe miasta </span>
+    <span>Podaj nazwę miasta </span>
     <span><%: Html.TextBox("town", (string)ViewData["town"], new { @id = "townTB" })%></span>
-    <span> lub nazwe restauracji </span>
+    <span> lub nazwę restauracji </span>
     <span><%: Html.TextBox("res", (string)ViewData["res"], new { @id = "resTB" })%></span>
     <span><input type="button" id="searchButton" value="Szukaj" onclick="search()"/></span>
     </div>

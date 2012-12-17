@@ -874,6 +874,7 @@
     <Content Include="Content\images\Delete.png" />
     <Content Include="Content\images\deleted.jpg" />
     <Content Include="Content\images\disk.png" />
+    <Content Include="Content\images\divider.png" />
     <Content Include="Content\images\empty.gif" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\help_panel.png" />
@@ -881,6 +882,7 @@
     <Content Include="Content\images\left_empty.png" />
     <Content Include="Content\images\left_eng.png" />
     <Content Include="Content\images\left_prev.png" />
+    <Content Include="Content\images\line.png" />
     <Content Include="Content\images\logo-test.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\LogoPizza.jpg" />
@@ -1342,6 +1344,7 @@
     <Content Include="Views\Basket\PayError.aspx" />
     <Content Include="Views\Basket\PaySuccess.aspx" />
     <Content Include="Views\Basket\Realize.aspx" />
+    <Content Include="Views\Home\TopRestaurants.aspx" />
     <Content Include="Views\ManagePanel\Errors.aspx" />
     <Content Include="Views\ManagePanel\ErrorSuccess.aspx" />
     <Content Include="Views\ManagePanel\Info.aspx" />

@@ -8,11 +8,11 @@
                 <%= Html.DisplayFor(m => m.Description)%>
            </p> 
         </asp:Panel>
-        <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="Auto">
-            <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="Auto">
+        <asp:Panel ID="Panel2" class="PanelTotoPromocje" runat="server" ScrollBars="auto">
+            <asp:Panel ID="Panel3" class="PanelToto" runat="server" ScrollBars="auto">
                 <%= Html.DisplayFor(m => m.Foto)%>
             </asp:Panel>
-            <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="Auto">
+            <asp:Panel ID="Panel4" class="PanelPromocje" runat="server" ScrollBars="auto">
                 <%= Html.DisplayFor(m => m.SpecialOffers)%>
             </asp:Panel>
         </asp:Panel>
