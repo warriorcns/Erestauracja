@@ -17,7 +17,7 @@ namespace Erestauracja.Models
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Adres email")]
+        [Display(Name = "Adres email (powiązany z PayPal)")]
         public string Email { get; set; }
 
         [DataType(DataType.EmailAddress)]
@@ -162,7 +162,7 @@ namespace Erestauracja.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Cena dostawy")]
-        public decimal DeliveryPrice { get; set; }
+        public string DeliveryPrice { get; set; }
 
         [Required]
         [Display(Name = "Widoczna dla klientów")]

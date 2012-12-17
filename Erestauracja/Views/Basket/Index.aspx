@@ -4,7 +4,11 @@
 <%@ Import Namespace="System.Runtime.Serialization" %>
 <%@ Import Namespace="System.Runtime.Serialization.Formatters.Binary" %>
 
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <script type="text/javascript">
         $(function () {

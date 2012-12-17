@@ -462,6 +462,7 @@ namespace Erestauracja.Controllers
                         CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(model.Login, true);
                         if (user != null)
                         {
+                            user.Email = model.Email;
                             user.Name = model.Name;
                             user.Surname = model.Surname;
                             user.Address = model.Address;
@@ -472,9 +473,18 @@ namespace Erestauracja.Controllers
                             user.Sex = model.Sex;
                             user.Telephone = model.Telephone;
 
-                            customMemebership.UpdateUser(user);
+                            string stat = null;
 
-                            return RedirectToAction("Personnel", "ManagePanel");
+                            customMemebership.CustomUpdateUser(user, out stat);
+
+                            if (!String.IsNullOrWhiteSpace(stat))
+                            {
+                                ModelState.AddModelError("", stat);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Personnel", "ManagePanel");
+                            }
                         }
                         else
                         {
@@ -774,7 +784,7 @@ namespace Erestauracja.Controllers
                 model.Nip = rest.Nip;
                 model.Regon = rest.Regon;
                 model.DeliveryTime = rest.DeliveryTime;
-                model.DeliveryPrice = rest.DeliveryPrice;
+                model.DeliveryPrice = rest.DeliveryPrice.ToString();
                 model.IsEnabled = rest.IsEnabled;
                 ModelState.Clear();
 
@@ -847,10 +857,14 @@ namespace Erestauracja.Controllers
                         bool value2 = false;
                         try
                         {
+                            decimal price;
+                            NumberStyles style = NumberStyles.AllowDecimalPoint;
+                            price = Decimal.Parse(model.DeliveryPrice, style);
+
                             ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                             using (client)
                             {
-                                value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id, model.DeliveryPrice);
+                                value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id, price);
                             }
                             client.Close();
                         }
@@ -3381,9 +3395,18 @@ namespace Erestauracja.Controllers
                             user.Sex = model.Sex;
                             user.Telephone = model.Telephone;
 
-                            customMemebership.UpdateUser(user);
+                            string stat = null;
 
-                            return RedirectToAction("Account", "ManagePanel");
+                            customMemebership.CustomUpdateUser(user, out stat);
+
+                            if (!String.IsNullOrWhiteSpace(stat))
+                            {
+                                ModelState.AddModelError("", stat);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Account", "ManagePanel");
+                            }
                         }
                         else
                         {

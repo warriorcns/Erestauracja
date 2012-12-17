@@ -345,7 +345,7 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
     <value>UPDATE `users` SET `failedPasswordAttemptCount` = @count, `failedPasswordAttemptWindowStart` = @windowStart WHERE `login` = @login</value>
   </data>
   <data name="UpdateUser" xml:space="preserve">
-    <value>UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town_name AND `postal_code` LIKE @postal_code), `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>
+    <value>UPDATE `users` SET `email`=@email, `name` = @name, `surname` = @surname, `address` = @address, `townID` = (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town_name AND `postal_code` LIKE @postal_code), `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login</value>
   </data>
   <data name="UpdateUserActivityByID" xml:space="preserve">
     <value>UPDATE `users` SET `lastActivityDate` = @lastActivityDate WHERE `id` = @id</value>

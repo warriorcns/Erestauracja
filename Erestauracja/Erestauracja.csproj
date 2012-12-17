@@ -1235,14 +1235,8 @@
     <Content Include="Scripts\themes\classic\galleria.classic.css" />
     <Content Include="Scripts\themes\classic\galleria.classic.js" />
     <Content Include="Scripts\themes\classic\galleria.classic.min.js" />
-    <None Include="Service References\ServiceReference\Arrays1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
-    <None Include="Service References\ServiceReference\Contract1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.AllOrders.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1452,11 +1446,17 @@
     <Content Include="Views\Admin\Index.master" />
     <Content Include="Views\ManagePanel\ManagePageContent.master" />
     <Content Include="Views\POS\POS.Master" />
-    <None Include="Service References\ServiceReference\service1.wsdl" />
-    <None Include="Service References\ServiceReference\service2.xsd">
+    <None Include="Service References\ServiceReference\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference\service21.xsd">
+    <None Include="Service References\ServiceReference\Contract.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service.wsdl" />
+    <None Include="Service References\ServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -1681,7 +1681,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Queries.resx" />
+    <EmbeddedResource Include="Queries.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference\" />

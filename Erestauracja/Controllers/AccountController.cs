@@ -179,6 +179,7 @@ namespace Erestauracja.Controllers
                         CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
                         if (user != null)
                         {
+                            user.Email = model.Email;
                             user.Name = model.Name;
                             user.Surname = model.Surname;
                             user.Address = model.Address;
@@ -189,9 +190,18 @@ namespace Erestauracja.Controllers
                             user.Sex = model.Sex;
                             user.Telephone = model.Telephone;
 
-                            customMemebership.UpdateUser(user);
+                            string stat = null;
 
-                            return RedirectToAction("Account", "Account");
+                            customMemebership.CustomUpdateUser(user, out stat);
+
+                            if (!String.IsNullOrWhiteSpace(stat))
+                            {
+                                ModelState.AddModelError("", stat);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Account", "Account");
+                            }
                         }
                         else
                         {

@@ -1044,7 +1044,7 @@ namespace Contract {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UPDATE `users` SET `name` = @name, `surname` = @surname, `address` = @address, `townID` = (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town_name AND `postal_code` LIKE @postal_code), `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login.
+        ///   Looks up a localized string similar to UPDATE `users` SET `email`=@email, `name` = @name, `surname` = @surname, `address` = @address, `townID` = (SELECT `id` FROM `towns` WHERE `town_name` LIKE @town_name AND `postal_code` LIKE @postal_code), `countryID` = (SELECT `id` FROM `countries` WHERE `name`=@country), `birthdate` = @birthdate, `sex` = @sex, `telephone` = @telephone, `comment` = @comment, `isApproved` = @isApproved  WHERE `login` = @login.
         /// </summary>
         internal static string UpdateUser {
             get {

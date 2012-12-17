@@ -1384,36 +1384,65 @@ namespace Erestauracja.Providers
         }
 
         /// <summary>
-        /// Aktualizuje dane użytkownika.
+        /// Metoda override - zawsze zwraca NotImplementedException
         /// </summary>
         /// <param name="muser">MembershipUser - CustomMembershipUser</param>
         public override void UpdateUser(MembershipUser muser)
         {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Aktualizuje dane użytkownika.
+        /// </summary>
+        /// <param name="muser">MembershipUser - CustomMembershipUser</param>
+        public void CustomUpdateUser(MembershipUser muser, out string status )
+        {
+            status = null;
             User user = GetUserFromCustomMembershipUser((CustomMembershipUser)muser);
 
-            bool value = false;
+            string useremail = GetUserNameByEmail(user.Email);
+            if (RequiresUniqueEmail && !(String.IsNullOrEmpty(useremail)))
+            {
+                if (useremail != user.Login)
+                {
+                    status = "Podany adres email jest zajęty";
+                }
+            }
 
-            try
+            if (String.IsNullOrWhiteSpace(status))
             {
-                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                using (client)
+                bool value = false;
+                try
                 {
-                    value = client.UpdateUser(user);
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.UpdateUser(user);
+                    }
+                    client.Close();
                 }
-                client.Close();
+                catch (Exception e)
+                {
+                    value = false;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "UpdateUser");
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                
+                if (value == false)
+                {
+                    status = "Nieznany błąd podczas zapisywania danych";
+                }
             }
-            catch (Exception e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "UpdateUser");
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
-                {
-                    throw e;
-                }
-            }
+
+            
         }
 
         /// <summary>

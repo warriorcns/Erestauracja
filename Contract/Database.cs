@@ -17,15 +17,15 @@ namespace Contract
         private string eventLog = "Erestauracja";
         private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
-        
-        private string ConnectionString = String.Empty;
+
+        public string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60;";//String.Empty;
       
         /// <summary>
         /// Wczytuje wartość connectionString z app.config 
         /// </summary>
         public Database()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+           // ConnectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
         }
 
         /// <summary>
@@ -1325,6 +1325,7 @@ namespace Contract
         public bool UpdateUser(User user)
         {
             MySqlCommand command = new MySqlCommand(Queries.UpdateUser);
+            command.Parameters.AddWithValue("@email", user.Email);
             command.Parameters.AddWithValue("@name", user.Name);
             command.Parameters.AddWithValue("@surname", user.Surname);
             command.Parameters.AddWithValue("@address", user.Address);

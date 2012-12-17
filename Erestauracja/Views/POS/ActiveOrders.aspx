@@ -2,6 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <meta charset="utf-8"/>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <%--<script src="../../Scripts/jquery.tools.min.js" type="text/javascript"></script>--%>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
