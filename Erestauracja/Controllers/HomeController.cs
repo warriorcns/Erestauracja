@@ -20,6 +20,15 @@ namespace Erestauracja.Controllers
     {
         public ActionResult Index()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized");
+                }
+            }
+
             List<RestaurantTop> value = null;
             Statistics stats = null;
             try
@@ -166,6 +175,14 @@ namespace Erestauracja.Controllers
 
         public ActionResult Info()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized");
+                }
+            }
             return View();
         }
 
@@ -173,6 +190,14 @@ namespace Erestauracja.Controllers
         // GET: /Home/Errors
         public ActionResult Errors()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized");
+                }
+            }
             return View();
         }
 
@@ -181,6 +206,15 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult Errors(ErrorModels model)
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 bool value = false;
@@ -216,6 +250,15 @@ namespace Erestauracja.Controllers
         // GET: /Home/ErrorSuccess
         public ActionResult ErrorSuccess()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized");
+                }
+            }
+
             return View();
         }
 

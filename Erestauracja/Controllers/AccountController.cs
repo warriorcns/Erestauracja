@@ -732,6 +732,15 @@ namespace Erestauracja.Controllers
         // GET: /Account/RegisterManager
         public ActionResult RegisterManager()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized", "Home");
+                }
+            }
+
             //ustawienie danych o płci
             List<SelectListItem> sex = new List<SelectListItem>();
             sex.Add(new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" });
@@ -773,6 +782,15 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult RegisterManager(RegisterModel model)
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized", "Home");
+                }
+            }
+
             List<Town> value = null;
             if (ModelState.IsValid)
             {
@@ -824,6 +842,7 @@ namespace Erestauracja.Controllers
                             string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
                             item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                         }
+                        ModelState.AddModelError("", status);
                     }
                     else
                     {
@@ -881,6 +900,15 @@ namespace Erestauracja.Controllers
         // GET: /Account/ExistingManager
         public ActionResult ExistingManager()
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized", "Home");
+                }
+            }
+
             return View();
         }
 
@@ -889,6 +917,15 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult ExistingManager(LogOnModel model)
         {
+            CustomRoleProvider rp = new CustomRoleProvider();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!rp.IsUserInRole(User.Identity.Name, "Klient"))
+                {
+                    return RedirectToAction("Unauthorized", "Home");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.Login, model.Password))
