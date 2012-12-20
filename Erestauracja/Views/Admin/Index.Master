@@ -1,9 +1,8 @@
-﻿<%@ Master Language="C#" MasterPageFile="~/Views/Admin/Admin.Master" AutoEventWireup="true"
-    CodeBehind="Index.master.cs" Inherits="Erestauracja.Views.Admin.Index" %>
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Index.master.cs" Inherits="Erestauracja.Views.Admin.Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <asp:ContentPlaceHolder ID="head" runat="server">
-            </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
     <div class="main">

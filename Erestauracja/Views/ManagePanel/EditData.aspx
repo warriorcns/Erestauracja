@@ -28,7 +28,11 @@
             //window.location.href = window.location.href.split('?', 1)[0];
         });
     </script>
-
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
     <div class="polaRejestracji">
         <div id="Form1" class="formaRejestracji" runat="server">
             <% using (Html.BeginForm())
@@ -47,7 +51,7 @@
                         <%: Html.LabelFor(m => m.Email)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Email)%>
+                        <%: Html.TextBoxFor(m => m.Email, new { @id = "fcs" })%>
                     </li>
                     </ul>
                 

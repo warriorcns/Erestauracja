@@ -9,13 +9,17 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    
     <h2>Wypełnij poniższy formularz oraz kliknij 'Zapisz', aby dodać nową restaurację.</h2>
     
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
     <script src="../../Scripts/jquery.price_format.1.7.js" type="text/javascript"></script>
-
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
     <script type="text/javascript">
         jQuery(function ($) {
             $("#DeliveryTimeID").mask("99:99:99");
@@ -62,7 +66,7 @@
                         <%: Html.LabelFor(m => m.Login)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.TextBoxFor(m => m.Login, new { @id = "fcs" })%>
                     </li>
                 </ul>
 

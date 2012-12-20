@@ -1,8 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Admin/Index.Master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.RegisterModel>" %>
+<asp:Content ID="Content" ContentPlaceHolderID="head" runat="server">
+    <script src="<%: Url.Content("~/Scripts/jquery.maskedinput-1.3.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jQuery.datepicker-pl.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
-    
-    
     <script type="text/javascript">
         $(function () {
             $("#Birthdate").datepicker({
@@ -13,10 +15,16 @@
         });
     </script>
     <script type="text/javascript">
-        jQuery(function ($) {
-            $("#Birthdate").mask("9999/99/99");
+        $(function () {
+            $("#Birthdate").mask("99/99/9999");
+            $("#fcs").focus();
         });
     </script>
+</asp:Content>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
+    
+    
     
 
     <div class="polaRejestracji">
@@ -33,7 +41,7 @@
                         <%: Html.LabelFor(m => m.Login) %>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.TextBoxFor(m => m.Login, new { @id = "fcs" })%>
                     </li>
                     <li class="validation-labelR">
                         <%: Html.ValidationMessageFor(m => m.Login)%>

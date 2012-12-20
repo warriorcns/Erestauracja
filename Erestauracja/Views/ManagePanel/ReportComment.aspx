@@ -1,7 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePageContent.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.ReportCommentModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
-
+    <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.stars').raty({
+                half: true,
+                path: "../../Content/images/",
+                readOnly: true,
+                score: function () { return $(this).attr('data-rating'); }
+            });
+        });      
+    </script>
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
 <% if (Model == null) %>
 <% { %>
     <h2>Pobieranie komentarza nie powiodło się. Przepraszamy za problemy, spróbuj później.</h2>
@@ -15,7 +30,7 @@
                 <span><%: Model.Date%></span>
                 <div>
                     <span>Ocena:</span>
-                    <span><%: Model.Rating%></span>
+                    <span class="stars" data-rating="<%: Model.Rating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span>
                 </div>
                 <% if (!String.IsNullOrWhiteSpace(Model.Comment)) %>
                 <% { %>
@@ -50,7 +65,7 @@
                    
                     <div class="editor-label">
                         <%: Html.LabelFor(m => m.Report) %>
-                        <%: Html.TextAreaFor(m => m.Report)%>
+                        <%: Html.TextAreaFor(m => m.Report, new { @id = "fcs" })%>
                         <%: Html.ValidationMessageFor(m => m.Report)%>
                     </div>
 

@@ -19,6 +19,7 @@
                 readOnly: true,
                 score: function () { return $(this).attr('data-rating'); }
             });
+            $("#townTB").focus(); 
         });      
     </script>
 
@@ -46,11 +47,8 @@
     function Redirect(RestaurantID) {
         var url = '<%: Url.Action("GetRequest", "Restaurant") %>';
         var data = { id: RestaurantID };
-        //alert(RestaurantID);
         if (RestaurantID.length != 0) {
             $.post(url, data, function (data) {
-                // TODO: do something with the response from the controller action
-                //alert('the value was successfully sent to the server' + str);
                 window.location.href = data.redirectToUrl;
             });
         }

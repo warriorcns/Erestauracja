@@ -14,7 +14,7 @@
                 var url = '<%: Url.Action("IsOnline", "Home") %>';
                 var data = { id: Resid };
                 $.post(url, data, function (data) {
-                    $(".resIsOnline" + Resid).text(data);
+                    $(".resIsOnline" + Resid).text("(Status: " + data + ")");
                 });
             });
         }
@@ -23,7 +23,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             callMethod();
-            setInterval("callMethod()", 60000); //600000ms = 10min
+            setInterval("callMethod()", 30000); //600000ms = 10min
         });
     </script>
 

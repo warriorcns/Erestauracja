@@ -28,7 +28,8 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
     </script>
     <script type="text/javascript">
         $(function ($) {
-            $("#Birthdate").mask("99/99/9999");      
+            $("#Birthdate").mask("99/99/9999");
+            $("#logintxb").focus();     
         });
     </script>
 
@@ -50,7 +51,7 @@ Aby dodać nową restaurację należy stworzyć konto menadżera, które umożli
                         <%: Html.LabelFor(m => m.Login) %>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.TextBoxFor(m => m.Login, new { @id = "logintxb" })%>
                     </li>
                 </ul>
                 

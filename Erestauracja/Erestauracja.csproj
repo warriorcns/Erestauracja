@@ -1235,8 +1235,14 @@
     <Content Include="Scripts\themes\classic\galleria.classic.css" />
     <Content Include="Scripts\themes\classic\galleria.classic.js" />
     <Content Include="Scripts\themes\classic\galleria.classic.min.js" />
+    <None Include="Service References\ServiceReference\Arrays2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference\Contract2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference\Erestauracja.ServiceReference.AllOrders.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1328,6 +1334,7 @@
     <Content Include="Views\Account\PasswordResetFinal.aspx" />
     <Content Include="Views\Account\QuestionAndAnswer.aspx" />
     <Content Include="Views\Account\RegisterManager.aspx" />
+    <Content Include="Views\Account\Settings.aspx" />
     <Content Include="Views\Admin\area.aspx" />
     <Content Include="Views\Admin\CreateRoles.aspx" />
     <Content Include="Views\Admin\CreateUser.aspx" />
@@ -1397,8 +1404,6 @@
     <Content Include="Views\POS\Locked.aspx" />
     <Content Include="Views\POS\OrderedProducts.aspx" />
     <Content Include="Views\POS\SalesDocuments.aspx" />
-    <Content Include="Views\POS\scrollexample.aspx" />
-    <Content Include="Views\Restaurant\areaselect.aspx" />
     <Content Include="Views\Restaurant\Comments.aspx" />
     <Content Include="Views\Restaurant\Contact.aspx" />
     <Content Include="Views\Restaurant\Delivery.aspx" />
@@ -1457,6 +1462,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service2.wsdl" />
+    <None Include="Service References\ServiceReference\service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\service4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

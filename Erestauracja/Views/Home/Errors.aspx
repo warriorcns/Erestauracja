@@ -3,7 +3,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 <h2>Podaj swój adres email oraz treść zgłoszenia, a następnie kliknij "Wyślij", aby powiadomić nas o znalexionym błędzie.</h2>
-
+    <script type="text/javascript">
+        $(function ($) {
+            $("#emailtxb").focus();
+        });
+    </script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
@@ -18,7 +22,7 @@
                     <%: Html.LabelFor(m => m.Email) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Email)%>
+                    <%: Html.TextBoxFor(m => m.Email, new { @id = "emailtxb" })%>
                     <%: Html.ValidationMessageFor(m => m.Email)%>
                 </div>
                 

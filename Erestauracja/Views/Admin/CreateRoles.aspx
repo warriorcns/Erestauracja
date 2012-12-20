@@ -2,6 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AdminPlaceHolder" runat="server">
 
+    <script type="text/javascript">
+        $(function () {
+            $("#RoleName").focus();
+        });
+    </script>
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true, "Rejestracja konta nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>

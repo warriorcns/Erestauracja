@@ -26,6 +26,7 @@
     $(function () {
         jQuery(function ($) {
             $("#Birthdate").mask("99/99/9999");
+            $("#fcs").focus();
         });
     });
     </script>
@@ -51,7 +52,7 @@
                         <%: Html.LabelFor(m => m.Email)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Email)%>
+                        <%: Html.TextBoxFor(m => m.Email, new { @id = "fcs" })%>
                     </li>
                     </ul>
                 

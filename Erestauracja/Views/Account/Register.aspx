@@ -35,16 +35,15 @@
         $(function () {
             jQuery(function ($) {
                 $("#Birthdate").mask("99/99/9999");
+                $("#logintxb").focus();
             });
         }); 
     </script>
     
     <script type="text/javascript">
         function ChoseAndSend(town, postalcode) {
-            //wstawia pola ze znacznika do textboxow
             var TownName = document.getElementById("TownName");
             var PostalCode = document.getElementById("PostalCode");
-            //tutaj potrzebujemy wklepac te wartosci do textboxow...
             TownName.value = town;
             PostalCode.value = postalcode;
         }
@@ -70,7 +69,7 @@
                         <%: Html.LabelFor(m => m.Login) %>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.TextBoxFor(m => m.Login, new { @id = "logintxb" })%>
                     </li>
                 </ul>
                 

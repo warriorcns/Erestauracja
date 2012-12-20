@@ -5,7 +5,11 @@
 </asp:Content>
 
 <asp:Content ID="changePasswordContent" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
@@ -22,7 +26,7 @@
                     <%: Html.LabelFor(m => m.OldPassword) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.OldPassword) %>
+                    <%: Html.PasswordFor(m => m.OldPassword, new { @id = "fcs" })%>
                     <%: Html.ValidationMessageFor(m => m.OldPassword) %>
                 </div>
                 

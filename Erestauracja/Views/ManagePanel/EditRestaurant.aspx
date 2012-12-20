@@ -25,7 +25,11 @@
            $('#time').mask("99:99:99");
        });
    </script>
-
+   <script type="text/javascript">
+       $(function ($) {
+           $("#fcs").focus();
+       });
+    </script>
     <div class="polaRejestracji">
 
         <div id="Form1" class="formaRejestracji" runat="server">
@@ -43,7 +47,7 @@
                         <%: Html.LabelFor(m => m.Name)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Name)%>
+                        <%: Html.TextBoxFor(m => m.Name, new { @id = "fcs" })%>
                     </li>
                 </ul>
                     <ul class="rej">

@@ -5,12 +5,16 @@
 <%@ Import Namespace="Erestauracja.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    AddEmployee
+    Dodaj pracownika
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-<h2>Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
+    <h2>Utwórz swoje konto, jeśli jeszcze go nie posiadasz.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
@@ -50,7 +54,7 @@
                         <%: Html.LabelFor(m => m.Login) %>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Login)%>
+                        <%: Html.TextBoxFor(m => m.Login, new { @id = "fcs" })%>
                     </li>
                 </ul>
                 

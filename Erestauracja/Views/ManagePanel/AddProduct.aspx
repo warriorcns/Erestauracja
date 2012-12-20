@@ -1,8 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePageContent.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.Models.AddProductModel>" %>
 <%@ Import Namespace="Erestauracja.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
-
-<% using (Html.BeginForm()) { %>
+     <script type="text/javascript">
+         $(function ($) {
+             $("#fcs").focus();
+         });
+    </script>
+    <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Dodawani produktu nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
             <fieldset>
@@ -12,7 +16,7 @@
                     <%: Html.LabelFor(m => m.ProductName)%>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.ProductName)%>
+                    <%: Html.TextBoxFor(m => m.ProductName, new { @id = "fcs" })%>
                     <%: Html.ValidationMessageFor(m => m.ProductName)%>
                 </div>
 

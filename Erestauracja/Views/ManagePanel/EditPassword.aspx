@@ -5,8 +5,13 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
     <div class="polaRejestracji">
 
         <form id="Form1" class="formaRejestracji" runat="server">
@@ -28,7 +33,7 @@
                         znaków.) 
                         </li>
                     <li class="editor-labelR">
-                        <%: Html.PasswordFor(m => m.Password)%>
+                        <%: Html.PasswordFor(m => m.Password, new { @id = "fcs" })%>
                     </li>
                 </ul>
 

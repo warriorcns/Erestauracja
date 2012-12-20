@@ -1,8 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/ManagePanel/ManagePageContent.master" Inherits="System.Web.Mvc.ViewPage<Erestauracja.ServiceReference.Category>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
-
-<% using (Html.BeginForm()) { %>
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
+    <% using (Html.BeginForm()) { %>
         <%: Html.ValidationSummary(true, "Rejestracja restauracji nie powiodła się. Popraw błędnie wypełnione pola i spróbuj ponownie.") %>
         <div>
             <fieldset>
@@ -12,7 +16,7 @@
                     <%: Html.LabelFor(m => m.CategoryName)%>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.CategoryName)%>
+                    <%: Html.TextBoxFor(m => m.CategoryName, new { @id = "fcs" })%>
                     <%: Html.ValidationMessageFor(m => m.CategoryName)%>
                 </div>
 

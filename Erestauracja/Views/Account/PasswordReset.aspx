@@ -5,8 +5,13 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript">
+        $(function ($) {
+            $("#logintxb").focus();
+        });
+    </script>
 
-<h2>Podaj swój login, a następnie kliknij 'Dalej' aby przejść do resetowania hasła.</h2>
+    <h2>Podaj swój login, a następnie kliknij 'Dalej' aby przejść do resetowania hasła.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
@@ -21,7 +26,7 @@
                     Wprowadź swój login
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBox("login")%>
+                    <%: Html.TextBox("login", null, new { @id = "logintxb" })%>
                 </div>
                 <p>
                     <input type="submit" value="Dalej"/>

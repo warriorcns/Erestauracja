@@ -6,8 +6,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Reports</h2>
-okrojony pos
+<h2>Reports - statystyki</h2>
+
 
 </asp:Content>
 

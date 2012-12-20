@@ -5,6 +5,12 @@
 </asp:Content>
 
 <asp:Content ID="loginContent" ContentPlaceHolderID="MainContent" runat="server">
+
+    <script type="text/javascript">
+        $(function ($) {
+            $("#logintxb").focus();
+        });
+    </script>
     <h2>Zaloguj się aby w pełni wykorzystać możliwości serwisu.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
@@ -23,7 +29,7 @@
                     <%: Html.LabelFor(m => m.Login) %>
                 </div>
                 <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Login)%>
+                    <%: Html.TextBoxFor(m => m.Login, new { @id = "logintxb" })%>
                     <%: Html.ValidationMessageFor(m => m.Login)%>
                 </div>
                 

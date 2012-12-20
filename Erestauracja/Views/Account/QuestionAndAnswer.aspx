@@ -7,7 +7,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Podaj odpowiedź na pytanie wybrane w czase rejestracji aby zresetować hasło.</h2>
+    <script type="text/javascript">
+        $(function ($) {
+            $("#fcs").focus();
+        });
+    </script>
+    <h2>Podaj odpowiedź na pytanie wybrane w czase rejestracji aby zresetować hasło.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
@@ -30,7 +35,7 @@
                 Odpowiedź: 
                 </div>
                 <div class="editor-field">
-                    <%= Html.TextBox("Odpowiedz") %>
+                    <%= Html.TextBox("Odpowiedz", null, new { @id = "fcs" }) %>
                 </div>
 
                 <p>
