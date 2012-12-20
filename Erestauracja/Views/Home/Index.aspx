@@ -14,7 +14,13 @@
                 var url = '<%: Url.Action("IsOnline", "Home") %>';
                 var data = { id: Resid };
                 $.post(url, data, function (data) {
-                    $(".resIsOnline" + Resid).text("(Status: " + data + ")");
+                    $(".resIsOnline" + Resid).text("(" + data + ")");
+                    if (data === "Online") {
+                        $(".resIsOnline" + Resid).css("color", "#66CC00");
+                    }
+                    else {
+                        $(".resIsOnline" + Resid).css("color", "#FF0000");
+                    }
                 });
             });
         }
