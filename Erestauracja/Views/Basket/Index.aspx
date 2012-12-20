@@ -58,7 +58,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             callMethod();
-            setInterval("callMethod()", 60000); //600000ms = 10min
+            setInterval("callMethod()", 30000); //600000ms = 10min
         });
     </script>
 
