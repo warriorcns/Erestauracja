@@ -114,9 +114,9 @@
                                { %> Komentarz do zamówienia: <%: order.Comment%><% } %></div>
                         <div>Adres dostawy: <%: order.UserAdderss %> <%: order.UserTown %> </div>
                         <div>Podsumowanie: (<%: TotalCount %> szt.) - <%: order.Price %> zł</div>
-                        <div id="print-order">
+                        <%--<div id="print-order">
                             <button>Drukuj rachunek.</button>
-                        </div>
+                        </div>--%>
                         
                         </div>
                     
