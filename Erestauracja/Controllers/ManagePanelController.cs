@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using AppLimit.CloudComputing.SharpBox;
+using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
 using Erestauracja.Authorization;
 using Erestauracja.Models;
 using Erestauracja.Providers;
-using MySql.Data.MySqlClient;
-using System.Data;
 using Erestauracja.ServiceReference;
-using System.Web.Security;
-using System.Threading;
-using System.Globalization;
-using AppLimit.CloudComputing.SharpBox;
-using System.IO;
-using AppLimit.CloudComputing.SharpBox.StorageProvider.DropBox;
 
 namespace Erestauracja.Controllers
 {

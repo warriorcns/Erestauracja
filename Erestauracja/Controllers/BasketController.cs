@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Web;
 using System.Web.Mvc;
-using Erestauracja.Models;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using Erestauracja.ServiceReference;
-using System.Configuration;
 
 namespace Erestauracja.Controllers
 {

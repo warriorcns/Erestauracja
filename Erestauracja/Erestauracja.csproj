@@ -304,7 +304,6 @@
     <Compile Include="Helpers\AllowAnonymous.cs" />
     <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\BasketModel.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ManagePanel.cs" />
     <Compile Include="Models\MapModel.cs" />
@@ -314,7 +313,6 @@
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Providers\CustomMembershipUser.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
-    <Compile Include="Queries.Designer.cs" />
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1691,11 +1689,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Queries.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference\" />

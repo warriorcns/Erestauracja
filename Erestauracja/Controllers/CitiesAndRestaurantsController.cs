@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
-using Erestauracja.Models;
-using Erestauracja.Providers;
-using System.Web.Mvc.Html;
-using Erestauracja.Authorization;
 using Erestauracja.ServiceReference;
-using System.Net;
-using System.Globalization;
-using Jmelosegui.Mvc.Controls;
 
 namespace Erestauracja.Controllers
 {

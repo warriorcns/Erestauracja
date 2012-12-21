@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Erestauracja.Authorization;
-using Erestauracja.Providers;
-using Erestauracja.Models;
 using System.Web.Security;
+using Erestauracja.Authorization;
+using Erestauracja.Models;
+using Erestauracja.Providers;
 using Erestauracja.ServiceReference;
-using Erestauracja.Helpers;
 
 namespace Erestauracja.Controllers
 {
