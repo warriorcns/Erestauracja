@@ -84,10 +84,10 @@ namespace Erestauracja.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                
+                to += " 23:59:59";
                 DateTime fromm = DateTime.Parse(from);
                 DateTime too = DateTime.Parse(to);
-                
+
                 ViewData["from"] = fromm;
                 ViewData["to"] = too;
 
