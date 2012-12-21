@@ -217,6 +217,7 @@ namespace Erestauracja.Controllers
                                 string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
                                 item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                             }
+                            ModelState.AddModelError("", status);
                         }
                         else
                         {
@@ -575,6 +576,7 @@ namespace Erestauracja.Controllers
                                     string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
                                     item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                                 }
+                                ModelState.AddModelError("", status);
                             }
                             else
                             {
