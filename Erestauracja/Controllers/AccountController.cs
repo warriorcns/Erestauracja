@@ -152,74 +152,81 @@ namespace Erestauracja.Controllers
             List<Town> value = null;
             if (ModelState.IsValid)
             {
-                string status = String.Empty;
+                if (DateTime.Today.AddYears(-18) >= model.Birthdate)
+                {
+                    string status = String.Empty;
 
-                try
-                {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
+                    try
                     {
-                        value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                if (value == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                else
-                {
-                    if (value.Count == 1)//edytuj usera
-                    {
-                        CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                        CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
-                        if (user != null)
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
                         {
-                            user.Email = model.Email;
-                            user.Name = model.Name;
-                            user.Surname = model.Surname;
-                            user.Address = model.Address;
-                            user.Town = model.Town;
-                            user.PostalCode = model.PostalCode;
-                            user.Country = model.Country;
-                            user.Birthdate = model.Birthdate;
-                            user.Sex = model.Sex;
-                            user.Telephone = model.Telephone;
-
-                            string stat = null;
-
-                            customMemebership.CustomUpdateUser(user, out stat);
-
-                            if (!String.IsNullOrWhiteSpace(stat))
+                            value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                    }
+                    if (value == null)
+                    {
+                        ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                    }
+                    else
+                    {
+                        if (value.Count == 1)//edytuj usera
+                        {
+                            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                            CustomMembershipUser user = (CustomMembershipUser)customMemebership.GetUser(User.Identity.Name, true);
+                            if (user != null)
                             {
-                                ModelState.AddModelError("", stat);
+                                user.Email = model.Email;
+                                user.Name = model.Name;
+                                user.Surname = model.Surname;
+                                user.Address = model.Address;
+                                user.Town = model.Town;
+                                user.PostalCode = model.PostalCode;
+                                user.Country = model.Country;
+                                user.Birthdate = model.Birthdate;
+                                user.Sex = model.Sex;
+                                user.Telephone = model.Telephone;
+
+                                string stat = null;
+
+                                customMemebership.CustomUpdateUser(user, out stat);
+
+                                if (!String.IsNullOrWhiteSpace(stat))
+                                {
+                                    ModelState.AddModelError("", stat);
+                                }
+                                else
+                                {
+                                    return RedirectToAction("Account", "Account");
+                                }
                             }
                             else
                             {
-                                return RedirectToAction("Account", "Account");
+                                ModelState.AddModelError("", "Edycja danych nie powiodła się");
+                            }
+                        }
+                        else if (value.Count > 1)//wczytaj miasta do mapki
+                        {
+                            foreach (Town item in value)
+                            {
+                                string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+                                item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Edycja danych nie powiodła się");
+                            ModelState.AddModelError("", status);
                         }
                     }
-                    else if (value.Count > 1)//wczytaj miasta do mapki
-                    {
-                        foreach (Town item in value)
-                        {
-                            string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
-                            item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", status);
-                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Użytkownik musi być pełnoletni");
                 }
             }
 
@@ -515,60 +522,74 @@ namespace Erestauracja.Controllers
         {
             List<Town> value = null;
             if (ModelState.IsValid)
-            { 
-                string status = String.Empty;
+            {
+                if (!(model.Login.Contains('|') || model.Login.Contains(',')))
+                {
+                    if (DateTime.Today.AddYears(-18) >= model.Birthdate)
+                    {
+                        string status = String.Empty;
 
-                try
-                {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
-                    {
-                        value = new List<Town>(client.GetTowns(out status, model.Town,model.PostalCode));
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                if (value == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                else
-                {
-                    if (value.Count == 1)//dodaj usera
-                    {
-                        MembershipCreateStatus createStatus;
-                        CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                        CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
-                        if (user != null)
+                        try
                         {
-                            CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                            role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                            using (client)
+                            {
+                                value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                            }
+                            client.Close();
                         }
-                        if (createStatus == MembershipCreateStatus.Success)
+                        catch (Exception e)
                         {
-                            FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
-                            return RedirectToAction("Index", "Home");
+                            ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                        }
+                        if (value == null)
+                        {
+                            ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
                         }
                         else
                         {
-                            ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                        }
-                    }
-                    else if (value.Count > 1)//wczytaj miasta do mapki
-                    {
-                        foreach (Town item in value)
-                        {
-                            string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
-                            item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                            if (value.Count == 1)//dodaj usera
+                            {
+                                MembershipCreateStatus createStatus;
+                                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                                if (user != null)
+                                {
+                                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Klient" });
+                                }
+                                if (createStatus == MembershipCreateStatus.Success)
+                                {
+                                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
+                                    return RedirectToAction("Index", "Home");
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                                }
+                            }
+                            else if (value.Count > 1)//wczytaj miasta do mapki
+                            {
+                                foreach (Town item in value)
+                                {
+                                    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+                                    item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                                }
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", status);
+                            }
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("", status);
+                        ModelState.AddModelError("", "Użytkownik musi być pełnoletni");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Login nie może zawierać znaków specjalnych '|' oraz ','");
                 }
             }
 
@@ -794,60 +815,74 @@ namespace Erestauracja.Controllers
             List<Town> value = null;
             if (ModelState.IsValid)
             {
-                string status = String.Empty;
-
-                try
+                if (!(model.Login.Contains('|') || model.Login.Contains(',')))
                 {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
+                    if (DateTime.Today.AddYears(-18) >= model.Birthdate)
                     {
-                        value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
-                    }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                if (value == null)
-                {
-                    ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
-                }
-                else
-                {
-                    if (value.Count == 1)//Dodaje menadżera
-                    {
-                        MembershipCreateStatus createStatus;
-                        CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-                        CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
-                        if (user != null)
+                        string status = String.Empty;
+                        try
                         {
-                            CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
-                            role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Menadżer" });
+                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                            using (client)
+                            {
+                                value = new List<Town>(client.GetTowns(out status, model.Town, model.PostalCode));
+                            }
+                            client.Close();
                         }
-                        if (createStatus == MembershipCreateStatus.Success)
+                        catch (Exception e)
                         {
-                            FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
-                            return RedirectToAction("Index", "ManagePanel");
+                            ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
+                        }
+                        if (value == null)
+                        {
+                            ModelState.AddModelError("", "Pobieranie miast nie powiodło się.");
                         }
                         else
                         {
-                            ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                            if (value.Count == 1)//Dodaje menadżera
+                            {
+
+                                MembershipCreateStatus createStatus;
+                                CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+                                CustomMembershipUser user = customMemebership.CreateUser(model.Login, model.Password, model.Email, model.Name, model.Surname, model.Address, value[0].ID, model.Country, model.Birthdate, model.Sex, model.Telephone, model.Question, model.Answer, true, out createStatus);
+                                if (user != null)
+                                {
+                                    CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
+                                    role.AddUsersToRoles(new string[] { user.Login }, new string[] { "Menadżer" });
+                                }
+                                if (createStatus == MembershipCreateStatus.Success)
+                                {
+                                    FormsAuthentication.SetAuthCookie(model.Login, false /* createPersistentCookie */);
+                                    return RedirectToAction("Index", "ManagePanel");
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                                }
+                            }
+                            else if (value.Count > 1)//wczytaj miasta do mapki
+                            {
+                                foreach (Town item in value)
+                                {
+                                    string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
+                                    item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
+                                }
+                                ModelState.AddModelError("", status);
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", status);
+                            }
                         }
-                    }
-                    else if (value.Count > 1)//wczytaj miasta do mapki
-                    {
-                        foreach (Town item in value)
-                        {
-                            string onClick = String.Format(" \"ChoseAndSend('{0}', '{1}')\" ", item.TownName, item.PostalCode);
-                            item.InfoWindowContent = item.TownName + " " + item.PostalCode + "</br>" + "<a href=" + "#" + " onclick=" + onClick + " class=" + "button" + ">" + "Wybierz." + "</a>";
-                        }
-                        ModelState.AddModelError("", status);
                     }
                     else
                     {
-                        ModelState.AddModelError("", status);
+                        ModelState.AddModelError("", "Użytkownik musi być pełnoletni");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Login nie może zawierać znaków specjalnych '|' oraz ','");
                 }
             }
 

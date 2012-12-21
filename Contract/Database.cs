@@ -4764,7 +4764,7 @@ namespace Contract
 
                     if (towns.Count > 0)
                     {
-                        status = "Nie znaleziono podanego miasta, ale znaleziono podobne (po szukaniu literówek).";
+                        status = "Nie znaleziono podanego miasta, ale znaleziono podobne.";
                         return towns;
                     }
                     else
