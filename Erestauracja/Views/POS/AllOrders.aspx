@@ -106,6 +106,10 @@
                         </div>
                         <br />
                         <div>Data zamówienia: <%: order.OrderDate %></div>
+                        <% if (order.Status == "Zakończone") %>
+                        <% { %>
+                                <div>Data zakończenia: <%: order.FinishDate %></div>
+                        <% } %>
                         <div>Sposób zapłaty: <% if (order.Payment == "cash")
                                                 { %>Gotówka<%}
                                                 else if (order.Payment.Contains("PayPal")) 

@@ -6,7 +6,7 @@
 <% { %>
     <h2>Twoje zamówienie - wybierz sopsób zapłaty</h2>
     <br />
-    <%: Model.DisplayName%> (czyOnline?) Razem: <%: Model.TotalPriceRest%> zł
+    <%: Model.DisplayName%> Razem: <%: Model.TotalPriceRest%> zł
         <div>
             <div>Kontakt: <%: Model.Telephone%></div>
             <div>Przewidywany czas dostawy: <%: Model.DeliveryTime%></div>
