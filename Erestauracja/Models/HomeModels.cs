@@ -15,12 +15,11 @@ namespace Erestauracja.Models
 
     public class ErrorModels
     {
-        [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Wpisz treść zgłoszenia.")]
         [DataType(DataType.Text)]
         [Display(Name = "Treść zgłoszenia")]
         public string Text { get; set; }

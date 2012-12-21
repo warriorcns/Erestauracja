@@ -6,6 +6,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type="text/javascript">
+    $(function ($) {
+        $("#emailtxb").focus();
+    });
+    </script>
+
     <h2>Podaj swój adres email oraz treść zgłoszenia, a następnie kliknij "Wyślij", aby powiadomić nas o znalexionym błędzie.</h2>
 
     <script src="<%: Url.Content("~/Scripts/jquery.validate.min.js") %>" type="text/javascript"></script>
@@ -18,21 +24,34 @@
             <fieldset>
                 <legend>Formularz zgłoszenia</legend>
 
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Email) %>
-                </div>
-                <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Email)%>
-                    <%: Html.ValidationMessageFor(m => m.Email)%>
-                </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Text) %>
-                </div>
-                <div class="editor-field">
-                    <%: Html.TextAreaFor(m => m.Text, 15, 40, null)%>
-                    <%: Html.ValidationMessageFor(m => m.Text)%>
-                </div>
+                <% if (!User.Identity.IsAuthenticated) %>
+                <% { %>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Email)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextBoxFor(m => m.Email, new { @id = "emailtxb" })%>
+                        <%: Html.ValidationMessageFor(m => m.Email)%>
+                    </div>
+
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Text)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextAreaFor(m => m.Text, 15, 40, null)%>
+                        <%: Html.ValidationMessageFor(m => m.Text)%>
+                    </div>
+                <% } %>
+                <% else %>
+                <% { %>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Text)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextAreaFor(m => m.Text, 15, 40, new { @id = "emailtxb" })%>
+                        <%: Html.ValidationMessageFor(m => m.Text)%>
+                    </div>
+                <% } %>
                 
                 <p>
                     <input type="submit" value="Wyślij"/>

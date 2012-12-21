@@ -35,28 +35,39 @@ namespace Erestauracja.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool value = false;
-                try
+                if (User.Identity.IsAuthenticated)
                 {
-                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                    using (client)
+                    model.Email = "User: " + User.Identity.Name;
+                }
+                if (!String.IsNullOrWhiteSpace(model.Email))
+                {
+                    bool value = false;
+                    try
                     {
-                        value = client.SendError(model.Email, model.Text);
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.SendError(model.Email, model.Text);
+                        }
+                        client.Close();
                     }
-                    client.Close();
-                }
-                catch (Exception e)
-                {
-                    value = false;
-                }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
 
-                if (value == false)
-                {
-                    ModelState.AddModelError("", "Wysyłanie zgłoszenia nie powiodło się.");
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Wysyłanie zgłoszenia nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("ErrorSuccess", "ManagePanel");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("ErrorSuccess", "ManagePanel");
+                    ModelState.AddModelError("", "Nie podano adresu email.");
                 }
             }
 

@@ -40,14 +40,16 @@
                 </div>
                 <br />
             <% } %>
-            <div>Komentarz do zamówienia
-                <%: Html.TextAreaFor(m => m.Comment, new { id = "comment" })%>
+            <div>Komentarz do zamówienia</div>
+            <div><%: Html.TextAreaFor(m => m.Comment, new { id = "comment" })%></div>
+            <br />
+            <div> Zapłać za pomocą: </div>
+            <br />
+            <div>
+            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new { @id = "acash" })%>
             </div>
             <br />
-            <div> Wybierz typ płatności: </div>
-            
-            <%: Html.ActionLink("Płatność gotówką przy odbiorze", "Cash", "Basket", new { com = "koment", id = (int)ViewData["id"], res = Model.RestaurantId }, new { @id = "acash" })%>
-            <br />
+            <div>lub</div>
             <br />
             <%: Html.ActionLink("Zaplac paypalem", "PostToPaypal", "PayPal", new { com = "koment", id = (int)ViewData["id"], resid = Model.RestaurantId }, new { @id = "paypal", @class = "paypalbutton" })%>
             <br />

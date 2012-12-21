@@ -18,21 +18,38 @@
             <fieldset>
                 <legend>Formularz zgłoszenia</legend>
 
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Email) %>
-                </div>
-                <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Email, new { @id = "emailtxb" })%>
-                    <%: Html.ValidationMessageFor(m => m.Email)%>
-                </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Text) %>
-                </div>
-                <div class="editor-field">
-                    <%: Html.TextAreaFor(m => m.Text, 15, 40, null)%>
-                    <%: Html.ValidationMessageFor(m => m.Text)%>
-                </div>
+                <% if (!User.Identity.IsAuthenticated) %>
+                <% { %>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Email)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextBoxFor(m => m.Email, new { @id = "emailtxb" })%>
+                    </div>
+
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Text)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextAreaFor(m => m.Text, 15, 40, null)%>
+                    </div>
+                    <div>
+                        <%: Html.ValidationMessageFor(m => m.Text)%>
+                    </div>
+                <% } %>
+                <% else %>
+                <% { %>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(m => m.Text)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.TextAreaFor(m => m.Text, 15, 40, new { @id = "emailtxb" })%>
+                        
+                    </div>
+                    <div>
+                        <%: Html.ValidationMessageFor(m => m.Text)%>
+                    </div>
+                <% } %>
                 
                 <p>
                     <input type="submit" value="Wyślij"/>
