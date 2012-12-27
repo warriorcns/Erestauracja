@@ -1482,7 +1482,7 @@ namespace Contract
             int failureCount = 0;
 
             DataSet ds = new DataSet();
-            ds = ExecuteQuery(command, "UpdateFailureCount");
+            ds = ExecuteQuery(command, "GetFailureCount");
 
             if (ds.Tables.Count > 0)
             {

@@ -223,7 +223,7 @@
 
 
                 <p>
-                    <input type="submit" value="Zatwierdz zmiany" />
+                    <input type="submit" value="Zatwierdź zmiany" />
                 </p>
             </fieldset>
         </div>

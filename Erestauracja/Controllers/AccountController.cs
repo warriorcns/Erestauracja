@@ -417,7 +417,8 @@ namespace Erestauracja.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.Login, model.Password))
+                CustomMembershipProvider cmp = new CustomMembershipProvider();
+                if (cmp.ValidateUser(model.Login, model.Password))
                 {
                     CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
                     if (role.IsUserInRole(model.Login, "Menadżer"))

@@ -2896,11 +2896,12 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
+        /*
         //
         // GET: /ManagePanel/DeleteCategory
         public ActionResult DeleteCategory(int id, int cat)
         {
-            if (id > 0 && cat >0)
+            if (id > 0 && cat > 0)
             {
                 ViewData["id"] = id;
                 bool value = false;
@@ -2909,7 +2910,7 @@ namespace Erestauracja.Controllers
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                      //  value = client.DeleteCategory(User.Identity.Name, id, cat);
+                        //  value = client.DeleteCategory(User.Identity.Name, id, cat);
                     }
                     client.Close();
                 }
@@ -2924,11 +2925,12 @@ namespace Erestauracja.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("EditMenuPage", new { id = id});
+                    return RedirectToAction("EditMenuPage", new { id = id });
                 }
             }
             return RedirectToAction("Restaurant");
         }
+         * */
 
         //
         // GET: /ManagePanel/AddProduct

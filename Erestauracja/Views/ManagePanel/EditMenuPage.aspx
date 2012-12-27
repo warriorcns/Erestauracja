@@ -66,7 +66,7 @@
                            <% } %>
                             
                             <p> <%: Html.ActionLink("edytuj", "EditCategoryPage", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>
-                            <p> <%: Html.ActionLink("usun", "DeleteCategory", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>
+                            <%--<p> <%: Html.ActionLink("usun", "DeleteCategory", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>--%>
 	                    </div>
                 <% } %>
 	        </div>

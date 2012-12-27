@@ -466,7 +466,7 @@ namespace Erestauracja.Providers
 
             if (answer == null && RequiresQuestionAndAnswer)
             {
-                UpdateFailureCount(login, "passwordAnswer");
+                //UpdateFailureCount(login, "passwordAnswer");
 
                 throw new ProviderException("Password answer required for password reset.");
             }
@@ -515,7 +515,7 @@ namespace Erestauracja.Providers
                 {
                     if (RequiresQuestionAndAnswer && !CheckPassword(answer, value.Answer))
                     {
-                        UpdateFailureCount(login, "passwordAnswer");
+                       // UpdateFailureCount(login, "passwordAnswer");
                         throw new MembershipPasswordException("Incorrect password answer.");
                     }
 
@@ -1525,7 +1525,7 @@ namespace Erestauracja.Providers
                 }
                 else
                 {
-                    UpdateFailureCount(login, "password");
+                 //   UpdateFailureCount(login, "password");
                 }
             }
 

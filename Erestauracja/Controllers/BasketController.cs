@@ -170,11 +170,11 @@ namespace Erestauracja.Controllers
             foreach(BasketProduct item in rest.Products)
             {
                 count += item.Count;
-            }
-            if (count > 20)
-            {
-                ViewData["error"] = "Maksymalna ilość zamówionych produktów w jednym zamówieniu to 20";
-                return View();
+                if (count > 20)
+                {
+                    ViewData["error"] = "Maksymalna ilość zamówionych produktów w jednym zamówieniu to 20";
+                    return View();
+                }
             }
 
             //wysyłanie zamówienia

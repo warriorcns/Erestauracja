@@ -432,10 +432,11 @@
 		click			: undefined,
 		half			: false,
 		halfShow		: true,
-		hints			: ['bad', 'poor', 'regular', 'good', 'gorgeous'],
+		hints			: ['bardzo s³abo', 's³abo', 'œrednio', 'dobrze', 'super!'],
 		iconRange		: undefined,
 		mouseover		: undefined,
-		noRatedMsg		: 'not rated yet',
+		noRatedMsg		: 'bardzo s³abo',
+//        not rated yet
 		number			: 5,
 		path			: 'img/',
 		precision		: false,
