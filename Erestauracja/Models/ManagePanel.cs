@@ -324,11 +324,6 @@ namespace Erestauracja.Models
 
     public class ProductModel
     {
-       // string priceOption = null;
-      //  DateTime creationDate = new DateTime();
-      //  bool isAvailable = false;
-      //  bool isEnabled = false;
-
         [HiddenInput]
         public int ProductId { get; set; }
 

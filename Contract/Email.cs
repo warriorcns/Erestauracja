@@ -18,11 +18,20 @@ namespace Contract
         int port = 587;
         System.Net.NetworkCredential credential = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Email()
         {
             //zczytać konfiguracje z config
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool SendPassword(string email, string password)
         {
             SmtpClient klient = smtp;
@@ -55,6 +64,12 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public bool SendError(string email, string text)
         {
             SmtpClient klient = smtp;
@@ -87,6 +102,16 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="resId"></param>
+        /// <param name="userLogin"></param>
+        /// <param name="comment"></param>
+        /// <param name="report"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
         public bool SendReportComment(int id, int resId, string userLogin, string comment, string report, string login)
         {
             SmtpClient klient = smtp;
@@ -120,6 +145,12 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public bool SendOrder(string email, Order order)
         {
             SmtpClient klient = smtp;

@@ -590,6 +590,37 @@ namespace Contract
             return u;
         }
 
+        /// <summary>
+        /// Pobiera dane z MySqlDataReader i zwraca obiekt typu Category
+        /// </summary>
+        /// <param name="reader">MySqlDataReader</param>
+        /// <returns>Category</returns>
+        private Category GetCategoriesFromReader(MySqlDataReader reader)
+        {
+            int id = reader.GetInt32(0);
+            int restaurantID = reader.GetInt32(1);
+            string categoryName = reader.GetString(2);
+            string categoryDescription = null;
+            if (!reader.IsDBNull(3)) categoryDescription = reader.GetString(3);
+            string priceOption = null;
+            if (!reader.IsDBNull(4)) priceOption = reader.GetString(4);
+            string nonPriceOption = null;
+            if (!reader.IsDBNull(5)) nonPriceOption = reader.GetString(5);
+            string nonPriceOption2 = null;
+            if (!reader.IsDBNull(6)) nonPriceOption2 = reader.GetString(6);
+
+            Category u = new Category();
+            u.CategoryID = id;
+            u.RestaurantID = restaurantID;
+            u.CategoryName = categoryName;
+            u.CategoryDescription = categoryDescription;
+            u.PriceOption = priceOption;
+            u.NonPriceOption = nonPriceOption;
+            u.NonPriceOption2 = nonPriceOption2;
+
+            return u;
+        }
+
         #endregion
 
         #region dodatkowe klasy pomocnicze
@@ -1582,6 +1613,12 @@ namespace Contract
 
         #region Role
 
+        /// <summary>
+        /// Dodaje użytkowników o danym loginie do ról
+        /// </summary>
+        /// <param name="logins">Loginy użytkowników</param>
+        /// <param name="rolenames">Role</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddUsersToRoles(string[] logins, string[] rolenames)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -1655,6 +1692,11 @@ namespace Contract
             return true;
         }
 
+        /// <summary>
+        /// Tworzy nową role
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool CreateRole(string rolename)
         {
             MySqlCommand command = new MySqlCommand(Queries.CreateRole);
@@ -1669,6 +1711,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Usuwa role oraz przypisania użytkowników do tej roli
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool DeleteRole(string rolename)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -1741,6 +1788,10 @@ namespace Contract
             return true;
         }
 
+        /// <summary>
+        /// Pobiera wszystkie role
+        /// </summary>
+        /// <returns>Nazwy ról oddzielonych przecinkami</returns>
         public string GetAllRoles()
         {
             string tmpRoleNames = "";
@@ -1798,6 +1849,11 @@ namespace Contract
             return tmpRoleNames;
         }
 
+        /// <summary>
+        /// Pobiera role przypisane do danego użytkownika
+        /// </summary>
+        /// <param name="login">Login uzytkownika</param>
+        /// <returns>Nazwy ról oddzielone przecinkami</returns>
         public string GetRolesForUser(string login)
         {
             string tmpRoleNames = "";
@@ -1857,6 +1913,11 @@ namespace Contract
             return tmpRoleNames;
         }
 
+        /// <summary>
+        /// Pobiera loginy użytkowników przypisanych do danej roli
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>Loginy użytkowników oddzielone przecinkami</returns>
         public string GetUsersInRole(string rolename)
         {
             string tmpUserNames = "";
@@ -1916,6 +1977,12 @@ namespace Contract
             return tmpUserNames;
         }
 
+        /// <summary>
+        /// Sprawdza czy użytkownik posiada daną role
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli użytkownik posiada daną role</returns>
         public bool IsUserInRole(string login, string rolename)
         {
             MySqlCommand command = new MySqlCommand(Queries.IsUserInRole);
@@ -1932,6 +1999,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Usuwa przypisania użytkowników do ról
+        /// </summary>
+        /// <param name="logins">Loginy użytkowników</param>
+        /// <param name="rolenames">Nazwy ról</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool RemoveUsersFromRoles(string[] logins, string[] rolenames)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2005,6 +2078,11 @@ namespace Contract
             return true;
         }
 
+        /// <summary>
+        /// Sprawdza istnienie danej roli
+        /// </summary>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <returns>True jeśli rola istnieje</returns>
         public bool RoleExists(string rolename)
         {
             MySqlCommand command = new MySqlCommand(Queries.RoleExists);
@@ -2020,6 +2098,16 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera loginy użytkowników przypisanych do danej roli
+        /// </summary>
+        /// <remarks>
+        /// Jeśli loginToMatch jest pusty lub null to metoda zwróci wszystkich użytkowników w danej roli
+        /// Jeśli loginToMatch jest podany metoda zwróci uzytkowników których login rozpoczyna się do loginToMatch
+        /// </remarks>
+        /// <param name="rolename">Nazwa roli</param>
+        /// <param name="loginToMatch">Login do dopasowania</param>
+        /// <returns>Loginy użytkowników oddzielone przecinkami</returns>
         public string FindUsersInRole(string rolename, string loginToMatch)
         {
             string tmpUserNames = "";
@@ -2089,6 +2177,26 @@ namespace Contract
 
         #region Manage restaurant
 
+        /// <summary>
+        /// Dodawanie nowej restauracji
+        /// </summary>
+        /// <param name="login">Login restauracji</param>
+        /// <param name="email">Emali</param>
+        /// <param name="password">Hasło</param>
+        /// <param name="passwordQuestion">Pytanie do odzyskiwania hasła</param>
+        /// <param name="passwordAnswer">Odpowiedz do pytania do odzyskiwania hasła</param>
+        /// <param name="name">Nazwa firmy</param>
+        /// <param name="displayName">Nazwa wyświetlana</param>
+        /// <param name="address">Adres lokalu</param>
+        /// <param name="townID">Id miasta</param>
+        /// <param name="country">Kraj</param>
+        /// <param name="telephone">Telefon</param>
+        /// <param name="nip">Numer NIP</param>
+        /// <param name="regon">Numer REGON</param>
+        /// <param name="deliveryTime">Czas dostawy</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="deliveryPrice">Cena dostawy</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddRestaurant(string login, string email, string password, string passwordQuestion, string passwordAnswer, string name, string displayName, string address, int townID, string country, string telephone, string nip, string regon, string deliveryTime, string managerLogin, decimal deliveryPrice)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2300,6 +2408,23 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Edycja danych restauracji
+        /// </summary>
+        /// <param name="name">Nazwa firmy</param>
+        /// <param name="displayName">Nazwa wyświetlana</param>
+        /// <param name="address">Adres lokalu</param>
+        /// <param name="townId">Id miasta</param>
+        /// <param name="country">Kraj</param>
+        /// <param name="telephone">Telefon</param>
+        /// <param name="nip">Numer NIP</param>
+        /// <param name="regon">Numer REGON</param>
+        /// <param name="deliveryTime">Czas dostawy</param>
+        /// <param name="isEnabled">Czy restauracja jest widoczna dla klientów</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="deliveryPrice">Cena dostawy</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2400,6 +2525,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera restauracje przypisane do danego menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>Lista typu Restaurant</returns>
         public List<Restaurant> GetRestaurantsByManagerLogin(string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2463,6 +2593,12 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera restauracje o danym id, przypisaną do danego menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu RestaurantInfo</returns>
         public RestaurantInfo GetRestaurant(string managerLogin, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2542,6 +2678,12 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony głównej restauracji dla menadżera 
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu MainPageContent</returns>
         public MainPageContent GetMainPage(string managerLogin, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2611,6 +2753,15 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Edycja zawartości strony głównej restauracji dla menadżera 
+        /// </summary>
+        /// <param name="description">Treść opisu</param>
+        /// <param name="foto">Pole nie jest używane, zostanie usunięte przy okazji updateu</param>
+        /// <param name="specialOffers">Treść ofert specjalnych</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditMainPage(string description, string foto, string specialOffers, int id, string managerLogin)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditMainPage);
@@ -2629,6 +2780,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony dowóz restauracji dla menadżera 
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu DeliveryPageContent</returns>
         public DeliveryPageContent GetDeliveryPage(string managerLogin, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2696,6 +2853,13 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Edycja zawartości strony dowóz restauracji dla menadżera
+        /// </summary>
+        /// <param name="delivery">Treść dowozu</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditDeliveryPage(string delivery, int id, string managerLogin)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditDeliveryPage);
@@ -2713,6 +2877,12 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony wydarzenia restauracji dla menadżera 
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu EventsPageContent</returns>
         public EventsPageContent GetEventsPage(string managerLogin, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2780,6 +2950,13 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Edycja zawartości strony wydarzenia restauracji dla menadżera
+        /// </summary>
+        /// <param name="events">Treść wydarzeń</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditEventsPage(string events, int id, string managerLogin)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditEventsPage);
@@ -2797,6 +2974,12 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony kontakt restauracji dla menadżera 
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu ContactPageContent</returns>
         public ContactPageContent GetContactPage(string managerLogin, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2864,6 +3047,13 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Edycja zawartości strony kontakt restauracji dla menadżera
+        /// </summary>
+        /// <param name="contact">Treść kontaktu</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditContactPage(string contact, int id, string managerLogin)
         {
             MySqlCommand command = new MySqlCommand(Queries.EditContactPage);
@@ -2881,6 +3071,17 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Dodaje nową kategorię
+        /// </summary>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="categoryName">Nazwa kategorii</param>
+        /// <param name="categoryDescription">Opis kategorii</param>
+        /// <param name="priceOption">Opcje cenowe</param>
+        /// <param name="nonPriceOption">Opcje nie cenowe</param>
+        /// <param name="nonPriceOption2">Opcje nie cenowe 2</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddCategory(int restaurantID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2, string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -2956,6 +3157,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera kategorie danej restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <returns>Lista typu Category</returns>
         public List<Category> GetCategories(string managerLogin, int restaurantID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -3078,32 +3285,13 @@ namespace Contract
             return null;
         }
 
-        private Category GetCategoriesFromReader(MySqlDataReader reader)
-        {
-            int id = reader.GetInt32(0);
-            int restaurantID = reader.GetInt32(1);
-            string categoryName = reader.GetString(2);
-            string categoryDescription = null;
-            if (!reader.IsDBNull(3)) categoryDescription = reader.GetString(3);
-            string priceOption = null;
-            if (!reader.IsDBNull(4)) priceOption = reader.GetString(4);
-            string nonPriceOption = null;
-            if (!reader.IsDBNull(5)) nonPriceOption = reader.GetString(5);
-            string nonPriceOption2 = null;
-            if (!reader.IsDBNull(6)) nonPriceOption2 = reader.GetString(6);
-
-            Category u = new Category();
-            u.CategoryID = id;
-            u.RestaurantID = restaurantID;
-            u.CategoryName = categoryName;
-            u.CategoryDescription = categoryDescription;
-            u.PriceOption = priceOption;
-            u.NonPriceOption = nonPriceOption;
-            u.NonPriceOption2 = nonPriceOption2;
-
-            return u;
-        }
-
+        /// <summary>
+        /// Pobiera dane kategori dla menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="categoryID">Id kategorii</param>
+        /// <returns>Obiekt typu Category</returns>
         public Category GetCategory(string managerLogin, int restaurantID, int categoryID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -3226,6 +3414,18 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Edytuje kategorie
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="categoryID">Id kategorii</param>
+        /// <param name="categoryName">Nazwa kategorii</param>
+        /// <param name="categoryDescription">Opis kategorii</param>
+        /// <param name="priceOption">Opcja cenowa</param>
+        /// <param name="nonPriceOption">Opcja niecenowa</param>
+        /// <param name="nonPriceOption2">Opcja niecenowa 2</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditCategory(string managerLogin, int restaurantID, int categoryID, string categoryName, string categoryDescription, string priceOption, string nonPriceOption, string nonPriceOption2)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -3387,6 +3587,13 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Usuwa kategorie
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="categoryID">Id kategorii</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool DeleteCategory(string managerLogin, int restaurantID, int categoryID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -3461,6 +3668,16 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Dodawanie nowego produktu
+        /// </summary>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="categoryID">Id kategorii</param>
+        /// <param name="productName">Nazwa produktu</param>
+        /// <param name="productDescription">Opis produktu</param>
+        /// <param name="price">Cena</param>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddProduct(int restaurantID, int categoryID, string productName, string productDescription, string price, string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -3779,6 +3996,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera menu restauracji dla menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <returns>Lista typu Menu</returns>
         public List<Menu> GetMenuManager(string managerLogin, int restaurantID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4010,6 +4233,13 @@ namespace Contract
             return null;
         }
 
+        /// <summary>
+        /// Pobiera dane produktu dla menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="productID">Id produktu</param>
+        /// <returns>Obiekt typu Product</returns>
         public Product GetProduct(string managerLogin, int restaurantID, int productID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4132,6 +4362,18 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Edytuje produkt
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <param name="id">Id produktu</param>
+        /// <param name="categoryID">Id kategorii</param>
+        /// <param name="productName">Nazwa produktu</param>
+        /// <param name="productDescription">Opis produktu</param>
+        /// <param name="price">Cena</param>
+        /// <param name="isAvailable">Czy widoczny dla klientów</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool EditProduct(string managerLogin, int restaurantID, int id, int categoryID, string productName, string productDescription, string price, bool isAvailable)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4221,6 +4463,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera pracowników przypisanych do restauracji danego menadżera
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <returns>Lista typu Presonnel</returns>
         public List<Presonnel> GetPersonnel(string managerLogin)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4311,6 +4558,12 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Dodaje pracownika do restauracji
+        /// </summary>
+        /// <param name="userId">Id użytkownika</param>
+        /// <param name="restaurantId">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddUserToRestaurant(int userId, int restaurantId)
         {
             MySqlCommand command = new MySqlCommand(Queries.AddUserToRestaurant);
@@ -4328,6 +4581,11 @@ namespace Contract
                 return false;
         }
 
+        /// <summary>
+        /// Pobiera dane o zawartości koszyka
+        /// </summary>
+        /// <param name="koszyk">Zawartość koszyka z cookie</param>
+        /// <returns>Obiekt typu BasketOut</returns>
         public BasketOut GetBasket(string koszyk)
         {
             BasketOut basket = new BasketOut();
@@ -4480,6 +4738,12 @@ namespace Contract
             return basket;
         }
 
+        /// <summary>
+        /// Sprawdza czy menadżer jest właścicielem restauracji
+        /// </summary>
+        /// <param name="login">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli jest właścicielem</returns>
         public bool IsRestaurantOwner(string login, int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4545,6 +4809,10 @@ namespace Contract
 
         #region Ogólne
 
+        /// <summary>
+        /// Pobiera liste państw
+        /// </summary>
+        /// <returns>Lista typu string</returns>
         public List<string> GetCountriesList()
         {
             MySqlCommand command = new MySqlCommand(Queries.GetCountriesList);
@@ -4566,6 +4834,13 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Pobiera liste miast pasujących do kryteriów
+        /// </summary>
+        /// <param name="townName">Nazwa miasta</param>
+        /// <param name="postalCode">Kod pocztowy</param>
+        /// <param name="status">out status - informacja o statusie pobierania miast</param>
+        /// <returns>Lista typu Town</returns>
         public List<Town> GetTowns(string townName, string postalCode, out string status)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4782,6 +5057,11 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Pobiera liste restauracji z danego miasta
+        /// </summary>
+        /// <param name="townName">Nazwa miasta</param>
+        /// <returns>Lista typu RestaurantInTown</returns>
         public List<RestaurantInTown> GetRestaurantByTown(string townName)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4857,6 +5137,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera menu restauracji dla klienta
+        /// </summary>
+        /// <param name="restaurantID">Id restauracji</param>
+        /// <returns>Lista typu menu</returns>
         public List<Menu> GetMenu(int restaurantID)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -4987,6 +5272,11 @@ namespace Contract
 
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony głównej restauracji dla klienta
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu MainPageContent</returns>
         public MainPageContent GetMainPageUser(int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5056,6 +5346,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony dowozu restauracji dla klienta
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu DeliveryPageContent</returns>
         public DeliveryPageContent GetDeliveryPageUser(int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5123,6 +5418,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony wydarzeń restauracji dla klienta
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu EventsPageContent</returns>
         public EventsPageContent GetEventsPageUser(int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5190,6 +5490,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera zawartość strony kontaktu restauracji dla klienta
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Obiekt typu ContactPageContent</returns>
         public ContactPageContent GetContactPageUser(int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5257,6 +5562,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera liste restauracji z danego miasta
+        /// </summary>
+        /// <param name="cityName">Nazwa miasta</param>
+        /// <returns>Obiekt typu RestaurantsFromCity</returns>
         public RestaurantsFromCity RestaurantsFromCity(string cityName)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5328,6 +5638,10 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Pobiera 10 najnowszych restauracji
+        /// </summary>
+        /// <returns>Lista typu RestaurantTop</returns>
         public List<RestaurantTop> GetTopRestaurant()
         {
             MySqlCommand command = new MySqlCommand(Queries.GetTopRestaurant);
@@ -5356,6 +5670,10 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Pobiera statystyki
+        /// </summary>
+        /// <returns>Obiekt typu Statistics</returns>
         public Statistics GetStatistics()
         {
             DateTime compareUser = DateTime.Now.Subtract(new TimeSpan(0,15,0));
@@ -5384,34 +5702,11 @@ namespace Contract
             return value;
         }
 
-        public List<string> GetEmployeesInRestaurant(string login)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.GetEmployeesInRestaurant);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@isLockedOut", false);
-
-            List<string> value = null;
-
-            DataSet ds = new DataSet();
-            ds = ExecuteQuery(command, "GetEmployeesInRestaurant");
-
-            if (ds.Tables.Count > 0)
-            {
-                value = new List<string>();
-                
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    String log = String.Empty;
-                    if (row["login"] != DBNull.Value)
-                    {
-                        log = row["login"].ToString();
-                        value.Add(log);
-                    }
-                }
-            }
-            return value;
-        }
-
+        /// <summary>
+        /// Sprawdza czy restauracja jest online
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli online</returns>
         public bool IsRestaurantOnline(int id)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5474,6 +5769,12 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Pobiera liste restauracji spełniających tryteria miasta i nazwy restauracji
+        /// </summary>
+        /// <param name="town">Nazwa miasta</param>
+        /// <param name="res">Nazwa restauracji</param>
+        /// <returns>Lista tylu RestaurantInCity</returns>
         public List<RestaurantInCity> GetSearchResult(string town, string res)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
@@ -5550,6 +5851,11 @@ namespace Contract
             return rest;
         }
 
+        /// <summary>
+        /// Zwiękasz licznik wejść na strone restauracji
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool IncInputsCount(int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.IncInputsCount);
@@ -5564,10 +5870,36 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Ustawia nową date aktywności użytkownika
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool SetUserActivity(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.SetUserActivity);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@activity", DateTime.Now);
+
+            int rowsaffected = ExecuteNonQuery(command, "SetUserActivity");
+
+            if (rowsaffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Komentarze
 
+        /// <summary>
+        /// Pobiera komentarze danej restauracji
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Lista typu Comment</returns>
         public List<Comment> GetRestaurantComments(int id)
         {
             List<Comment> comments = null;
@@ -5634,6 +5966,14 @@ namespace Contract
             return comments;
         }
 
+        /// <summary>
+        /// Dodaje komenatarz
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="stars">Ocena</param>
+        /// <param name="comment">KOmentarz</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool AddComment(string login, int id, double stars, string comment)
         {
             MySqlCommand command = new MySqlCommand(Queries.AddComment);
@@ -5652,6 +5992,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera komentarze wystawione przez użytkownika
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <returns>Lista typu Comment</returns>
         public List<Comment> GetUserComments(string login)
         {
             List<Comment> comments = null;
@@ -5718,6 +6063,12 @@ namespace Contract
             return comments;
         }
 
+        /// <summary>
+        /// Usuwanie komentarza
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool DeleteComment(string login, int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.DeleteComment);
@@ -5733,6 +6084,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera komentarz i danym id
+        /// </summary>
+        /// <param name="id">Id komentarza</param>
+        /// <returns>Obiekt typu Comment</returns>
         public Comment GetComments(int id)
         {
             Comment comments = null;
@@ -5802,6 +6158,13 @@ namespace Contract
         
         #region Zamówienia
         
+        /// <summary>
+        /// Zapisuje status zamówienia
+        /// </summary>
+        /// <param name="id">Id zamówienia</param>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="status">Status</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool SetOrderStatus(int id, string login, string status)
         {
             if (login.Contains('|'))
@@ -5836,6 +6199,12 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera dane dotyczące zamówienia potrzebne do PayPala
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <param name="order">Id zamówienia</param>
+        /// <returns>string</returns>
         public string GetPayPalData(int id, int order)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetPayPalData);
@@ -5882,6 +6251,11 @@ namespace Contract
             return value;
         }
 
+        /// <summary>
+        /// Pobiera aders email restauracji
+        /// </summary>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>Adres emiali typu string</returns>
         public string GetRestaurantEmail(int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmail);
@@ -5897,6 +6271,11 @@ namespace Contract
             return null;  
         }
 
+        /// <summary>
+        /// Pobiera adres email restauracji na podstawie id zamówienia
+        /// </summary>
+        /// <param name="id">Id zamówienia</param>
+        /// <returns>Emili jako string</returns>
         private string GetRestaurantEmailByOrderId(int id)
         {
             MySqlCommand command = new MySqlCommand(Queries.GetRestaurantEmailByOrderId);
@@ -5912,6 +6291,11 @@ namespace Contract
             return null;  
         }
 
+        /// <summary>
+        /// Pobiera aktywne zamówienia danego użytkownika
+        /// </summary>
+        /// <param name="login">LOgin użytkownika</param>
+        /// <returns>Lista typu UserOrder</returns>
         public List<UserOrder> GetUserActiveOrder(string login)
         {
             List<UserOrder> orders = null;
@@ -6040,6 +6424,13 @@ namespace Contract
             return orders;
         }
 
+        /// <summary>
+        /// Pobiera zamówienia użytkownika z danego okresy czasu
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="from">Data od</param>
+        /// <param name="to">Data do</param>
+        /// <returns>Lista typu UserOrder</returns>
         public List<UserOrder> GetOrderHistory(string login, DateTime from, DateTime to)
         {
             List<UserOrder> orders = null;
@@ -6169,6 +6560,12 @@ namespace Contract
             return orders;
         }
 
+        /// <summary>
+        /// Zapisuje zamówienie
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="basket">Dane koszyka</param>
+        /// <returns>Id zamówienia</returns>
         public int SaveOrder(string login, BasketRest basket)
         {
             int id = -1;
@@ -6275,6 +6672,14 @@ namespace Contract
             return id;
         }
 
+        /// <summary>
+        /// Realizuj zamówienie
+        /// </summary>
+        /// <param name="login">Login użytkownika</param>
+        /// <param name="id">Id zamówienia</param>
+        /// <param name="comment">KOmentarz do zamówienia</param>
+        /// <param name="payment">Typ płatności</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool Pay(string login, int id, string comment, string payment)
         {
             MySqlCommand command = new MySqlCommand(Queries.Pay);
@@ -6301,6 +6706,11 @@ namespace Contract
             return false;  
         }
 
+        /// <summary>
+        /// Pobiera zamówienia dla restauracji
+        /// </summary>
+        /// <param name="login">Login zalogowanego pracownika</param>
+        /// <returns>Obiekt typu AllOrders</returns>
         public AllOrders GetOrders(string login)
         {
             AllOrders allOrders = null;
@@ -6506,6 +6916,13 @@ namespace Contract
             return allOrders;
         }
 
+        /// <summary>
+        /// Pobiera zamówienia dla restauracji z określonego czasu
+        /// </summary>
+        /// <param name="login">Login zalogowanego pracownika</param>
+        /// <param name="from">Data od</param>
+        /// <param name="to">Data do</param>
+        /// <returns>Lista typu Order</returns>
         public List<Order> GetAllOrders(string login, DateTime from, DateTime to)
         {
             List<Order> allOrders = null;
@@ -6644,6 +7061,11 @@ namespace Contract
             return allOrders;
         }
 
+        /// <summary>
+        /// Pobiera zamówienie o danym id
+        /// </summary>
+        /// <param name="id">Id zamówienia</param>
+        /// <returns>Obiekt typu Order</returns>
         private Order GetOrder(int id)
         {
             Order order = null;
@@ -6776,6 +7198,44 @@ namespace Contract
 
         #region POS
 
+        /// <summary>
+        /// Pobiera liste pracowników z danej restauracji
+        /// </summary>
+        /// <param name="login">Login restauracji</param>
+        /// <returns>Lista typu string</returns>
+        public List<string> GetEmployeesInRestaurant(string login)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetEmployeesInRestaurant);
+            command.Parameters.AddWithValue("@login", login);
+            command.Parameters.AddWithValue("@isLockedOut", false);
+
+            List<string> value = null;
+
+            DataSet ds = new DataSet();
+            ds = ExecuteQuery(command, "GetEmployeesInRestaurant");
+
+            if (ds.Tables.Count > 0)
+            {
+                value = new List<string>();
+                
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    String log = String.Empty;
+                    if (row["login"] != DBNull.Value)
+                    {
+                        log = row["login"].ToString();
+                        value.Add(log);
+                    }
+                }
+            }
+            return value;
+        }
+        /// <summary>
+        /// Ustawia status online restauracji
+        /// </summary>
+        /// <param name="login">Login zalogowanego pracownika</param>
+        /// <param name="online">Status online lub offline</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool SetRestaurantOnline(string login, string online)
         {
             if (login.Contains('|'))
@@ -6803,6 +7263,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Pobiera status online restauracji
+        /// </summary>
+        /// <param name="login">Login zalogowanego pracownika</param>
+        /// <returns>True jeśli restauracja jest online</returns>
         public bool RestaurantOnlineStatus(string login)
         {
             if (login.Contains('|'))
@@ -6834,6 +7299,11 @@ namespace Contract
             return false;
         }
 
+        /// <summary>
+        /// Zapisuje aktywność restauracji
+        /// </summary>
+        /// <param name="login">Login zalogowanego pracownika lub restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         public bool SetRestaurantActivity(string login)
         {
             MySqlCommand command = new MySqlCommand(Queries.SetRestaurantActivity);
@@ -6859,23 +7329,5 @@ namespace Contract
         }
 
         #endregion
-
-        public bool SetUserActivity(string login)
-        {
-            MySqlCommand command = new MySqlCommand(Queries.SetUserActivity);
-            command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@activity", DateTime.Now);
-
-            int rowsaffected = ExecuteNonQuery(command, "SetUserActivity");
-
-            if (rowsaffected > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
-
-
 }
