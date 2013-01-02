@@ -18,7 +18,7 @@
     <script src="<%: Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js") %>" type="text/javascript"></script>
 
     <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "?")%>
+        <%: Html.ValidationSummary(true, "Błąd")%>
         <div>
             <fieldset>
                 <legend>Odzyskiwanie hasła</legend>

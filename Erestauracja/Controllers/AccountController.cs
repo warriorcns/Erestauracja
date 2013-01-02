@@ -709,9 +709,18 @@ namespace Erestauracja.Controllers
         [HttpPost]
         public ActionResult PasswordReset(string login)
         {
-            CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone");
-            return RedirectToAction("QuestionAndAnswer", new { login = login });
+             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
+             MembershipUser u = customMemebership.GetUser(login, false);
+             if (u != null)
+             {
+                 if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone");
+                 return RedirectToAction("QuestionAndAnswer", new { login = login });
+             }
+             else
+             {
+                 ModelState.AddModelError("", "Nieprawidłowy login");
+                 return View();
+             }
         }
 
         //
@@ -719,12 +728,20 @@ namespace Erestauracja.Controllers
         public ActionResult QuestionAndAnswer(string login)
         {
             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-
-            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
-            ViewData["Login"] = login;
-            string pyt = customMemebership.GetUserQuestion(login);
-            ViewData["Pytanie"] = pyt;
-            return View();
+            MembershipUser u = customMemebership.GetUser(login, false);
+            if (u != null)
+            {
+                if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
+                ViewData["Login"] = login;
+                string pyt = customMemebership.GetUserQuestion(login);
+                ViewData["Pytanie"] = pyt;
+                return View();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nieprawidłowy login");
+                return View();
+            }
         }
 
         //
@@ -733,9 +750,24 @@ namespace Erestauracja.Controllers
         public ActionResult QuestionAndAnswer(string login, string odpowiedz)
         {
             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];
-            if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
-            customMemebership.ResetPassword(login, odpowiedz);
-            return RedirectToAction("PasswordResetFinal");
+            MembershipUser u = customMemebership.GetUser(login, false);
+            if (u != null)
+            {
+                if (!customMemebership.EnablePasswordReset) throw new Exception("Resetowanie hasła nie jest dozwolone\r\n");
+                string status = customMemebership.ResetPassword(login, odpowiedz);
+                if (status == "OK")
+                    return RedirectToAction("PasswordResetFinal");
+                else
+                {
+                    ModelState.AddModelError("", status);
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nieprawidłowy login");
+                return View();
+            }
         }
 
         //

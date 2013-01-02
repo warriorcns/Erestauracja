@@ -18,7 +18,7 @@ namespace Contract
         private string message = "Wystąpił błąd związany z MySql podczas komunikacji z bazą danych.\n\n";
         private string message2 = "Wystąpił błąd podczas komunikacji z bazą danych.\n\n";
 
-        public string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=root;charset=utf8;Encrypt=true;Connection Timeout=60;";//String.Empty;
+        public string ConnectionString = "SERVER=localhost;DATABASE=eres;UID=erestauracja;PASSWORD=Erestauracja123;charset=utf8;Encrypt=true;Connection Timeout=60;";//String.Empty;
       
         /// <summary>
         /// Wczytuje wartość connectionString z app.config 
@@ -7230,6 +7230,7 @@ namespace Contract
             }
             return value;
         }
+
         /// <summary>
         /// Ustawia status online restauracji
         /// </summary>

@@ -456,19 +456,21 @@ namespace Erestauracja.Providers
         /// </remarks>
         /// <param name="login">Login użytkownika</param>
         /// <param name="answer">Odpowiedź na pytanie</param>
-        /// <returns>Pusty string.</returns>
+        /// <returns>OK - jeśli metoda wykonała się poprawnie.</returns>
         public override string ResetPassword(string login, string answer)
         {
             if (!EnablePasswordReset)
             {
-                throw new NotSupportedException("Password reset is not enabled.");
+               // throw new NotSupportedException("Resetowanie hasła nie jest dostępne.");
+                return "Resetowanie hasła nie jest dostępne.";
             }
 
             if (answer == null && RequiresQuestionAndAnswer)
             {
                 //UpdateFailureCount(login, "passwordAnswer");
 
-                throw new ProviderException("Password answer required for password reset.");
+                //throw new ProviderException("Odpowiedź na pytanie do restetowania hasła jest wymagana.");
+                return "Odpowiedź na pytanie do restetowania hasła jest wymagana.";
             }
 
             string newPassword =
@@ -516,7 +518,8 @@ namespace Erestauracja.Providers
                     if (RequiresQuestionAndAnswer && !CheckPassword(answer, value.Answer))
                     {
                        // UpdateFailureCount(login, "passwordAnswer");
-                        throw new MembershipPasswordException("Incorrect password answer.");
+                      //  throw new MembershipPasswordException("Nieprawidłowa odpowiedź.");
+                        return "Nieprawidłowa odpowiedź.";
                     }
 
                     bool reset = false;
@@ -545,21 +548,24 @@ namespace Erestauracja.Providers
                     if (reset == true)
                     {
                         //return newPassword;
-                        return String.Empty;
+                        return "OK";
                     }
                     else
                     {
-                        throw new MembershipPasswordException("Restetowanie hasła nie powiodło się.");
+                        //throw new MembershipPasswordException("Restetowanie hasła nie powiodło się.");
+                        return "Restetowanie hasła nie powiodło się.";
                     }
                 }
                 else
                 {
-                    throw new MembershipPasswordException("The supplied user is locked out.");
+                   // throw new MembershipPasswordException("Użytkownik o podanym loginie jest zablokowany.");
+                    return "Użytkownik o podanym loginie jest zablokowany.";
                 }
             }
             else
             {
-                throw new MembershipPasswordException("The supplied user name is not found.");
+               // throw new MembershipPasswordException("Nieprawidłowy login.");
+                return "Nieprawidłowy login.";
             }
         }
 
