@@ -19,7 +19,7 @@ namespace Contract
         System.Net.NetworkCredential credential = new System.Net.NetworkCredential("erestauracja", "Erestauracja123");
 
         /// <summary>
-        /// 
+        /// Konstruktor klasy
         /// </summary>
         public Email()
         {
@@ -27,11 +27,11 @@ namespace Contract
         }
 
         /// <summary>
-        /// 
+        /// Wysyła nowe hasło na podany email
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <param name="password">Nowe hasło</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public bool SendPassword(string email, string password)
         {
             SmtpClient klient = smtp;
@@ -65,11 +65,11 @@ namespace Contract
         }
 
         /// <summary>
-        /// 
+        /// Wysyła zgłoszenie błędu
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
+        /// <param name="email">Informacja o użytkowniku, który wysłał zgłoszenie (email lub login)</param>
+        /// <param name="text">Treść zgłoszenia</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public bool SendError(string email, string text)
         {
             SmtpClient klient = smtp;
@@ -103,15 +103,15 @@ namespace Contract
         }
 
         /// <summary>
-        /// 
+        /// Wysyła zgłoszenie nadużycia w komentarzu
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="resId"></param>
-        /// <param name="userLogin"></param>
-        /// <param name="comment"></param>
-        /// <param name="report"></param>
-        /// <param name="login"></param>
-        /// <returns></returns>
+        /// <param name="id">Id komentarza</param>
+        /// <param name="resId">Id restauracji</param>
+        /// <param name="userLogin">Login użytkownika</param>
+        /// <param name="comment">Treść komentarza</param>
+        /// <param name="report">Treść zgłoszenia</param>
+        /// <param name="login">Login menadżera</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public bool SendReportComment(int id, int resId, string userLogin, string comment, string report, string login)
         {
             SmtpClient klient = smtp;
@@ -146,11 +146,11 @@ namespace Contract
         }
 
         /// <summary>
-        /// 
+        /// Wysyła zamówienie na adres email restauracji
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="order"></param>
-        /// <returns></returns>
+        /// <param name="email">Adres email</param>
+        /// <param name="order">Zamówienie typu Order</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie</returns>
         public bool SendOrder(string email, Order order)
         {
             SmtpClient klient = smtp;

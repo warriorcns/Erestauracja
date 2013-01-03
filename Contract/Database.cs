@@ -6085,7 +6085,7 @@ namespace Contract
         }
 
         /// <summary>
-        /// Pobiera komentarz i danym id
+        /// Pobiera komentarz o danym id
         /// </summary>
         /// <param name="id">Id komentarza</param>
         /// <returns>Obiekt typu Comment</returns>
