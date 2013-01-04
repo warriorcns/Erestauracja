@@ -63,7 +63,7 @@ namespace Erestauracja.Controllers
         }
 
         
-        
+        //metoda filtrujaca liste zamowien - wywolanie przez jquery
         public ActionResult FilterOrders(string from, string to)
         {
             if (Request.IsAuthenticated)
@@ -77,7 +77,7 @@ namespace Erestauracja.Controllers
             }
         }
 
-
+        //widok wszystkie zamowienia
         public ActionResult AllOrders(string from, string to)
         {
             if (Request.IsAuthenticated)
@@ -118,7 +118,7 @@ namespace Erestauracja.Controllers
             }
         }
 
-
+        //zmiana statusu zamowienia
         public ActionResult setStatus(int id, string stat)
         {
 
@@ -147,6 +147,7 @@ namespace Erestauracja.Controllers
                 return Json(new { redirectToUrl = Url.Action("ActiveOrders", "POS") });
             }
         }
+
         //
         // GET: /POS/SalesDocuments
         /// <summary>
@@ -307,7 +308,7 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-
+        //ustawienie nowego statusu dla restauracji
         public void status(string st)
         {
             bool value = false;
@@ -326,6 +327,7 @@ namespace Erestauracja.Controllers
             }
         }
 
+        //pobranie aktualnego statusu restauracji
         public string getStatus()
         {
             bool value = false;
@@ -345,6 +347,7 @@ namespace Erestauracja.Controllers
             return (value) ? "Online" : "Offline"; 
         }
 
+        //ustawienie daty ostatniej aktywnosci restauracji
         public void setAct()
         { 
             try

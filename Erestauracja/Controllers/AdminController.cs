@@ -16,11 +16,7 @@ namespace Erestauracja.Controllers
         //
         // GET: /Admin/
 
-        public ActionResult area()
-        {
-            return View();
-        }
-
+        //glowny widok
         public ActionResult Index()
         {
             if (!User.IsInRole("Admin"))
@@ -181,6 +177,7 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //usuwanie uzytkownika
         public ActionResult deleteUser(string user)
         {
             CustomMembershipProvider customMemebership = (CustomMembershipProvider)System.Web.Security.Membership.Providers["CustomMembershipProvider"];

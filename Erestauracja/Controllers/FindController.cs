@@ -9,6 +9,7 @@ namespace Erestauracja.Controllers
     public class FindController : Controller
     {
 
+        //obsluguje wywolanie w skrypcie jquery
         public ActionResult getReq(string town, string res, bool first)
         {
             return Json(new { redirectToUrl = Url.Action("Index", "Find", new { town = String.Empty, res = String.Empty, first = true }) });

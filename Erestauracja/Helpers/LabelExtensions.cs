@@ -21,7 +21,7 @@ namespace Erestauracja.Helpers
                 htmlAttributes
             );
         }
-
+        //wlasny label helper rozszerzony o mozliwosc dodania atrybutow html
         private static MvcHtmlString LabelHelper(
             HtmlHelper html,
             ModelMetadata metadata,

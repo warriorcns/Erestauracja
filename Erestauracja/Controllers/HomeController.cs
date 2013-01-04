@@ -12,6 +12,7 @@ namespace Erestauracja.Controllers
     
     public class HomeController : Controller
     {
+        //glowny widok
         public ActionResult Index()
         {
             CustomRoleProvider rp = new CustomRoleProvider();
@@ -87,6 +88,7 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //metoda obslugujaca przekierowanie w zaleznosci od roli
         public ActionResult Unauthorized()
         {
             CustomRoleProvider role = (CustomRoleProvider)System.Web.Security.Roles.Providers["CustomRoleProvider"];
@@ -130,6 +132,7 @@ namespace Erestauracja.Controllers
             }
         }
 
+        //wyszukuje restauracje - wywolanie poprzez jquery
         public ActionResult SearchRestaurants(String value)
         {
             //(m.TownName)
@@ -166,6 +169,7 @@ namespace Erestauracja.Controllers
 
 
         }
+
 
         public ActionResult Info()
         {
@@ -267,6 +271,7 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //sprawdzanie czy restauracja jest online - wywolanie przez jquery
         public string IsOnline(int id)
         {
             bool value = false;
@@ -296,6 +301,7 @@ namespace Erestauracja.Controllers
             }
         }
 
+        //ustawienie aktywnosci uzytkownika
         public void setAct()
         {
             if (User.Identity.IsAuthenticated)

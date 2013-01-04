@@ -541,7 +541,10 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Restaurant");
         }
 
-        # region dropBox
+        # region dropbox
+
+        # region polaczenia ftp - nieuzywane obecnie 
+
         public static void DownloadFileFTP(string ftpfilepath)
         {
             // The serverUri parameter should start with the ftp:// scheme. 
@@ -667,6 +670,9 @@ namespace Erestauracja.Controllers
             
         }
 
+        # endregion
+
+        //upload pliku na chmure
         [HttpPost]
         public ActionResult FileUpload(HttpPostedFileBase fileUp)
         {
