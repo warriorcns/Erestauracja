@@ -894,10 +894,10 @@ namespace Contract
     }
 
 
-    #region membership dataContract
+    #region Membership dataContract
 
     /// <summary>
-    /// 
+    /// Zawiera hasło, odpowiedź do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany
     /// </summary>
     [DataContract]
     public class PasswordAndAnswer
@@ -906,6 +906,9 @@ namespace Contract
         private string passwordAnswer = null;
         private bool isLockedOut = false;
 
+        /// <summary>
+        /// Hasło
+        /// </summary>
         [DataMember]
         public string Password
         {
@@ -913,6 +916,9 @@ namespace Contract
             set { password = value; }
         }
 
+        /// <summary>
+        /// Odpowiedź na pytanie do odzyskiwania hasła
+        /// </summary>
         [DataMember]
         public string PasswordAnswer
         {
@@ -920,6 +926,9 @@ namespace Contract
             set { passwordAnswer = value; }
         }
 
+        /// <summary>
+        /// Czy zablokowany
+        /// </summary>
         [DataMember]
         public bool IsLockedOut
         {
@@ -928,12 +937,18 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera odpowiedź do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany
+    /// </summary>
     [DataContract]
     public class PasswordAnswer
     {
         private string passwordAnswer = null;
         private bool isLockedOut = false;
 
+        /// <summary>
+        /// Odpowiedź na pytanie do odzyskiwania hasła
+        /// </summary>
         [DataMember]
         public string Answer
         {
@@ -941,6 +956,9 @@ namespace Contract
             set { passwordAnswer = value; }
         }
 
+        /// <summary>
+        /// Czy zablokowany
+        /// </summary>
         [DataMember]
         public bool IsLockedOut
         {
@@ -949,12 +967,18 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera pytanie do odzyskiwania hasła oraz informacje czy użytkownik jest zablokowany
+    /// </summary>
     [DataContract]
     public class PasswordQuestion
     {
         private string passwordQuestion = null;
         private bool isLockedOut = false;
 
+        /// <summary>
+        /// Pytanie do odzyskiwania hasła
+        /// </summary>
         [DataMember]
         public string Question
         {
@@ -962,6 +986,9 @@ namespace Contract
             set { passwordQuestion = value; }
         }
 
+        /// <summary>
+        /// Czy zablokowany
+        /// </summary>
         [DataMember]
         public bool IsLockedOut
         {
@@ -970,6 +997,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera dane o użytkowniku
+    /// </summary>
     [DataContract]
     public class User
     {
@@ -995,6 +1025,9 @@ namespace Contract
         private bool isLockedOut = false;
         private DateTime lastLockedOutDate = new DateTime();
 
+        /// <summary>
+        /// Id
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -1002,6 +1035,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Login
+        /// </summary>
         [DataMember]
         public string Login
         {
@@ -1009,6 +1045,9 @@ namespace Contract
             set { login = value; }
         }
 
+        /// <summary>
+        /// Adres email
+        /// </summary>
         [DataMember]
         public string Email
         {
@@ -1016,6 +1055,9 @@ namespace Contract
             set { email = value; }
         }
 
+        /// <summary>
+        /// Imie
+        /// </summary>
         [DataMember]
         public string Name
         {
@@ -1023,6 +1065,9 @@ namespace Contract
             set { name = value; }
         }
 
+        /// <summary>
+        /// Nazwisko
+        /// </summary>
         [DataMember]
         public string Surname
         {
@@ -1030,6 +1075,9 @@ namespace Contract
             set { surname = value; }
         }
 
+        /// <summary>
+        /// Adres
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -1037,6 +1085,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -1044,6 +1095,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -1051,6 +1105,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Kraj
+        /// </summary>
         [DataMember]
         public string Country
         {
@@ -1058,6 +1115,9 @@ namespace Contract
             set { country = value; }
         }
 
+        /// <summary>
+        /// Data urodzenia
+        /// </summary>
         [DataMember]
         public DateTime Birthdate
         {
@@ -1065,6 +1125,9 @@ namespace Contract
             set { birthdate = value; }
         }
 
+        /// <summary>
+        /// Płeć
+        /// </summary>
         [DataMember]
         public string Sex
         {
@@ -1072,6 +1135,9 @@ namespace Contract
             set { sex = value; }
         }
 
+        /// <summary>
+        /// Numer telefonu
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -1079,6 +1145,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -1086,6 +1155,9 @@ namespace Contract
             set { comment = value; }
         }
 
+        /// <summary>
+        /// Pytanie do odzyskiwana hasła
+        /// </summary>
         [DataMember]
         public string PasswordQuestion
         {
@@ -1093,6 +1165,9 @@ namespace Contract
             set { passwordQuestion = value; }
         }
 
+        /// <summary>
+        /// Czy zatwierdzony
+        /// </summary>
         [DataMember]
         public bool IsApproved
         {
@@ -1100,6 +1175,9 @@ namespace Contract
             set { isApproved = value; }
         }
 
+        /// <summary>
+        /// Data ostatniej aktywności
+        /// </summary>
         [DataMember]
         public DateTime LastActivityDate
         {
@@ -1107,6 +1185,9 @@ namespace Contract
             set { lastActivityDate = value; }
         }
 
+        /// <summary>
+        /// Data ostatniego logowania
+        /// </summary>
         [DataMember]
         public DateTime LastLoginDate
         {
@@ -1114,6 +1195,9 @@ namespace Contract
             set { lastLoginDate = value; }
         }
 
+        /// <summary>
+        /// Data ostatniej zmiany hasła
+        /// </summary>
         [DataMember]
         public DateTime LastPasswordChangedDate
         {
@@ -1121,6 +1205,9 @@ namespace Contract
             set { lastPasswordChangedDate = value; }
         }
 
+        /// <summary>
+        /// Data utworzenia
+        /// </summary>
         [DataMember]
         public DateTime CreationDate
         {
@@ -1128,6 +1215,9 @@ namespace Contract
             set { creationDate = value; }
         }
 
+        /// <summary>
+        /// Czy zablokowany
+        /// </summary>
         [DataMember]
         public bool IsLockedOut
         {
@@ -1135,6 +1225,9 @@ namespace Contract
             set { isLockedOut = value; }
         }
 
+        /// <summary>
+        /// Data ostatniego zablokowania
+        /// </summary>
         [DataMember]
         public DateTime LastLockedOutDate
         {
@@ -1143,12 +1236,18 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera hasło oraz informację czy użytkownik jest zatwierdzony
+    /// </summary>
     [DataContract]
     public class ValidateUser
     {
         private string password = null;
         private bool isApproved = false;
 
+        /// <summary>
+        /// Hasło
+        /// </summary>
         [DataMember]
         public string Password
         {
@@ -1156,6 +1255,9 @@ namespace Contract
             set { password = value; }
         }
 
+        /// <summary>
+        /// Czy zatwierdzony
+        /// </summary>
         [DataMember]
         public bool IsApproved
         {
@@ -1166,8 +1268,11 @@ namespace Contract
 
     #endregion
 
-    #region restaurant dataContract
+    #region Restaurant dataContract
 
+    /// <summary>
+    /// Zawiera dane o restauracji
+    /// </summary>
     [DataContract]
     public class Restaurant
     { 
@@ -1196,6 +1301,9 @@ namespace Contract
         private bool isLockedOut = false;
         private DateTime lastLockedOutDate = new DateTime();
 
+        /// <summary>
+        /// Id
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -1203,6 +1311,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Nazwa firmy
+        /// </summary>
         [DataMember]
         public string Name
         {
@@ -1210,6 +1321,9 @@ namespace Contract
             set { name = value; }
         }
 
+        /// <summary>
+        /// Nazwa wyświetlana
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -1217,6 +1331,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Adres
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -1224,6 +1341,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -1231,6 +1351,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -1238,6 +1361,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Kraj
+        /// </summary>
         [DataMember]
         public string Country
         {
@@ -1245,6 +1371,9 @@ namespace Contract
             set { country = value; }
         }
 
+        /// <summary>
+        /// Telefon
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -1252,6 +1381,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// Numer NIP
+        /// </summary>
         [DataMember]
         public string Nip
         {
@@ -1259,6 +1391,9 @@ namespace Contract
             set { nip = value; }
         }
 
+        /// <summary>
+        /// Numer REGON
+        /// </summary>
         [DataMember]
         public string Regon
         {
@@ -1266,6 +1401,9 @@ namespace Contract
             set { regon = value; }
         }
 
+        /// <summary>
+        /// Ilość wyświetleń
+        /// </summary>
         [DataMember]
         public int InputsCount
         {
@@ -1273,6 +1411,9 @@ namespace Contract
             set { inputsCount = value; }
         }
 
+        /// <summary>
+        /// Średnia ocena
+        /// </summary>
         [DataMember]
         public double AverageRating
         {
@@ -1280,6 +1421,9 @@ namespace Contract
             set { averageRating = value; }
         }
 
+        /// <summary>
+        /// Id menadżera
+        /// </summary>
         [DataMember]
         public int MenagerId
         {
@@ -1287,6 +1431,9 @@ namespace Contract
             set { menagerId = value; }
         }
 
+        /// <summary>
+        /// Czas dostawy
+        /// </summary>
         [DataMember]
         public string DeliveryTime
         {
@@ -1294,6 +1441,9 @@ namespace Contract
             set { deliveryTime = value; }
         }
 
+        /// <summary>
+        /// Cena dostawy
+        /// </summary>
         [DataMember]
         public decimal DeliveryPrice
         {
@@ -1301,6 +1451,9 @@ namespace Contract
             set { deliveryPrice = value; }
         }
 
+        /// <summary>
+        /// Id restauracji jako usera
+        /// </summary>
         [DataMember]
         public int UserId
         {
@@ -1308,6 +1461,9 @@ namespace Contract
             set { userId = value; }
         }
 
+        /// <summary>
+        /// Czy widoczna
+        /// </summary>
         [DataMember]
         public bool IsEnabled
         {
@@ -1315,6 +1471,9 @@ namespace Contract
             set { isEnabled = value; }
         }
 
+        /// <summary>
+        /// Login
+        /// </summary>
         [DataMember]
         public string Login
         {
@@ -1322,6 +1481,9 @@ namespace Contract
             set { login = value; }
         }
 
+        /// <summary>
+        /// Adres email
+        /// </summary>
         [DataMember]
         public string Email
         {
@@ -1329,6 +1491,9 @@ namespace Contract
             set { email = value; }
         }
         
+        /// <summary>
+        /// Czy zatwierdzona
+        /// </summary>
         [DataMember]
         public bool IsApproved
         {
@@ -1336,6 +1501,9 @@ namespace Contract
             set { isApproved = value; }
         }
 
+        /// <summary>
+        /// Data ostatniej aktywności
+        /// </summary>
         [DataMember]
         public DateTime LastActivityDate
         {
@@ -1343,6 +1511,9 @@ namespace Contract
             set { lastActivityDate = value; }
         }
 
+        /// <summary>
+        /// Data dodania
+        /// </summary>
         [DataMember]
         public DateTime CreationDate
         {
@@ -1350,6 +1521,9 @@ namespace Contract
             set { creationDate = value; }
         }
 
+        /// <summary>
+        /// Czy zablokowana
+        /// </summary>
         [DataMember]
         public bool IsLockedOut
         {
@@ -1357,6 +1531,9 @@ namespace Contract
             set { isLockedOut = value; }
         }
 
+        /// <summary>
+        /// Data ostatniego zablokowania
+        /// </summary>
         [DataMember]
         public DateTime LastLockedOutDate
         {
@@ -1365,6 +1542,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera informacje o restauracji
+    /// </summary>
     [DataContract]
     public class RestaurantInfo
     {
@@ -1382,6 +1562,9 @@ namespace Contract
         private decimal deliveryPrice = 0.00M;
         private bool isEnabled = false;
 
+        /// <summary>
+        /// Id
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -1389,6 +1572,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Nazwa firmy
+        /// </summary>
         [DataMember]
         public string Name
         {
@@ -1396,6 +1582,9 @@ namespace Contract
             set { name = value; }
         }
 
+        /// <summary>
+        /// Nazwa wyświetlana
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -1403,6 +1592,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Adres
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -1410,6 +1602,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -1417,6 +1612,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -1424,6 +1622,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Kraj
+        /// </summary>
         [DataMember]
         public string Country
         {
@@ -1431,6 +1632,9 @@ namespace Contract
             set { country = value; }
         }
 
+        /// <summary>
+        /// Telefon
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -1438,6 +1642,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// NUmer NIP
+        /// </summary>
         [DataMember]
         public string Nip
         {
@@ -1445,6 +1652,9 @@ namespace Contract
             set { nip = value; }
         }
 
+        /// <summary>
+        /// Numer REGON
+        /// </summary>
         [DataMember]
         public string Regon
         {
@@ -1452,6 +1662,9 @@ namespace Contract
             set { regon = value; }
         }
 
+        /// <summary>
+        /// Czas dostawy
+        /// </summary>
         [DataMember]
         public string DeliveryTime
         {
@@ -1459,6 +1672,9 @@ namespace Contract
             set { deliveryTime = value; }
         }
 
+        /// <summary>
+        /// Cena dostawy
+        /// </summary>
         [DataMember]
         public decimal DeliveryPrice
         {
@@ -1466,6 +1682,9 @@ namespace Contract
             set { deliveryPrice = value; }
         }
         
+        /// <summary>
+        /// Czy widoczna dla klientów
+        /// </summary>
         [DataMember]
         public bool IsEnabled
         {
@@ -1474,6 +1693,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera zawartość strony głównej restauracji
+    /// </summary>
     [DataContract]
     public class MainPageContent
     {
@@ -1481,6 +1703,9 @@ namespace Contract
         private string foto = null;
         private string specialOffers = null;
 
+        /// <summary>
+        /// Panel opis
+        /// </summary>
         [DataMember]
         public string Description
         {
@@ -1488,6 +1713,9 @@ namespace Contract
             set { description = value; }
         }
 
+        /// <summary>
+        /// Panel foto
+        /// </summary>
         [DataMember]
         public string Foto
         {
@@ -1495,6 +1723,9 @@ namespace Contract
             set { foto = value; }
         }
 
+        /// <summary>
+        /// Panel promocje
+        /// </summary>
         [DataMember]
         public string SpecialOffers
         {
@@ -1502,12 +1733,18 @@ namespace Contract
             set { specialOffers = value; }
         }
     }
-    
+
+    /// <summary>
+    /// Zawiera zawartość strony dowozu restauracji
+    /// </summary>
     [DataContract]
     public class DeliveryPageContent
     {
         private string delivery = null;
 
+        /// <summary>
+        /// Panel dowóz
+        /// </summary>
         [DataMember]
         public string Delivery
         {
@@ -1516,11 +1753,17 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera zawartość strony wydarzeń restauracji
+    /// </summary>
     [DataContract]
     public class EventsPageContent
     {
         private string events = null;
 
+        /// <summary>
+        /// Panel wydarzenia
+        /// </summary>
         [DataMember]
         public string Events
         {
@@ -1529,11 +1772,17 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera zawartość strony kontaktu restauracji
+    /// </summary>
     [DataContract]
     public class ContactPageContent
     {
         private string contact = null;
 
+        /// <summary>
+        /// Panel kontakt
+        /// </summary>
         [DataMember]
         public string Contact
         {
@@ -1542,6 +1791,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera informacje o kategorii
+    /// </summary>
     [DataContract]
     public class Category
     {
@@ -1553,6 +1805,9 @@ namespace Contract
         private string nonPriceOption = null;
         private string nonPriceOption2 = null;
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantID
         {
@@ -1560,6 +1815,9 @@ namespace Contract
             set { restaurantID = value; }
         }
 
+        /// <summary>
+        /// Id kategorii
+        /// </summary>
         [DataMember]
         public int CategoryID
         {
@@ -1567,6 +1825,9 @@ namespace Contract
             set { categoryID = value; }
         }
 
+        /// <summary>
+        /// Nazwa kategorii
+        /// </summary>
         [DataMember]
         public string CategoryName
         {
@@ -1574,6 +1835,9 @@ namespace Contract
             set { categoryName = value; }
         }
 
+        /// <summary>
+        /// Opis
+        /// </summary>
         [DataMember]
         public string CategoryDescription
         {
@@ -1581,6 +1845,9 @@ namespace Contract
             set { categoryDescription = value; }
         }
 
+        /// <summary>
+        /// Opcje cenowe
+        /// </summary>
         [DataMember]
         public string PriceOption
         {
@@ -1588,6 +1855,9 @@ namespace Contract
             set { priceOption = value; }
         }
 
+        /// <summary>
+        /// Opcje nie wpływające na cene
+        /// </summary>
         [DataMember]
         public string NonPriceOption
         {
@@ -1595,6 +1865,9 @@ namespace Contract
             set { nonPriceOption = value; }
         }
 
+        /// <summary>
+        /// Opcje nie wpływające na cene 2
+        /// </summary>
         [DataMember]
         public string NonPriceOption2
         {
@@ -1603,6 +1876,9 @@ namespace Contract
         }
     }    
         
+    /// <summary>
+    /// Menu restauracji
+    /// </summary>
     [DataContract]
     public class Menu
     {
@@ -1615,6 +1891,9 @@ namespace Contract
         private string nonPriceOption2 = null;
         private List<Product> products = null;
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantID
         {
@@ -1622,6 +1901,9 @@ namespace Contract
             set { restaurantID = value; }
         }
 
+        /// <summary>
+        /// Id kategorii
+        /// </summary>
         [DataMember]
         public int CategoryID
         {
@@ -1629,6 +1911,9 @@ namespace Contract
             set { categoryID = value; }
         }
 
+        /// <summary>
+        /// Nazwa kategorii
+        /// </summary>
         [DataMember]
         public string CategoryName
         {
@@ -1636,6 +1921,9 @@ namespace Contract
             set { categoryName = value; }
         }
 
+        /// <summary>
+        /// Opis
+        /// </summary>
         [DataMember]
         public string CategoryDescription
         {
@@ -1643,6 +1931,9 @@ namespace Contract
             set { categoryDescription = value; }
         }
 
+        /// <summary>
+        /// Opcja cenowa
+        /// </summary>
         [DataMember]
         public string PriceOption
         {
@@ -1650,6 +1941,9 @@ namespace Contract
             set { priceOption = value; }
         }
 
+        /// <summary>
+        /// Opcja nie wpływająca na cene
+        /// </summary>
         [DataMember]
         public string NonPriceOption
         {
@@ -1657,6 +1951,9 @@ namespace Contract
             set { nonPriceOption = value; }
         }
 
+        /// <summary>
+        /// Opcja nie wpływająca na cene 2
+        /// </summary>
         [DataMember]
         public string NonPriceOption2
         {
@@ -1664,6 +1961,9 @@ namespace Contract
             set { nonPriceOption2 = value; }
         }
 
+        /// <summary>
+        /// Lista produktów
+        /// </summary>
         [DataMember]
         public List<Product> Products
         {
@@ -1672,6 +1972,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Informacje o produkcie
+    /// </summary>
     [DataContract]
     public class Product
     {
@@ -1686,6 +1989,9 @@ namespace Contract
         private bool isAvailable = false;
         private bool isEnabled = false;
 
+        /// <summary>
+        /// Id produktu
+        /// </summary>
         [DataMember]
         public int ProductId
         {
@@ -1693,6 +1999,9 @@ namespace Contract
             set { productId = value; }
         }
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantId
         {
@@ -1700,6 +2009,9 @@ namespace Contract
             set { restaurantId = value; }
         }
 
+        /// <summary>
+        /// Id kategorii
+        /// </summary>
         [DataMember]
         public int CategoryId
         {
@@ -1707,6 +2019,9 @@ namespace Contract
             set { categoryId = value; }
         }
 
+        /// <summary>
+        /// Nazwa
+        /// </summary>
         [DataMember]
         public string ProductName
         {
@@ -1714,6 +2029,9 @@ namespace Contract
             set { productName = value; }
         }
 
+        /// <summary>
+        /// Opis
+        /// </summary>
         [DataMember]
         public string ProductDescription
         {
@@ -1721,6 +2039,9 @@ namespace Contract
             set { productDescription = value; }
         }
 
+        /// <summary>
+        /// Cena
+        /// </summary>
         [DataMember]
         public string Price
         {
@@ -1728,6 +2049,9 @@ namespace Contract
             set { price = value; }
         }
 
+        /// <summary>
+        /// Opcja cenowa
+        /// </summary>
         [DataMember]
         public string PriceOption
         {
@@ -1735,6 +2059,9 @@ namespace Contract
             set { priceOption = value; }
         }
 
+        /// <summary>
+        /// Data dodania
+        /// </summary>
         [DataMember]
         public DateTime CreationDate
         {
@@ -1742,6 +2069,9 @@ namespace Contract
             set { creationDate = value; }
         }
 
+        /// <summary>
+        /// Czy widoczny dla klientów
+        /// </summary>
         [DataMember]
         public bool IsAvailable
         {
@@ -1749,6 +2079,9 @@ namespace Contract
             set { isAvailable = value; }
         }
 
+        /// <summary>
+        /// Czy jest prawidłowy
+        /// </summary>
         [DataMember]
         public bool IsEnabled
         {
@@ -1757,6 +2090,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera dane personelu restauacji
+    /// </summary>
     [DataContract]
     public class Presonnel
     {
@@ -1766,30 +2102,49 @@ namespace Contract
         private string restaurantTown = null;
         private List<User> employees = new List<User>();
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantId
         {
             get { return restaurantId; }
             set { restaurantId = value; }
         }
+
+        /// <summary>
+        /// Nazwa restauracji
+        /// </summary>
         [DataMember]
         public string RestaurantName
         {
             get { return restaurantName; }
             set { restaurantName = value; }
         }
+
+        /// <summary>
+        /// Adres restauracji
+        /// </summary>
         [DataMember]
         public string RestaurantAddress
         {
             get { return restaurantAddress; }
             set { restaurantAddress = value; }
         }
+
+        /// <summary>
+        /// Miasto restauracji
+        /// </summary>
         [DataMember]
         public string RestaurantTown
         {
             get { return restaurantTown; }
             set { restaurantTown = value; }
         }
+
+        /// <summary>
+        /// Lista pracowników
+        /// </summary>
         [DataMember]
         public List<User> Employees
         {
@@ -1798,6 +2153,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera pełne dane koszyka
+    /// </summary>
     [DataContract]
     public class BasketOut
     {
@@ -1811,6 +2169,9 @@ namespace Contract
         //    set { totalPrice = value; }
         //}
 
+        /// <summary>
+        /// Lista restauracji w koszyku
+        /// </summary>
         [DataMember]
         public List<BasketRest> Basket
         {
@@ -1820,6 +2181,9 @@ namespace Contract
 
     }
 
+    /// <summary>
+    /// Zawiera dane koszyka z danej restauracji
+    /// </summary>
     [DataContract]
     public class BasketRest
     {
@@ -1832,6 +2196,9 @@ namespace Contract
         public string comment = String.Empty;
         public List<BasketProduct> products = new List<BasketProduct>();
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantId
         {
@@ -1839,6 +2206,9 @@ namespace Contract
             set { restaurantId = value; }
         }
 
+        /// <summary>
+        /// Nazwa restauracji
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -1846,6 +2216,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Telefon
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -1853,6 +2226,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// Czas dostawy
+        /// </summary>
         [DataMember]
         public string DeliveryTime
         {
@@ -1860,6 +2236,9 @@ namespace Contract
             set { deliveryTime = value; }
         }
 
+        /// <summary>
+        /// Cena dostawy
+        /// </summary>
         [DataMember]
         public decimal DeliveryPrice
         {
@@ -1867,6 +2246,9 @@ namespace Contract
             set { deliveryPrice = value; }
         }
 
+        /// <summary>
+        /// Cena całkowita - na restaurację
+        /// </summary>
         [DataMember]
         public decimal TotalPriceRest
         {
@@ -1874,6 +2256,9 @@ namespace Contract
             set { totalPriceRest = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -1881,6 +2266,9 @@ namespace Contract
             set { comment = value; }
         }
 
+        /// <summary>
+        /// Lista produktów
+        /// </summary>
         [DataMember]
         public List<BasketProduct> Products
         {
@@ -1890,6 +2278,9 @@ namespace Contract
 
     }
 
+    /// <summary>
+    /// Zawiera informacje o produkcie w koszyku
+    /// </summary>
     [DataContract]
     public class BasketProduct
     {
@@ -1905,6 +2296,9 @@ namespace Contract
         public decimal totalPriceProd = 0.00M;
       //  public bool isSelected = true;
 
+        /// <summary>
+        /// Numer w koszyku
+        /// </summary>
         [DataMember]
         public int BasketId
         {
@@ -1912,6 +2306,9 @@ namespace Contract
             set { basketId = value; }
         }
 
+        /// <summary>
+        /// Id produktu
+        /// </summary>
         [DataMember]
         public int ProductId
         {
@@ -1919,6 +2316,9 @@ namespace Contract
             set { productId = value; }
         }
 
+        /// <summary>
+        /// Nazwa produktu
+        /// </summary>
         [DataMember]
         public string ProductName
         {
@@ -1926,6 +2326,9 @@ namespace Contract
             set { productName = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -1933,6 +2336,9 @@ namespace Contract
             set { comment = value; }
         }
 
+        /// <summary>
+        /// Opcja cenowa
+        /// </summary>
         [DataMember]
         public string PriceOption
         {
@@ -1940,6 +2346,9 @@ namespace Contract
             set { priceOption = value; }
         }
 
+        /// <summary>
+        /// Opcja nie wpływająca na cene
+        /// </summary>
         [DataMember]
         public string NonPriceOption
         {
@@ -1947,6 +2356,9 @@ namespace Contract
             set { nonPriceOption = value; }
         }
 
+        /// <summary>
+        /// Opcja nie wpływająca na cene 2
+        /// </summary>
         [DataMember]
         public string NonPriceOption2
         {
@@ -1954,6 +2366,9 @@ namespace Contract
             set { nonPriceOption2 = value; }
         }
 
+        /// <summary>
+        /// Cena
+        /// </summary>
         [DataMember]
         public decimal Price
         {
@@ -1961,6 +2376,9 @@ namespace Contract
             set { price = value; }
         }
 
+        /// <summary>
+        /// Ilość
+        /// </summary>
         [DataMember]
         public int Count
         {
@@ -1968,6 +2386,9 @@ namespace Contract
             set { count = value; }
         }
 
+        /// <summary>
+        /// Cena x ilość
+        /// </summary>
         [DataMember]
         public decimal TotalPriceProd
         {
@@ -1986,8 +2407,11 @@ namespace Contract
 
     #endregion
 
-    #region ogólne
+    #region Ogólne dataContract
 
+    /// <summary>
+    /// Zawiera informacje o mieście
+    /// </summary>
     [DataContract]
     public class Town
     {
@@ -2001,6 +2425,9 @@ namespace Contract
         private double longtitude = 0;
         private string infoWindowContent = "";
 
+        /// <summary>
+        /// Pusta zmienna przeznaczona na kod znacznika na mapce
+        /// </summary>
         [DataMember]
         public string InfoWindowContent
         {
@@ -2008,6 +2435,9 @@ namespace Contract
             set { infoWindowContent = value; }
         }
 
+        /// <summary>
+        /// Id miasta
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -2015,6 +2445,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -2022,6 +2455,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Nazwa miasta
+        /// </summary>
         [DataMember]
         public string TownName
         {
@@ -2029,6 +2465,9 @@ namespace Contract
             set { townName = value; }
         }
 
+        /// <summary>
+        /// Województwo
+        /// </summary>
         [DataMember]
         public string Province
         {
@@ -2036,6 +2475,9 @@ namespace Contract
             set { province = value; }
         }
 
+        /// <summary>
+        /// Powiat
+        /// </summary>
         [DataMember]
         public string District
         {
@@ -2043,6 +2485,9 @@ namespace Contract
             set { district = value; }
         }
 
+        /// <summary>
+        /// Gmina
+        /// </summary>
         [DataMember]
         public string Community
         {
@@ -2050,6 +2495,9 @@ namespace Contract
             set { community = value; }
         }
 
+        /// <summary>
+        /// Szerokość geograficzna
+        /// </summary>
         [DataMember]
         public double Latitude
         {
@@ -2057,6 +2505,9 @@ namespace Contract
             set { latitude = value; }
         }
 
+        /// <summary>
+        /// Długość geograficzna
+        /// </summary>
         [DataMember]
         public double Longtitude
         {
@@ -2065,6 +2516,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera mazwy restauracji wraz z nazwą miasta
+    /// </summary>
     [DataContract]
     public class RestaurantInTown
     {
@@ -2072,6 +2526,9 @@ namespace Contract
         private string name = null;
         private int townId = -1;
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int ResId
         {
@@ -2079,6 +2536,9 @@ namespace Contract
             set { resId = value; }
         }
 
+        /// <summary>
+        /// Nazwa
+        /// </summary>
         [DataMember]
         public string Name
         {
@@ -2086,6 +2546,9 @@ namespace Contract
             set { name = value; }
         }
 
+        /// <summary>
+        /// Id miasta
+        /// </summary>
         [DataMember]
         public int TownId
         {
@@ -2094,12 +2557,18 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera restauracje w danym mieście
+    /// </summary>
     [DataContract]
     public class RestaurantsFromCity
     {
         private string cityName = null;
         private List<RestaurantInCity> restaurants = new List<RestaurantInCity>();
 
+        /// <summary>
+        /// Nazwa miasta
+        /// </summary>
         [DataMember]
         public string CityName
         {
@@ -2107,6 +2576,9 @@ namespace Contract
             set { cityName = value; }
         }
 
+        /// <summary>
+        /// Lista restauracji
+        /// </summary>
         [DataMember]
         public List<RestaurantInCity> Restaurants
         {
@@ -2115,6 +2587,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera informacje o restauracji
+    /// </summary>
     [DataContract]
     public class RestaurantInCity
     {
@@ -2133,7 +2608,9 @@ namespace Contract
         private double longtitude = 0;
         private string infoWindowContent = String.Empty;
        
-
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -2141,6 +2618,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Nazwa wyświetlana
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -2148,6 +2628,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Adres
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -2155,6 +2638,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -2162,6 +2648,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -2169,6 +2658,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Kraj
+        /// </summary>
         [DataMember]
         public string Country
         {
@@ -2176,6 +2668,9 @@ namespace Contract
             set { country = value; }
         }
 
+        /// <summary>
+        /// Telefon
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -2183,6 +2678,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// Ilość wyświetleń
+        /// </summary>
         [DataMember]
         public int InputsCount
         {
@@ -2190,6 +2688,9 @@ namespace Contract
             set { inputsCount = value; }
         }
 
+        /// <summary>
+        /// Średnia ocena
+        /// </summary>
         [DataMember]
         public double AverageRating
         {
@@ -2197,6 +2698,9 @@ namespace Contract
             set { averageRating = value; }
         }
 
+        /// <summary>
+        /// Czas dostawy
+        /// </summary>
         [DataMember]
         public string DeliveryTime
         {
@@ -2204,6 +2708,9 @@ namespace Contract
             set { deliveryTime = value; }
         }
 
+        /// <summary>
+        /// Data utworzenia
+        /// </summary>
         [DataMember]
         public DateTime CreationDate
         {
@@ -2211,6 +2718,9 @@ namespace Contract
             set { creationDate = value; }
         }
 
+        /// <summary>
+        /// Szerokość geograficzna
+        /// </summary>
         [DataMember]
         public double Latitude
         {
@@ -2218,6 +2728,9 @@ namespace Contract
             set { latitude = value; }
         }
 
+        /// <summary>
+        /// Długość geograficzna
+        /// </summary>
         [DataMember]
         public double Longtitude
         {
@@ -2225,6 +2738,9 @@ namespace Contract
             set { longtitude = value; }
         }
 
+        /// <summary>
+        /// Pusta zmienna przeznaczona na kod znacznika na mapce
+        /// </summary>
         [DataMember]
         public string InfoWindowContent
         {
@@ -2233,6 +2749,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera informacje o restauracji potrzebne do wyświetlenia jej na liście top10
+    /// </summary>
     [DataContract]
     public class RestaurantTop
     {
@@ -2243,6 +2762,9 @@ namespace Contract
         private string postalCode = null;
         private string telephone = null;
 
+        /// <summary>
+        /// Id restauracji
+        /// </summary>
         [DataMember]
         public int ID
         {
@@ -2250,6 +2772,9 @@ namespace Contract
             set { id = value; }
         }
 
+        /// <summary>
+        /// Nazwa wyświetlana
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -2257,6 +2782,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Adres
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -2264,6 +2792,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -2271,6 +2802,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
         [DataMember]
         public string PostalCode
         {
@@ -2278,6 +2812,9 @@ namespace Contract
             set { postalCode = value; }
         }
 
+        /// <summary>
+        /// Telefon
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -2286,6 +2823,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera statystyki strony
+    /// </summary>
     [DataContract]
     public class Statistics
     {
@@ -2295,6 +2835,9 @@ namespace Contract
         private int activeUsers = -1;
         private int activeRestaurants = -1;
 
+        /// <summary>
+        /// Ilość produktów (dań)
+        /// </summary>
         [DataMember]
         public int ProductsCount
         {
@@ -2302,6 +2845,9 @@ namespace Contract
             set { productsCount = value; }
         }
 
+        /// <summary>
+        /// Ilość restauracji
+        /// </summary>
         [DataMember]
         public int RestaurantsCount
         {
@@ -2309,6 +2855,9 @@ namespace Contract
             set { restaurantsCount = value; }
         }
 
+        /// <summary>
+        /// Liczba użytkowników
+        /// </summary>
         [DataMember]
         public int UsersCount
         {
@@ -2316,6 +2865,9 @@ namespace Contract
             set { usersCount = value; }
         }
 
+        /// <summary>
+        /// Liczba aktywnych użytkowników
+        /// </summary>
         [DataMember]
         public int ActiveUsers
         {
@@ -2323,6 +2875,9 @@ namespace Contract
             set { activeUsers = value; }
         }
 
+        /// <summary>
+        /// Liczba aktywnych restauracji
+        /// </summary>
         [DataMember]
         public int ActiveRestaurants
         {
@@ -2333,6 +2888,122 @@ namespace Contract
 
     #endregion
 
+    #region Komentarze 
+
+    /// <summary>
+    /// Zawiera dane komentarza
+    /// </summary>
+    [DataContract]
+    public class Comment
+    {
+        private int id = -1;
+        private string userLogin = null;
+        public string displayName = String.Empty;
+        private string address = null;
+        private string town = null;
+        private string postal = null;
+        private double rating = -1;
+        private string comment = null;
+        private DateTime date = new DateTime(1,1,1);
+
+        /// <summary>
+        /// Id komentarza
+        /// </summary>
+        [DataMember]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        /// <summary>
+        /// Login użytkownika wystawiającego komentarz
+        /// </summary>
+        [DataMember]
+        public string UserLogin
+        {
+            get { return userLogin; }
+            set { userLogin = value; }
+        }
+
+        /// <summary>
+        /// Nazwa restauracji
+        /// </summary>
+        [DataMember]
+        public string DisplayName
+        {
+            get { return displayName; }
+            set { displayName = value; }
+        }
+
+        /// <summary>
+        /// Adres restauracji
+        /// </summary>
+        [DataMember]
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+        /// <summary>
+        /// Miasto restauracji
+        /// </summary>
+        [DataMember]
+        public string Town
+        {
+            get { return town; }
+            set { town = value; }
+        }
+
+        /// <summary>
+        /// Kod pocztowy
+        /// </summary>
+        [DataMember]
+        public string Postal
+        {
+            get { return postal; }
+            set { postal = value; }
+        }
+
+        /// <summary>
+        /// Ocena
+        /// </summary>
+        [DataMember]
+        public double Rating
+        {
+            get { return rating; }
+            set { rating = value; }
+        }
+
+        /// <summary>
+        /// Treść komentarza
+        /// </summary>
+        [DataMember]
+        public string CommentText
+        {
+            get { return comment; }
+            set { comment = value; }
+        }
+
+        /// <summary>
+        /// Data wystawienia komentarza
+        /// </summary>
+        [DataMember]
+        public DateTime Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
+    }
+
+    #endregion
+
+    #region Zamówienia
+
+    /// <summary>
+    /// Zawiera wszystkie zamówienia
+    /// </summary>
     [DataContract]
     public class AllOrders
     {
@@ -2362,6 +3033,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera dane zamówienia
+    /// </summary>
     [DataContract]
     public class Order
     {
@@ -2380,6 +3054,9 @@ namespace Contract
         private DateTime finishDate = new DateTime(1, 1, 1);
         private List<OrderedProduct> products = new List<OrderedProduct>();
 
+        /// <summary>
+        /// Id zamówienia
+        /// </summary>
         [DataMember]
         public int OrderId
         {
@@ -2387,6 +3064,9 @@ namespace Contract
             set { orderId = value; }
         }
 
+        /// <summary>
+        /// Imie klienta
+        /// </summary>
         [DataMember]
         public string UserName
         {
@@ -2394,6 +3074,9 @@ namespace Contract
             set { userName = value; }
         }
 
+        /// <summary>
+        /// Nazwisko klienta
+        /// </summary>
         [DataMember]
         public string UserSurname
         {
@@ -2401,6 +3084,9 @@ namespace Contract
             set { userSurname = value; }
         }
 
+        /// <summary>
+        /// Adres klienta
+        /// </summary>
         [DataMember]
         public string UserAdderss
         {
@@ -2408,6 +3094,9 @@ namespace Contract
             set { userAdderss = value; }
         }
 
+        /// <summary>
+        /// MIasto klienta
+        /// </summary>
         [DataMember]
         public string UserTown
         {
@@ -2415,6 +3104,9 @@ namespace Contract
             set { userTown = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy klienta
+        /// </summary>
         [DataMember]
         public string UserPostal
         {
@@ -2422,6 +3114,9 @@ namespace Contract
             set { userPostal = value; }
         }
 
+        /// <summary>
+        /// Telefon klienta
+        /// </summary>
         [DataMember]
         public string UserTelephone
         {
@@ -2429,6 +3124,9 @@ namespace Contract
             set { userTelephone = value; }
         }
 
+        /// <summary>
+        /// Status zamówienia
+        /// </summary>
         [DataMember]
         public string Status
         {
@@ -2436,6 +3134,9 @@ namespace Contract
             set { status = value; }
         }
 
+        /// <summary>
+        /// Cena
+        /// </summary>
         [DataMember]
         public decimal Price
         {
@@ -2443,6 +3144,9 @@ namespace Contract
             set { price = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -2450,6 +3154,9 @@ namespace Contract
             set { comment = value; }
         }
 
+        /// <summary>
+        /// Data zamówienia
+        /// </summary>
         [DataMember]
         public DateTime OrderDate
         {
@@ -2457,6 +3164,9 @@ namespace Contract
             set { orderDate = value; }
         }
 
+        /// <summary>
+        /// Sposób płatności
+        /// </summary>
         [DataMember]
         public string Payment
         {
@@ -2464,6 +3174,9 @@ namespace Contract
             set { payment = value; }
         }
 
+        /// <summary>
+        /// Data zakończenia
+        /// </summary>
         [DataMember]
         public DateTime FinishDate
         {
@@ -2471,6 +3184,9 @@ namespace Contract
             set { finishDate = value; }
         }
 
+        /// <summary>
+        /// Lista zamówionych produktów
+        /// </summary>
         [DataMember]
         public List<OrderedProduct> Products
         {
@@ -2479,6 +3195,9 @@ namespace Contract
         }
     }
 
+    /// <summary>
+    /// Zawiera dane produktu w zamówieniu
+    /// </summary>
     [DataContract]
     public class OrderedProduct
     {
@@ -2490,6 +3209,9 @@ namespace Contract
         public string nonPriceOption2 = null;
         public string comment = null;
        
+        /// <summary>
+        /// Id produktu
+        /// </summary>
         [DataMember]
         public int ProductId
         {
@@ -2497,6 +3219,9 @@ namespace Contract
             set { productId = value; }
         }
 
+        /// <summary>
+        /// Nazwa produktu
+        /// </summary>
         [DataMember]
         public string ProductName
         {
@@ -2504,6 +3229,9 @@ namespace Contract
             set { productName = value; }
         }
 
+        /// <summary>
+        /// Wybrana opcja cenowa
+        /// </summary>
         [DataMember]
         public string PriceOption
         {
@@ -2511,6 +3239,9 @@ namespace Contract
             set { priceOption = value; }
         }
 
+        /// <summary>
+        /// Ilość
+        /// </summary>
         [DataMember]
         public int Count
         {
@@ -2518,6 +3249,9 @@ namespace Contract
             set { count = value; }
         }
 
+        /// <summary>
+        /// Wybrana opcja nie wpływająca na cenę
+        /// </summary>
         [DataMember]
         public string NonPriceOption
         {
@@ -2525,6 +3259,9 @@ namespace Contract
             set { nonPriceOption = value; }
         }
 
+        /// <summary>
+        /// Wybrana opcja nie wpływająca na cenę 2
+        /// </summary>
         [DataMember]
         public string NonPriceOption2
         {
@@ -2532,6 +3269,9 @@ namespace Contract
             set { nonPriceOption2 = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -2540,7 +3280,9 @@ namespace Contract
         }
     }
 
-    //zamówienia widziane przez klienta
+    /// <summary>
+    /// Zamówienia widziane przez klienta
+    /// </summary>
     [DataContract]
     public class UserOrder
     {
@@ -2560,6 +3302,9 @@ namespace Contract
         private DateTime finishDate = new DateTime(1, 1, 1);
         private List<OrderedProduct> products = new List<OrderedProduct>();
 
+        /// <summary>
+        /// Id zamówienia
+        /// </summary>
         [DataMember]
         public int OrderId
         {
@@ -2567,6 +3312,9 @@ namespace Contract
             set { orderId = value; }
         }
 
+        /// <summary>
+        /// Nazwa restauracji
+        /// </summary>
         [DataMember]
         public string DisplayName
         {
@@ -2574,6 +3322,9 @@ namespace Contract
             set { displayName = value; }
         }
 
+        /// <summary>
+        /// Adres restauracji
+        /// </summary>
         [DataMember]
         public string Address
         {
@@ -2581,6 +3332,9 @@ namespace Contract
             set { address = value; }
         }
 
+        /// <summary>
+        /// Miasto restauracji
+        /// </summary>
         [DataMember]
         public string Town
         {
@@ -2588,6 +3342,9 @@ namespace Contract
             set { town = value; }
         }
 
+        /// <summary>
+        /// Kod pocztowy restauracji
+        /// </summary>
         [DataMember]
         public string Postal
         {
@@ -2595,6 +3352,9 @@ namespace Contract
             set { postal = value; }
         }
 
+        /// <summary>
+        /// Telefon restauracji
+        /// </summary>
         [DataMember]
         public string Telephone
         {
@@ -2602,6 +3362,9 @@ namespace Contract
             set { telephone = value; }
         }
 
+        /// <summary>
+        /// Czas dostawy
+        /// </summary>
         [DataMember]
         public string DeliveryTime
         {
@@ -2609,6 +3372,9 @@ namespace Contract
             set { deliveryTime = value; }
         }
 
+        /// <summary>
+        /// Cena dostawy
+        /// </summary>
         [DataMember]
         public decimal DeliveryPrice
         {
@@ -2616,6 +3382,9 @@ namespace Contract
             set { deliveryPrice = value; }
         }
 
+        /// <summary>
+        /// Ststus zamówienia
+        /// </summary>
         [DataMember]
         public string Status
         {
@@ -2623,6 +3392,9 @@ namespace Contract
             set { status = value; }
         }
 
+        /// <summary>
+        /// Cena
+        /// </summary>
         [DataMember]
         public decimal Price
         {
@@ -2630,6 +3402,9 @@ namespace Contract
             set { price = value; }
         }
 
+        /// <summary>
+        /// Komentarz
+        /// </summary>
         [DataMember]
         public string Comment
         {
@@ -2637,6 +3412,9 @@ namespace Contract
             set { comment = value; }
         }
 
+        /// <summary>
+        /// Data zamówienia
+        /// </summary>
         [DataMember]
         public DateTime OrderDate
         {
@@ -2644,6 +3422,9 @@ namespace Contract
             set { orderDate = value; }
         }
 
+        /// <summary>
+        /// Sposób płatonści
+        /// </summary>
         [DataMember]
         public string Payment
         {
@@ -2651,6 +3432,9 @@ namespace Contract
             set { payment = value; }
         }
 
+        /// <summary>
+        /// Data zakończenia
+        /// </summary>
         [DataMember]
         public DateTime FinishDate
         {
@@ -2658,6 +3442,9 @@ namespace Contract
             set { finishDate = value; }
         }
 
+        /// <summary>
+        /// Lista produktów
+        /// </summary>
         [DataMember]
         public List<OrderedProduct> Products
         {
@@ -2666,80 +3453,5 @@ namespace Contract
         }
     }
 
-    [DataContract]
-    public class Comment
-    {
-        private int id = -1;
-        private string userLogin = null;
-        public string displayName = String.Empty;
-        private string address = null;
-        private string town = null;
-        private string postal = null;
-        private double rating = -1;
-        private string comment = null;
-        private DateTime date = new DateTime(1,1,1);
-
-        [DataMember]
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        [DataMember]
-        public string UserLogin
-        {
-            get { return userLogin; }
-            set { userLogin = value; }
-        }
-
-        [DataMember]
-        public string DisplayName
-        {
-            get { return displayName; }
-            set { displayName = value; }
-        }
-
-        [DataMember]
-        public string Address
-        {
-            get { return address; }
-            set { address = value; }
-        }
-
-        [DataMember]
-        public string Town
-        {
-            get { return town; }
-            set { town = value; }
-        }
-
-        [DataMember]
-        public string Postal
-        {
-            get { return postal; }
-            set { postal = value; }
-        }
-
-        [DataMember]
-        public double Rating
-        {
-            get { return rating; }
-            set { rating = value; }
-        }
-
-        [DataMember]
-        public string CommentText
-        {
-            get { return comment; }
-            set { comment = value; }
-        }
-
-        [DataMember]
-        public DateTime Date
-        {
-            get { return date; }
-            set { date = value; }
-        }
-    }
+    #endregion
 }
