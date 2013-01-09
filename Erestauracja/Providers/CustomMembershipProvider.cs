@@ -1390,6 +1390,40 @@ namespace Erestauracja.Providers
         }
 
         /// <summary>
+        /// Pobiera id użytkownika na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca id użytkownika.</returns>
+        public int GetRestaurantIdByEmail(string email)
+        {
+            int value = -1;
+
+            try
+            {
+                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                using (client)
+                {
+                    value = client.GetRestaurantIdByEmail(email);
+                }
+                client.Close();
+            }
+            catch (Exception e)
+            {
+                if (WriteExceptionsToEventLog)
+                {
+                    WriteToEventLog(e, "GetRestaurantIdByEmail");
+                    throw new ProviderException(exceptionMessage);
+                }
+                else
+                {
+                    throw e;
+                }
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Metoda override - zawsze zwraca NotImplementedException
         /// </summary>
         /// <param name="muser">MembershipUser - CustomMembershipUser</param>

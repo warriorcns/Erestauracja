@@ -8,13 +8,13 @@ namespace Erestauracja.Models
 {
     public class ChangePasswordModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Password)]
         [Display(Name = "Dotychczasowe hasło")]
         public string OldPassword { get; set; }
 
         //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nowe hasło")]
@@ -28,11 +28,11 @@ namespace Erestauracja.Models
 
     public class LogOnModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
@@ -43,15 +43,14 @@ namespace Erestauracja.Models
 
     public class RegisterModel
     {
-
         CultureInfo polish = new CultureInfo("pl-PL");
-        
-        [Required]
+
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -62,7 +61,7 @@ namespace Erestauracja.Models
         public string ConfirmEmail { get; set; }
 
         //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength=6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
@@ -73,77 +72,73 @@ namespace Erestauracja.Models
         [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Pytanie do przywracania hasła")]
         public string Question { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Odpowiedz")]
         public string Answer { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Imię")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwisko")]
         public string Surname { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Adres ")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kod pocztowy")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
-
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birthdate { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Płeć")]
         public string Sex { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
-
-        
     }
 
     public class RegisterEmployeeModel
     {
-
         CultureInfo polish = new CultureInfo("pl-PL");
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -154,7 +149,7 @@ namespace Erestauracja.Models
         public string ConfirmEmail { get; set; }
 
         //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
@@ -165,59 +160,59 @@ namespace Erestauracja.Models
         [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Pytanie do przywracania hasła")]
         public string Question { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Odpowiedz")]
         public string Answer { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Imię")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwisko")]
         public string Surname { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Adres ")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kod pocztowy")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birthdate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Płeć")]
         public string Sex { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
@@ -228,58 +223,58 @@ namespace Erestauracja.Models
 
     public class UserDataModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Imię")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwisko")]
         public string Surname { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Adres ")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kod pocztowy")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Data urodzenia")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Birthdate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Płeć")]
         public string Sex { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
@@ -287,7 +282,7 @@ namespace Erestauracja.Models
 
     public class UserRoleModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "RoleName")]
         public string RoleName { get; set; }

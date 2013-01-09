@@ -44,6 +44,20 @@
                 </p>
                 <ul class="rej">
                     <li class="display-labelR">
+                        <%: Html.LabelFor(m => m.Email)%>
+                    </li>
+                    <li class="editor-labelR">
+                        <%: Html.TextBoxFor(m => m.Email)%>
+                    </li>
+                </ul>
+                    <ul class="rej">
+                        <li class="display-labelR">
+                            <%: Html.ValidationMessageFor(m => m.Email)%>
+                        </li>
+                    </ul>
+
+                <ul class="rej">
+                    <li class="display-labelR">
                         <%: Html.LabelFor(m => m.Name)%>
                     </li>
                     <li class="editor-labelR">

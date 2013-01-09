@@ -7,12 +7,12 @@ namespace Erestauracja.Models
 {
     public class RegisterRestaurantModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Adres email (powiązany z PayPal)")]
         public string Email { get; set; }
@@ -22,7 +22,7 @@ namespace Erestauracja.Models
         [Compare("Email", ErrorMessage = "Pola Email oraz Powtórz email nie są zgodne.")]
         public string ConfirmEmail { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
@@ -33,67 +33,67 @@ namespace Erestauracja.Models
         [Compare("Password", ErrorMessage = "Pola Hasło oraz Powtórz hasło nie są zgodne.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Pytanie do przywracania hasła")]
         public string Question { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Odpowiedz")]
         public string Answer { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa firmy")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa wyświetlana")]
         public string DisplayName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Adres lokalu")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kod pocztowy")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "NIP")]
         public string Nip { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "REGON")]
         public string Regon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Time)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Cena dostawy")]
         public string DeliveryPrice { get; set; }
@@ -102,79 +102,84 @@ namespace Erestauracja.Models
 
     public class EditRestaurantModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Html)]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa firmy")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa wyświetlana")]
         public string DisplayName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Adres lokalu")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kod pocztowy")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kraj")]
         public string Country { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numer telefonu")]
         public string Telephone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "NIP")]
         public string Nip { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "REGON")]
         public string Regon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Czas dostawy")]
         public string DeliveryTime { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Cena dostawy")]
         public string DeliveryPrice { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [Display(Name = "Widoczna dla klientów")]
         public bool IsEnabled { get; set; }
     }
 
     public class ChangeResPasswordModel
     {
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Password)]
         [Display(Name = "Dotychczasowe hasło")]
         public string OldPassword { get; set; }
 
         //ustawione 6 na stałe jak sie zdecydujemy to trzeba ustawić
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nowe hasło")]
@@ -214,12 +219,14 @@ namespace Erestauracja.Models
         
         
     }
+
     public class images
     {
         public String name { get; set; }
         public Uri link { get; set; }
 
     }
+
     public class DeliveryPageModel
     {
         [HiddenInput]
@@ -258,7 +265,7 @@ namespace Erestauracja.Models
         [HiddenInput]
         public int CategoryID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa kategori")]
         public string CategoryName { get; set; }
@@ -285,7 +292,7 @@ namespace Erestauracja.Models
         [HiddenInput]
         public int RestaurantID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa produktu")]
         public string ProductName { get; set; }
@@ -294,12 +301,12 @@ namespace Erestauracja.Models
         [Display(Name = "Opis")]
         public string ProductDescription { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kategoria")]
         public int Category { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Cena")]
         public string Price { get; set; }
@@ -330,7 +337,7 @@ namespace Erestauracja.Models
         [HiddenInput]
         public int RestaurantID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Nazwa produktu")]
         public string ProductName { get; set; }
@@ -339,12 +346,12 @@ namespace Erestauracja.Models
         [Display(Name = "Opis")]
         public string ProductDescription { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Kategoria")]
         public int Category { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [DataType(DataType.Text)]
         [Display(Name = "Cena")]
         public string Price { get; set; }
@@ -358,7 +365,7 @@ namespace Erestauracja.Models
         [HiddenInput]
         public string EmployeeLogin { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać przynajmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
@@ -402,7 +409,7 @@ namespace Erestauracja.Models
         [HiddenInput]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [Display(Name = "Powód")]
         public string Report { get; set; }
     }

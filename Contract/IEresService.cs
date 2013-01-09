@@ -147,6 +147,14 @@ namespace Contract
         string GetUserNameByEmail(string email);
 
         /// <summary>
+        /// Pobiera id użytkownika na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca id użytkownika.</returns>
+        [OperationContract]
+        int GetRestaurantIdByEmail(string email);
+
+        /// <summary>
         /// Aktualizuje dane użytkownika
         /// </summary>
         /// <param name="user">Dane użytkownika jako obiekt typu User</param>
@@ -336,7 +344,7 @@ namespace Contract
         /// <param name="deliveryPrice">Cena dostawy</param>
         /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         [OperationContract]
-        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice);
+        bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice, string email);
 
         /// <summary>
         /// Pobiera restauracje przypisane do danego menadżera
@@ -1549,6 +1557,7 @@ namespace Contract
     public class RestaurantInfo
     {
         private int id = -1;
+        private string email = null;
         private string name = null;
         private string displayName = null;
         private string address = null;
@@ -1570,6 +1579,16 @@ namespace Contract
         {
             get { return id; }
             set { id = value; }
+        }
+
+        /// <summary>
+        /// Adres email
+        /// </summary>
+        [DataMember]
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
         }
 
         /// <summary>

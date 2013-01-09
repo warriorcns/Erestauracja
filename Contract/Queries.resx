@@ -274,7 +274,7 @@
     <value>SELECT `id`, `restaurantId`, `categoryId`, `name`, `description`, `price`, `priceOption`, `creationDate`, `isAvailable`, `isEnabled` FROM `products` WHERE `restaurantId`=@restaurantId AND `categoryId`=@categoryId</value>
   </data>
   <data name="GetRestaurant" xml:space="preserve">
-    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled`, x.`deliveryPrice` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>
+    <value>SELECT x.`id`, x.`name`, x.`displayName`, x.`address`, t.`town_name`, t.`postal_code`, y.`name`, x.`telephone`, x.`nip`, x.`regon`, x.`deliveryTime`, x.`isEnabled`, x.`deliveryPrice`, u.`email` FROM `restaurants` x JOIN `countries` y ON x.`countryId` = y.`id` JOIN `towns` t ON x.`townId` = t.`id` JOIN `users` u ON x.`userId` = u.`id` WHERE `menagerId` = (SELECT `id` FROM `users` WHERE `login` = @managerLogin) AND x.`id` = @id</value>
   </data>
   <data name="GetRestaurantByTown" xml:space="preserve">
     <value>SELECT x.`id`, x.`displayName`, y.`town_name`, y.`id` FROM `restaurants` x JOIN `towns` y ON x.`townId` = y.`id` WHERE y.`town_name` LIKE @townName AND x.`isEnabled` = @isEnabled</value>
@@ -463,5 +463,11 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   </data>
   <data name="SetUserActivity" xml:space="preserve">
     <value>UPDATE `users` SET `lastActivityDate`=@activity WHERE `login`=@login</value>
+  </data>
+  <data name="GetRestaurantIdByEmail" xml:space="preserve">
+    <value>SELECT r.`id` FROM `restaurants` r JOIN `users` u ON r.`userId`=u.`id` WHERE u.`email` = @email</value>
+  </data>
+  <data name="UpdateRestaurantEmail" xml:space="preserve">
+    <value>UPDATE `users` SET `email`=@email WHERE `id` = (SELECT `userId` FROM `restaurants` WHERE `id` =@id)</value>
   </data>
 </root>

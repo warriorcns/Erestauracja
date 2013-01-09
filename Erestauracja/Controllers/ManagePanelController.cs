@@ -826,6 +826,7 @@ namespace Erestauracja.Controllers
                 model.DeliveryTime = rest.DeliveryTime;
                 model.DeliveryPrice = rest.DeliveryPrice.ToString();
                 model.IsEnabled = rest.IsEnabled;
+                model.Email = rest.Email;
                 ModelState.Clear();
 
                 //pobranie listy państw
@@ -894,31 +895,60 @@ namespace Erestauracja.Controllers
                 {
                     if (value.Count == 1)//edytuj dane restauracji
                     {
-                        bool value2 = false;
-                        try
-                        {
-                            decimal price;
-                            NumberStyles style = NumberStyles.AllowDecimalPoint;
-                            price = Decimal.Parse(model.DeliveryPrice, style);
+                        bool isEmailOK = false;
 
-                            ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
-                            using (client)
+                        CustomMembershipProvider cmp = new CustomMembershipProvider();
+                        string useremail = cmp.GetUserNameByEmail(model.Email);
+                        //jeśli unikalny email jest wymagamy i email jest zajęty
+                        if (!(String.IsNullOrEmpty(useremail)))//cmp.RequiresUniqueEmail && 
+                        {
+                            int userId = cmp.GetRestaurantIdByEmail(model.Email);
+                            //sprawdzamy czy email należy do tej restauracji
+                            if (userId > 0)
                             {
-                                value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id, price);
+                                if (userId == model.Id)
+                                {
+                                    isEmailOK = true;
+                                }
                             }
-                            client.Close();
-                        }
-                        catch (Exception e)
-                        {
-                            value2 = false;
-                        }
-                        if (value2 == false)
-                        {
-                            ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
                         }
                         else
                         {
-                            return RedirectToAction("Restaurant", "ManagePanel");
+                            isEmailOK = true;
+                        }
+
+                        if (isEmailOK == true)
+                        {
+                            bool value2 = false;
+                            try
+                            {
+                                decimal price;
+                                NumberStyles style = NumberStyles.AllowDecimalPoint;
+                                price = Decimal.Parse(model.DeliveryPrice, style);
+
+                                ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                                using (client)
+                                {
+                                    value2 = client.EditRestaurant(model.Name, model.DisplayName, model.Address, value[0].ID, model.Country, model.Telephone, model.Nip, model.Regon, model.DeliveryTime, model.IsEnabled, User.Identity.Name, model.Id, price, model.Email);
+                                }
+                                client.Close();
+                            }
+                            catch (Exception e)
+                            {
+                                value2 = false;
+                            }
+                            if (value2 == false)
+                            {
+                                ModelState.AddModelError("", "Edytowanie restauracji nie powiodło się.");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Restaurant", "ManagePanel");
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Adres email jest zajęty.");
                         }
                     }
                     else if (value.Count > 1)//wczytaj miasta do mapki

@@ -1349,6 +1349,36 @@ namespace Contract
         }
 
         /// <summary>
+        /// Pobiera id restauracji na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca id restauracji.</returns>
+        public int GetRestaurantIdByEmail(string email)
+        {
+            MySqlCommand command = new MySqlCommand(Queries.GetRestaurantIdByEmail);
+            command.Parameters.AddWithValue("@email", email);
+
+            object rowsaffected = (ExecuteScalar(command, "GetRestaurantIdByEmail"));
+
+            if (rowsaffected != null)
+            {
+                int id = Convert.ToInt32(rowsaffected);
+                if (id > 0)
+                {
+                    return id;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Aktualizuje dane użytkownika
         /// </summary>
         /// <param name="user">Dane użytkownika jako obiekt typu User</param>
@@ -2425,7 +2455,7 @@ namespace Contract
         /// <param name="id">Id restauracji</param>
         /// <param name="deliveryPrice">Cena dostawy</param>
         /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice, string email)
         {
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             Coordinate wspol = new Coordinate(0.0, 0.0);
@@ -2515,14 +2545,81 @@ namespace Contract
             command.Parameters.AddWithValue("@latitude", wspol.Latitude);
             command.Parameters.AddWithValue("@longitude", wspol.Longitude);
             command.Parameters.AddWithValue("@price", deliveryPrice);
+            command.Connection = conn;
 
-            int rowsaffected = ExecuteNonQuery(command, "EditRestaurant");
+            MySqlCommand command2 = new MySqlCommand(Queries.UpdateRestaurantEmail);
+            command2.Parameters.AddWithValue("@email", email);
+            command2.Parameters.AddWithValue("@id", id);
+            command2.Connection = conn;
 
-            if (rowsaffected > 0)
+            MySqlTransaction tran = null;
+
+            try
             {
-                return true;
+                int comm1, comm2;
+                conn.Open();
+                tran = conn.BeginTransaction();
+                command.Transaction = tran;
+                command2.Transaction = tran;
+
+                comm2 = command2.ExecuteNonQuery();
+                comm1 = command.ExecuteNonQuery();
+
+                if (comm1 > 0 && comm2 > 0)
+                {
+                    tran.Commit();
+                }
+                else
+                {
+                    tran.Rollback();
+                    return false;
+                }
             }
-            return false;
+            catch (MySqlException e)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message;
+                wiadomosc += "Action: " + "EditRestaurant" + "\n\n";
+                wiadomosc += "Exception: " + e.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    tran.Rollback();
+                }
+                catch { }
+
+                EventLog log = new EventLog();
+                log.Source = eventSource;
+                log.Log = eventLog;
+
+                string wiadomosc = message2;
+                wiadomosc += "Action: " + "EditRestaurant" + "\n\n";
+                wiadomosc += "Exception: " + ex.ToString();
+
+                log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
         }
 
         /// <summary>
@@ -2631,6 +2728,7 @@ namespace Contract
                         rest.DeliveryTime = reader.GetString(10);
                         rest.IsEnabled = reader.GetBoolean(11);
                         rest.DeliveryPrice = reader.GetDecimal(12);
+                        rest.Email = reader.GetString(13);
                     }
                 }
                 else

@@ -301,6 +301,23 @@ namespace Contract
         }
 
         /// <summary>
+        /// Pobiera id użytkownika na podstawie adresu email.
+        /// </summary>
+        /// <param name="email">Adres email użytkownika</param>
+        /// <returns>Zwraca id użytkownika.</returns>
+        public int GetRestaurantIdByEmail(string email)
+        {
+            if (!(String.IsNullOrEmpty(email)))
+            {
+                Database db = new Database();
+                int value = db.GetRestaurantIdByEmail(email);
+                return value;
+            }
+            else
+                return -1;
+        }
+
+        /// <summary>
         /// Aktualizuje dane użytkownika
         /// </summary>
         /// <param name="user">Dane użytkownika jako obiekt typu User</param>
@@ -672,15 +689,15 @@ namespace Contract
         /// <param name="id">Id restauracji</param>
         /// <param name="deliveryPrice">Cena dostawy</param>
         /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
-        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice)
+        public bool EditRestaurant(string name, string displayName, string address, int townId, string country, string telephone, string nip, string regon, string deliveryTime, bool isEnabled, string managerLogin, int id, decimal deliveryPrice, string email)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(displayName) || String.IsNullOrEmpty(address)
                 || townId == null || townId < 0 || String.IsNullOrEmpty(country) || String.IsNullOrEmpty(telephone)
                 || isEnabled==null || String.IsNullOrEmpty(nip) || String.IsNullOrEmpty(regon)
-                || id == null || id < 0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime) || deliveryPrice == null || deliveryPrice < 0.00M))
+                || id == null || id < 0 || String.IsNullOrEmpty(managerLogin) || String.IsNullOrEmpty(deliveryTime) || deliveryPrice == null || deliveryPrice < 0.00M || String.IsNullOrEmpty(email)))
             {
                 Database db = new Database();
-                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, nip, regon, deliveryTime, isEnabled, managerLogin, id, deliveryPrice);
+                bool value = db.EditRestaurant(name, displayName, address, townId, country, telephone, nip, regon, deliveryTime, isEnabled, managerLogin, id, deliveryPrice, email);
                 return value;
             }
             else
