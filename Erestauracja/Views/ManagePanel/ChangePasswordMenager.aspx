@@ -15,7 +15,7 @@
             <fieldset>
                 <legend>Zmiana hasła</legend>
                 <p>
-                    Wprowadz dotychczasowe i nowe hasło oraz kliknij 'Zatwierdź' w celu zmiany. 
+                    Wprowadź dotychczasowe i nowe hasło oraz kliknij 'Zatwierdź' w celu zmiany. 
                 </p>
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.OldPassword) %>
