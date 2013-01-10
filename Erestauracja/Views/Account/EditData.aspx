@@ -189,7 +189,7 @@
                         <%: Html.LabelFor(m => m.Sex)%>
                     </li>
                     <li class="editor-labelR">
-                        <%: Html.TextBoxFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
+                        <%: Html.DropDownListFor(m => m.Sex, (IEnumerable<SelectListItem>)ViewData["sex"])%>
                     </li>
                     </ul>
                 
