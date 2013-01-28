@@ -110,7 +110,15 @@
                 <div>Produkty:</div>
                 <% foreach (OrderedProduct product in order.Products) %>
                 <% { %>
-                    <div>
+                    <% if (String.IsNullOrWhiteSpace( product.ProductName)) %>
+                    <% { %>
+                        <div>
+                            Produkt usunięty z oferty restauracji.
+                        </div>
+                    <% } %>
+                    <% else %>
+                    <% { %>
+                        <div>
                         <span>
                             <%: product.ProductName%>  x <%: product.Count%>
                             <% if (!String.IsNullOrWhiteSpace(product.PriceOption)) %>
@@ -133,6 +141,7 @@
                             <% } %>
                         </span>
                     </div>
+                    <% } %>
                 <% } %>
                 </br>
                 <% if (!String.IsNullOrWhiteSpace(order.Comment)) %>

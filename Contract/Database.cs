@@ -428,12 +428,17 @@ namespace Contract
         private OrderedProduct GetOrderedProductFromReader(MySqlDataReader reader)
         {
             int productId = reader.GetInt32(0);
-            string productName = reader.GetString(1);
-            string priceOption = reader.GetString(2);
+            string productName = null;
+            if(!reader.IsDBNull(1)) productName = reader.GetString(1);
+            string priceOption = null;
+            if (!reader.IsDBNull(2)) priceOption = reader.GetString(2);
             int count = reader.GetInt32(3);
-            string nonPriceOption = reader.GetString(4);
-            string nonPriceOption2 = reader.GetString(5);
-            string comment = reader.GetString(6);
+            string nonPriceOption = null;
+            if (!reader.IsDBNull(4)) nonPriceOption = reader.GetString(4);
+            string nonPriceOption2 = null;
+            if (!reader.IsDBNull(5)) nonPriceOption2 = reader.GetString(5);
+            string comment = null;
+            if (!reader.IsDBNull(6)) comment = reader.GetString(6);
 
             OrderedProduct u = new OrderedProduct();
             u.ProductId = productId;
@@ -3713,12 +3718,77 @@ namespace Contract
                     MySqlCommand command = new MySqlCommand(Queries.DeleteCategory);
                     command.Parameters.AddWithValue("@restaurantId", restaurantID);
                     command.Parameters.AddWithValue("@id", categoryID);
+                    command.Connection = conn;
 
-                    int rowsaffected = ExecuteNonQuery(command, "DeleteCategory");
+                    MySqlCommand command2 = new MySqlCommand(Queries.RemoveProductsFromCategory);
+                    command2.Parameters.AddWithValue("@restaurantId", restaurantID);
+                    command2.Parameters.AddWithValue("@categoryId", categoryID);
+                    command2.Parameters.AddWithValue("@isEnabled", false);
+                    command2.Parameters.AddWithValue("@isAvailable", false);
+                    command2.Connection = conn;
 
-                    if (rowsaffected > 0)
+                    MySqlTransaction tran = null;
+
+                    try
                     {
-                        return true;
+                        conn.Open();
+                        tran = conn.BeginTransaction();
+                        command.Transaction = tran;
+                        command2.Transaction = tran;
+
+                        command2.ExecuteNonQuery();
+                        int rows = command.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            tran.Commit();
+                            return true;
+                        }
+                        else
+                            tran.Rollback();
+                    }
+                    catch (MySqlException e)
+                    {
+                        try
+                        {
+                            tran.Rollback();
+                        }
+                        catch { }
+
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message;
+                        wiadomosc += "Action: " + "DeleteCategory" + "\n\n";
+                        wiadomosc += "Exception: " + e.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            tran.Rollback();
+                        }
+                        catch { }
+
+                        EventLog log = new EventLog();
+                        log.Source = eventSource;
+                        log.Log = eventLog;
+
+                        string wiadomosc = message2;
+                        wiadomosc += "Action: " + "DeleteCategory" + "\n\n";
+                        wiadomosc += "Exception: " + ex.ToString();
+
+                        log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                        return false;
+                    }
+                    finally
+                    {
+                        conn.Close();
                     }
                     return false;
                 }
@@ -4901,6 +4971,94 @@ namespace Contract
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Usuwanie produktu
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="res">Id restauracji</param>
+        /// <param name="id">Id produktu</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool DeleteProduct(string managerLogin, int res, int id)
+        {
+            if (IsRestaurantOwner(managerLogin, res))
+            {
+                MySqlConnection conn = new MySqlConnection(ConnectionString);
+                MySqlCommand command = new MySqlCommand(Queries.DeleteProduct);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@date", DateTime.Now);
+                command.Connection = conn;
+
+                MySqlCommand command2 = new MySqlCommand(Queries.DeleteProductsInOrder);
+                command2.Parameters.AddWithValue("@id", id);
+                command2.Connection = conn;
+
+                MySqlTransaction tran = null;
+
+                try
+                {
+                    conn.Open();
+                    tran = conn.BeginTransaction();
+                    command.Transaction = tran;
+                    command2.Transaction = tran;
+
+                    command2.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+
+                    tran.Commit();
+                }
+                catch (MySqlException e)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "DeleteProduct" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "DeleteProduct" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion

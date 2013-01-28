@@ -33,6 +33,7 @@
         });
 	</script>
 
+    <%: Html.ValidationSummary(true, "") %>
     <fieldset>
     <legend>Kategorie - kliknij <%: Html.ActionLink("tutaj", "AddCategory", "ManagePanel", new { id = Model.RestaurantID }, null) %> aby dodać nową</legend>
         <div id="accordion">
@@ -65,8 +66,8 @@
                                 </p>
                            <% } %>
                             
-                            <p> <%: Html.ActionLink("edytuj", "EditCategoryPage", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>
-                            <%--<p> <%: Html.ActionLink("usun", "DeleteCategory", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>--%>
+                            <p> <%: Html.ActionLink("Edytuj", "EditCategoryPage", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>
+                            <p> <%: Html.ActionLink("Usuń", "DeleteCategory", "ManagePanel", new { id = Model.RestaurantID, cat = kategoria.CategoryID }, null)%> </p>
 	                    </div>
                 <% } %>
 	        </div>
@@ -146,6 +147,7 @@
                             <% } %>
 
                             <p><%: Html.ActionLink("Edytuj", "EditProduct", "ManagePanel", new { id = product.ProductId, cat = product.CategoryId, res= product.RestaurantId }, null) %></p> 
+                            <p><%: Html.ActionLink("Usuń", "DeleteProduct", "ManagePanel", new { id = product.ProductId, res= product.RestaurantId }, null) %></p> 
                             </div>
                     <% } %>
                 </div>

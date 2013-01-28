@@ -2926,7 +2926,6 @@ namespace Erestauracja.Controllers
             return View(model);
         }
 
-        /*
         //
         // GET: /ManagePanel/DeleteCategory
         public ActionResult DeleteCategory(int id, int cat)
@@ -2940,7 +2939,7 @@ namespace Erestauracja.Controllers
                     ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
                     using (client)
                     {
-                        //  value = client.DeleteCategory(User.Identity.Name, id, cat);
+                        value = client.DeleteCategory(User.Identity.Name, id, cat);
                     }
                     client.Close();
                 }
@@ -2960,7 +2959,6 @@ namespace Erestauracja.Controllers
             }
             return RedirectToAction("Restaurant");
         }
-         * */
 
         //
         // GET: /ManagePanel/AddProduct
@@ -3718,6 +3716,43 @@ namespace Erestauracja.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //id produktu
+        //res żeby sprawdzić czy jest właścicielem
+        //
+        // GET: /ManagePanel/DeleteProduct
+        public ActionResult DeleteProduct(int id, int res)
+        {
+            if (id > 0 && res > 0)
+            {
+                ViewData["id"] = res;
+
+                bool value = false;
+                try
+                {
+                    ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                    using (client)
+                    {
+                        value = client.DeleteProduct(User.Identity.Name, res, id);
+                    }
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    value = false;
+                }
+
+                if (value == false)
+                {
+                    ModelState.AddModelError("", "Usuwanie produktu nie powiodło się.");
+                }
+                else
+                {
+                    return RedirectToAction("EditMenuPage", "ManagePanel", new { id = res });
+                }
+            }
+            return RedirectToAction("Restaurant");
         }
 
     }

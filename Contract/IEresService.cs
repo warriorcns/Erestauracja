@@ -580,6 +580,16 @@ namespace Contract
         [OperationContract]
         bool IsRestaurantOwner(string login, int id);
 
+        /// <summary>
+        /// Usuwanie produktu
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="res">Id restauracji</param>
+        /// <param name="id">Id produktu</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        [OperationContract]
+        bool DeleteProduct(string managerLogin, int res, int id);
+
         #endregion
 
         #region Ogólne

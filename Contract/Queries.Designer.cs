@@ -196,6 +196,24 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE `products` SET `restaurantId`=0, `categoryId`=null, `name`=null, `description`=null, `price`=null, `priceOption`=null, `creationDate`=@date, `isAvailable`=0, `isEnabled`=0 WHERE `id`=@id.
+        /// </summary>
+        internal static string DeleteProduct {
+            get {
+                return ResourceManager.GetString("DeleteProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `products_in_order` SET `priceOption`=null,`nonPriceOption1`=null,`nonPriceOption2`=null,`comment`=null WHERE `productId`=@id.
+        /// </summary>
+        internal static string DeleteProductsInOrder {
+            get {
+                return ResourceManager.GetString("DeleteProductsInOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteRole {
@@ -905,6 +923,15 @@ namespace Contract {
         internal static string Pay {
             get {
                 return ResourceManager.GetString("Pay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled, `categoryId`=0 WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId.
+        /// </summary>
+        internal static string RemoveProductsFromCategory {
+            get {
+                return ResourceManager.GetString("RemoveProductsFromCategory", resourceCulture);
             }
         }
         

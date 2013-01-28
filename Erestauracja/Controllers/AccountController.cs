@@ -18,8 +18,6 @@ namespace Erestauracja.Controllers
     {    
         //
         // GET: /Account/Account
-        //role ktore maja dostep do danego zasobu - inaczej przekierowuje na strone logowania - do zmiany.
-        //[Authorize]
         [CustomAuthorizeAttribute(Roles = "Klient")]
         public ActionResult Account()
         {

@@ -98,10 +98,17 @@
                             <% int TotalCount = 0; foreach (Erestauracja.ServiceReference.OrderedProduct product in order.Products)
                                {
                                    TotalCount += product.Count; %>
-                                <div style="text-indent: 20px;"><%: product.ProductName%> - <%: product.PriceOption%> (<%: product.Count%> szt.) </div>
-                                <div style="text-indent: 40px;">Opcje: <%: product.NonPriceOption%> , <%: product.NonPriceOption2%></div>
-                                <div style="text-indent: 40px;"> <% if(product.Comment.Length > 0){%> Komentarz do produktu: <%: product.Comment%> <% }%></div>
-                                <div>---------------------------------------</div>
+                                   <% if (String.IsNullOrWhiteSpace(product.ProductName)) %>
+                                   <% { %>
+                                        <div style="text-indent: 20px;">Produkt usunięty z oferty restauracji.</div>
+                                   <% } %>
+                                   <% else %>
+                                   <% { %>
+                                        <div style="text-indent: 20px;"><%: product.ProductName%> - <%: product.PriceOption%> (<%: product.Count%> szt.) </div>
+                                        <div style="text-indent: 40px;">Opcje: <%: product.NonPriceOption%> , <%: product.NonPriceOption2%></div>
+                                        <div style="text-indent: 40px;"> <% if(product.Comment.Length > 0){%> Komentarz do produktu: <%: product.Comment%> <% }%></div>
+                                   <% } %>
+                                   <div>---------------------------------------</div>
                             <% } %>
                         </div>
                         <br />

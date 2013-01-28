@@ -345,7 +345,6 @@ namespace Erestauracja.Controllers
         }
 
       //  private delegate bool Uchwyt(int arg);
-
         public string IsOnline(int id)
         {
             bool value = false;

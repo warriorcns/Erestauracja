@@ -8,7 +8,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <script type="text/javascript">
         $(function () {
@@ -39,8 +39,7 @@
             }
         }
     </script>
-
-    
+   
     <script type="text/javascript">
         function callMethod() {
             //IsOnline
@@ -89,7 +88,17 @@
                 <br />
                 <% foreach (BasketProduct product in rest.Products) %>
                 <% { %>
-                <div>
+                    <% if (String.IsNullOrWhiteSpace( product.ProductName)) %>
+                    <% { %>
+                        <div>
+                            <span>Produkt usunięty z oferty restauracji.</span>
+                            <span>Cena: <%: product.Price%>zł x <%: product.Count%> = <%: product.TotalPriceProd%>zł</span>
+                            <span><%: Html.ActionLink("usuń z koszyka", "Delete", "Basket", new { id = product.BasketId }, null)%> </span>
+                        </div>
+                    <% } %>
+                    <% else %>
+                    <% { %>
+                        <div>
                     <span>
                          <%: product.ProductName%> 
                          <% if (!String.IsNullOrWhiteSpace(product.PriceOption)) %>
@@ -114,6 +123,7 @@
                     <span>Cena: <%: product.Price%>zł x <%: product.Count%> = <%: product.TotalPriceProd%>zł</span>
                     <span><%: Html.ActionLink("usuń z koszyka", "Delete", "Basket", new { id = product.BasketId }, null)%> </span>
                 </div>
+                    <% } %>
                 <br />
                 <% } %>
             <%: Html.ActionLink("Realizuj", "Realize", "Basket", new { data = Send(rest) }, null)%>

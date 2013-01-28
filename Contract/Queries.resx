@@ -470,4 +470,13 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="UpdateRestaurantEmail" xml:space="preserve">
     <value>UPDATE `users` SET `email`=@email WHERE `id` = (SELECT `userId` FROM `restaurants` WHERE `id` =@id)</value>
   </data>
+  <data name="DeleteProduct" xml:space="preserve">
+    <value>UPDATE `products` SET `restaurantId`=0, `categoryId`=null, `name`=null, `description`=null, `price`=null, `priceOption`=null, `creationDate`=@date, `isAvailable`=0, `isEnabled`=0 WHERE `id`=@id</value>
+  </data>
+  <data name="DeleteProductsInOrder" xml:space="preserve">
+    <value>UPDATE `products_in_order` SET `priceOption`=null,`nonPriceOption1`=null,`nonPriceOption2`=null,`comment`=null WHERE `productId`=@id</value>
+  </data>
+  <data name="RemoveProductsFromCategory" xml:space="preserve">
+    <value>UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled, `categoryId`=0 WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId</value>
+  </data>
 </root>

@@ -62,18 +62,6 @@ namespace Erestauracja.Controllers
                 ViewData["stat"] = stats;
             }
 
-            #region śmieci
-            //    ViewBag.Message = "Witaj na stronie głównej!";
-            //var Miasta = new SelectList(new []{
-            //                                  new {ID="1",Name="Tczew"},
-            //                                  new{ID="2",Name="Gdansk"},
-            //                                  new{ID="3",Name="Gdynia"},
-            //                                  new{ID="4",Name="Sopot"},
-            //                              },
-            //                "ID","Name",1);
-            //ViewData["Miasta"]=Miasta;
-            //IEnumerable<SelectListItem> selectList = null;
-            #endregion
             var selectList = new SelectList(new[]{
                                               new {ID=String.Empty,Name=String.Empty},
                                           },
@@ -170,7 +158,8 @@ namespace Erestauracja.Controllers
 
         }
 
-
+        //
+        // GET: /Home/Info
         public ActionResult Info()
         {
             CustomRoleProvider rp = new CustomRoleProvider();

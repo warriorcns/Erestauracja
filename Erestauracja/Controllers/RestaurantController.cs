@@ -247,6 +247,8 @@ namespace Erestauracja.Controllers
             //return View();
         }
 
+        //
+        // GET: /Restaurant/Menu
         public ActionResult Menu(int id)
         {
             if (id > 0)
@@ -282,22 +284,10 @@ namespace Erestauracja.Controllers
                 }
             }
             return RedirectToAction("Restaurant");
-            //return RedirectToAction("Restaurant", "ManagePanel");
-
-            //#region ciasteczka - odczyt
-            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            //myCookie = Request.Cookies["MyTestCookie"];
-            //int id;
-            //if (myCookie != null)
-            //{
-            //    id = int.Parse(myCookie.Value);
-            //}
-            //#endregion
-            ////dziala pobieranie do c:/Data
-            ////DownloadFiles("*.jpg");
-            //return View();
         }
 
+        //
+        // GET: /Restaurant/Delivery
         public ActionResult Delivery(int id)
         {
             ViewData["id"] = id;
@@ -332,19 +322,10 @@ namespace Erestauracja.Controllers
                 }
             }
             return RedirectToAction("Restaurant");
-
-            //#region ciasteczka - odczyt
-            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            //myCookie = Request.Cookies["MyTestCookie"];
-            //int id;
-            //if (myCookie != null)
-            //{
-            //    id = int.Parse(myCookie.Value);
-            //}
-            //#endregion
-            //return View();
         }
 
+        //
+        // GET: /Restaurant/Events
         public ActionResult Events(int id)
         {
             ViewData["id"] = id;
@@ -379,20 +360,10 @@ namespace Erestauracja.Controllers
                 }
             }
             return RedirectToAction("Restaurant");
-
-
-            //#region ciasteczka - odczyt
-            //System.Web.HttpCookie myCookie = new System.Web.HttpCookie("MyTestCookie");
-            //myCookie = Request.Cookies["MyTestCookie"];
-            //int id;
-            //if (myCookie != null)
-            //{
-            //    id = int.Parse(myCookie.Value);
-            //}
-            //#endregion
-            //return View();
         }
 
+        //
+        // GET: /Restaurant/Gallery
         public ActionResult Gallery(int id)
         {
             ViewData["id"] = id;
@@ -472,6 +443,8 @@ namespace Erestauracja.Controllers
             return View();
         }
 
+        //
+        // GET: /Restaurant/Contact
         public ActionResult Contact(int id)
         {
             ViewData["id"] = id;
@@ -509,6 +482,8 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Restaurant");
         }
 
+        //
+        // GET: /Restaurant/Comments
         public ActionResult Comments(int id)
         {
             ViewData["id"] = id;
