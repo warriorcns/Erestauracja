@@ -1214,6 +1214,27 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Usuwanie pracownika z restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="res">Id restauracji</param>
+        /// <param name="id">Id pracownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool DeleteEmployee(string managerLogin, int res, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || res == null || res < 1 || id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.DeleteEmployee(managerLogin, res, id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Ogólne

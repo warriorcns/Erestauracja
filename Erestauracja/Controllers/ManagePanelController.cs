@@ -3755,5 +3755,45 @@ namespace Erestauracja.Controllers
             return RedirectToAction("Restaurant");
         }
 
+        //
+        // GET: /ManagePanel/DeleteEmployee
+        [CustomAuthorizeAttribute(Roles = "Menadżer")]
+        public ActionResult DeleteEmployee(int id, int res)
+        {
+            if (Request.IsAuthenticated)
+            {
+                if (id > 0)
+                {
+                    bool value = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.DeleteEmployee(User.Identity.Name, res, id);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
+
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Usuwanie pracownika nie powiodło się.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Personnel", "ManagePanel");
+                    }
+                }
+                return RedirectToAction("Personnel");
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
     }
 }

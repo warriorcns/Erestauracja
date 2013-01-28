@@ -589,6 +589,16 @@ namespace Contract
         /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
         [OperationContract]
         bool DeleteProduct(string managerLogin, int res, int id);
+        
+        /// <summary>
+        /// Usuwanie pracownika z restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="res">Id restauracji</param>
+        /// <param name="id">Id pracownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        [OperationContract]
+        bool DeleteEmployee(string managerLogin, int res, int id);
 
         #endregion
 

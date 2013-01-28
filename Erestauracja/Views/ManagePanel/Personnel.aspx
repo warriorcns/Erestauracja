@@ -76,6 +76,7 @@
 
                                  <%: Html.ActionLink("Edytuj dane", "EditData", "ManagePanel", new { login = user.Login }, null)%>
                                  <%: Html.ActionLink("Zmień hasło", "EditPassword", "ManagePanel", new { login = user.Login }, null)%>
+                                 <%: Html.ActionLink("Usuń", "DeleteEmployee", "ManagePanel", new { id = user.ID, res = item.RestaurantId }, null)%>
                             </div>
                         <% } %>
                     </div>

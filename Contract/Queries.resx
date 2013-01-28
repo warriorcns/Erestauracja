@@ -476,6 +476,18 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="DeleteProductsInOrder" xml:space="preserve">
     <value>UPDATE `products_in_order` SET `priceOption`=null,`nonPriceOption1`=null,`nonPriceOption2`=null,`comment`=null WHERE `productId`=@id</value>
   </data>
+  <data name="DeleteEmployeeLogins" xml:space="preserve">
+    <value>DELETE FROM `employees_login` WHERE `employeeId`=@id AND `restaurantId`=@res</value>
+  </data>
+  <data name="DeleteEmployeesFromRestaurant" xml:space="preserve">
+    <value>DELETE FROM `employees_in_restaurants` WHERE `userId`=@id AND `restaurantId`=@res</value>
+  </data>
+  <data name="DeleteUserById" xml:space="preserve">
+    <value>DELETE FROM `users` WHERE `id` = @id</value>
+  </data>
+  <data name="RemoveEmployeeFromRole" xml:space="preserve">
+    <value>DELETE FROM `users_in_roles` WHERE `userID`=@id AND `roleID`=@role</value>
+  </data>
   <data name="RemoveProductsFromCategory" xml:space="preserve">
     <value>UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled, `categoryId`=0 WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId</value>
   </data>

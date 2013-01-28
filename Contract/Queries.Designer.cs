@@ -196,6 +196,24 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `employees_login` WHERE `employeeId`=@id AND `restaurantId`=@res.
+        /// </summary>
+        internal static string DeleteEmployeeLogins {
+            get {
+                return ResourceManager.GetString("DeleteEmployeeLogins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `employees_in_restaurants` WHERE `userId`=@id AND `restaurantId`=@res.
+        /// </summary>
+        internal static string DeleteEmployeesFromRestaurant {
+            get {
+                return ResourceManager.GetString("DeleteEmployeesFromRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `products` SET `restaurantId`=0, `categoryId`=null, `name`=null, `description`=null, `price`=null, `priceOption`=null, `creationDate`=@date, `isAvailable`=0, `isEnabled`=0 WHERE `id`=@id.
         /// </summary>
         internal static string DeleteProduct {
@@ -228,6 +246,15 @@ namespace Contract {
         internal static string DeleteUser {
             get {
                 return ResourceManager.GetString("DeleteUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users` WHERE `id` = @id.
+        /// </summary>
+        internal static string DeleteUserById {
+            get {
+                return ResourceManager.GetString("DeleteUserById", resourceCulture);
             }
         }
         
@@ -923,6 +950,15 @@ namespace Contract {
         internal static string Pay {
             get {
                 return ResourceManager.GetString("Pay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `userID`=@id AND `roleID`=@role.
+        /// </summary>
+        internal static string RemoveEmployeeFromRole {
+            get {
+                return ResourceManager.GetString("RemoveEmployeeFromRole", resourceCulture);
             }
         }
         

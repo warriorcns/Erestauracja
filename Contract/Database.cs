@@ -5061,6 +5061,126 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Usuwanie pracownika z restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="res">Id restauracji</param>
+        /// <param name="id">Id pracownika</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool DeleteEmployee(string managerLogin, int res, int id)
+        {
+            if (IsRestaurantOwner(managerLogin, res))
+            {
+                MySqlConnection conn = new MySqlConnection(ConnectionString);
+
+                MySqlCommand command = new MySqlCommand(Queries.DeleteEmployeesFromRestaurant);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@res", res);
+                command.Connection = conn;
+
+                MySqlCommand command2 = new MySqlCommand(Queries.DeleteEmployeeLogins);
+                command2.Parameters.AddWithValue("@id", id);
+                command2.Parameters.AddWithValue("@res", res);
+                command2.Connection = conn;
+
+                MySqlCommand command3 = new MySqlCommand(Queries.DeleteUserById);
+                command3.Parameters.AddWithValue("@id", id);
+                command3.Connection = conn;
+
+                MySqlCommand command4 = new MySqlCommand(Queries.RemoveEmployeeFromRole);
+                command4.Parameters.AddWithValue("@id", id);
+                command4.Parameters.AddWithValue("@role", 3);
+                command4.Connection = conn;
+
+                MySqlTransaction tran = null;
+
+                try
+                {
+                    conn.Open();
+                    tran = conn.BeginTransaction();
+                    command.Transaction = tran;
+                    command2.Transaction = tran;
+                    command3.Transaction = tran;
+                    command4.Transaction = tran;
+
+                    int rowsaffected = command.ExecuteNonQuery();
+                    if (rowsaffected > 0)
+                    {
+                        command2.ExecuteNonQuery();
+                        int rows = command3.ExecuteNonQuery();
+                        int rowss = command4.ExecuteNonQuery();
+
+                        if (rows > 0 && rowss > 0)
+                        {
+                            tran.Commit();
+                            return true;
+                        }
+                        else
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        tran.Rollback();
+                        return false;
+                    }
+                }
+                catch (MySqlException e)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "DeleteProduct" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "DeleteProduct" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Ogólne
