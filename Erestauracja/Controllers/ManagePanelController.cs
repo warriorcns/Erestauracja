@@ -3828,6 +3828,40 @@ namespace Erestauracja.Controllers
                     {
                         //tu usuń ale pamiętaj że w bazie danych już nie ma żadnych o tej restauracji
                         //jej id masz w parametrach
+                        #region DropBox Connection
+                        try
+                        {
+                            // Creating the cloudstorage object 
+                            CloudStorage dropBoxStorage = new CloudStorage();
+
+                            // get the configuration for dropbox 
+                            var dropBoxConfig = CloudStorage.GetCloudConfigurationEasy(nSupportedCloudConfigurations.DropBox);
+
+                            // declare an access token
+                            ICloudStorageAccessToken accessToken = null;
+
+                            // load a valid security token from file
+                            string path = Server.MapPath(Url.Content("~/Content/token.txt"));
+
+                            //using (FileStream fs = System.IO.File.Open("C:\\dropboxtoken.txt", FileMode.Open, FileAccess.Read, FileShare.None))
+                            using (FileStream fs = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                            {
+                                accessToken = dropBoxStorage.DeserializeSecurityToken(fs);
+                            }
+
+                            // open the connection 
+                            var storageToken = dropBoxStorage.Open(dropBoxConfig, accessToken);
+
+                            // delete a directory
+                            dropBoxStorage.DeleteFileSystemEntry("/Public/images/" + id.ToString());
+
+                            dropBoxStorage.Close();
+                        }
+                        catch (AppLimit.CloudComputing.SharpBox.Exceptions.SharpBoxException ex)
+                        {
+                            ;
+                        }
+                        #endregion
                         return RedirectToAction("Restaurant", "ManagePanel");
                     }
                 }
