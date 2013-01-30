@@ -1235,6 +1235,26 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Usuwanie restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool DeleteRestaurant(string managerLogin, int id)
+        {
+            if (!(String.IsNullOrEmpty(managerLogin) || id == null || id < 1))
+            {
+                Database db = new Database();
+                bool value = db.DeleteRestaurant(managerLogin, id);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Ogólne

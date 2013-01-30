@@ -80,7 +80,7 @@
                 <%: Html.ActionLink("Edytuj dane", "EditRestaurant", "ManagePanel", new { id = x.ID }, null)%>
                 <%: Html.ActionLink("Zmiana hasła", "ChangePassword", "ManagePanel", new { login = x.Login }, null)%>
                 <%: Html.ActionLink("Zarządzaj", "MainPage", "ManagePanel", new { id = x.ID }, null)%>
-
+                <%: Html.ActionLink("Usuń", "DeleteRestaurant", "ManagePanel", new { id = x.ID }, null)%>
 	    </div>
 	<% } %>
     

@@ -600,6 +600,15 @@ namespace Contract
         [OperationContract]
         bool DeleteEmployee(string managerLogin, int res, int id);
 
+        /// <summary>
+        /// Usuwanie restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        [OperationContract]
+        bool DeleteRestaurant(string managerLogin,int id);
+
         #endregion
 
         #region Ogólne

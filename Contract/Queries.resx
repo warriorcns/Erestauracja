@@ -491,4 +491,43 @@ ON u.`countryID` = c.`id` JOIN `towns` t ON u.`townID` = t.`id` WHERE u.`login` 
   <data name="RemoveProductsFromCategory" xml:space="preserve">
     <value>UPDATE `products` SET `isAvailable`=@isAvailable,`isEnabled`=@isEnabled, `categoryId`=0 WHERE `categoryId`=@categoryId AND `restaurantId`=@restaurantId</value>
   </data>
+  <data name="DeleteAllCategoryInRes" xml:space="preserve">
+    <value>DELETE FROM `category` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteAllCommentsInRes" xml:space="preserve">
+    <value>DELETE FROM `comments` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteAllEmployees" xml:space="preserve">
+    <value>DELETE FROM `users` WHERE `id` IN (SELECT `userId` FROM `employees_in_restaurants` WHERE `restaurantId`=@id)</value>
+  </data>
+  <data name="DeleteAllEmployeesFromRole" xml:space="preserve">
+    <value>DELETE FROM `users_in_roles` WHERE `userID` IN (SELECT `userId` FROM `employees_in_restaurants` WHERE `restaurantId`=@id) AND `roleID`=@role</value>
+  </data>
+  <data name="DeleteAllOrdersInRes" xml:space="preserve">
+    <value>DELETE FROM `orders` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteAllProductsInRes" xml:space="preserve">
+    <value>DELETE FROM `products` WHERE `restaurantId`=@id OR `id` IN (SELECT `productId` FROM `products_in_order` WHERE `orderId` IN (SELECT `id` FROM `orders` WHERE `restaurantId`=@id))</value>
+  </data>
+  <data name="DeleteEmployeesInRestaurant" xml:space="preserve">
+    <value>DELETE FROM `employees_in_restaurants` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteEmployeesLogin" xml:space="preserve">
+    <value>DELETE FROM `employees_login` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteProductsInOrderFromRes" xml:space="preserve">
+    <value>DELETE FROM `products_in_order` WHERE `orderId` IN (SELECT `id` FROM `orders` WHERE `restaurantId`=@id)</value>
+  </data>
+  <data name="DeleteRestaurant" xml:space="preserve">
+    <value>DELETE FROM `restaurants` WHERE `id`=@id</value>
+  </data>
+  <data name="DeleteRestaurantFromRole" xml:space="preserve">
+    <value>DELETE FROM `users_in_roles` WHERE `userID`=(SELECT `userId` FROM `restaurants` WHERE `id`=@id) AND `roleID`=@role</value>
+  </data>
+  <data name="DeleteRestPageContent" xml:space="preserve">
+    <value>DELETE FROM `rest_page_content` WHERE `restaurantId`=@id</value>
+  </data>
+  <data name="DeleteUserAsRestaurant" xml:space="preserve">
+    <value>DELETE FROM `users` WHERE `id`=(SELECT `userId` FROM `restaurants` WHERE `id`=@id)</value>
+  </data>
 </root>

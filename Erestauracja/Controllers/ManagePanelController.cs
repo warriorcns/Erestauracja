@@ -3795,5 +3795,48 @@ namespace Erestauracja.Controllers
                 return RedirectToAction("LogOn", "Account");
             }
         }
+
+        //
+        // GET: /ManagePanel/DeleteRestaurant
+        [CustomAuthorizeAttribute(Roles = "Menadżer")]
+        public ActionResult DeleteRestaurant(int id)
+        {
+            if (Request.IsAuthenticated)
+            {
+                if (id > 0)
+                {
+                    bool value = false;
+                    try
+                    {
+                        ServiceReference.EresServiceClient client = new ServiceReference.EresServiceClient();
+                        using (client)
+                        {
+                            value = client.DeleteRestaurant(User.Identity.Name, id);
+                        }
+                        client.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        value = false;
+                    }
+
+                    if (value == false)
+                    {
+                        ModelState.AddModelError("", "Usuwanie restauracji nie powiodło się.");
+                    }
+                    else
+                    {
+                        //tu usuń ale pamiętaj że w bazie danych już nie ma żadnych o tej restauracji
+                        //jej id masz w parametrach
+                        return RedirectToAction("Restaurant", "ManagePanel");
+                    }
+                }
+                return RedirectToAction("Restaurant");
+            }
+            else
+            {
+                return RedirectToAction("LogOn", "Account");
+            }
+        }
     }
 }

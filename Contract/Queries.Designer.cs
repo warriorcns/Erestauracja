@@ -178,6 +178,60 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `category` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteAllCategoryInRes {
+            get {
+                return ResourceManager.GetString("DeleteAllCategoryInRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `comments` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteAllCommentsInRes {
+            get {
+                return ResourceManager.GetString("DeleteAllCommentsInRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users` WHERE `id` IN (SELECT `userId` FROM `employees_in_restaurants` WHERE `restaurantId`=@id).
+        /// </summary>
+        internal static string DeleteAllEmployees {
+            get {
+                return ResourceManager.GetString("DeleteAllEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `userID` IN (SELECT `userId` FROM `employees_in_restaurants` WHERE `restaurantId`=@id) AND `roleID`=@role.
+        /// </summary>
+        internal static string DeleteAllEmployeesFromRole {
+            get {
+                return ResourceManager.GetString("DeleteAllEmployeesFromRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `orders` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteAllOrdersInRes {
+            get {
+                return ResourceManager.GetString("DeleteAllOrdersInRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `products` WHERE `restaurantId`=@id OR `id` IN (SELECT `productId` FROM `products_in_order` WHERE `orderId` IN (SELECT `id` FROM `orders` WHERE `restaurantId`=@id)).
+        /// </summary>
+        internal static string DeleteAllProductsInRes {
+            get {
+                return ResourceManager.GetString("DeleteAllProductsInRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `category` WHERE `id`=@id AND `restaurantId`=@restaurantId.
         /// </summary>
         internal static string DeleteCategory {
@@ -214,6 +268,24 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `employees_in_restaurants` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteEmployeesInRestaurant {
+            get {
+                return ResourceManager.GetString("DeleteEmployeesInRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `employees_login` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteEmployeesLogin {
+            get {
+                return ResourceManager.GetString("DeleteEmployeesLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE `products` SET `restaurantId`=0, `categoryId`=null, `name`=null, `description`=null, `price`=null, `priceOption`=null, `creationDate`=@date, `isAvailable`=0, `isEnabled`=0 WHERE `id`=@id.
         /// </summary>
         internal static string DeleteProduct {
@@ -232,6 +304,42 @@ namespace Contract {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `products_in_order` WHERE `orderId` IN (SELECT `id` FROM `orders` WHERE `restaurantId`=@id).
+        /// </summary>
+        internal static string DeleteProductsInOrderFromRes {
+            get {
+                return ResourceManager.GetString("DeleteProductsInOrderFromRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `restaurants` WHERE `id`=@id.
+        /// </summary>
+        internal static string DeleteRestaurant {
+            get {
+                return ResourceManager.GetString("DeleteRestaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users_in_roles` WHERE `userID`=(SELECT `userId` FROM `restaurants` WHERE `id`=@id) AND `roleID`=@role.
+        /// </summary>
+        internal static string DeleteRestaurantFromRole {
+            get {
+                return ResourceManager.GetString("DeleteRestaurantFromRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `rest_page_content` WHERE `restaurantId`=@id.
+        /// </summary>
+        internal static string DeleteRestPageContent {
+            get {
+                return ResourceManager.GetString("DeleteRestPageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM `roles` WHERE `rolename` = @rolename.
         /// </summary>
         internal static string DeleteRole {
@@ -246,6 +354,15 @@ namespace Contract {
         internal static string DeleteUser {
             get {
                 return ResourceManager.GetString("DeleteUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM `users` WHERE `id`=(SELECT `userId` FROM `restaurants` WHERE `id`=@id).
+        /// </summary>
+        internal static string DeleteUserAsRestaurant {
+            get {
+                return ResourceManager.GetString("DeleteUserAsRestaurant", resourceCulture);
             }
         }
         

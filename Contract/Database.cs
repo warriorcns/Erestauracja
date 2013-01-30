@@ -5181,6 +5181,175 @@ namespace Contract
             }
         }
 
+        /// <summary>
+        /// Usuwanie restauracji
+        /// </summary>
+        /// <param name="managerLogin">Login menadżera</param>
+        /// <param name="id">Id restauracji</param>
+        /// <returns>True jeśli metoda wykonała się poprawnie.</returns>
+        public bool DeleteRestaurant(string managerLogin, int id)
+        {
+            if (IsRestaurantOwner(managerLogin, id))
+            {
+                MySqlConnection conn = new MySqlConnection(ConnectionString);
+
+                //usuwanie kategorii
+                MySqlCommand command = new MySqlCommand(Queries.DeleteAllCategoryInRes);
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection = conn;
+
+                //usuwanie komentarzy
+                MySqlCommand command2 = new MySqlCommand(Queries.DeleteAllCommentsInRes);
+                command2.Parameters.AddWithValue("@id", id);
+                command2.Connection = conn;
+
+                //usuwanie employees_in_restaurants
+                MySqlCommand command3 = new MySqlCommand(Queries.DeleteEmployeesInRestaurant);
+                command3.Parameters.AddWithValue("@id", id);
+                command3.Connection = conn;
+
+                //usuwanie employees_login
+                MySqlCommand command4 = new MySqlCommand(Queries.DeleteEmployeesLogin);
+                command4.Parameters.AddWithValue("@id", id);
+                command4.Connection = conn;
+
+                //usuwanie zamówień
+                MySqlCommand command5 = new MySqlCommand(Queries.DeleteAllOrdersInRes);
+                command5.Parameters.AddWithValue("@id", id);
+                command5.Connection = conn;
+
+                //usuwanie produktów
+                MySqlCommand command6 = new MySqlCommand(Queries.DeleteAllProductsInRes);
+                command6.Parameters.AddWithValue("@id", id);
+                command6.Connection = conn;
+
+                //usuwanie products_in_order
+                MySqlCommand command7 = new MySqlCommand(Queries.DeleteProductsInOrderFromRes);
+                command7.Parameters.AddWithValue("@id", id);
+                command7.Connection = conn;
+
+                //usuwanie restauracji
+                MySqlCommand command8 = new MySqlCommand(Queries.DeleteRestaurant);
+                command8.Parameters.AddWithValue("@id", id);
+                command8.Connection = conn;
+
+                //usuwanie zawartości strony restauracji
+                MySqlCommand command9 = new MySqlCommand(Queries.DeleteRestPageContent);
+                command9.Parameters.AddWithValue("@id", id);
+                command9.Connection = conn;
+
+                //usuwanie usera jako restauracja
+                MySqlCommand command10 = new MySqlCommand(Queries.DeleteUserAsRestaurant);
+                command10.Parameters.AddWithValue("@id", id);
+                command10.Connection = conn;
+
+                //usuwanie restauracji z roli
+                MySqlCommand command11 = new MySqlCommand(Queries.DeleteRestaurantFromRole);
+                command11.Parameters.AddWithValue("@id", id);
+                command11.Parameters.AddWithValue("@role", 4);
+                command11.Connection = conn;
+
+                //usuwanie pracowników
+                MySqlCommand command12 = new MySqlCommand(Queries.DeleteAllEmployees);
+                command12.Parameters.AddWithValue("@id", id);
+                command12.Connection = conn;
+
+                //usuwanie pracownikó z roli
+                MySqlCommand command13 = new MySqlCommand(Queries.DeleteAllEmployeesFromRole);
+                command13.Parameters.AddWithValue("@id", id);
+                command13.Parameters.AddWithValue("@role", 3);
+                command13.Connection = conn;
+
+                MySqlTransaction tran = null;
+
+                try
+                {
+                    conn.Open();
+                    tran = conn.BeginTransaction();
+                    command.Transaction = tran;
+                    command2.Transaction = tran;
+                    command3.Transaction = tran;
+                    command4.Transaction = tran;
+                    command5.Transaction = tran;
+                    command6.Transaction = tran;
+                    command7.Transaction = tran;
+                    command8.Transaction = tran;
+                    command9.Transaction = tran;
+                    command10.Transaction = tran;
+                    command11.Transaction = tran;
+                    command12.Transaction = tran;
+                    command13.Transaction = tran;
+
+                    command.ExecuteNonQuery();
+                    command2.ExecuteNonQuery();
+                    command12.ExecuteNonQuery();
+                    command13.ExecuteNonQuery();
+                    command3.ExecuteNonQuery();
+                    command4.ExecuteNonQuery();
+                    command9.ExecuteNonQuery();
+                    command10.ExecuteNonQuery();
+                    command11.ExecuteNonQuery();
+                    command6.ExecuteNonQuery();
+                    command7.ExecuteNonQuery();
+                    command5.ExecuteNonQuery();
+                    command8.ExecuteNonQuery();
+
+                    tran.Commit();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message;
+                    wiadomosc += "Action: " + "DeleteRestaurant" + "\n\n";
+                    wiadomosc += "Exception: " + e.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        tran.Rollback();
+                    }
+                    catch { }
+
+                    EventLog log = new EventLog();
+                    log.Source = eventSource;
+                    log.Log = eventLog;
+
+                    string wiadomosc = message2;
+                    wiadomosc += "Action: " + "DeleteRestaurant" + "\n\n";
+                    wiadomosc += "Exception: " + ex.ToString();
+
+                    log.WriteEntry(wiadomosc, EventLogEntryType.Error);
+
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Ogólne
