@@ -19,6 +19,11 @@
                 var data = { st: st };
                 $.post(url, data, function (data) {
                     $("#setStatus").text(st);
+                    if (st === "Online") {
+                        $("#setStatus").css("color", "green");
+                    } else {
+                        $("#setStatus").css("color", "red");
+                    }
                 });
                 return false;
             });
@@ -27,9 +32,14 @@
     <script type="text/javascript">
         $(function () {
             var url = '<%: Url.Action("getStatus", "POS") %>';
-            var data = { };
+            var data = {};
             $.post(url, data, function (data) {
                 $("#setStatus").text(data);
+                if (data === "Online") {
+                    $("#setStatus").css("color", "green");
+                } else {
+                    $("#setStatus").css("color", "red");
+                }
             });
         });
     </script>
@@ -44,7 +54,8 @@
         <div>
             <%: Html.ActionLink("Koniec", "End", "POS", new { @class = "button wood" })%></div>
         <div>
-            <button id="setStatus" class="button wood">Online</button></div>
+            <button id="setStatus" style="height: 80px; width: 100%">Online</button>
+        </div>
     </div>
 
     

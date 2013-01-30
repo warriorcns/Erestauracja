@@ -3,14 +3,20 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<script type="text/javascript">
-    $(function () {
-        $("#accordion").accordion({
-            collapsible: true,
-            active: false
+    <script type="text/javascript">
+        $(function () {
+            $("#accordion").accordion({
+                collapsible: true,
+                active: false
+            });
         });
-    });
-</script>
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setInterval("location.reload(true)", 12000);
+        });
+    </script>
 
 <%: Html.ValidationSummary(true, "Błąd.")%>
 <% if (Model == null) %>
@@ -21,14 +27,14 @@
 <% { %>
     <% if (Model.Count == 0) %>
     <% { %>
-        <h2>Brak aktywnych zamóweiń.</h2>
+        <h2>Brak aktywnych zamówień.</h2>
     <% } %>
     <% else %>
     <% { %>
         <div id="accordion">
         <% foreach (UserOrder order in Model) %>
         <% { %>
-            <h3><a href="#"><span>Numer:<%:order.OrderId%></span> <span><%: order.DisplayName %></span> <span>Razem: <%: order.Price%> zł</span>
+            <h3><a href="#"><span>Numer: </span> <span class="OrderId"><%:order.OrderId%></span> <span><%: order.DisplayName %></span> <span>Razem: <%: order.Price%> zł</span>
             <% if (order.Payment == "cash") %>
             <% { %>
                 <span>Płatność przy odbiorze</span>
@@ -41,7 +47,7 @@
             <% { %>
                 <span>Płatność inna</span>
             <% } %>
-            <span>Status: <%: order.Status%></span>
+            <span class="status">Status: <%: order.Status%></span>
             </a></h3>
             <div>Dane restauracji:
                 <div>Adres: <%: order.Address%> - <%: order.Town%> (<%: order.Postal%>)</div>

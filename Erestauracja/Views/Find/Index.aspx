@@ -100,7 +100,7 @@
             <span class="PanelListaRestauracji" id="resList">
                 <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model) %>
                 <% { %>
-                        <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
+                        <div class="FindresInfo" onclick="Redirect('<%: Html.Encode(item.ID) %>')">
                             <div> <%: item.DisplayName %> 
                             <% if( (DateTime.Compare(item.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0 )%>
                             <% { %>

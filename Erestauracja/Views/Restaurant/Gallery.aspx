@@ -12,6 +12,7 @@
         .square-thumb {
             width: 150px;
             height: 150px;
+            padding: 20px;
         }
     </style>
     <style>
@@ -39,14 +40,14 @@
         </a>
     </div>--%>
     <div style="color: Red"><%: ViewData["alert"] %></div>
-   <div class="yoxview" >
+    <span class="yoxview" >
         <% foreach (Uri link in (IEnumerable)ViewData["imagesuris"])
            { %>
-        <a href="<%:link.AbsoluteUri%>">
-            <img class="thumbnail" src="<%:link.AbsoluteUri%>" alt="Zdjecie" style="display:inline;" />
-        </a>
+       <a href="<%:link.AbsoluteUri%>">
+           <span><img class="thumbnail" src="<%:link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" /></span>
+       </a>
         <%} %>
-    </div>
+    </span>
     
 
     <script type="text/javascript">
@@ -54,7 +55,7 @@
     jQuery('.thumbnail').nailthumb({ width: 150, height: 150, method: 'resize', fitDirection: 'center center' });
         jQuery(document).ready(function ($) { 
             jQuery.noConflict();
-            $(".yoxview").yoxview({ lang: 'pl', linkToOriginalContext: false,  });
+            $(".yoxview").yoxview({ lang: 'pl', linkToOriginalContext: false  });
         });
     </script>
     <%--<script type="text/javascript">

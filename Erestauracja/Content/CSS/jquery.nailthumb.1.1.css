@@ -19,10 +19,12 @@
   width: auto;
   height: auto;
   margin: 0 0 11px;
-  padding: 0px;
+  margin: 20px;
   overflow: hidden;
   position: relative;
   text-align: left;
+  float: left;
+  
 }
 .nailthumb-container img.nailthumb-image {
   margin: 0px;

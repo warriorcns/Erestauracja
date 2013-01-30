@@ -16,6 +16,7 @@
 .galleryElement
 {
     list-style: none;
+    float: left;
     display: inline;
 }
 
@@ -23,4 +24,7 @@
 {
          
 }
-
+.buttonAndImg
+{
+    list-style: none;    
+}

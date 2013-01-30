@@ -1,6 +1,6 @@
 ﻿.main
 {
-        
+     
 }
 
 .all
@@ -9,18 +9,20 @@
    
     width: 100%;
     clear: both;
-    height: 100%;
-    overflow: hidden;   
+    height: 105%;
+    overflow: hidden;
+    padding-bottom: 20px; 
+     
 }
 
 
 .lewypanel
 {
     
-    border-top: 2px black solid;
-    border-bottom: 2px black solid;
-    border-left: 2px black solid;
-    border-right: 2px black solid;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
     
     text-align: left;
     position: relative;
@@ -29,13 +31,16 @@
     height: 100%;
     margin: 0 20px 0 0 ; 
     overflow: scroll;
-    background: no-repeat;
+    background-color: #FFEDD7;
     float: left;
     margin-left: -20px;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
-     width: 30%;
+    width: 30%;
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
     
 }
 .resInfo
@@ -60,10 +65,10 @@
 
 .PanelInfo
 {
-    border-top: 2px black solid;
-    border-bottom: 2px black solid;
-    border-left: 2px black solid;
-    border-right: 2px black solid;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
     width: 60%;
     text-align: left;
     position: relative;
@@ -76,15 +81,19 @@
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
     margin: 10px, 0, 0, 10px;
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
+    background-color: #FFEDD7;
 }
 
 .PanelWybor
 {
-   border-top: 2px black solid;
-    border-bottom: 2px black solid;
-    border-left: 2px black solid;
-    border-right: 2px black solid;
-    
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
+    background-color: #FFEDD7;
     text-align: left;
     position: relative;
     margin: 0 0 20px;
@@ -97,7 +106,9 @@
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
-    
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
 }
 
 .LabelWybierzMiasto
@@ -165,10 +176,10 @@
 
 .Panelstatystyki
 {
-    border-top: 2px black solid;
-    border-bottom: 2px black solid;
-    border-left: 2px black solid;
-    border-right: 2px black solid;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
     margin-top: 10px;
     text-align: left;
     position: relative;
@@ -181,6 +192,10 @@
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0; 
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
+    background-color: #FFEDD7;
 }
 
 .stats
@@ -203,10 +218,23 @@
     margin-bottom: 20px;
     margin-left: 20px;    
     font-size: large;
+    padding: 0 0 2px 0;
+    -webkit-transition: all 0.3s ease-out; 
+    -moz-transition: all 0.3s ease-out; 
+    -o-transition: all 0.3s ease-out;
+    
 }
 
 .resInfo:hover
 {
     cursor: hand; 
     cursor: pointer;
+    margin-left: 0px;
+    border: solid 1px #CCC;
+	-moz-box-shadow: 2px 2px 2px #6E5139;
+	-webkit-box-shadow: 2px 2px 2px #6E5139;
+    box-shadow: 2px 2px 2px #6E5139;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    margin-right: 13px;
 }
+

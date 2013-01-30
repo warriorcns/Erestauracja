@@ -59,7 +59,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            setInterval("location.reload(true)", 300000);
+            setInterval("location.reload(true)", 60000);
         });
     </script>
     <script type="text/javascript">
@@ -96,12 +96,17 @@
         <div class="buttons-container">
             
             <div>
-                <input type="button" onclick="reload()" class="button wood" value="Odswież zamówienia" />
+                <input type="button" onclick="reload()" class="button wood" value="Odswież zamówienia" style="width: 100%;"/>
             </div>
             <div>
                 <%: Html.ActionLink("Cofnij", "Index", "POS", new{ @class="button wood"})%>
             </div>
-            
+            <div>
+            <%: Html.TextBox("szukaj", null, new { @id = "searchtxb", @class = "search-textbox" })%>
+            </div>
+            <div>
+                <button id="searchButton" onclick="search">Szukaj</button>
+            </div>
         </div>
         <div id="tabs-nohdr">
             <ul>
@@ -285,10 +290,7 @@
         </div>
     </div>
     
-    <div>
-        <%: Html.TextBox("szukaj", null, new { @id = "searchtxb", @class = "search-textbox" })%>
-        <button id="searchButton" onclick="search">Szukaj</button>
-    </div>
+    
     
     
 

@@ -23,7 +23,7 @@
             <div class="PanelListaRestauracji">
             <% foreach (Erestauracja.ServiceReference.RestaurantInCity item in Model.Restaurants) %>
             <% { %>
-                    <div onclick="Redirect('<%: Html.Encode(item.ID) %>')">
+                    <div class="FindresInfo" onclick="Redirect('<%: Html.Encode(item.ID) %>')">
                         <div> <%: item.DisplayName %> 
                         <% if( (DateTime.Compare(item.CreationDate, DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)))) > 0 )%>
                         <% { %>
@@ -38,12 +38,12 @@
             <% } %>
         </div>
             <div class="PanelMapa">
-            <div class="mapTowns" id="mapka" style="display: block">
-                <% Html.RenderPartial("RestaurantsMaps", Model.Restaurants as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
-                <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
-                <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+                <div class="FindmapTowns" id="mapka">
+                    <% Html.RenderPartial("RestaurantsMaps", Model.Restaurants as IEnumerable<Erestauracja.ServiceReference.RestaurantInCity>);%>
+                    <%--Renderuje mapke oraz dzialaja inne jQery skrypty--%>
+                    <% Html.Telerik().ScriptRegistrar().jQuery(false).jQueryValidation(false).OnDocumentReady("$('#mapTowns').dialog();").Render(); %>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     

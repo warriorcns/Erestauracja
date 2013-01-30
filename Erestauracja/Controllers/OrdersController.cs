@@ -33,7 +33,6 @@ namespace Erestauracja.Controllers
             }
 
             return View(value);
-        }
-
+        }        
     }
 }

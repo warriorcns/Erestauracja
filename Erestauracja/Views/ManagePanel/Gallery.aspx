@@ -43,10 +43,15 @@
                foreach (Erestauracja.Models.images foo in Model.Files)
                {
                    imgID++;%>
-        <li class="galleryElement"><a href="<%:foo.link.AbsoluteUri %>">
-            <img id="<%:ViewData["id"] + "_" + imgID %>" class="thumbnail" src="<%:foo.link.AbsoluteUri%>" alt="Zdjecie" style="display: inline;" />
-        </a></li>
-        <button class="delphoto" onclick="deleteFile('<%:foo.name %>','<%: ViewData["id"] %>','<%: imgID %>')">Usuń zdjęcie</button>
+        <li class="galleryElement">
+            <ol>
+                <li class="buttonAndImg"><button class="delphoto" style="position: relative; margin: 30px 30px 0 30px" onclick="deleteFile('<%:foo.name %>','<%: ViewData["id"] %>','<%: imgID %>')">Usuń zdjęcie</button></li>
+                <li class="buttonAndImg"><a href="<%:foo.link.AbsoluteUri %>">
+                    <img id="<%:ViewData["id"] + "_" + imgID %>" class="thumbnail" src="<%:foo.link.AbsoluteUri%>" alt="Zdjecie" />
+                </a></li>
+            </ol>
+        </li>
+        
         <%} %>
     </ul>
    

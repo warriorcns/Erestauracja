@@ -776,6 +776,7 @@
     <Content Include="Content\2012.2.607\Windows7\slider-v.gif" />
     <Content Include="Content\2012.2.607\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.2.607\Windows7\sprite.png" />
+    <Content Include="Content\CSS\Account.css" />
     <Content Include="Content\CSS\Admin.css" />
     <Content Include="Content\CSS\CitiesAndRestaurants.css" />
     <Content Include="Content\CSS\jquery.nailthumb.1.1.css" />
@@ -901,6 +902,7 @@
     <Content Include="Content\style\jHtmlArea.png" />
     <Content Include="Content\style\jHtmlArea_Toolbar_Group_BG.png" />
     <Content Include="Content\style\jHtmlArea_Toolbar_Group__Btn_Select_BG.png" />
+    <Content Include="Content\style\jqueryui\jquery-ui.css" />
     <Content Include="Content\style\jqueryui\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\style\jqueryui\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\style\jqueryui\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />

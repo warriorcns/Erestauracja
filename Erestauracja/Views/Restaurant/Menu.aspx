@@ -4,22 +4,22 @@
 
     <meta charset="utf-8">
 
-	<script type="text/javascript">
-	    $(function () {
-	        $("#tabs-left").tabs({
-	            //heightStyle: 'auto'
-	        });
-	    });
-	</script>
-
+    <link rel="Stylesheet" type="text/css" href="~/Content/style/jqueryui/ui-lightness/jquery-ui-1.7.2.custom.css" />
     <script type="text/javascript">
         $(function () {
+            
             $(".accordion2").accordion({
                 active: false,
                 autoHeight: false,
                 event: "click",
                 collapsible: true
             });
+            $("#tabs-left").tabs({
+                //heightStyle: 'auto'
+            });
+            //var tabs_parent = $("#tabs-left").parent().css("height");
+            //alert($("#tabs-left").parent().css("height"));
+            //$("#tabs-left").css("height", $("#tabs-left").parent().css("height"));
         });
     </script>
 

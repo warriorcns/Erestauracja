@@ -3,6 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AccountPlaceHolder" runat="server">
 
+    <link href="../../Content/CSS/Account.css" rel="stylesheet" type="text/css" />
     <%--<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="../../Scripts/jquery-ui.js" type="text/javascript"></script>
     <script src="../../Scripts/jquery.raty.js" type="text/javascript"></script>--%>
@@ -37,18 +38,21 @@
                 <% { %>
                     <hr />
                     <div>
-                        <span>Numer komentarza: <%: comm.Id %>.</span>
-                        <span>Wstawiony dla: <%: comm.DisplayName %> (<%: comm.Town %>)</span>
+                        <span class="CommTitle">Numer komentarza: </span>
+                        <span><%: comm.Id %>.</span>
+
+                        <span class="CommTitle">Wstawiony dla: </span>
+                        <span><%: comm.DisplayName %> (<%: comm.Town %>)</span>
                         <span><%: comm.Date %></span>
                         <div>
-                            <span>Ocena:</span>
+                            <span class="CommTitle">Ocena:</span>
                             <span class="stars" data-rating="<%: comm.Rating.ToString("F",System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")) %>"></span>
                         </div>
                         <% if (!String.IsNullOrWhiteSpace(comm.CommentText)) %>
                         <% { %>
                         <div>
-                            <div>Treść komentarza:</div>
-                            <div><%: comm.CommentText%></div>
+                            <div class="CommTitle">Treść komentarza:</div>
+                            <div class="CommContent"><%: comm.CommentText%></div>
                         </div>
                         <% } %>
                         <%: Html.ActionLink("Usuń", "DeleteComment", "Account", new { id = comm.Id }, null)%>

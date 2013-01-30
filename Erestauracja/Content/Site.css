@@ -98,6 +98,9 @@ page width. Or, you can specify an exact pixel width. */
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 4px 0 0 0;
      z-index: 3;
+     -moz-box-shadow: 5px 5px 5px #888;
+     -webkit-box-shadow: 5px 5px 5px #888;
+     box-shadow: 5px 5px 5px #815938;
 }
 
 div#label
@@ -138,18 +141,20 @@ header h1, #header h1 {
     -moz-border-radius: 4px 0 0 0;
     margin-top: 4px;
     min-width: 700px;
-    
+    overflow: hidden;
+    clear: both;
 }
 
 .ikonka
 {
     background: url(images/logo.png) no-repeat left top;
-     height: 75px;
-     float: left;
-     position: relative;
-     z-index: 1;
+    height: 95px;
+    float: left;
+    position: relative;
+    z-index: 1;
     overflow: visible;
-    width: 200px;
+    width: 250px;
+    background-size: 210% auto;
     
 }
 
@@ -481,6 +486,7 @@ header h1, #header h1 {
 
 /* TAB MENU   
 ----------------------------------------------------------*/
+
 ul#menu {
     border-bottom: 2px #6B6052 solid;
     padding: 0 0 1px ;
@@ -513,15 +519,26 @@ ul#menu li a {
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 10px 10px 0px 0px;
     -moz-border-radius: 4px 4px 0 0;
+    -webkit-transition: all 0.3s ease-out; 
+    -moz-transition: all 0.3s ease-out; 
+    -o-transition: all 0.3s ease-out;
+    
+    /*-moz-box-shadow: 0px 0px 15px #A7A7A7;
+    -webkit-box-shadow: 0px 0px 15px #A7A7A7; */
+    box-shadow: 2px -2px 5px #3C3C3C;
+    background-size: 110% auto;
 }
 
 ul#menu li a:hover {
-   /* background-color: #FFE4C4;*/
     text-decoration: none;
     color: #926641;
     background: url("/Content/images/button1.jpg") no-repeat left top;
-    
+    -moz-box-shadow: 0px 0px 15px #FFFFFF;
+    -webkit-box-shadow: 0px 0px 15px #FFFFFF;
+    box-shadow: 0px 0px 15px #FFFFFF;
+    background-size: 110% auto;
 }
+
 
 ul#menu li a:active {
     background-color: #a6e2a6;
@@ -627,7 +644,10 @@ footer,
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 0 0 4px 4px;
     width: 120px;
-    height: 70px;  
+    height: 70px; 
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888; 
 }
 
 #footer-logo #footer-divider {

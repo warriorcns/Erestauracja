@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 	    $(function () {
 	        $("#tabs-left").tabs({
-	            heightStyle: 'auto'
+	            heightStyle: 'content'
 	        });
 	    });
 	</script>
