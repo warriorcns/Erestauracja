@@ -240,8 +240,22 @@ a
 {
     position: relative; 
     margin-top: 20%;
-    left: 45%;
+    left: 40%;
     width: 200px;
+    
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
+    padding: 10px 0px 20px 10px;   
+    background-color: #FFEDD7;
+    float: left;
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 4px 0 0 0;
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
 }
 
 .LargeFont

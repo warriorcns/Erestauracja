@@ -53,26 +53,26 @@
     <%: Html.ValidationSummary(true, "Logowanie nie powiodło się. Popraw błędnie wypełnione pola i spróbuj ponownie.")%>
     <div class="locked-login">
 
-                <%: Html.Hidden(User.Identity.Name, null, new { id = "user" })%>
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Login, new { @class = "LargeFont" })%>
+            <%: Html.Hidden(User.Identity.Name, null, new { id = "user" })%>
+            <div class="editor-label">
+                <%: Html.LabelFor(m => m.Login, new { @class = "LargeFont" })%>
                    
-                </div>
-                <div class="editor-field">
-                    <%--: Html.TextBoxFor(m => m.Login)--%>
-                    <%: Html.DropDownListFor(m => m.Login, (IEnumerable<SelectListItem>)ViewData["logins"], new { @class = "locked-fields" })%>
-                    <%: Html.ValidationMessageFor(m => m.Login)%>
-                </div>
+            </div>
+            <div class="editor-field">
+                <%--: Html.TextBoxFor(m => m.Login)--%>
+                <%: Html.DropDownListFor(m => m.Login, (IEnumerable<SelectListItem>)ViewData["logins"], new { @class = "locked-fields" })%>
+                <%: Html.ValidationMessageFor(m => m.Login)%>
+            </div>
                 
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Password, new { @class = "LargeFont" })%>
-                </div>
-                <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.Password, new { id = "keyboard", @class = "locked-fields"})%>
-                    <%: Html.ValidationMessageFor(m => m.Password) %>
-                </div>
+            <div class="editor-label">
+                <%: Html.LabelFor(m => m.Password, new { @class = "LargeFont" })%>
+            </div>
+            <div class="editor-field">
+                <%: Html.PasswordFor(m => m.Password, new { id = "keyboard", @class = "locked-fields"})%>
+                <%: Html.ValidationMessageFor(m => m.Password) %>
+            </div>
 
-                <input type="submit" value="Zaloguj" class="locked-button"/>
+            <input type="submit" value="Zaloguj" class="locked-button"/>
     </div>
     <% } %>
 
